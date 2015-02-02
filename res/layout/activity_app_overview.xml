@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/content"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+    </android.support.v4.view.ViewPager>
+
+    <!-- <com.viewpagerindicator.CirclePageIndicator -->
+    <!-- android:id="@+id/indicator" -->
+    <!-- android:layout_width="fill_parent" -->
+    <!-- android:layout_height="wrap_content" -->
+    <!-- android:padding="10dip" -->
+    <!-- app:fillColor="#FF888888" -->
+    <!-- app:pageColor="#88FF0000" -->
+    <!-- app:radius="10dp" -->
+    <!-- app:strokeColor="#FF000000" -->
+    <!-- app:strokeWidth="2dp" /> -->
+
+    <com.viewpagerindicator.CirclePageIndicator
+        android:id="@+id/indicator"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:padding="30dp" />
+
+</RelativeLayout>
