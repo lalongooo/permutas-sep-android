@@ -11,6 +11,10 @@
     <string name="app_overview_4th_item_text">Si crees importante este aporte, considera una donación.</string>    
     <string name="app_overview_start_button">Comenzar</string>
     
+    <string name="tos_dialog_text">Al seleccionar \"Aceptar\" usted acepta los Términos y condiciones del uso de esta aplicación.</string>
+    <string name="tos_dialog_cancel">Cancelar</string>
+    <string name="tos_dialog_accept">Aceptar</string>
+    
     <string name="act_splash_cont_descr">Application icon</string>
     <string name="act_splash_by_lalongooo">By @lalongooo</string>
 
