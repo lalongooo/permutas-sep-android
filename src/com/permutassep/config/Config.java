@@ -51,6 +51,6 @@ public class Config {
 	/**
 	 * The splash screen activity duration (in milliseconds).
 	 */
-	public static final int SPLASH_SCREEN_DELAY = 3200;
+	public static final int SPLASH_SCREEN_DELAY = 1000;
 
 }

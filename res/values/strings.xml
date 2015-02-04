@@ -4,10 +4,12 @@
     <string name="app_name">Permutas SEP</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    
     <string name="app_overview_1st_item_text">Queremos que la información esté al alcance de todos</string>
     <string name="app_overview_2nd_item_text">Creemos que nuestra solución hará a mas personas felices</string>
-    <string name="app_overview_3rd_item_text">Esperamos que encuentres pronto tu permuta...de verdad.</string>
-    <string name="app_overview_4th_item_text">Si crees importante este aporte, considera una donación.</string>
+    <string name="app_overview_3rd_item_text">Esperamos que encuentres pronto tu permuta&#8230;de verdad.</string>
+    <string name="app_overview_4th_item_text">Si crees importante este aporte, considera una donación.</string>    
+    <string name="app_overview_start_button">Comenzar</string>
     
     <string name="act_splash_cont_descr">Application icon</string>
     <string name="act_splash_by_lalongooo">By @lalongooo</string>

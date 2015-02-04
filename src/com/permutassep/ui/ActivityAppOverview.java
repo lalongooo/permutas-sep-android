@@ -55,27 +55,6 @@ public class ActivityAppOverview extends Activity {
 		    @Override
 		    public void onPageScrollStateChanged(int arg0) {}
 		});
-
-//		ColorAnimationView colorAnimationView = (ColorAnimationView) findViewById(R.id.ColorAnimationView);
-//		colorAnimationView.setmViewPager(viewPager, 4);
-//		colorAnimationView
-//				.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-//					@Override
-//					public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//						Log.e("TAG", "onPageScrolled");
-//					}
-//
-//					@Override
-//					public void onPageSelected(int position) {
-//						Log.e("TAG", "onPageSelected");
-//					}
-//
-//					@Override
-//					public void onPageScrollStateChanged(int state) {
-//						Log.e("TAG", "onPageScrollStateChanged");
-//					}
-//				});
-
 	}
 
 }
