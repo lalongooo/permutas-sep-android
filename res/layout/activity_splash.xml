@@ -15,10 +15,11 @@
         android:text="@string/app_name"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/app_font_main_color"
-        android:textSize="@dimen/splash_text_size" />
+        android:textSize="@dimen/splash_text_size"
+        android:typeface="normal" />
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/tvByLalongooo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
