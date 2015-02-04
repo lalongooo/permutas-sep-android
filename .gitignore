@@ -23,3 +23,5 @@ proguard/
 
 #Ignore the /libs folder
 libs/
+.settings/
+*.DS_Store
