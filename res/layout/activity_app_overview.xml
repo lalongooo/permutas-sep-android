@@ -28,13 +28,13 @@
         android:id="@+id/indicator"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/button1"
+        android:layout_above="@+id/btnStart"
         android:paddingBottom="20dp"
         android:paddingTop="30dp"
         app:radius="5dp" />
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/btnStart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

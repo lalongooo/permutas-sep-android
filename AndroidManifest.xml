@@ -29,6 +29,9 @@
         <activity
             android:name=".ui.ActivityAppOverview"
             android:label="@string/app_name" />
+        <activity
+            android:name=".ui.ActivityNewsFeed"
+            android:label="@string/app_name" />
     </application>
 
 </manifest>
