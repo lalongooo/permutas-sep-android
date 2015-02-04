@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.permutassep.ui.R;
+import com.permutassep.R;
 
 public class AppOverviewAdapter extends PagerAdapter {
 
