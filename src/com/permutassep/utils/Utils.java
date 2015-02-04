@@ -6,7 +6,8 @@ import android.graphics.Typeface;
 public class Utils {
 
 	public static Typeface getTypeFace(Context c){
-		return Typeface.createFromAsset(c.getAssets(), "advent_bold_extra.ttf");
+//		return Typeface.createFromAsset(c.getAssets(), "advent_bold_extra.ttf");
+		return Typeface.DEFAULT;
 	}
 	
 }
