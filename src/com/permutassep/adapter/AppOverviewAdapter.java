@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.permutassep.R;
+import com.permutassep.utils.Utils;
 
 public class AppOverviewAdapter extends PagerAdapter {
 
@@ -41,11 +42,12 @@ public class AppOverviewAdapter extends PagerAdapter {
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View vi = inflater.inflate(R.layout.activity_app_overview_vp, null);
 
-		ImageView imageView = (ImageView) vi
-				.findViewById(R.id.ivViewPagerImageView);
+		ImageView imageView = (ImageView) vi.findViewById(R.id.ivViewPagerImageView);
 		imageView.setImageResource(imagesArray[position]);
 
 		TextView tv = (TextView) vi.findViewById(R.id.tvViewPagerTextView);
+		tv.setTypeface(Utils.getTypeFace(context));
+		
 		switch (position) {
 		case 0:
 			tv.setText(context.getString(R.string.app_overview_1st_item_text));

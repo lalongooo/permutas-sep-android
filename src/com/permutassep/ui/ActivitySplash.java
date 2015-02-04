@@ -4,28 +4,26 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.widget.TextView;
 
 import com.permutassep.R;
 import com.permutassep.config.Config;
+import com.permutassep.utils.Utils;
 
 
 public class ActivitySplash extends ActionBarActivity {
 
-	TextView tvAppName;
+	 private TextView tvAppName;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_splash);
 		
-				
-		Typeface tf = Typeface.createFromAsset(getAssets(), "advent_bold_extra.ttf");
-		tvAppName = (TextView) findViewById(R.id.tvAppName);
-		tvAppName.setTypeface(tf);
+		setContentView(R.layout.activity_splash);		
+		tvAppName = (TextView) findViewById(R.id.tvAppName);		
+		tvAppName.setTypeface(Utils.getTypeFace(this));
 		
 		TimerTask task = new TimerTask() {
 
