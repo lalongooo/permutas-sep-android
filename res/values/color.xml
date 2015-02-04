@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="app_main_color">#EC5152</color>
+    <color name="app_main_color">#292929</color>
     <color name="app_font_main_color">#FFFFFF</color>
-    <color name="app_background_dark">#292929</color>
+    <color name="app_background_dark">#EC5152</color>
 
 </resources>
