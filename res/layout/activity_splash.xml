@@ -17,4 +17,22 @@
         android:textColor="@color/app_font_main_color"
         android:textSize="@dimen/splash_text_size" />
 
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/background_rectangle"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:text="@string/act_splash_by_lalongooo"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/app_main_color" />
+
 </RelativeLayout>

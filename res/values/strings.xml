@@ -10,5 +10,6 @@
     <string name="app_overview_4th_item_text">This is a test example</string>
     
     <string name="act_splash_cont_descr">Application icon</string>
+    <string name="act_splash_by_lalongooo">By @lalongooo</string>
 
 </resources>
