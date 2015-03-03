@@ -21,7 +21,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -93,7 +92,6 @@ public class ProfessorCityFromFragment extends Fragment {
         Bundle args = getArguments();
         mKey = args.getString(ARG_KEY);
         mPage = (ProfessorCityFromPage) mCallbacks.onGetPage(mKey);
-        Log.i("onCreate","onCreate launched!");
     }
 
     @Override
@@ -143,7 +141,6 @@ public class ProfessorCityFromFragment extends Fragment {
         }
 
         mCallbacks = (PageFragmentCallbacks) activity;
-        Log.i("onAttach","onAttach launched!");
     }
 
     @Override
@@ -155,7 +152,6 @@ public class ProfessorCityFromFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Log.i("onViewCreated","onViewCreated launched!");
     }
 
     @Override
@@ -217,7 +213,7 @@ public class ProfessorCityFromFragment extends Fragment {
                         });
 
                     }catch (Exception ex){
-                        Log.d("An error ocurred", ex.getMessage());
+                        // TODO: Add exception handling best practices
                     }
                 }else{
                     if(selectedState.getId() == 0){
@@ -259,11 +255,12 @@ public class ProfessorCityFromFragment extends Fragment {
                             @Override
                             public void failure(RetrofitError error) {
                                 hideDialog();
+                                // TODO: Inform to the user about a network problem
                             }
                         });
 
                     }catch (Exception ex){
-                        Log.d("An error occurred", ex.getMessage());
+                        // TODO: Add exception handling best practices
                     }
                 }else{
                     if(position != 0){
@@ -321,7 +318,6 @@ public class ProfessorCityFromFragment extends Fragment {
         outState.putInt(ProfessorCityFromFragment.STATE_FROM_SELECTED_KEY, stateSelectedPosition);
         outState.putInt(ProfessorCityFromFragment.CITY_FROM_SELECTED_KEY, citySelectedPosition);
         outState.putInt(ProfessorCityFromFragment.TOWN_FROM_SELECTED_KEY, townSelectedPosition);
-        Log.i("onSaveInstanceState","onSaveInstanceState launched!");
     }
 
 }

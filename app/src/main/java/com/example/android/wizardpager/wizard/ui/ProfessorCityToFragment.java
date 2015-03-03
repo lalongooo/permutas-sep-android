@@ -21,7 +21,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -211,11 +210,12 @@ public class ProfessorCityToFragment extends Fragment {
                             @Override
                             public void failure(RetrofitError error) {
                                 hideDialog();
+                                // TODO: Inform to the user about a network problem
                             }
                         });
 
                     }catch (Exception ex){
-                        Log.d("An error ocurred", ex.getMessage());
+                        // TODO: Add exception handling best practices
                     }
                 }else{
                     if(selectedState.getId() == 0){
@@ -261,7 +261,7 @@ public class ProfessorCityToFragment extends Fragment {
                         });
 
                     }catch (Exception ex){
-                        Log.d("An error occurred", ex.getMessage());
+                        // TODO: Add exception handling best practices
                     }
                 }else{
                     if(position != 0){
@@ -319,6 +319,5 @@ public class ProfessorCityToFragment extends Fragment {
         outState.putInt(ProfessorCityToFragment.STATE_TO_SELECTED_KEY, stateSelectedPosition);
         outState.putInt(ProfessorCityToFragment.CITY_TO_SELECTED_KEY, citySelectedPosition);
         outState.putInt(ProfessorCityToFragment.TOWN_TO_SELECTED_KEY, townSelectedPosition);
-        Log.i("onSaveInstanceState","onSaveInstanceState launched!");
     }
 }
