@@ -18,4 +18,61 @@
     <string name="act_splash_cont_descr">Application icon</string>
     <string name="act_splash_by_lalongooo">By @lalongooo</string>
 
+    <string name="next">Siguiente</string>
+    <string name="prev">Regresar</string>
+    <string name="finish">Enviar solicitud</string>
+    <string name="review">Revisa tu información</string>
+    <string name="label_your_name">Tu nombre</string>
+    <string name="label_your_email">Tu correo</string>
+    <string name="label_your_phone">Tu teléfono</string>
+    <string name="label_your_state">Tu estado</string>
+    <string name="label_your_municipality">Tu municipio</string>
+    <string name="label_your_locality">Tu localidad</string>
+    <string name="hint_your_name">p. ej. Mary</string>
+    <string name="hint_your_email">Opcional</string>
+    <string name="hint_your_phone">Opcional</string>
+    <string name="submit_confirm_message">Place the order with the deli? You will receive an email confirmation.</string>
+    <string name="submit_confirm_button">Place order</string>
+
+    <string name="main_select_state">Selecciona Estado</string>
+    <string name="main_loading_cities">Cargando ciudades</string>
+    <string name="main_loading_localities">Cargando localidades</string>
+    <string name="please_wait">Por favor, espera...</string>
+
+    <string-array name="states">
+        <item>Todo México</item>
+        <item>Aguascalientes</item>
+        <item>Baja California</item>
+        <item>Baja California Sur</item>
+        <item>Campeche</item>
+        <item>Coahuila de Zaragoza</item>
+        <item>Colima</item>
+        <item>Chiapas</item>
+        <item>Chihuahua</item>
+        <item>Distrito Federal</item>
+        <item>Durango</item>
+        <item>Guanajuato</item>
+        <item>Guerrero</item>
+        <item>Hidalgo</item>
+        <item>Jalisco</item>
+        <item>México</item>
+        <item>Michoacán de Ocampo</item>
+        <item>Morelos</item>
+        <item>Nayarit</item>
+        <item>Nuevo León</item>
+        <item>Oaxaca</item>
+        <item>Puebla</item>
+        <item>Querétaro</item>
+        <item>Quintana Roo</item>
+        <item>San Luis Potosí</item>
+        <item>Sinaloa</item>
+        <item>Sonora</item>
+        <item>Tabasco</item>
+        <item>Tamaulipas</item>
+        <item>Tlaxcala</item>
+        <item>Veracruz de Ignacio de la Llave</item>
+        <item>Yucatán</item>
+        <item>Zacatecas</item>
+    </string-array>
+
 </resources>
