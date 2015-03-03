@@ -1,4 +1,4 @@
-package com.example.android.wizardpager.wizard;
+package com.permutassep.model;
 
 import android.content.Context;
 

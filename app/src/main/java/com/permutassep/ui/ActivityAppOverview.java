@@ -69,7 +69,7 @@ public class ActivityAppOverview extends Activity implements OnClickListener {
 		switch (v.getId()) {
 		case R.id.btnStart:
 
-			Intent mainIntent = new Intent().setClass(ActivityAppOverview.this, ActivityNewsFeed.class);
+			Intent mainIntent = new Intent().setClass(ActivityAppOverview.this, ActivityCreatePost.class);
 			startActivity(mainIntent);
 			finish();
 

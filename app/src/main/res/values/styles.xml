@@ -12,11 +12,11 @@
         -->
     </style>
 
-    <style name="AppTheme" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
         <item name="textAppearanceFinish">@style/TextAppearanceFinish</item>
     </style>
 
-    <style name="TextAppearanceFinish" parent="Base.TextAppearance.AppCompat.Medium">
+    <style name="TextAppearanceFinish" parent="android:TextAppearance.Holo.Medium">
         <item name="android:textColor">#fff</item>
     </style>
 
