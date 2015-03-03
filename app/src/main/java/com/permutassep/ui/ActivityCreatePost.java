@@ -20,6 +20,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -123,6 +124,7 @@ public class ActivityCreatePost extends FragmentActivity implements
             public void onClick(View view) {
                 if (mPager.getCurrentItem() == mCurrentPageSequence.size()) {
                     DialogFragment dg = new DialogFragment() {
+                        @NonNull
                         @Override
                         public Dialog onCreateDialog(Bundle savedInstanceState) {
                             return new AlertDialog.Builder(getActivity())
@@ -155,13 +157,13 @@ public class ActivityCreatePost extends FragmentActivity implements
                                                         post.setTownTo((Town) p.getData().getParcelable(ProfessorCityToPage.LOCALITY_TO_DATA_KEY));
                                                         break;
                                                     case PermutaSepWizardModel.POSITION_TYPE_KEY:
-                                                        post.setPositionType(p.getData().getString(p.SIMPLE_DATA_KEY));
+                                                        post.setPositionType(p.getData().getString(Page.SIMPLE_DATA_KEY));
                                                         break;
                                                     case PermutaSepWizardModel.WORKDAY_TYPE_KEY:
-                                                        post.setWorkdayType(p.getData().getString(p.SIMPLE_DATA_KEY));
+                                                        post.setWorkdayType(p.getData().getString(Page.SIMPLE_DATA_KEY));
                                                         break;
                                                     case PermutaSepWizardModel.TEACHING_CAREER_KEY:
-                                                        post.setIsTeachingCareer(p.getData().getString(p.SIMPLE_DATA_KEY).equals("Si") ? true : false);
+                                                        post.setIsTeachingCareer(p.getData().getString(Page.SIMPLE_DATA_KEY).equals("Si"));
                                                         break;
                                                 }
                                             }
