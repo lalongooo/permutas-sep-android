@@ -38,7 +38,7 @@ public class ActivityAppOverview extends Activity implements OnClickListener {
 		viewPager = (ViewPager) findViewById(R.id.pager);
 		viewPager.setBackgroundDrawable(trans);
 		indicator = (CirclePageIndicator) findViewById(R.id.indicator);
-		btnStart = (Button) findViewById(R.id.btnStart);
+		btnStart = (Button) findViewById(R.id.btnLogin);
 		btnStart.setOnClickListener(this);
 
 		AppOverviewAdapter adapter = new AppOverviewAdapter(this);
@@ -67,7 +67,7 @@ public class ActivityAppOverview extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.btnStart:
+		case R.id.btnLogin:
 
 			Intent mainIntent = new Intent().setClass(ActivityAppOverview.this, ActivityCreatePost.class);
 			startActivity(mainIntent);
