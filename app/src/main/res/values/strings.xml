@@ -2,6 +2,7 @@
 <resources>
 
     <string name="app_name">Permutas SEP</string>
+    <string name="facebook_app_id">143269149215368</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     
@@ -10,7 +11,7 @@
     <string name="app_overview_3rd_item_text">Esperamos que encuentres pronto tu permuta&#8230;de verdad.</string>
     <string name="app_overview_4th_item_text">Si crees importante este aporte, considera una donación.</string>    
     <string name="app_overview_login_button">Entrar</string>
-    <string name="app_overview_signup_button">Registrar</string>
+    <string name="app_overview_signup_button">Registrarse</string>
     
     <string name="tos_dialog_text">Al seleccionar \"Aceptar\" usted acepta los Términos y condiciones del uso de esta aplicación.</string>
     <string name="tos_dialog_cancel">Cancelar</string>
