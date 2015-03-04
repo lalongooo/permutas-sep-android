@@ -28,8 +28,9 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
-import com.permutassep.R;
 import com.example.android.wizardpager.wizard.model.ProfessorContactInfoPage;
+import com.permutassep.R;
+import com.permutassep.config.Config;
 
 public class ProfessorContactInfoFragment extends Fragment {
     private static final String ARG_KEY = "key";
@@ -68,12 +69,9 @@ public class ProfessorContactInfoFragment extends Fragment {
         ((TextView) rootView.findViewById(android.R.id.title)).setText(mPage.getTitle());
 
         mNameView = ((TextView) rootView.findViewById(R.id.your_name));
-        mNameView.setText(mPage.getData().getString(ProfessorContactInfoPage.NAME_DATA_KEY));
-
         mEmailView = ((TextView) rootView.findViewById(R.id.your_email));
-        mEmailView.setText(mPage.getData().getString(ProfessorContactInfoPage.EMAIL_DATA_KEY));
-
         mPhoneView = ((TextView) rootView.findViewById(R.id.your_phone));
+
         mPhoneView.setText(mPage.getData().getString(ProfessorContactInfoPage.PHONE_DATA_KEY));        
         
         return rootView;
@@ -142,6 +140,28 @@ public class ProfessorContactInfoFragment extends Fragment {
                 mPage.notifyDataChanged();
             }
         });
+
+        String name = getActivity().getSharedPreferences(Config.APP_PREFERENCES_NAME, Context.MODE_PRIVATE).getString("name", "");
+        String email = getActivity().getSharedPreferences(Config.APP_PREFERENCES_NAME, Context.MODE_PRIVATE).getString("email", "");
+
+        if(!name.equals("")){
+            mNameView.setText(name);
+        }else{
+            mNameView.setText(mPage.getData().getString(ProfessorContactInfoPage.NAME_DATA_KEY));
+        }
+
+        if(!name.equals("")){
+            mEmailView.setText(email);
+        }else{
+            mEmailView.setText(mPage.getData().getString(ProfessorContactInfoPage.EMAIL_DATA_KEY));
+        }
+
+
+        if(!email.equals("")){
+            mPhoneView.requestFocus();
+        }else{
+            mEmailView.requestFocus();
+        }
     }
 
     @Override
