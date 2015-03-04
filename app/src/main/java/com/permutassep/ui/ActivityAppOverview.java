@@ -5,10 +5,9 @@ import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.view.View;
-import android.view.View.OnClickListener;
 
 import com.facebook.Request;
 import com.facebook.Response;
@@ -25,7 +24,7 @@ import com.viewpagerindicator.PageIndicator;
 
 import java.util.Arrays;
 
-public class ActivityAppOverview extends Activity implements OnClickListener {
+public class ActivityAppOverview extends Activity{
 
     private PageIndicator indicator;
     private ViewPager viewPager;
@@ -141,23 +140,8 @@ public class ActivityAppOverview extends Activity implements OnClickListener {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         uiHelper.onSaveInstanceState(outState);
     }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btnLogin:
-
-                Intent mainIntent = new Intent().setClass(ActivityAppOverview.this, ActivityCreatePost.class);
-                startActivity(mainIntent);
-                finish();
-
-                break;
-        }
-
-    }
-
 }
