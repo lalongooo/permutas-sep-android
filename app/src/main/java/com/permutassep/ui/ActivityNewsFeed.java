@@ -15,11 +15,6 @@ public class ActivityNewsFeed extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_news_feed);
 		
-		boolean firstRun = getSharedPreferences(Config.APP_PREFERENCES_NAME, MODE_PRIVATE).getBoolean("tos_accepted", true);
-		if (firstRun){
-			showTOSDialog();
-		}
-
 	}
 	
 	private void showTOSDialog() {

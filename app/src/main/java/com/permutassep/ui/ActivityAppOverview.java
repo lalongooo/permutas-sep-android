@@ -149,7 +149,7 @@ public class ActivityAppOverview extends Activity{
     }
 
     private void goToNextActivity(){
-        Intent i = new Intent().setClass(ActivityAppOverview.this, ActivityCreatePost.class);
+        Intent i = new Intent().setClass(ActivityAppOverview.this, ActivityNewsFeed.class);
         startActivity(i);
         finish();
     }
