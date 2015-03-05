@@ -38,6 +38,9 @@ public class ActivityAppOverview extends Activity{
         uiHelper = new UiLifecycleHelper(this, callback);
         uiHelper.onCreate(savedInstanceState);
         setUI();
+        if(Session.getActiveSession().isOpened()){
+            goToNextActivity();
+        }
     }
 
     private void setUI() {
@@ -143,5 +146,11 @@ public class ActivityAppOverview extends Activity{
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         uiHelper.onSaveInstanceState(outState);
+    }
+
+    private void goToNextActivity(){
+        Intent i = new Intent().setClass(ActivityAppOverview.this, ActivityCreatePost.class);
+        startActivity(i);
+        finish();
     }
 }
