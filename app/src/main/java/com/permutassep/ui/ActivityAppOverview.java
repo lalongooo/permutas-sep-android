@@ -113,10 +113,10 @@ public class ActivityAppOverview extends Activity{
         super.onResume();
         // For scenarios where the main activity is launched and user
         // session is not null, the session state change notification
-        // may not be triggered. Trigger it if it's open/closed.
+        // may not be triggered. Trigger| it if it's open/closed.
         Session session = Session.getActiveSession();
         if (session != null && (session.isOpened() || session.isClosed())) {
-            onSessionStateChange(session, session.getState(), null);
+//            onSessionStateChange(session, session.getState(), null);
         }
         uiHelper.onResume();
     }
