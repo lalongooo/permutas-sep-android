@@ -8,6 +8,9 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.model.DividerDrawerItem;
+import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.permutassep.R;
 import com.permutassep.config.Config;
 
@@ -38,6 +41,11 @@ public class ActivityNewsFeed extends ActionBarActivity {
                 .withActivity(this)
                 .withToolbar(toolbar)
                 .withHeader(R.layout.header)
+                .addDrawerItems(
+                        new PrimaryDrawerItem().withName("Home"),
+                        new DividerDrawerItem(),
+                        new SecondaryDrawerItem().withName("Settings")
+                )
                 .build();
         result.getListView().setVerticalScrollBarEnabled(false);
 	}
