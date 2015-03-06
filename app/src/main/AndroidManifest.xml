@@ -33,6 +33,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.ActivityNewsFeed"
+            android:theme="@style/DrawerTheme"
             android:label="@string/app_name" />
         <activity
             android:name=".ui.ActivityCreatePost"
