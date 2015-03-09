@@ -6,7 +6,10 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 
+import com.mikepenz.iconics.IconicsDrawable;
+import com.mikepenz.iconics.typeface.FontAwesome;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
@@ -75,5 +78,14 @@ public class ActivityNewsFeed extends ActionBarActivity {
 			}
 		}
 	};
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+
+        menu.findItem(R.id.action_post).setIcon(new IconicsDrawable(this, FontAwesome.Icon.faw_plus_square).color(Color.WHITE).actionBarSize());
+
+        return true;
+    }
+
 
 }

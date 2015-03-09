@@ -4,9 +4,7 @@
     tools:context="com.permutassep.MainActivity" >
 
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
+        android:id="@+id/action_post"
         android:title="@string/action_settings"
-        app:showAsAction="never"/>
-
+        app:showAsAction="ifRoom"/>
 </menu>
