@@ -1,0 +1,71 @@
+{
+  "user": {
+    "email": "hdez",
+    "name": "Jorge",
+    "phone": "8116916048"
+  },
+  "stateFrom": {
+    "stateName": "Hidalgo",
+    "id": 13
+  },
+  "cityFrom": {
+    "clave_entidad": "13",
+    "clave_inegi": "13028",
+    "nombre_municipio": "Huejutla de Reyes",
+    "id": "538",
+    "lat": "21.1437501907349",
+    "lng": "-98.4449996948242",
+    "maxx": "-98.29",
+    "maxy": "21.2419",
+    "minx": "-98.6",
+    "miny": "21.0456",
+    "nombre_entidad": "Hidalgo",
+    "nombre_inegi": "",
+    "clave_municipio": 28
+  },
+  "townFrom": {
+    "altitud": "0159",
+    "clave": "0080",
+    "estado_id": "13",
+    "nombre": "Santa Catarina",
+    "latitud": "210558",
+    "longitud": "0982250",
+    "municipio_clave": "28",
+    "municipio_id": "475",
+    "id": 113983
+  },
+  "stateTo": {
+    "stateName": "Nuevo León",
+    "id": 19
+  },  
+  "cityTo": {
+    "clave_entidad": "19",
+    "clave_inegi": "19039",
+    "nombre_municipio": "Monterrey",
+    "id": "1049",
+    "lat": "25.5997228622437",
+    "lng": "-100.309028625488",
+    "maxx": "-100.235",
+    "maxy": "25.6983",
+    "minx": "-100.383",
+    "miny": "25.5011",
+    "nombre_entidad": "Nuevo Leon",
+    "nombre_inegi": "",
+    "clave_municipio": 39
+  },
+  "townTo": {
+    "altitud": "0530",
+    "clave": "0001",
+    "estado_id": "19",
+    "nombre": "Monterrey",
+    "latitud": "254017",
+    "longitud": "1001831",
+    "municipio_clave": "39",
+    "municipio_id": "986",
+    "id": 170063
+  },
+  "workdayType": "Jornada Regular",
+  "positionType": "Federal",
+  "postDate": "Mar 9, 2015 3:34:38 PM",
+  "isTeachingCareer": false
+}

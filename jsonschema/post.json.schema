@@ -1,0 +1,289 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://permutassep",
+  "title": "Post",
+  "description": "A post from the Permutas SEP android app",
+  "type": "object",
+  "properties": {
+    "user": {
+      "id": "user",
+      "type": "object",
+      "properties": {
+        "email": {
+          "id": "email",
+          "type": "string"
+        },
+        "name": {
+          "id": "name",
+          "type": "string"
+        },
+        "phone": {
+          "id": "phone",
+          "type": "string"
+        }
+      },
+      "required": [
+        "email",
+        "name"
+      ]
+    },
+    "stateFrom": {
+      "id": "stateFrom",
+      "type": "object",
+      "properties": {
+        "stateName": {
+          "id": "stateName",
+          "type": "string"
+        },
+        "id": {
+          "id": "id",
+          "type": "integer"
+        }
+      }
+    },
+    "cityFrom": {
+      "id": "cityFrom",
+      "type": "object",
+      "properties": {
+        "clave_entidad": {
+          "id": "clave_entidad",
+          "type": "string"
+        },
+        "clave_inegi": {
+          "id": "clave_inegi",
+          "type": "string"
+        },
+        "nombre_municipio": {
+          "id": "nombre_municipio",
+          "type": "string"
+        },
+        "id": {
+          "id": "id",
+          "type": "string"
+        },
+        "lat": {
+          "id": "lat",
+          "type": "string"
+        },
+        "lng": {
+          "id": "lng",
+          "type": "string"
+        },
+        "maxx": {
+          "id": "maxx",
+          "type": "string"
+        },
+        "maxy": {
+          "id": "maxy",
+          "type": "string"
+        },
+        "minx": {
+          "id": "minx",
+          "type": "string"
+        },
+        "miny": {
+          "id": "miny",
+          "type": "string"
+        },
+        "nombre_entidad": {
+          "id": "nombre_entidad",
+          "type": "string"
+        },
+        "nombre_inegi": {
+          "id": "nombre_inegi",
+          "type": "string"
+        },
+        "clave_municipio": {
+          "id": "clave_municipio",
+          "type": "integer"
+        }
+      }
+    },
+    "townFrom": {
+      "id": "townFrom",
+      "type": "object",
+      "properties": {
+        "altitud": {
+          "id": "altitud",
+          "type": "string"
+        },
+        "clave": {
+          "id": "clave",
+          "type": "string"
+        },
+        "estado_id": {
+          "id": "estado_id",
+          "type": "string"
+        },
+        "nombre": {
+          "id": "nombre",
+          "type": "string"
+        },
+        "latitud": {
+          "id": "latitud",
+          "type": "string"
+        },
+        "longitud": {
+          "id": "longitud",
+          "type": "string"
+        },
+        "municipio_clave": {
+          "id": "municipio_clave",
+          "type": "string"
+        },
+        "municipio_id": {
+          "id": "municipio_id",
+          "type": "string"
+        },
+        "id": {
+          "id": "id",
+          "type": "integer"
+        }
+      }
+    },
+    "stateTo": {
+      "id": "stateTo",
+      "type": "object",
+      "properties": {
+        "stateName": {
+          "id": "stateName",
+          "type": "string"
+        },
+        "id": {
+          "id": "id",
+          "type": "integer"
+        }
+      }
+    },
+    "cityTo": {
+      "id": "cityTo",
+      "type": "object",
+      "properties": {
+        "clave_entidad": {
+          "id": "clave_entidad",
+          "type": "string"
+        },
+        "clave_inegi": {
+          "id": "clave_inegi",
+          "type": "string"
+        },
+        "nombre_municipio": {
+          "id": "nombre_municipio",
+          "type": "string"
+        },
+        "id": {
+          "id": "id",
+          "type": "string"
+        },
+        "lat": {
+          "id": "lat",
+          "type": "string"
+        },
+        "lng": {
+          "id": "lng",
+          "type": "string"
+        },
+        "maxx": {
+          "id": "maxx",
+          "type": "string"
+        },
+        "maxy": {
+          "id": "maxy",
+          "type": "string"
+        },
+        "minx": {
+          "id": "minx",
+          "type": "string"
+        },
+        "miny": {
+          "id": "miny",
+          "type": "string"
+        },
+        "nombre_entidad": {
+          "id": "nombre_entidad",
+          "type": "string"
+        },
+        "nombre_inegi": {
+          "id": "nombre_inegi",
+          "type": "string"
+        },
+        "clave_municipio": {
+          "id": "clave_municipio",
+          "type": "integer"
+        }
+      }
+    },
+    "townTo": {
+      "id": "townTo",
+      "type": "object",
+      "properties": {
+        "altitud": {
+          "id": "altitud",
+          "type": "string"
+        },
+        "clave": {
+          "id": "clave",
+          "type": "string"
+        },
+        "estado_id": {
+          "id": "estado_id",
+          "type": "string"
+        },
+        "nombre": {
+          "id": "nombre",
+          "type": "string"
+        },
+        "latitud": {
+          "id": "latitud",
+          "type": "string"
+        },
+        "longitud": {
+          "id": "longitud",
+          "type": "string"
+        },
+        "municipio_clave": {
+          "id": "municipio_clave",
+          "type": "string"
+        },
+        "municipio_id": {
+          "id": "municipio_id",
+          "type": "string"
+        },
+        "id": {
+          "id": "id",
+          "type": "integer"
+        }
+      }
+    },
+    "workdayType": {
+      "id": "workdayType",
+      "type": "string"
+    },
+    "positionType": {
+      "id": "positionType",
+      "type": "string"
+    },
+    "postDate": {
+      "id": "postDate",
+      "type": "string"
+    },
+    "isTeachingCareer": {
+      "id": "isTeachingCareer",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "user",
+    "stateFrom",
+    "cityFrom",
+    "townFrom",
+    "stateTo",
+    "cityTo",
+    "townTo",
+    "workdayType",
+    "positionType",
+    "postDate",
+    "isTeachingCareer"
+  ]
+}
+
