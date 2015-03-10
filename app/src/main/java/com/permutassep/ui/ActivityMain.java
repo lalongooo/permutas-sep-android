@@ -7,18 +7,32 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.View;
+import android.widget.AdapterView;
 
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
-import com.mikepenz.iconics.typeface.FontAwesome;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.Nameable;
 import com.permutassep.R;
 import com.permutassep.config.Config;
 
 public class ActivityMain extends ActionBarActivity {
+
+    public enum DrawerItems {
+        HOME(1000),
+        SETTINGS(1001);
+
+        public int id;
+
+        private DrawerItems(int id) {
+            this.id = id;
+        }
+    }
 
     public Drawer.Result result;
 
@@ -46,10 +60,22 @@ public class ActivityMain extends ActionBarActivity {
                 .withToolbar(toolbar)
                 .withHeader(R.layout.header)
                 .addDrawerItems(
-                        new PrimaryDrawerItem().withName("Home"),
+                        new PrimaryDrawerItem().withName("Home").withIdentifier(DrawerItems.HOME.id).withIcon(GoogleMaterial.Icon.gmd_home),
                         new DividerDrawerItem(),
-                        new SecondaryDrawerItem().withName("Settings")
+                        new SecondaryDrawerItem().withName("Settings").withIdentifier(DrawerItems.SETTINGS.id).withIcon(GoogleMaterial.Icon.gmd_settings)
                 )
+                .withSelectedItem(1)
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l, IDrawerItem drawerItem) {
+                        if (drawerItem != null) {
+                            if (drawerItem instanceof Nameable) {
+                                toolbar.setTitle(((Nameable) drawerItem).getName());
+                            }
+                        }
+                        replaceFragment(drawerItem.getIdentifier());
+                    }
+                })
                 .build();
         result.getListView().setVerticalScrollBarEnabled(false);
 	}
@@ -88,5 +114,11 @@ public class ActivityMain extends ActionBarActivity {
         return true;
     }
 
-
+    private void replaceFragment(int id){
+        if(id == DrawerItems.HOME.id){
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentNewsFeed()).commit();
+        }else if(id == DrawerItems.SETTINGS.id){
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentSettings()).commit();
+        }
+    }
 }
