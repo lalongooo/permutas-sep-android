@@ -12,8 +12,9 @@
         -->
     </style>
 
-    <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
+    <style name="AppTheme" parent="MaterialDrawerTheme.TranslucentStatus">
         <item name="textAppearanceFinish">@style/TextAppearanceFinish</item>
+        <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
     </style>
 
     <style name="TextAppearanceFinish" parent="android:TextAppearance.Holo.Medium">
@@ -35,7 +36,7 @@
         <item name="android:layout_marginRight">16dp</item>
         <item name="android:paddingLeft">?android:attr/listPreferredItemPaddingLeft</item>
         <item name="android:textSize">36sp</item>
-        <item name="android:textColor">#ff0099cc</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
         <item name="android:fontFamily">sans-serif-thin</item>
     </style>
 
@@ -51,7 +52,17 @@
         <item name="android:paddingRight">12dp</item>
     </style>
 
-
+    <style name="WizardFormEditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">0dp</item>
+        <item name="android:textAppearance">?android:textAppearanceSmall</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:paddingLeft">12dp</item>
+        <item name="android:paddingRight">12dp</item>
+    </style>
 
     <style name="DrawerTheme" parent="MaterialDrawerTheme.TranslucentStatus">
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>

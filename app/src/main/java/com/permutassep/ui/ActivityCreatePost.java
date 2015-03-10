@@ -19,17 +19,20 @@ package com.permutassep.ui;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 
 import com.example.android.wizardpager.wizard.model.AbstractWizardModel;
@@ -41,6 +44,13 @@ import com.example.android.wizardpager.wizard.model.ProfessorContactInfoPage;
 import com.example.android.wizardpager.wizard.ui.PageFragmentCallbacks;
 import com.example.android.wizardpager.wizard.ui.ReviewFragment;
 import com.example.android.wizardpager.wizard.ui.StepPagerStrip;
+import com.mikepenz.google_material_typeface_library.GoogleMaterial;
+import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.model.DividerDrawerItem;
+import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.Nameable;
 import com.permutassep.R;
 import com.permutassep.config.Config;
 import com.permutassep.model.City;
@@ -53,7 +63,7 @@ import com.permutassep.model.User;
 import java.util.Date;
 import java.util.List;
 
-public class ActivityCreatePost extends FragmentActivity implements
+public class ActivityCreatePost extends ActionBarActivity implements
         PageFragmentCallbacks,
         ReviewFragment.Callbacks,
         ModelCallbacks {
@@ -72,9 +82,25 @@ public class ActivityCreatePost extends FragmentActivity implements
     private List<Page> mCurrentPageSequence;
     private StepPagerStrip mStepPagerStrip;
 
+    public Drawer.Result result;
+
+    public enum DrawerItems {
+        HOME(1000),
+        SETTINGS(1001);
+
+        public int id;
+
+        private DrawerItems(int id) {
+            this.id = id;
+        }
+    }
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_post);
+
+
+
 
         boolean firstRun = getSharedPreferences(Config.APP_PREFERENCES_NAME, MODE_PRIVATE).getBoolean("tos_accepted", true);
         if (firstRun){
@@ -194,6 +220,34 @@ public class ActivityCreatePost extends FragmentActivity implements
 
         onPageTreeChanged();
         updateBottomBar();
+
+
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.activity_main_toolbar);
+        toolbar.setTitleTextColor(Color.WHITE);
+        setSupportActionBar(toolbar);
+        result = new Drawer()
+                .withActivity(this)
+                .withToolbar(toolbar)
+                .withHeader(R.layout.header)
+                .addDrawerItems(
+                        new PrimaryDrawerItem().withName("Home").withIdentifier(DrawerItems.HOME.id).withIcon(GoogleMaterial.Icon.gmd_home),
+                        new DividerDrawerItem(),
+                        new SecondaryDrawerItem().withName("Settings").withIdentifier(DrawerItems.SETTINGS.id).withIcon(GoogleMaterial.Icon.gmd_settings)
+                )
+                .withSelectedItem(1)
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l, IDrawerItem drawerItem) {
+                        if (drawerItem != null) {
+                            if (drawerItem instanceof Nameable) {
+                                toolbar.setTitle(((Nameable) drawerItem).getName());
+                            }
+                        }
+
+                    }
+                })
+                .build();
+        result.getListView().setVerticalScrollBarEnabled(false);
     }
 
     @Override

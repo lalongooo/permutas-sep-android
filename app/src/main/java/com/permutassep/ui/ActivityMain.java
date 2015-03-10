@@ -2,11 +2,13 @@ package com.permutassep.ui;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 
@@ -112,6 +114,19 @@ public class ActivityMain extends ActionBarActivity {
         menu.findItem(R.id.action_post).setIcon(new IconicsDrawable(this, GoogleMaterial.Icon.gmd_add).color(Color.WHITE).actionBarSize());
 
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_post) {
+            Intent i = new Intent().setClass(ActivityMain.this, ActivityCreatePost.class);
+            startActivity(i);
+            finish();
+
+            return true;
+        }
+        return false; //super.onOptionsItemSelected(item);
     }
 
     private void replaceFragment(int id){
