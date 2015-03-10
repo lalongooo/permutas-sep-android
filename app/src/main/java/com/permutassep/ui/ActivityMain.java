@@ -18,7 +18,7 @@ import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.permutassep.R;
 import com.permutassep.config.Config;
 
-public class ActivityNewsFeed extends ActionBarActivity {
+public class ActivityMain extends ActionBarActivity {
 
     public Drawer.Result result;
 
@@ -35,7 +35,7 @@ public class ActivityNewsFeed extends ActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_news_feed);
+		setContentView(R.layout.activity_main);
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.activity_main_toolbar);
         toolbar.setTitleTextColor(Color.WHITE);
