@@ -59,7 +59,6 @@ public class ActivityMain extends ActionBarActivity {
         result = new Drawer()
                 .withActivity(this)
                 .withToolbar(toolbar)
-                .withHeader(R.layout.header)
                 .addDrawerItems(
                         new PrimaryDrawerItem().withName("Home").withIdentifier(DrawerItems.HOME.id).withIcon(GoogleMaterial.Icon.gmd_home),
                         new DividerDrawerItem(),

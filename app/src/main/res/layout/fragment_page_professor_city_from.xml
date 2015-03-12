@@ -41,8 +41,7 @@
                 android:id="@+id/spn_your_state"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:layout_marginBottom="30dp"
-                android:spinnerMode="dialog"/>
+                android:layout_marginBottom="30dp"/>
 
             <TextView
                 style="@style/WizardFormLabel"
