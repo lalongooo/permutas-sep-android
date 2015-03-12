@@ -27,11 +27,12 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.permutassep.R;
 import com.example.android.wizardpager.wizard.model.AbstractWizardModel;
 import com.example.android.wizardpager.wizard.model.ModelCallbacks;
 import com.example.android.wizardpager.wizard.model.Page;
 import com.example.android.wizardpager.wizard.model.ReviewItem;
+import com.permutassep.R;
+import com.permutassep.ui.ActivityMain;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -73,11 +74,11 @@ public class ReviewFragment extends ListFragment implements ModelCallbacks {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
-        if (!(activity instanceof Callbacks)) {
+        if (!(((ActivityMain) activity).getSupportFragmentManager().getFragments().get(0) instanceof Callbacks)) {
             throw new ClassCastException("Activity must implement fragment's callbacks");
         }
 
-        mCallbacks = (Callbacks) activity;
+        mCallbacks = (Callbacks) ((ActivityMain) activity).getSupportFragmentManager().getFragments().get(0);;
 
         mWizardModel = mCallbacks.onGetModel();
         mWizardModel.registerListener(this);

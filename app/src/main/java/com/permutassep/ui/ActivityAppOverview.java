@@ -95,7 +95,7 @@ public class ActivityAppOverview extends Activity{
                 public void onCompleted(GraphUser user, Response response) {
                     if (user != null) {
                         // Display the parsed user info
-                        Intent i = new Intent().setClass(ActivityAppOverview.this, ActivityCreatePost.class);
+                        Intent i = new Intent().setClass(ActivityAppOverview.this, ActivityMain.class);
                         getSharedPreferences(Config.APP_PREFERENCES_NAME, MODE_PRIVATE).edit()
                                 .putString("name", user.getName()).commit();
                         getSharedPreferences(Config.APP_PREFERENCES_NAME, MODE_PRIVATE).edit()

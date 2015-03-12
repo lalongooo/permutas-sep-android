@@ -2,7 +2,6 @@ package com.permutassep.ui;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -120,9 +119,7 @@ public class ActivityMain extends ActionBarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_post) {
-            Intent i = new Intent().setClass(ActivityMain.this, ActivityCreatePost.class);
-            startActivity(i);
-            finish();
+            replaceFragment(R.id.action_post);
 
             return true;
         }
@@ -134,6 +131,8 @@ public class ActivityMain extends ActionBarActivity {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentNewsFeed()).commit();
         }else if(id == DrawerItems.SETTINGS.id){
             getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentSettings()).commit();
+        }else if(id == R.id.action_post){
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentCreatePost()).commit();
         }
     }
 }

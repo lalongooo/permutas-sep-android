@@ -21,6 +21,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,9 +31,9 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.permutassep.R;
 import com.example.android.wizardpager.wizard.model.Page;
 import com.example.android.wizardpager.wizard.model.ProfessorCityFromPage;
+import com.permutassep.R;
 import com.permutassep.adapter.CitySpinnerBaseAdapter;
 import com.permutassep.adapter.StateSpinnerBaseAdapter;
 import com.permutassep.adapter.TownSpinnerBaseAdapter;
@@ -40,6 +41,7 @@ import com.permutassep.inegifacil.rest.InegiFacilRestClient;
 import com.permutassep.model.City;
 import com.permutassep.model.State;
 import com.permutassep.model.Town;
+import com.permutassep.ui.ActivityMain;
 
 import java.util.ArrayList;
 
@@ -92,6 +94,7 @@ public class ProfessorCityFromFragment extends Fragment {
         Bundle args = getArguments();
         mKey = args.getString(ARG_KEY);
         mPage = (ProfessorCityFromPage) mCallbacks.onGetPage(mKey);
+        Log.i("onCreate","onCreate launched!");
     }
 
     @Override
@@ -136,11 +139,11 @@ public class ProfessorCityFromFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
-        if (!(activity instanceof PageFragmentCallbacks)) {
+        if (!(((ActivityMain) activity).getSupportFragmentManager().getFragments().get(0) instanceof PageFragmentCallbacks)) {
             throw new ClassCastException("Activity must implement PageFragmentCallbacks");
         }
 
-        mCallbacks = (PageFragmentCallbacks) activity;
+        mCallbacks = (PageFragmentCallbacks) ((ActivityMain) activity).getSupportFragmentManager().getFragments().get(0);
     }
 
     @Override
@@ -152,6 +155,7 @@ public class ProfessorCityFromFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Log.i("onViewCreated","onViewCreated launched!");
     }
 
     @Override
@@ -213,7 +217,7 @@ public class ProfessorCityFromFragment extends Fragment {
                         });
 
                     }catch (Exception ex){
-                        // TODO: Add exception handling best practices
+                        Log.d("An error ocurred", ex.getMessage());
                     }
                 }else{
                     if(selectedState.getId() == 0){
@@ -255,12 +259,11 @@ public class ProfessorCityFromFragment extends Fragment {
                             @Override
                             public void failure(RetrofitError error) {
                                 hideDialog();
-                                // TODO: Inform to the user about a network problem
                             }
                         });
 
                     }catch (Exception ex){
-                        // TODO: Add exception handling best practices
+                        Log.d("An error occurred", ex.getMessage());
                     }
                 }else{
                     if(position != 0){
@@ -318,6 +321,7 @@ public class ProfessorCityFromFragment extends Fragment {
         outState.putInt(ProfessorCityFromFragment.STATE_FROM_SELECTED_KEY, stateSelectedPosition);
         outState.putInt(ProfessorCityFromFragment.CITY_FROM_SELECTED_KEY, citySelectedPosition);
         outState.putInt(ProfessorCityFromFragment.TOWN_FROM_SELECTED_KEY, townSelectedPosition);
+        Log.i("onSaveInstanceState","onSaveInstanceState launched!");
     }
 
 }

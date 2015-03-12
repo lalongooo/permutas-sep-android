@@ -30,7 +30,7 @@ import android.widget.TextView;
 
 import com.example.android.wizardpager.wizard.model.ProfessorContactInfoPage;
 import com.permutassep.R;
-import com.permutassep.config.Config;
+import com.permutassep.ui.ActivityMain;
 
 public class ProfessorContactInfoFragment extends Fragment {
     private static final String ARG_KEY = "key";
@@ -69,10 +69,13 @@ public class ProfessorContactInfoFragment extends Fragment {
         ((TextView) rootView.findViewById(android.R.id.title)).setText(mPage.getTitle());
 
         mNameView = ((TextView) rootView.findViewById(R.id.your_name));
-        mEmailView = ((TextView) rootView.findViewById(R.id.your_email));
-        mPhoneView = ((TextView) rootView.findViewById(R.id.your_phone));
+        mNameView.setText(mPage.getData().getString(ProfessorContactInfoPage.NAME_DATA_KEY));
 
-        mPhoneView.setText(mPage.getData().getString(ProfessorContactInfoPage.PHONE_DATA_KEY));        
+        mEmailView = ((TextView) rootView.findViewById(R.id.your_email));
+        mEmailView.setText(mPage.getData().getString(ProfessorContactInfoPage.EMAIL_DATA_KEY));
+
+        mPhoneView = ((TextView) rootView.findViewById(R.id.your_phone));
+        mPhoneView.setText(mPage.getData().getString(ProfessorContactInfoPage.PHONE_DATA_KEY));
         
         return rootView;
     }
@@ -81,11 +84,11 @@ public class ProfessorContactInfoFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
-        if (!(activity instanceof PageFragmentCallbacks)) {
+        if (!(((ActivityMain) activity).getSupportFragmentManager().getFragments().get(0) instanceof PageFragmentCallbacks)) {
             throw new ClassCastException("Activity must implement PageFragmentCallbacks");
         }
 
-        mCallbacks = (PageFragmentCallbacks) activity;
+        mCallbacks = (PageFragmentCallbacks) ((ActivityMain) activity).getSupportFragmentManager().getFragments().get(0);
     }
 
     @Override
@@ -140,28 +143,6 @@ public class ProfessorContactInfoFragment extends Fragment {
                 mPage.notifyDataChanged();
             }
         });
-
-        String name = getActivity().getSharedPreferences(Config.APP_PREFERENCES_NAME, Context.MODE_PRIVATE).getString("name", "");
-        String email = getActivity().getSharedPreferences(Config.APP_PREFERENCES_NAME, Context.MODE_PRIVATE).getString("email", "");
-
-        if(!name.equals("")){
-            mNameView.setText(name);
-        }else{
-            mNameView.setText(mPage.getData().getString(ProfessorContactInfoPage.NAME_DATA_KEY));
-        }
-
-        if(!name.equals("")){
-            mEmailView.setText(email);
-        }else{
-            mEmailView.setText(mPage.getData().getString(ProfessorContactInfoPage.EMAIL_DATA_KEY));
-        }
-
-
-        if(!email.equals("")){
-            mPhoneView.requestFocus();
-        }else{
-            mEmailView.requestFocus();
-        }
     }
 
     @Override

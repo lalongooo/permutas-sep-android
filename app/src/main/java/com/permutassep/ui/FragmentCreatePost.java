@@ -19,20 +19,16 @@ package com.permutassep.ui;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 
 import com.example.android.wizardpager.wizard.model.AbstractWizardModel;
@@ -44,15 +40,7 @@ import com.example.android.wizardpager.wizard.model.ProfessorContactInfoPage;
 import com.example.android.wizardpager.wizard.ui.PageFragmentCallbacks;
 import com.example.android.wizardpager.wizard.ui.ReviewFragment;
 import com.example.android.wizardpager.wizard.ui.StepPagerStrip;
-import com.mikepenz.google_material_typeface_library.GoogleMaterial;
-import com.mikepenz.materialdrawer.Drawer;
-import com.mikepenz.materialdrawer.model.DividerDrawerItem;
-import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
-import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
-import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
-import com.mikepenz.materialdrawer.model.interfaces.Nameable;
 import com.permutassep.R;
-import com.permutassep.config.Config;
 import com.permutassep.model.City;
 import com.permutassep.model.PermutaSepWizardModel;
 import com.permutassep.model.Post;
@@ -63,7 +51,7 @@ import com.permutassep.model.User;
 import java.util.Date;
 import java.util.List;
 
-public class ActivityCreatePost extends ActionBarActivity implements
+public class FragmentCreatePost extends Fragment implements
         PageFragmentCallbacks,
         ReviewFragment.Callbacks,
         ModelCallbacks {
@@ -72,7 +60,7 @@ public class ActivityCreatePost extends ActionBarActivity implements
 
     private boolean mEditingAfterReview;
 
-    private AbstractWizardModel mWizardModel = new PermutaSepWizardModel(this);
+    private AbstractWizardModel mWizardModel = new PermutaSepWizardModel(getActivity());
 
     private boolean mConsumePageSelectedEvent;
 
@@ -82,30 +70,9 @@ public class ActivityCreatePost extends ActionBarActivity implements
     private List<Page> mCurrentPageSequence;
     private StepPagerStrip mStepPagerStrip;
 
-    public Drawer.Result result;
-
-    public enum DrawerItems {
-        HOME(1000),
-        SETTINGS(1001);
-
-        public int id;
-
-        private DrawerItems(int id) {
-            this.id = id;
-        }
-    }
-
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_post);
-
-
-
-
-        boolean firstRun = getSharedPreferences(Config.APP_PREFERENCES_NAME, MODE_PRIVATE).getBoolean("tos_accepted", true);
-        if (firstRun){
-            showTOSDialog();
-        }
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.fragment_createpost, container, false);
 
         if (savedInstanceState != null) {
             mWizardModel.load(savedInstanceState.getBundle("model"));
@@ -113,10 +80,10 @@ public class ActivityCreatePost extends ActionBarActivity implements
 
         mWizardModel.registerListener(this);
 
-        mPagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
-        mPager = (ViewPager) findViewById(R.id.pager);
+        mPagerAdapter = new MyPagerAdapter(getActivity().getSupportFragmentManager());
+        mPager = (ViewPager) rootView.findViewById(R.id.pager);
         mPager.setAdapter(mPagerAdapter);
-        mStepPagerStrip = (StepPagerStrip) findViewById(R.id.strip);
+        mStepPagerStrip = (StepPagerStrip) rootView.findViewById(R.id.strip);
         mStepPagerStrip.setOnPageSelectedListener(new StepPagerStrip.OnPageSelectedListener() {
             @Override
             public void onPageStripSelected(int position) {
@@ -127,8 +94,8 @@ public class ActivityCreatePost extends ActionBarActivity implements
             }
         });
 
-        mNextButton = (Button) findViewById(R.id.next_button);
-        mPrevButton = (Button) findViewById(R.id.prev_button);
+        mNextButton = (Button) rootView.findViewById(R.id.next_button);
+        mPrevButton = (Button) rootView.findViewById(R.id.prev_button);
 
         mPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
@@ -150,7 +117,6 @@ public class ActivityCreatePost extends ActionBarActivity implements
             public void onClick(View view) {
                 if (mPager.getCurrentItem() == mCurrentPageSequence.size()) {
                     DialogFragment dg = new DialogFragment() {
-                        @NonNull
                         @Override
                         public Dialog onCreateDialog(Bundle savedInstanceState) {
                             return new AlertDialog.Builder(getActivity())
@@ -183,13 +149,13 @@ public class ActivityCreatePost extends ActionBarActivity implements
                                                         post.setTownTo((Town) p.getData().getParcelable(ProfessorCityToPage.LOCALITY_TO_DATA_KEY));
                                                         break;
                                                     case PermutaSepWizardModel.POSITION_TYPE_KEY:
-                                                        post.setPositionType(p.getData().getString(Page.SIMPLE_DATA_KEY));
+                                                        post.setPositionType(p.getData().getString(p.SIMPLE_DATA_KEY));
                                                         break;
                                                     case PermutaSepWizardModel.WORKDAY_TYPE_KEY:
-                                                        post.setWorkdayType(p.getData().getString(Page.SIMPLE_DATA_KEY));
+                                                        post.setWorkdayType(p.getData().getString(p.SIMPLE_DATA_KEY));
                                                         break;
                                                     case PermutaSepWizardModel.TEACHING_CAREER_KEY:
-                                                        post.setIsTeachingCareer(p.getData().getString(Page.SIMPLE_DATA_KEY).equals("Si"));
+                                                        post.setIsTeachingCareer(p.getData().getString(p.SIMPLE_DATA_KEY).equals("Si") ? true : false);
                                                         break;
                                                 }
                                             }
@@ -200,7 +166,7 @@ public class ActivityCreatePost extends ActionBarActivity implements
                                     .create();
                         }
                     };
-                    dg.show(getSupportFragmentManager(), "place_order_dialog");
+                    dg.show(getActivity().getSupportFragmentManager(), "place_order_dialog");
                 } else {
                     if (mEditingAfterReview) {
                         mPager.setCurrentItem(mPagerAdapter.getCount() - 1);
@@ -221,33 +187,7 @@ public class ActivityCreatePost extends ActionBarActivity implements
         onPageTreeChanged();
         updateBottomBar();
 
-
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.activity_main_toolbar);
-        toolbar.setTitleTextColor(Color.WHITE);
-        setSupportActionBar(toolbar);
-        result = new Drawer()
-                .withActivity(this)
-                .withToolbar(toolbar)
-                .withHeader(R.layout.header)
-                .addDrawerItems(
-                        new PrimaryDrawerItem().withName("Home").withIdentifier(DrawerItems.HOME.id).withIcon(GoogleMaterial.Icon.gmd_home),
-                        new DividerDrawerItem(),
-                        new SecondaryDrawerItem().withName("Settings").withIdentifier(DrawerItems.SETTINGS.id).withIcon(GoogleMaterial.Icon.gmd_settings)
-                )
-                .withSelectedItem(1)
-                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l, IDrawerItem drawerItem) {
-                        if (drawerItem != null) {
-                            if (drawerItem instanceof Nameable) {
-                                toolbar.setTitle(((Nameable) drawerItem).getName());
-                            }
-                        }
-
-                    }
-                })
-                .build();
-        result.getListView().setVerticalScrollBarEnabled(false);
+        return rootView;
     }
 
     @Override
@@ -264,15 +204,15 @@ public class ActivityCreatePost extends ActionBarActivity implements
         if (position == mCurrentPageSequence.size()) {
             mNextButton.setText(R.string.finish);
             mNextButton.setBackgroundResource(R.drawable.finish_background);
-            mNextButton.setTextAppearance(this, R.style.TextAppearanceFinish);
+            mNextButton.setTextAppearance(getActivity(), R.style.TextAppearanceFinish);
         } else {
             mNextButton.setText(mEditingAfterReview
                     ? R.string.review
                     : R.string.next);
             mNextButton.setBackgroundResource(R.drawable.selectable_item_background);
             TypedValue v = new TypedValue();
-            getTheme().resolveAttribute(android.R.attr.textAppearanceMedium, v, true);
-            mNextButton.setTextAppearance(this, v.resourceId);
+            getActivity().getTheme().resolveAttribute(android.R.attr.textAppearanceMedium, v, true);
+            mNextButton.setTextAppearance(getActivity(), v.resourceId);
             mNextButton.setEnabled(position != mPagerAdapter.getCutOffPage());
         }
 
@@ -280,13 +220,13 @@ public class ActivityCreatePost extends ActionBarActivity implements
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         super.onDestroy();
         mWizardModel.unregisterListener(this);
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBundle("model", mWizardModel.save());
     }
@@ -396,30 +336,4 @@ public class ActivityCreatePost extends ActionBarActivity implements
             return mCutOffPage;
         }
     }
-
-    private void showTOSDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(getString(R.string.tos_dialog_text))
-                .setPositiveButton(getString(R.string.tos_dialog_accept),dialogClickListener)
-                .setNegativeButton(getString(R.string.tos_dialog_cancel),dialogClickListener).show();
-    }
-
-    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-        @Override
-        public void onClick(DialogInterface dialog, int which) {
-            switch (which) {
-                case DialogInterface.BUTTON_POSITIVE:
-                    // Save the state
-                    getSharedPreferences(Config.APP_PREFERENCES_NAME, MODE_PRIVATE)
-                            .edit()
-                            .putBoolean("tos_accepted", false)
-                            .commit();
-                    break;
-
-                case DialogInterface.BUTTON_NEGATIVE:
-                    finish();
-                    break;
-            }
-        }
-    };
 }

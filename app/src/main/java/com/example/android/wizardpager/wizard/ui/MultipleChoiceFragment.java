@@ -28,9 +28,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.permutassep.R;
 import com.example.android.wizardpager.wizard.model.MultipleFixedChoicePage;
 import com.example.android.wizardpager.wizard.model.Page;
+import com.permutassep.R;
+import com.permutassep.ui.ActivityMain;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -112,11 +113,11 @@ public class MultipleChoiceFragment extends ListFragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
-        if (!(activity instanceof PageFragmentCallbacks)) {
+        if (!(((ActivityMain) activity).getSupportFragmentManager().getFragments().get(0) instanceof PageFragmentCallbacks)) {
             throw new ClassCastException("Activity must implement PageFragmentCallbacks");
         }
 
-        mCallbacks = (PageFragmentCallbacks) activity;
+        mCallbacks = (PageFragmentCallbacks) ((ActivityMain) activity).getSupportFragmentManager().getFragments().get(0);
     }
 
     @Override
