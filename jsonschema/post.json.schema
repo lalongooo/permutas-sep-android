@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "id": "http://permutassep",
-  "title": "Post",
+  "title": "PermutasSepPost",
   "description": "A post from the Permutas SEP android app",
   "type": "object",
   "properties": {
@@ -20,11 +20,16 @@
         "phone": {
           "id": "phone",
           "type": "string"
+        },
+        "password": {
+          "id": "password",
+          "type": "string"
         }
       },
       "required": [
         "email",
-        "name"
+        "name",
+        "password"
       ]
     },
     "stateFrom": {
@@ -39,12 +44,20 @@
           "id": "id",
           "type": "integer"
         }
-      }
+      },
+      "required": [
+        "stateName",
+        "id"
+      ]
     },
     "cityFrom": {
       "id": "cityFrom",
       "type": "object",
       "properties": {
+        "id": {
+          "id": "id",
+          "type": "string"
+        },
         "clave_entidad": {
           "id": "clave_entidad",
           "type": "string"
@@ -55,10 +68,6 @@
         },
         "nombre_municipio": {
           "id": "nombre_municipio",
-          "type": "string"
-        },
-        "id": {
-          "id": "id",
           "type": "string"
         },
         "lat": {
@@ -265,7 +274,7 @@
     },
     "postDate": {
       "id": "postDate",
-      "type": "string"
+      "type": "date"
     },
     "isTeachingCareer": {
       "id": "isTeachingCareer",
@@ -286,4 +295,3 @@
     "isTeachingCareer"
   ]
 }
-
