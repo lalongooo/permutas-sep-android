@@ -12,7 +12,7 @@
     <color name="secondary_text">#727272</color>
     <color name="icons">#FFFFFF</color>
     <color name="divider">#B6B6B6</color>
-    <color name="windowBackground">#343432</color>
+    <color name="windowBackground">#FFF</color>
 
     <!-- green fab button -->
     <color name="primary_green">#B2FF59</color>
@@ -57,7 +57,7 @@
 
 
     <color name="app_main_color">#292929</color>
-    <color name="app_font_main_color">#FFFFFF</color>
+    <color name="app_font_main_color">#292929</color>
     <color name="app_background_dark">#2196F3</color>
 
     <color name="step_pager_previous_tab_color">@color/primary_light</color>
