@@ -279,6 +279,10 @@
     "isTeachingCareer": {
       "id": "isTeachingCareer",
       "type": "boolean"
+    },
+    "post": {
+      "id": "post",
+      "type": "string"
     }
   },
   "required": [
@@ -292,6 +296,7 @@
     "workdayType",
     "positionType",
     "postDate",
-    "isTeachingCareer"
+    "isTeachingCareer",
+    "postº"
   ]
 }
