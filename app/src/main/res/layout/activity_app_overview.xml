@@ -39,28 +39,29 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true">
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="30dp">
 
 
-        <com.facebook.widget.LoginButton
-            xmlns:fb="http://schemas.android.com/apk/res-auto"
+        <Button
             android:id="@+id/btnLogin"
             android:layout_width="160dp"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
-            fb:login_text="@string/app_overview_login_button"
-            android:layout_margin="13dp"/>
+            android:layout_centerVertical="true"
+            android:layout_margin="13dp"
+            android:onClick="goToLoginSignUpActivity"
+            android:text="@string/app_overview_start_button" />
 
         <!--<Button-->
-            <!--android:id="@+id/btnSignUp"-->
-            <!--android:layout_width="160dp"-->
-            <!--android:layout_height="53dp"-->
-            <!--android:layout_alignParentEnd="true"-->
-            <!--android:layout_alignParentRight="true"-->
-            <!--android:layout_centerVertical="true"-->
-            <!--android:text="@string/app_overview_signup_button"-->
-            <!--android:layout_margin="13dp" />-->
+        <!--android:id="@+id/btnSignUp"-->
+        <!--android:layout_width="160dp"-->
+        <!--android:layout_height="53dp"-->
+        <!--android:layout_alignParentEnd="true"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:text="@string/app_overview_signup_button"-->
+        <!--android:layout_margin="13dp" />-->
 
     </RelativeLayout>
 

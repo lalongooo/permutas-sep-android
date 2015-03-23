@@ -134,7 +134,8 @@ public class FragmentCreatePost extends Fragment implements
                                                         User user = new User(
                                                                 p.getData().getString(ProfessorContactInfoPage.NAME_DATA_KEY),
                                                                 p.getData().getString(ProfessorContactInfoPage.EMAIL_DATA_KEY),
-                                                                p.getData().getString(ProfessorContactInfoPage.PHONE_DATA_KEY)
+                                                                p.getData().getString(ProfessorContactInfoPage.PHONE_DATA_KEY),
+                                                                ""
                                                         );
                                                         post.setUser(user);
                                                         break;

@@ -1,5 +1,7 @@
 package com.permutassep.inegifacil.rest;
 
+import com.permutassep.config.Config;
+
 import retrofit.RestAdapter;
 
 /**
@@ -8,7 +10,7 @@ import retrofit.RestAdapter;
 public class InegiFacilRestClient {
 
     private static IInegiFacilService restClient;
-    private static String BASE_URL = "http://inegifacil.com/";
+    private static String BASE_URL = Config.INEGI_FACIL_REST_BASE_URL;
 
     static {
         setupRestClient();

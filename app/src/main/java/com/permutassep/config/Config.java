@@ -32,4 +32,14 @@ public class Config {
 	 */
 	public static final int SPLASH_SCREEN_DELAY = 1000;
 
+    /**
+     * Endpoint of the InegiFacil REST service
+     */
+    public static final String INEGI_FACIL_REST_BASE_URL = "http://inegifacil.com/";
+
+    /**
+     * Endpoint of the PermutasSEP REST service
+     */
+    public static final String PERMUTAS_SEP_REST_BASE_URL = "http://192.168.1.69:8000/";
+
 }
