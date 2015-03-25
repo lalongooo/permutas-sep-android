@@ -1,12 +1,10 @@
 package com.permutassep.ui;
 
 import android.app.Activity;
-import android.content.Context;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.telephony.TelephonyManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -35,7 +33,9 @@ public class ActivityLoginSignUp extends Activity {
     private Button btnRegister;
     private EditText etName;
     private EditText etEmail;
+    private EditText etPhone;
     private EditText etPassword;
+    private ProgressDialog pDlg;
 
 
     @Override
@@ -52,6 +52,7 @@ public class ActivityLoginSignUp extends Activity {
 
         etName = (EditText) findViewById(R.id.etName);
         etEmail = (EditText) findViewById(R.id.etEmail);
+        etPhone = (EditText) findViewById(R.id.etPhone);
         etPassword = (EditText) findViewById(R.id.etPassword);
 
 
@@ -60,29 +61,28 @@ public class ActivityLoginSignUp extends Activity {
 
             @Override
             public void onClick(View v) {
+                showDialog(getString(R.string.login_sign_up_log_reg_dlg_title), getString(R.string.login_sign_up_log_reg_dlg_text));
 
                 String name = etName.getText().toString();
                 String email= etEmail.getText().toString();
                 String password = etPassword.getText().toString();
-                TelephonyManager mManager =(TelephonyManager) getSystemService(TELEPHONY_SERVICE);
-                String phone =  mManager.getLine1Number();
-                if (phone == null || phone == ""){
-                    phone = "0000000000";
-                }
+                String phone =  etPhone.getText().toString();
+
                 User u = new User(name, email, phone, password);
 
                 if(!name.isEmpty() && Utils.isValidEmail(email) && !password.isEmpty()){
                     PermutasSEPRestClient.get().newUser(u, new Callback<User>() {
                         @Override
                         public void success(User user, retrofit.client.Response response) {
-                            Log.i("user HTTP 200: ", user.toString());
+                            hideDialog();
+                            goToLoginMActivity();
                         }
 
                         @Override
                         public void failure(RetrofitError error) {
-                            Log.i("user post error: ", error.toString());
+                            hideDialog();
                         }
-                    });
+                     });
 
                 }
             }
@@ -162,5 +162,20 @@ public class ActivityLoginSignUp extends Activity {
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         uiHelper.onSaveInstanceState(outState);
+    }
+
+    private void showDialog(String title, String text) {
+        pDlg = ProgressDialog.show(this, title, text, true);
+    }
+
+    private void hideDialog() {
+        if(pDlg != null)
+            pDlg.dismiss();
+    }
+
+    private void goToLoginMActivity(){
+        Intent i = new Intent().setClass(ActivityLoginSignUp.this, ActivityMain.class);
+        startActivity(i);
+        finish();
     }
 }

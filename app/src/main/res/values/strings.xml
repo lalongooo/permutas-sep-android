@@ -18,6 +18,9 @@
     <string name="login_sign_up_hint_name">Tu nombre</string>
     <string name="login_sign_up_hint_email">Tu correo</string>
     <string name="login_sign_up_hint_password">Tu contraseña</string>
+    <string name="login_sign_up_log_in_with">O registrate con</string>
+    <string name="login_sign_up_log_reg_dlg_title">Espera...</string>
+    <string name="login_sign_up_log_reg_dlg_text">Te estamos registrando</string>
 
 
     
@@ -39,10 +42,10 @@
     <string name="label_your_state">Tu estado</string>
     <string name="label_your_municipality">Tu municipio</string>
     <string name="label_your_locality">Tu localidad</string>
-    <string name="hint_your_name">p. ej. Mary</string>
-    <string name="hint_your_email">p. ej. mail@gmail.com</string>
-    <string name="hint_your_phone">p. ej. 1234567890</string>
-    <string name="hint_your_password"></string>
+    <string name="hint_your_name">Tu nombre</string>
+    <string name="hint_your_email">Tu correo</string>
+    <string name="hint_your_phone">Tu teléfono</string>
+    <string name="hint_your_password">Tu contraseña</string>
     <string name="submit_confirm_message">Place the order with the deli? You will receive an email confirmation.</string>
     <string name="submit_confirm_button">Place order</string>
 
