@@ -62,7 +62,7 @@ public class ActivityAppOverview extends Activity{
     }
 
     public void goToLoginSignUpActivity(View v){
-        Intent i = new Intent().setClass(ActivityAppOverview.this, ActivityLoginSignUp.class);
+        Intent i = new Intent().setClass(ActivityAppOverview.this, ActivityMain.class);
         startActivity(i);
         finish();
     }

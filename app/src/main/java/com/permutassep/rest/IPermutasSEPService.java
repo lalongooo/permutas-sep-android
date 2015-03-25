@@ -8,6 +8,6 @@ import retrofit.http.POST;
 
 public interface  IPermutasSEPService {
 
-    @POST("/api/users/")
+    @POST("/users/")
     void newUser(@Body User user, Callback<User> callback);
 }

@@ -40,6 +40,6 @@ public class Config {
     /**
      * Endpoint of the PermutasSEP REST service
      */
-    public static final String PERMUTAS_SEP_REST_BASE_URL = "http://192.168.1.69:8000/";
+    public static final String PERMUTAS_SEP_REST_BASE_URL = "https://permuta-sep.herokuapp.com/api/";
 
 }

@@ -23,8 +23,8 @@ public class PermutasSEPRestClient {
     }
 
     private static void setupRestClient() {
-        RestAdapter restAdapter = new RestAdapter
-                .Builder()
+        RestAdapter restAdapter = new RestAdapter.Builder()
+                .setLogLevel(RestAdapter.LogLevel.FULL)
                 .setEndpoint(BASE_URL)
                 .build();
         restClient = restAdapter.create(IPermutasSEPService.class);

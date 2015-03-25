@@ -1,9 +1,11 @@
 package com.permutassep.ui;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -58,13 +60,19 @@ public class ActivityLoginSignUp extends Activity {
 
             @Override
             public void onClick(View v) {
+
                 String name = etName.getText().toString();
                 String email= etEmail.getText().toString();
                 String password = etPassword.getText().toString();
+                TelephonyManager mManager =(TelephonyManager) getSystemService(TELEPHONY_SERVICE);
+                String phone =  mManager.getLine1Number();
+                if (phone == null || phone == ""){
+                    phone = "0000000000";
+                }
+                User u = new User(name, email, phone, password);
 
                 if(!name.isEmpty() && Utils.isValidEmail(email) && !password.isEmpty()){
-
-                    PermutasSEPRestClient.get().newUser(new User(name, email, "", password), new Callback<User>() {
+                    PermutasSEPRestClient.get().newUser(u, new Callback<User>() {
                         @Override
                         public void success(User user, retrofit.client.Response response) {
                             Log.i("user HTTP 200: ", user.toString());

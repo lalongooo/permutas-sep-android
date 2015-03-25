@@ -32,7 +32,6 @@
 
             <TextView style="@style/WizardFormLabel"
                 android:text="@string/label_your_name" />
-
             <EditText android:id="@+id/your_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -43,7 +42,6 @@
 
             <TextView style="@style/WizardFormLabel"
                 android:text="@string/label_your_email" />
-
             <EditText android:id="@+id/your_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -52,17 +50,36 @@
                 android:hint="@string/hint_your_email"
                 android:layout_marginBottom="16dp" />
 
-
 			<TextView style="@style/WizardFormLabel"
                 android:text="@string/label_your_phone" />
-
             <EditText android:id="@+id/your_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:saveEnabled="false"
                 android:inputType="phone"
-                android:hint="@string/hint_your_phone" />
-            
+                android:hint="@string/hint_your_phone"
+                android:layout_marginBottom="16dp"/>
+
+            <TextView style="@style/WizardFormLabel"
+                android:text="@string/label_your_password" />
+            <EditText android:id="@+id/your_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:saveEnabled="false"
+                android:inputType="textPassword"
+                android:hint="@string/hint_your_password"
+                android:layout_marginBottom="16dp"/>
+
+            <com.facebook.widget.LoginButton xmlns:fb="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/btnLogin"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="13dp"
+                fb:login_text="@string/login_sign_up_facebook_login_button" />
+
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
