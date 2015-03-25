@@ -21,6 +21,11 @@ import com.permutassep.config.Config;
 import com.permutassep.model.User;
 import com.permutassep.rest.PermutasSEPRestClient;
 import com.permutassep.utils.Utils;
+import com.throrinstudio.android.common.libs.validator.Form;
+import com.throrinstudio.android.common.libs.validator.Validate;
+import com.throrinstudio.android.common.libs.validator.validator.EmailValidator;
+import com.throrinstudio.android.common.libs.validator.validator.NotEmptyValidator;
+import com.throrinstudio.android.common.libs.validator.validator.PhoneValidator;
 
 import java.util.Arrays;
 
@@ -56,33 +61,57 @@ public class ActivityLoginSignUp extends Activity {
         etPassword = (EditText) findViewById(R.id.etPassword);
 
 
+        Validate vName = new Validate(etName);
+        vName.addValidator(new NotEmptyValidator(getApplicationContext()));
+
+        Validate vEmail = new Validate(etEmail);
+        vEmail.addValidator(new EmailValidator(getApplicationContext()));
+
+        Validate vPhone = new Validate(etPhone);
+        vPhone.addValidator(new PhoneValidator(getApplicationContext()));
+
+        Validate vPassword = new Validate(etPassword);
+        vPassword.addValidator(new NotEmptyValidator(getApplicationContext()));
+
+        final Form f = new Form();
+        f.addValidates(vName);
+        f.addValidates(vEmail);
+        f.addValidates(vPhone);
+        f.addValidates(vPassword);
+
         btnRegister = (Button) findViewById(R.id.btnRegister);
         btnRegister.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                showDialog(getString(R.string.login_sign_up_log_reg_dlg_title), getString(R.string.login_sign_up_log_reg_dlg_text));
 
-                String name = etName.getText().toString();
-                String email= etEmail.getText().toString();
-                String password = etPassword.getText().toString();
-                String phone =  etPhone.getText().toString();
+                if(f.validate()){
 
-                User u = new User(name, email, phone, password);
+                    showDialog(getString(R.string.login_sign_up_log_reg_dlg_title), getString(R.string.login_sign_up_log_reg_dlg_text));
 
-                if(!name.isEmpty() && Utils.isValidEmail(email) && !password.isEmpty()){
-                    PermutasSEPRestClient.get().newUser(u, new Callback<User>() {
-                        @Override
-                        public void success(User user, retrofit.client.Response response) {
-                            hideDialog();
-                            goToLoginMActivity();
-                        }
+                    String name = etName.getText().toString();
+                    String email= etEmail.getText().toString();
+                    String password = etPassword.getText().toString();
+                    String phone =  etPhone.getText().toString();
 
-                        @Override
-                        public void failure(RetrofitError error) {
-                            hideDialog();
-                        }
-                     });
+                    User u = new User(name, email, phone, password);
+                    if(!name.isEmpty() && Utils.isValidEmail(email) && !password.isEmpty()){
+                        PermutasSEPRestClient.get().newUser(u, new Callback<User>() {
+                            @Override
+                            public void success(User user, retrofit.client.Response response) {
+                                hideDialog();
+                                goToMainActivity();
+                            }
+
+                            @Override
+                            public void failure(RetrofitError error) {
+                                hideDialog();
+                            }
+                        });
+
+                    }
+
+                }else{
 
                 }
             }
@@ -173,7 +202,7 @@ public class ActivityLoginSignUp extends Activity {
             pDlg.dismiss();
     }
 
-    private void goToLoginMActivity(){
+    private void goToMainActivity(){
         Intent i = new Intent().setClass(ActivityLoginSignUp.this, ActivityMain.class);
         startActivity(i);
         finish();
