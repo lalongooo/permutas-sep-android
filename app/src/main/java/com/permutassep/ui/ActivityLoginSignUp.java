@@ -88,14 +88,12 @@ public class ActivityLoginSignUp extends Activity {
                 if(f.validate()){
 
                     showDialog(getString(R.string.login_sign_up_log_reg_dlg_title), getString(R.string.login_sign_up_log_reg_dlg_text));
-
                     String name = etName.getText().toString();
                     String email= etEmail.getText().toString();
                     String password = etPassword.getText().toString();
                     String phone =  etPhone.getText().toString();
 
                     User u = new User(name, email, phone, password);
-                    if(!name.isEmpty() && Utils.isValidEmail(email) && !password.isEmpty()){
                         PermutasSEPRestClient.get().newUser(u, new Callback<User>() {
                             @Override
                             public void success(User user, retrofit.client.Response response) {
@@ -108,9 +106,6 @@ public class ActivityLoginSignUp extends Activity {
                                 hideDialog();
                             }
                         });
-
-                    }
-
                 }else{
 
                 }
