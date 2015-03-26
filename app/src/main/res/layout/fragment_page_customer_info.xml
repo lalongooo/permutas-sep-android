@@ -60,16 +60,6 @@
                 android:hint="@string/hint_your_phone"
                 android:layout_marginBottom="16dp"/>
 
-            <TextView style="@style/WizardFormLabel"
-                android:text="@string/label_your_password" />
-            <EditText android:id="@+id/your_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:saveEnabled="false"
-                android:inputType="textPassword"
-                android:hint="@string/hint_your_password"
-                android:layout_marginBottom="16dp"/>
-
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
