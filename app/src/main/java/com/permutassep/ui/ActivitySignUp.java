@@ -19,6 +19,7 @@ import com.facebook.widget.LoginButton;
 import com.permutassep.R;
 import com.permutassep.config.Config;
 import com.permutassep.constants.Constants;
+import com.permutassep.model.SocialUser;
 import com.permutassep.model.User;
 import com.permutassep.rest.PermutasSEPRestClient;
 import com.throrinstudio.android.common.libs.validator.Form;
@@ -133,10 +134,19 @@ public class ActivitySignUp extends Activity {
                     if (user != null) {
                         // Display the parsed user info
                         Intent i = new Intent().setClass(ActivitySignUp.this, ActivityMain.class);
-                        getSharedPreferences(Config.APP_PREFERENCES_NAME, MODE_PRIVATE).edit()
-                                .putString("name", user.getName()).commit();
-                        getSharedPreferences(Config.APP_PREFERENCES_NAME, MODE_PRIVATE).edit()
-                                .putString("email", user.getProperty("email") != null ? user.getProperty("email").toString() : "").commit();
+
+                        SocialUser socialUser = new SocialUser(
+                                user.getName()
+                                , user.getProperty("email") != null ? user.getProperty("email").toString() : ""
+                                , ""
+                                , ""
+                                , SocialUser.SocialNetwork.FACEBOOK
+                                , user.getId()
+                        );
+
+                        ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getBaseContext(), Config.APP_PREFERENCES_NAME, MODE_PRIVATE);
+                        complexPreferences.putObject(Constants.PREF_SOCIAL_USER_KEY, socialUser);
+                        complexPreferences.commit();
                         startActivity(i);
                         finish();
                     }
