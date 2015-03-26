@@ -73,7 +73,9 @@ public class ActivityMain extends ActionBarActivity {
                                 toolbar.setTitle(((Nameable) drawerItem).getName());
                             }
                         }
-                        replaceFragment(drawerItem.getIdentifier());
+                        if(drawerItem != null){
+                            replaceFragment(drawerItem.getIdentifier());
+                        }
                     }
                 })
                 .build();
@@ -119,7 +121,7 @@ public class ActivityMain extends ActionBarActivity {
         int id = item.getItemId();
         if (id == R.id.action_post) {
             replaceFragment(R.id.action_post);
-
+            result.setSelection(-1);
             return true;
         }
         return false; //super.onOptionsItemSelected(item);
