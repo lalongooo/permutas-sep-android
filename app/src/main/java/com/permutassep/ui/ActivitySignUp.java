@@ -61,7 +61,6 @@ public class ActivitySignUp extends Activity {
         etPhone = (EditText) findViewById(R.id.etPhone);
         etPassword = (EditText) findViewById(R.id.etPassword);
 
-
         Validate vName = new Validate(etName);
         vName.addValidator(new NotEmptyValidator(getApplicationContext()));
 
@@ -111,8 +110,6 @@ public class ActivitySignUp extends Activity {
                             hideDialog();
                         }
                     });
-                } else {
-
                 }
             }
         });
