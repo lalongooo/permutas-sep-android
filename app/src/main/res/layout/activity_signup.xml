@@ -101,7 +101,6 @@
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:layout_gravity="center_horizontal"
-                android:layout_margin="13dp"
                 fb:login_text="@string/app_sign_up_facebook_login_button" />
 
         </LinearLayout>
