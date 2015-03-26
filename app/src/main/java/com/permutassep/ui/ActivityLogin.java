@@ -10,9 +10,7 @@ import android.widget.EditText;
 import com.permutassep.R;
 import com.throrinstudio.android.common.libs.validator.Form;
 import com.throrinstudio.android.common.libs.validator.Validate;
-import com.throrinstudio.android.common.libs.validator.validator.EmailValidator;
 import com.throrinstudio.android.common.libs.validator.validator.NotEmptyValidator;
-import com.throrinstudio.android.common.libs.validator.validator.PhoneValidator;
 
 public class ActivityLogin extends Activity {
 
@@ -54,5 +52,11 @@ public class ActivityLogin extends Activity {
 
 
 
+    }
+
+    private void goToMainActivity() {
+        Intent i = new Intent().setClass(ActivityLogin.this, ActivityMain.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(i);
     }
 }

@@ -132,8 +132,6 @@ public class ActivitySignUp extends Activity {
                 @Override
                 public void onCompleted(GraphUser user, Response response) {
                     if (user != null) {
-                        // Display the parsed user info
-                        Intent i = new Intent().setClass(ActivitySignUp.this, ActivityMain.class);
 
                         SocialUser socialUser = new SocialUser(
                                 user.getName()
@@ -147,20 +145,14 @@ public class ActivitySignUp extends Activity {
                         ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getBaseContext(), Config.APP_PREFERENCES_NAME, MODE_PRIVATE);
                         complexPreferences.putObject(Constants.PREF_SOCIAL_USER_KEY, socialUser);
                         complexPreferences.commit();
-                        startActivity(i);
-                        finish();
+
+                        goToMainActivity();
                     }
                 }
             });
         } else if (state.isClosed()) {
             // TODO: What to do when the session state is closed?
         }
-    }
-
-    private void goToNextActivity() {
-        Intent i = new Intent().setClass(ActivitySignUp.this, ActivitySignUp.class);
-        startActivity(i);
-        finish();
     }
 
     @Override
@@ -211,7 +203,7 @@ public class ActivitySignUp extends Activity {
 
     private void goToMainActivity() {
         Intent i = new Intent().setClass(ActivitySignUp.this, ActivityMain.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(i);
-        finish();
     }
 }
