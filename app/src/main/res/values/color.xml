@@ -1,72 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-
-    <!-- default theme colors -->
-    <color name="primary">#F0BA00</color>
-    <color name="primary_dark">#ff9d7400</color>
-    <color name="primary_light">#7effbd00</color>
-    <color name="background">#ECECEC</color>
-    <color name="accent">@color/primary</color>
-    <color name="primary_text">#212121</color>
-    <color name="secondary_text">#727272</color>
-    <color name="icons">#FFFFFF</color>
-    <color name="divider">#B6B6B6</color>
-    <color name="windowBackground">#FFF</color>
-
-    <!-- green fab button -->
-    <color name="primary_green">#B2FF59</color>
-    <color name="primary_dark_green">#259B24</color>
-    <color name="accent_green">#8BC34A</color>
-    <color name="unfinished_progress">#AAFFFFFF</color>
-
-    <!-- transparent -->
-    <color name="transparent">#00FFFFFF</color>
-    <color name="material_red">#E51C23</color>
-
-    <!-- error view -->
-    <color name="error_view_text">#ffffffff</color>
-    <color name="error_view_text_light">#ffffffff</color>
-    <color name="error_view_text_dark">#DEDEDE</color>
-
-    <!-- MaterialDrawer DARK colors -->
-    <color name="material_drawer_primary">@color/primary</color>
-    <color name="material_drawer_primary_dark">@color/primary_dark</color>
-    <color name="material_drawer_primary_light">@color/primary_light</color>
-    <color name="material_drawer_accent">@color/accent</color>
-    <color name="material_drawer_background">@color/windowBackground</color>
-    <!-- Material DEFAULT text / items colors -->
-    <color name="material_drawer_icons">#000</color>
-    <color name="material_drawer_primary_text">#FFF</color>
-    <color name="material_drawer_secondary_text">#DEDEDE</color>
-    <color name="material_drawer_hint_text">#ABABAB</color>
-    <color name="material_drawer_contrast_text">#000</color>
-    <color name="material_drawer_divider">#232323</color>
-    <!-- Material DEFAULT drawer colors -->
-    <color name="material_drawer_selected">#232323</color>
-    <color name="material_drawer_selected_text">@color/accent</color>
-
-
-
-
-
-
-
-
-
-
-
-    <color name="app_main_color">#292929</color>
-    <color name="app_font_main_color">#292929</color>
-    <color name="app_background_dark">#2196F3</color>
-
     <color name="step_pager_previous_tab_color">@color/primary_light</color>
     <color name="step_pager_selected_tab_color">@color/primary</color>
     <color name="step_pager_selected_last_tab_color">@color/primary</color>
     <color name="step_pager_next_tab_color">#66000000</color>
-
     <color name="review_green">@color/primary</color>
-
     <color name="text_light">@color/primary</color>
-
 </resources>

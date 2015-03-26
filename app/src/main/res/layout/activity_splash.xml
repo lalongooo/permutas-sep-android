@@ -12,27 +12,7 @@
         android:drawableTop="@drawable/app_overview_2_smartphone"
         android:text="@string/app_name"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/app_font_main_color"
         android:textSize="@dimen/splash_text_size"
         android:typeface="normal" />
-
-    <TextView
-        android:id="@+id/tvByLalongooo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="30dp"
-        android:background="@drawable/background_rectangle"
-        android:paddingLeft="25dp"
-        android:paddingRight="25dp"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:visibility="gone"
-        android:text="@string/act_splash_by_lalongooo"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/app_main_color" />
 
 </RelativeLayout>

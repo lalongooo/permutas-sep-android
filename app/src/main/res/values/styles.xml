@@ -3,13 +3,6 @@
     <style name="AppThemeTemp" parent="Theme.AppCompat.Light.NoActionBar">
     </style>
 
-    <style name="AppTheme" parent="MaterialDrawerTheme.TranslucentStatus">
-        <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
-        <item name="android:windowBackground">@color/windowBackground</item>
-        <item name="buttonBarButtonStyle">?attr/actionButtonStyle</item>
-
-    </style>
-
     <style name="WindowAnimationTransition">
         <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
         <item name="android:windowExitAnimation">@android:anim/fade_out</item>
@@ -20,7 +13,7 @@
     </style>
 
     <style name="TextAppearanceCapturing" parent="android:TextAppearance.Holo.Medium">
-        <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="android:textColor">@color/primary</item>
     </style>
 
     <style name="WizardPageContainer">

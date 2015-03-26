@@ -209,9 +209,10 @@ public class FragmentCreatePost extends Fragment implements
         } else {
             mNextButton.setText(mEditingAfterReview ? R.string.review : R.string.next);
             mNextButton.setBackgroundResource(R.drawable.selectable_item_background);
-            TypedValue v = new TypedValue();
-            getActivity().getTheme().resolveAttribute(R.style.TextAppearanceCapturing, v, true);
-            mNextButton.setTextAppearance(getActivity(), v.resourceId);
+            mNextButton.setTextAppearance(getActivity(), R.style.TextAppearanceCapturing);
+            if (!mCurrentPageSequence.get(position).isCompleted()){
+                mNextButton.setTextColor(getResources().getColor(android.R.color.darker_gray));
+            }
             mNextButton.setEnabled(position != mPagerAdapter.getCutOffPage());
         }
 
