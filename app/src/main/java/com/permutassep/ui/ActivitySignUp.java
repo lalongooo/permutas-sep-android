@@ -94,7 +94,7 @@ public class ActivitySignUp extends Activity {
                     String phone = etPhone.getText().toString();
 
                     User u = new User(name, email, phone, password);
-                    ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getBaseContext(), "myPrefs", MODE_PRIVATE);
+                    ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getBaseContext(), Config.APP_PREFERENCES_NAME, MODE_PRIVATE);
                     complexPreferences.putObject(Constants.PREF_USER_KEY, u);
                     complexPreferences.commit();
 
