@@ -13,6 +13,7 @@ import com.permutassep.R;
 import com.permutassep.adapter.AppOverviewAdapter;
 import com.permutassep.config.Config;
 import com.permutassep.constants.Constants;
+import com.permutassep.model.SocialUser;
 import com.permutassep.model.User;
 import com.viewpagerindicator.CirclePageIndicator;
 import com.viewpagerindicator.PageIndicator;
@@ -69,7 +70,7 @@ public class ActivityAppOverview extends Activity{
     public void startOnClick(View v){
 
         ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(this, Config.APP_PREFERENCES_NAME, MODE_PRIVATE);
-        User user = complexPreferences.getObject(Constants.PREF_USER_KEY, User.class);
+        User user = complexPreferences.getObject(Constants.PREF_USER_KEY, SocialUser.class);
 
         Intent i = new Intent();
         if(user != null){

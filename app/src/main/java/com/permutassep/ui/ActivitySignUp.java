@@ -143,7 +143,7 @@ public class ActivitySignUp extends Activity {
                         );
 
                         ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getBaseContext(), Config.APP_PREFERENCES_NAME, MODE_PRIVATE);
-                        complexPreferences.putObject(Constants.PREF_SOCIAL_USER_KEY, socialUser);
+                        complexPreferences.putObject(Constants.PREF_USER_KEY, socialUser);
                         complexPreferences.commit();
 
                         goToMainActivity();
