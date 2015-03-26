@@ -58,7 +58,7 @@
 
     <string name="next">Siguiente</string>
     <string name="prev">Regresar</string>
-    <string name="finish">Enviar solicitud</string>
+    <string name="finish">Publicar permuta</string>
     <string name="review">Revisa tu información</string>
     <string name="label_your_name">Tu nombre</string>
     <string name="label_your_email">Tu correo</string>
@@ -71,8 +71,8 @@
     <string name="hint_your_email">Tu correo</string>
     <string name="hint_your_phone">Tu teléfono</string>
     <string name="hint_your_password">Tu contraseña</string>
-    <string name="submit_confirm_message">Place the order with the deli? You will receive an email confirmation.</string>
-    <string name="submit_confirm_button">Place order</string>
+    <string name="submit_confirm_message">Presiona Aceptar para publicar tu permuta</string>
+    <string name="submit_confirm_button">Aceptar</string>
 
     <string name="main_select_state">Selecciona Estado</string>
     <string name="main_loading_cities">Cargando ciudades</string>
