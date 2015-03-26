@@ -27,14 +27,25 @@
     <string name="app_overview_start_button">Iniciar</string>
     <string name="app_overview_signup_button">Registrarse</string>
 
-    <string name="login_sign_up_sign_up">Registrarme</string>
-    <string name="login_sign_up_facebook_login_button">Registrarme con Facebook</string>
-    <string name="login_sign_up_hint_name">Tu nombre</string>
-    <string name="login_sign_up_hint_email">Tu correo</string>
-    <string name="login_sign_up_hint_password">Tu contraseña</string>
-    <string name="login_sign_up_log_in_with">O registrate con</string>
-    <string name="login_sign_up_log_reg_dlg_title">Espera...</string>
-    <string name="login_sign_up_log_reg_dlg_text">Te estamos registrando</string>
+    <string name="app_sign_up">Registrarme</string>
+    <string name="app_sign_up_facebook_login_button">Registrarme con Facebook</string>
+    <string name="app_sign_up_hint_name">Tu nombre</string>
+    <string name="app_sign_up_hint_email">Tu correo</string>
+    <string name="app_sign_up_hint_password">Tu contraseña</string>
+    <string name="app_sign_up_log_in_with">O registrate con</string>
+    <string name="app_sign_up_log_reg_dlg_title">Espera...</string>
+    <string name="app_sign_up_log_reg_dlg_text">Te estamos registrando</string>
+
+    <string name="app_login_sign_up_already_have_account">Ya tengo cuenta</string>
+    <string name="app_login_sign_up_log_in">Iniciar sesión</string>
+    <string name="app_login_sign_up_want_to_register">Quiero registrarme</string>
+    <string name="app_login_sign_up_want_to_register_cta">Registrarme</string>
+
+    <string name="app_login_username">Tu nombre de usuario o correo</string>
+    <string name="app_login_password">Tu contraseña</string>
+    <string name="app_login_btn_login">Iniciar sesión</string>
+    <string name="app_login_login_with_fb">O iniciar sesión con</string>
+    <string name="app_login_btn_login_with_fb">Iniciar sesión con Facebook</string>
 
 
     

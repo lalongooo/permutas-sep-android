@@ -18,6 +18,7 @@ import com.facebook.model.GraphUser;
 import com.facebook.widget.LoginButton;
 import com.permutassep.R;
 import com.permutassep.config.Config;
+import com.permutassep.constants.Constants;
 import com.permutassep.model.User;
 import com.permutassep.rest.PermutasSEPRestClient;
 import com.throrinstudio.android.common.libs.validator.Form;
@@ -28,6 +29,7 @@ import com.throrinstudio.android.common.libs.validator.validator.PhoneValidator;
 
 import java.util.Arrays;
 
+import br.kots.mob.complex.preferences.ComplexPreferences;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 
@@ -84,28 +86,32 @@ public class ActivitySignUp extends Activity {
             @Override
             public void onClick(View v) {
 
-                if(f.validate()){
+                if (f.validate()) {
 
-                    showDialog(getString(R.string.login_sign_up_log_reg_dlg_title), getString(R.string.login_sign_up_log_reg_dlg_text));
+                    showDialog(getString(R.string.app_sign_up_log_reg_dlg_title), getString(R.string.app_sign_up_log_reg_dlg_text));
                     String name = etName.getText().toString();
-                    String email= etEmail.getText().toString();
+                    String email = etEmail.getText().toString();
                     String password = etPassword.getText().toString();
-                    String phone =  etPhone.getText().toString();
+                    String phone = etPhone.getText().toString();
 
                     User u = new User(name, email, phone, password);
-                        PermutasSEPRestClient.get().newUser(u, new Callback<User>() {
-                            @Override
-                            public void success(User user, retrofit.client.Response response) {
-                                hideDialog();
-                                goToMainActivity();
-                            }
+                    ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getBaseContext(), "myPrefs", MODE_PRIVATE);
+                    complexPreferences.putObject(Constants.PREF_USER_KEY, u);
+                    complexPreferences.commit();
 
-                            @Override
-                            public void failure(RetrofitError error) {
-                                hideDialog();
-                            }
-                        });
-                }else{
+                    PermutasSEPRestClient.get().newUser(u, new Callback<User>() {
+                        @Override
+                        public void success(User user, retrofit.client.Response response) {
+                            hideDialog();
+                            goToMainActivity();
+                        }
+
+                        @Override
+                        public void failure(RetrofitError error) {
+                            hideDialog();
+                        }
+                    });
+                } else {
 
                 }
             }
@@ -144,7 +150,7 @@ public class ActivitySignUp extends Activity {
         }
     }
 
-    private void goToNextActivity(){
+    private void goToNextActivity() {
         Intent i = new Intent().setClass(ActivitySignUp.this, ActivitySignUp.class);
         startActivity(i);
         finish();
@@ -192,11 +198,11 @@ public class ActivitySignUp extends Activity {
     }
 
     private void hideDialog() {
-        if(pDlg != null)
+        if (pDlg != null)
             pDlg.dismiss();
     }
 
-    private void goToMainActivity(){
+    private void goToMainActivity() {
         Intent i = new Intent().setClass(ActivitySignUp.this, ActivityMain.class);
         startActivity(i);
         finish();

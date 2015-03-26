@@ -50,7 +50,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:layout_margin="13dp"
-            android:onClick="goToLoginSignUpActivity"
+            android:onClick="startOnClick"
             android:text="@string/app_overview_start_button" />
 
         <!--<Button-->

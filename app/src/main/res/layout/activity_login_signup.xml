@@ -1,109 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/WizardPageContainer">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <TextView style="@style/WizardPageTitle" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:orientation="vertical"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp">
 
-    <ScrollView android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:scrollbarStyle="outsideOverlay">
-
-        <LinearLayout android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/tvAlreadyRegistered"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/app_login_sign_up_already_have_account"
+            android:layout_marginBottom="16dp"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
-            <EditText android:id="@+id/etName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:saveEnabled="false"
-                android:inputType="textCapWords"
-                android:hint="@string/hint_your_name"
-                android:layout_marginBottom="16dp" />
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="30dp"
+            android:text="@string/app_login_sign_up_log_in" />
 
-            <EditText android:id="@+id/etEmail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:saveEnabled="false"
-                android:inputType="textEmailAddress"
-                android:hint="@string/hint_your_email"
-                android:layout_marginBottom="16dp" />
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="3"
+            android:orientation="horizontal">
 
-            <EditText android:id="@+id/etPhone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:saveEnabled="false"
-                android:inputType="phone"
-                android:hint="@string/hint_your_phone"
-                android:layout_marginBottom="16dp"/>
-
-            <EditText android:id="@+id/etPassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:saveEnabled="false"
-                android:inputType="textPassword"
-                android:hint="@string/hint_your_password"
-                android:layout_marginBottom="30dp"/>
-
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/login_sign_up_sign_up"
-                android:id="@+id/btnRegister"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="30dp"/>
-
-            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="3">
-
-                <View
-                    android:layout_width="95dp"
-                    android:layout_height="2dp"
-                    android:background="@android:color/darker_gray"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="@string/login_sign_up_log_in_with"
-                    android:id="@+id/textView3"
-                    android:textSize="15dp"
-                    android:layout_marginRight="4dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true" />
-
-                <View
-                    android:layout_width="95dp"
-                    android:layout_height="2dp"
-                    android:background="@android:color/darker_gray"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true" />
-
-            </RelativeLayout>
-
-
-            <com.facebook.widget.LoginButton xmlns:fb="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/btnLogin"
-                android:layout_width="300dp"
-                android:layout_marginTop="30dp"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
+            <View
+                android:layout_width="150dp"
+                android:layout_height="2dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:layout_gravity="center_horizontal"
-                android:layout_margin="13dp"
-                fb:login_text="@string/login_sign_up_facebook_login_button" />
+                android:background="@android:color/darker_gray" />
 
-        </LinearLayout>
-    </ScrollView>
-</LinearLayout>
+            <!--<TextView-->
+                <!--android:id="@+id/textView3"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignParentTop="true"-->
+                <!--android:layout_centerHorizontal="true"-->
+                <!--android:layout_marginRight="4dp"-->
+                <!--android:text="@string/app_sign_up_log_in_with"-->
+                <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
+                <!--android:textSize="15dp" />-->
+
+            <View
+                android:layout_width="150dp"
+                android:layout_height="2dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@android:color/darker_gray" />
+
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/tvWantToRegister"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/app_login_sign_up_want_to_register"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="30dp"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <Button
+            android:id="@+id/btnRegister"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="30dp"
+            android:text="@string/app_login_sign_up_want_to_register_cta" />
+
+    </LinearLayout>
+</RelativeLayout>
