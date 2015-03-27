@@ -30,7 +30,13 @@ import android.widget.TextView;
 
 import com.example.android.wizardpager.wizard.model.ProfessorContactInfoPage;
 import com.permutassep.R;
+import com.permutassep.config.Config;
+import com.permutassep.constants.Constants;
+import com.permutassep.model.SocialUser;
+import com.permutassep.model.User;
 import com.permutassep.ui.ActivityMain;
+
+import br.kots.mob.complex.preferences.ComplexPreferences;
 
 public class ProfessorContactInfoFragment extends Fragment {
     private static final String ARG_KEY = "key";
@@ -143,6 +149,15 @@ public class ProfessorContactInfoFragment extends Fragment {
                 mPage.notifyDataChanged();
             }
         });
+
+        ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), Config.APP_PREFERENCES_NAME, Context.MODE_PRIVATE);
+        User user = complexPreferences.getObject(Constants.PREF_USER_KEY, SocialUser.class);
+
+        if(user != null){
+            mNameView.setText(user.getName() != null ? user.getName() : "");
+            mEmailView.setText(user.getEmail() != null ? user.getEmail() : "");
+            mPhoneView.setText(user.getPhone() != null ? user.getPhone() : "");
+        }
     }
 
     @Override
