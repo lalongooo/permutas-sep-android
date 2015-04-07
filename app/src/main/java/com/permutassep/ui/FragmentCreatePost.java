@@ -43,7 +43,6 @@ import com.example.android.wizardpager.wizard.ui.StepPagerStrip;
 import com.permutassep.R;
 import com.permutassep.model.City;
 import com.permutassep.model.PermutaSepWizardModel;
-import com.permutassep.model.Place;
 import com.permutassep.model.Post;
 import com.permutassep.model.State;
 import com.permutassep.model.Town;
@@ -141,16 +140,14 @@ public class FragmentCreatePost extends Fragment implements
                                                         post.setUser(user);
                                                         break;
                                                     case PermutaSepWizardModel.CITY_FROM_KEY:
-                                                        State sf = (State) p.getData().getParcelable(ProfessorCityFromPage.STATE_DATA_KEY);
-                                                        City cf = (City) p.getData().getParcelable(ProfessorCityFromPage.MUNICIPALITY_DATA_KEY);
-                                                        Town tf = (Town) p.getData().getParcelable(ProfessorCityFromPage.LOCALITY_DATA_KEY);
-                                                        post.setPlaceFrom(new Place((short)sf.getId(), Short.valueOf(cf.getId()), Short.valueOf(tf.getClave()), Double.valueOf(tf.getLatitud()), Double.valueOf(tf.getLongitud())));
+                                                        post.setStateFrom((State) p.getData().getParcelable(ProfessorCityFromPage.STATE_DATA_KEY));
+                                                        post.setCityFrom((City) p.getData().getParcelable(ProfessorCityFromPage.MUNICIPALITY_DATA_KEY));
+                                                        post.setTownFrom((Town) p.getData().getParcelable(ProfessorCityFromPage.LOCALITY_DATA_KEY));
                                                         break;
                                                     case PermutaSepWizardModel.CITY_TO_KEY:
-                                                        State st = (State) p.getData().getParcelable(ProfessorCityToPage.STATE_TO_DATA_KEY);
-                                                        City ct = (City) p.getData().getParcelable(ProfessorCityToPage.MUNICIPALITY_TO_DATA_KEY);
-                                                        Town tt = (Town) p.getData().getParcelable(ProfessorCityToPage.LOCALITY_TO_DATA_KEY);
-                                                        post.setPlaceTo(new Place((short)st.getId(), Short.valueOf(ct.getId()), Short.valueOf(tt.getClave()), Double.valueOf(tt.getLatitud()), Double.valueOf(tt.getLongitud())));
+                                                        post.setStateTo((State) p.getData().getParcelable(ProfessorCityToPage.STATE_TO_DATA_KEY));
+                                                        post.setCityTo((City) p.getData().getParcelable(ProfessorCityToPage.MUNICIPALITY_TO_DATA_KEY));
+                                                        post.setTownTo((Town) p.getData().getParcelable(ProfessorCityToPage.LOCALITY_TO_DATA_KEY));
                                                         break;
                                                     case PermutaSepWizardModel.POSITION_TYPE_KEY:
                                                         post.setPositionType(p.getData().getString(p.SIMPLE_DATA_KEY));

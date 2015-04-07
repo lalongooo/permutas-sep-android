@@ -8,13 +8,21 @@ import java.util.Date;
 public class Post {
 
     private User mUser;
-    private Place mPlaceFrom;
-    private Place mPlaceTo;
-    private String mWorkdayType;
+
+    private State mStateFrom;
+    private City mCityFrom;
+    private Town mTownFrom;
+
+    private State mStateTo;
+    private City mCityTo;
+    private Town mTownTo;
+
     private String mPositionType;
-    private Date mPostDate;
+    private String mWorkdayType;
+
     private boolean mIsTeachingCareer;
 
+    private Date mPostDate;
 
     public User getUser() {
         return mUser;
@@ -24,20 +32,52 @@ public class Post {
         this.mUser = user;
     }
 
-    public Place getPlaceFrom() {
-        return mPlaceFrom;
+    public State getStateFrom() {
+        return mStateFrom;
     }
 
-    public void setPlaceFrom(Place mPlaceFrom) {
-        this.mPlaceFrom = mPlaceFrom;
+    public void setStateFrom(State stateFrom) {
+        this.mStateFrom = stateFrom;
     }
 
-    public Place getPlaceTo() {
-        return mPlaceTo;
+    public City getCityFrom() {
+        return mCityFrom;
     }
 
-    public void setPlaceTo(Place mPlaceTo) {
-        this.mPlaceTo = mPlaceTo;
+    public void setCityFrom(City cityFrom) {
+        this.mCityFrom = cityFrom;
+    }
+
+    public Town getTownFrom() {
+        return mTownFrom;
+    }
+
+    public void setTownFrom(Town townFrom) {
+        this.mTownFrom = townFrom;
+    }
+
+    public State getStateTo() {
+        return mStateTo;
+    }
+
+    public void setStateTo(State stateTo) {
+        this.mStateTo = stateTo;
+    }
+
+    public City getCityTo() {
+        return mCityTo;
+    }
+
+    public void setCityTo(City cityTo) {
+        this.mCityTo = cityTo;
+    }
+
+    public Town getTownTo() {
+        return mTownTo;
+    }
+
+    public void setTownTo(Town townTo) {
+        this.mTownTo = townTo;
     }
 
     public String getPositionType() {
@@ -72,4 +112,20 @@ public class Post {
         this.mPostDate = postDate;
     }
 
+    @Override
+    public String toString() {
+        return "Post{" +
+                "mUser=" + mUser +
+                ", mStateFrom=" + mStateFrom +
+                ", mCityFrom=" + mCityFrom +
+                ", mTownFrom=" + mTownFrom +
+                ", mStateTo=" + mStateTo +
+                ", mCityTo=" + mCityTo +
+                ", mTownTo=" + mTownTo +
+                ", mPositionType='" + mPositionType + '\'' +
+                ", mWorkdayType='" + mWorkdayType + '\'' +
+                ", mIsTeachingCareer=" + mIsTeachingCareer +
+                ", mPostDate=" + mPostDate +
+                '}';
+    }
 }
