@@ -26,6 +26,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.android.wizardpager.wizard.model.ProfessorContactInfoPage;
@@ -44,9 +45,9 @@ public class ProfessorContactInfoFragment extends Fragment {
     private PageFragmentCallbacks mCallbacks;
     private String mKey;
     private ProfessorContactInfoPage mPage;
-    private TextView mNameView;
-    private TextView mEmailView;
-    private TextView mPhoneView;
+    private EditText mNameView;
+    private EditText mEmailView;
+    private EditText mPhoneView;
 
     public static ProfessorContactInfoFragment create(String key) {
         Bundle args = new Bundle();
@@ -74,13 +75,13 @@ public class ProfessorContactInfoFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_page_professor_info, container, false);
         ((TextView) rootView.findViewById(android.R.id.title)).setText(mPage.getTitle());
 
-        mNameView = ((TextView) rootView.findViewById(R.id.your_name));
+        mNameView = ((EditText) rootView.findViewById(R.id.your_name));
         mNameView.setText(mPage.getData().getString(ProfessorContactInfoPage.NAME_DATA_KEY));
 
-        mEmailView = ((TextView) rootView.findViewById(R.id.your_email));
+        mEmailView = ((EditText) rootView.findViewById(R.id.your_email));
         mEmailView.setText(mPage.getData().getString(ProfessorContactInfoPage.EMAIL_DATA_KEY));
 
-        mPhoneView = ((TextView) rootView.findViewById(R.id.your_phone));
+        mPhoneView = ((EditText) rootView.findViewById(R.id.your_phone));
         mPhoneView.setText(mPage.getData().getString(ProfessorContactInfoPage.PHONE_DATA_KEY));
         
         return rootView;
@@ -132,6 +133,14 @@ public class ProfessorContactInfoFragment extends Fragment {
             public void afterTextChanged(Editable editable) {
                 mPage.getData().putString(ProfessorContactInfoPage.EMAIL_DATA_KEY, (editable != null) ? editable.toString() : null);
                 mPage.notifyDataChanged();
+
+                ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), Config.APP_PREFERENCES_NAME, Context.MODE_PRIVATE);
+
+                User user = complexPreferences.getObject(Constants.PREF_USER_KEY, User.class);
+                user.setEmail((editable != null) ? editable.toString() : null);
+
+                complexPreferences.putObject(Constants.PREF_USER_KEY, user);
+                complexPreferences.commit();
             }
         });
         
@@ -147,6 +156,16 @@ public class ProfessorContactInfoFragment extends Fragment {
             public void afterTextChanged(Editable editable) {
                 mPage.getData().putString(ProfessorContactInfoPage.PHONE_DATA_KEY, (editable != null) ? editable.toString() : null);
                 mPage.notifyDataChanged();
+
+                ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), Config.APP_PREFERENCES_NAME, Context.MODE_PRIVATE);
+
+                User user = complexPreferences.getObject(Constants.PREF_USER_KEY, User.class);
+                user.setPhone((editable != null) ? editable.toString() : null);
+
+                complexPreferences.putObject(Constants.PREF_USER_KEY, user);
+                complexPreferences.commit();
+
+
             }
         });
 
@@ -154,9 +173,14 @@ public class ProfessorContactInfoFragment extends Fragment {
         User user = complexPreferences.getObject(Constants.PREF_USER_KEY, SocialUser.class);
 
         if(user != null){
-            mNameView.setText(user.getName() != null ? user.getName() : "");
-            mEmailView.setText(user.getEmail() != null ? user.getEmail() : "");
-            mPhoneView.setText(user.getPhone() != null ? user.getPhone() : "");
+            mNameView.setText(user.getName() != null && user.getName() != "" ? user.getName() : "");
+            mNameView.setFocusable(user.getName() != null && user.getName() != "" ? false : true);
+
+            mEmailView.setText(user.getEmail() != null && user.getEmail() != "" ? user.getEmail() : "");
+            mEmailView.setFocusable(user.getEmail() != null && user.getEmail() != "" ? false : true);
+
+            mPhoneView.setText(user.getPhone() != null && user.getPhone() != "" ? user.getPhone() : "");
+            mPhoneView.setFocusable(user.getPhone() != null && user.getPhone() != "" ? false : true);
         }
     }
 

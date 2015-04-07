@@ -18,6 +18,7 @@ package com.permutassep.ui;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -25,6 +26,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,8 +42,11 @@ import com.example.android.wizardpager.wizard.ui.PageFragmentCallbacks;
 import com.example.android.wizardpager.wizard.ui.ReviewFragment;
 import com.example.android.wizardpager.wizard.ui.StepPagerStrip;
 import com.permutassep.R;
+import com.permutassep.config.Config;
+import com.permutassep.constants.Constants;
 import com.permutassep.model.City;
 import com.permutassep.model.PermutaSepWizardModel;
+import com.permutassep.model.Place;
 import com.permutassep.model.Post;
 import com.permutassep.model.State;
 import com.permutassep.model.Town;
@@ -49,6 +54,8 @@ import com.permutassep.model.User;
 
 import java.util.Date;
 import java.util.List;
+
+import br.kots.mob.complex.preferences.ComplexPreferences;
 
 public class FragmentCreatePost extends Fragment implements
         PageFragmentCallbacks,
@@ -150,23 +157,21 @@ public class FragmentCreatePost extends Fragment implements
                                             for (Page p : mWizardModel.getCurrentPageSequence()) {
                                                 switch (p.getKey()){
                                                     case PermutaSepWizardModel.CONTACT_INFO_KEY:
-                                                        User user = new User(
-                                                                p.getData().getString(ProfessorContactInfoPage.NAME_DATA_KEY),
-                                                                p.getData().getString(ProfessorContactInfoPage.EMAIL_DATA_KEY),
-                                                                p.getData().getString(ProfessorContactInfoPage.PHONE_DATA_KEY),
-                                                                ""
-                                                        );
+                                                        User user = ComplexPreferences.getComplexPreferences(getActivity(), Config.APP_PREFERENCES_NAME, Context.MODE_PRIVATE).getObject(Constants.PREF_USER_KEY, User.class);
+                                                        post.setUser(user);
                                                         post.setUser(user);
                                                         break;
                                                     case PermutaSepWizardModel.CITY_FROM_KEY:
-                                                        post.setStateFrom((State) p.getData().getParcelable(ProfessorCityFromPage.STATE_DATA_KEY));
-                                                        post.setCityFrom((City) p.getData().getParcelable(ProfessorCityFromPage.MUNICIPALITY_DATA_KEY));
-                                                        post.setTownFrom((Town) p.getData().getParcelable(ProfessorCityFromPage.LOCALITY_DATA_KEY));
+                                                        State sf = (State) p.getData().getParcelable(ProfessorCityFromPage.STATE_DATA_KEY);
+                                                        City cf = (City) p.getData().getParcelable(ProfessorCityFromPage.MUNICIPALITY_DATA_KEY);
+                                                        Town tf = (Town) p.getData().getParcelable(ProfessorCityFromPage.LOCALITY_DATA_KEY);
+                                                        post.setPlaceFrom(new Place((short)sf.getId(), Short.valueOf(cf.getId()), Short.valueOf(tf.getClave()), Double.valueOf(tf.getLatitud()), Double.valueOf(tf.getLongitud())));
                                                         break;
                                                     case PermutaSepWizardModel.CITY_TO_KEY:
-                                                        post.setStateTo((State) p.getData().getParcelable(ProfessorCityToPage.STATE_TO_DATA_KEY));
-                                                        post.setCityTo((City) p.getData().getParcelable(ProfessorCityToPage.MUNICIPALITY_TO_DATA_KEY));
-                                                        post.setTownTo((Town) p.getData().getParcelable(ProfessorCityToPage.LOCALITY_TO_DATA_KEY));
+                                                        State st = (State) p.getData().getParcelable(ProfessorCityToPage.STATE_TO_DATA_KEY);
+                                                        City ct = (City) p.getData().getParcelable(ProfessorCityToPage.MUNICIPALITY_TO_DATA_KEY);
+                                                        Town tt = (Town) p.getData().getParcelable(ProfessorCityToPage.LOCALITY_TO_DATA_KEY);
+                                                        post.setPlaceTo(new Place((short)st.getId(), Short.valueOf(ct.getId()), Short.valueOf(tt.getClave()), Double.valueOf(tt.getLatitud()), Double.valueOf(tt.getLongitud())));
                                                         break;
                                                     case PermutaSepWizardModel.POSITION_TYPE_KEY:
                                                         post.setPositionType(p.getData().getString(p.SIMPLE_DATA_KEY));
