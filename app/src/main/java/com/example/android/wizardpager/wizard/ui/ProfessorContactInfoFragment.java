@@ -174,13 +174,13 @@ public class ProfessorContactInfoFragment extends Fragment {
 
         if(user != null){
             mNameView.setText(user.getName() != null && user.getName() != "" ? user.getName() : "");
-            mNameView.setFocusable(user.getName() != null && user.getName() != "" ? false : true);
+            // mNameView.setFocusable(user.getName() != null && user.getName() != "" ? false : true);
 
             mEmailView.setText(user.getEmail() != null && user.getEmail() != "" ? user.getEmail() : "");
-            mEmailView.setFocusable(user.getEmail() != null && user.getEmail() != "" ? false : true);
+            // mEmailView.setFocusable(user.getEmail() != null && user.getEmail() != "" ? false : true);
 
             mPhoneView.setText(user.getPhone() != null && user.getPhone() != "" ? user.getPhone() : "");
-            mPhoneView.setFocusable(user.getPhone() != null && user.getPhone() != "" ? false : true);
+            // mPhoneView.setFocusable(user.getPhone() != null && user.getPhone() != "" ? false : true);
         }
     }
 
