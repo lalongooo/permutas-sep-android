@@ -25,7 +25,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -115,6 +114,26 @@ public class FragmentCreatePost extends Fragment implements
         mNextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(mCurrentPageSequence.get(mPager.getCurrentItem()).getKey() == PermutaSepWizardModel.CONTACT_INFO_KEY){
+
+                    DialogFragment dg = new DialogFragment() {
+                        @Override
+                        public Dialog onCreateDialog(Bundle savedInstanceState) {
+                            return new AlertDialog.Builder(getActivity())
+                                    .setMessage(R.string.submit_confirm_message)
+                                    .setPositiveButton(R.string.submit_confirm_button, new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+
+                                        }
+                                    })
+                                    .setNegativeButton(android.R.string.cancel, null)
+                                    .create();
+                        }
+                    };
+                    dg.show(getActivity().getSupportFragmentManager(), "place_order_dialog");
+
+                }
                 if (mPager.getCurrentItem() == mCurrentPageSequence.size()) {
                     DialogFragment dg = new DialogFragment() {
                         @Override
