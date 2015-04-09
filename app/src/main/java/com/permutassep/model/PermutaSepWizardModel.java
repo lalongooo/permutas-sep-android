@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.example.android.wizardpager.wizard.model.AbstractWizardModel;
 import com.example.android.wizardpager.wizard.model.PageList;
+import com.example.android.wizardpager.wizard.model.PostTextPage;
 import com.example.android.wizardpager.wizard.model.ProfessorCityFromPage;
 import com.example.android.wizardpager.wizard.model.ProfessorCityToPage;
 import com.example.android.wizardpager.wizard.model.ProfessorContactInfoPage;
@@ -14,6 +15,7 @@ public class PermutaSepWizardModel extends AbstractWizardModel {
 		super(context);
 	}
 
+    public static final String POST_TEXT_KEY = "post_text_page_key";
     public static final String CONTACT_INFO_KEY = "contact_info_page_key";
     public static final String CITY_FROM_KEY = "city_from_page_key";
     public static final String CITY_TO_KEY = "city_to_page_key";
@@ -29,7 +31,8 @@ public class PermutaSepWizardModel extends AbstractWizardModel {
                 new ProfessorCityToPage(this, "Tu lugar deseado").setRequired(true).setKey(CITY_TO_KEY),
                 new SingleFixedChoicePage(this, "Tipo de plaza").setChoices("Estatal", "Federal").setRequired(true).setKey(POSITION_TYPE_KEY),
                 new SingleFixedChoicePage(this, "Tipo de jornada").setChoices("Jornada Regular", "Jornada ampliada", "Tiempo completo").setRequired(true).setKey(WORKDAY_TYPE_KEY),
-                new SingleFixedChoicePage(this, "Carrera magisterial").setChoices("Si", "No").setRequired(true).setKey(TEACHING_CAREER_KEY)
+                new SingleFixedChoicePage(this, "Carrera magisterial").setChoices("Si", "No").setRequired(true).setKey(TEACHING_CAREER_KEY),
+                new PostTextPage(this, "Información adicional").setRequired(true).setKey(POST_TEXT_KEY)
 				);
 	}
 }

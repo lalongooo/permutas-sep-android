@@ -35,8 +35,6 @@ import com.permutassep.R;
 import com.permutassep.ui.ActivityMain;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class ReviewFragment extends ListFragment implements ModelCallbacks {
@@ -104,12 +102,12 @@ public class ReviewFragment extends ListFragment implements ModelCallbacks {
         for (Page page : mWizardModel.getCurrentPageSequence()) {
             page.getReviewItems(reviewItems);
         }
-        Collections.sort(reviewItems, new Comparator<ReviewItem>() {
-            @Override
-            public int compare(ReviewItem a, ReviewItem b) {
-                return a.getWeight() > b.getWeight() ? +1 : a.getWeight() < b.getWeight() ? -1 : 0;
-            }
-        });
+//        Collections.sort(reviewItems, new Comparator<ReviewItem>() {
+//            @Override
+//            public int compare(ReviewItem a, ReviewItem b) {
+//                return a.getWeight() > b.getWeight() ? +1 : a.getWeight() < b.getWeight() ? -1 : 0;
+//            }
+//        });
         mCurrentReviewItems = reviewItems;
 
         if (mReviewAdapter != null) {
