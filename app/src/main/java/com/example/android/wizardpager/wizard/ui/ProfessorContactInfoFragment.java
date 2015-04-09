@@ -58,8 +58,7 @@ public class ProfessorContactInfoFragment extends Fragment {
         return fragment;
     }
 
-    public ProfessorContactInfoFragment() {
-    }
+    public ProfessorContactInfoFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
