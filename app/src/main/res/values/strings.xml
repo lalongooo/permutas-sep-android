@@ -19,6 +19,8 @@
     <string name="facebook_app_id">143269149215368</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Publicar permuta</string>
+
+    <string name="wizard_contact_suggest_data_completion_dialog_msg">Si completas los datos en esta seccion, podrán contactarte con mayor facilidad. Presiona Siguiente si no quieres agregar mayor información</string>
     
     <string name="app_overview_1st_item_text">Queremos que la información esté al alcance de todos</string>
     <string name="app_overview_2nd_item_text">Creemos que nuestra solución hará a mas personas felices</string>

@@ -26,7 +26,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +36,6 @@ import com.example.android.wizardpager.wizard.model.ModelCallbacks;
 import com.example.android.wizardpager.wizard.model.Page;
 import com.example.android.wizardpager.wizard.model.ProfessorCityFromPage;
 import com.example.android.wizardpager.wizard.model.ProfessorCityToPage;
-import com.example.android.wizardpager.wizard.model.ProfessorContactInfoPage;
 import com.example.android.wizardpager.wizard.ui.PageFragmentCallbacks;
 import com.example.android.wizardpager.wizard.ui.ReviewFragment;
 import com.example.android.wizardpager.wizard.ui.StepPagerStrip;
@@ -75,6 +73,7 @@ public class FragmentCreatePost extends Fragment implements
 
     private List<Page> mCurrentPageSequence;
     private StepPagerStrip mStepPagerStrip;
+    boolean suggestDataCompletion = true;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -118,30 +117,31 @@ public class FragmentCreatePost extends Fragment implements
             }
         });
 
+
         mNextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mCurrentPageSequence.get(mPager.getCurrentItem()).getKey() == PermutaSepWizardModel.CONTACT_INFO_KEY){
+
+                if(suggestDataCompletion && mCurrentPageSequence.get(mPager.getCurrentItem()).getKey() == PermutaSepWizardModel.CONTACT_INFO_KEY){
 
                     DialogFragment dg = new DialogFragment() {
                         @Override
                         public Dialog onCreateDialog(Bundle savedInstanceState) {
                             return new AlertDialog.Builder(getActivity())
-                                    .setMessage(R.string.submit_confirm_message)
+                                    .setMessage(R.string.wizard_contact_suggest_data_completion_dialog_msg)
                                     .setPositiveButton(R.string.submit_confirm_button, new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
-
+                                            suggestDataCompletion = false;
                                         }
                                     })
-                                    .setNegativeButton(android.R.string.cancel, null)
                                     .create();
                         }
                     };
-                    dg.show(getActivity().getSupportFragmentManager(), "place_order_dialog");
+                    dg.show(getActivity().getSupportFragmentManager(), "contact_data_dialog");
 
                 }
-                if (mPager.getCurrentItem() == mCurrentPageSequence.size()) {
+                else if (mPager.getCurrentItem() == mCurrentPageSequence.size()) {
                     DialogFragment dg = new DialogFragment() {
                         @Override
                         public Dialog onCreateDialog(Bundle savedInstanceState) {
