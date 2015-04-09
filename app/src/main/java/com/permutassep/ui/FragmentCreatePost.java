@@ -34,11 +34,13 @@ import android.widget.Button;
 import com.example.android.wizardpager.wizard.model.AbstractWizardModel;
 import com.example.android.wizardpager.wizard.model.ModelCallbacks;
 import com.example.android.wizardpager.wizard.model.Page;
+import com.example.android.wizardpager.wizard.model.PostTextPage;
 import com.example.android.wizardpager.wizard.model.ProfessorCityFromPage;
 import com.example.android.wizardpager.wizard.model.ProfessorCityToPage;
 import com.example.android.wizardpager.wizard.ui.PageFragmentCallbacks;
 import com.example.android.wizardpager.wizard.ui.ReviewFragment;
 import com.example.android.wizardpager.wizard.ui.StepPagerStrip;
+import com.google.gson.Gson;
 import com.permutassep.R;
 import com.permutassep.config.Config;
 import com.permutassep.constants.Constants;
@@ -165,13 +167,23 @@ public class FragmentCreatePost extends Fragment implements
                                                         State sf = p.getData().getParcelable(ProfessorCityFromPage.STATE_DATA_KEY);
                                                         City cf = p.getData().getParcelable(ProfessorCityFromPage.MUNICIPALITY_DATA_KEY);
                                                         Town tf = p.getData().getParcelable(ProfessorCityFromPage.LOCALITY_DATA_KEY);
-                                                        post.setPlaceFrom(new Place((short)sf.getId(), Short.valueOf(cf.getId()), Short.valueOf(tf.getClave()), Double.valueOf(tf.getLatitud()), Double.valueOf(tf.getLongitud())));
+
+                                                        post.setStateTo(sf.getId());
+                                                        post.setCityTo(Short.valueOf(cf.getId()));
+                                                        post.setTownTo(Short.valueOf(tf.getClave()));
+                                                        post.setLatTo(Double.valueOf(tf.getLatitud()));
+                                                        post.setLonTo(Double.valueOf(tf.getLongitud()));
                                                         break;
                                                     case PermutaSepWizardModel.CITY_TO_KEY:
                                                         State st =  p.getData().getParcelable(ProfessorCityToPage.STATE_TO_DATA_KEY);
                                                         City ct = p.getData().getParcelable(ProfessorCityToPage.MUNICIPALITY_TO_DATA_KEY);
                                                         Town tt = p.getData().getParcelable(ProfessorCityToPage.LOCALITY_TO_DATA_KEY);
-                                                        post.setPlaceTo(new Place((short)st.getId(), Short.valueOf(ct.getId()), Short.valueOf(tt.getClave()), Double.valueOf(tt.getLatitud()), Double.valueOf(tt.getLongitud())));
+
+                                                        post.setStateFrom(st.getId());
+                                                        post.setCityFrom(Short.valueOf(ct.getId()));
+                                                        post.setTownFrom(Short.valueOf(tt.getClave()));
+                                                        post.setLatFrom(Double.valueOf(tt.getLatitud()));
+                                                        post.setLonFrom(Double.valueOf(tt.getLongitud()));
                                                         break;
                                                     case PermutaSepWizardModel.POSITION_TYPE_KEY:
                                                         post.setPositionType(p.getData().getString(p.SIMPLE_DATA_KEY));
@@ -182,8 +194,13 @@ public class FragmentCreatePost extends Fragment implements
                                                     case PermutaSepWizardModel.TEACHING_CAREER_KEY:
                                                         post.setIsTeachingCareer(p.getData().getString(p.SIMPLE_DATA_KEY).equals("Si") ? true : false);
                                                         break;
+                                                    case PermutaSepWizardModel.POST_TEXT_KEY:
+                                                        post.setPostText(p.getData().getString(PostTextPage.TEXT_DATA_KEY));
+                                                        break;
                                                 }
                                             }
+
+                                            String postJson = new Gson().toJson(post);
 
                                         }
                                     })

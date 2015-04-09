@@ -175,7 +175,7 @@ public class ProfessorCityFromFragment extends Fragment {
 
         if(spnState.getAdapter() == null){
             String [] states = getResources().getStringArray(R.array.states);
-            for (int i = 0; i < states.length; i++){
+            for (short i = 0; i < states.length; i++){
                 mStates.add(new State(i, states[i]));
             }
             spnState.setAdapter(new StateSpinnerBaseAdapter(getActivity(), mStates));

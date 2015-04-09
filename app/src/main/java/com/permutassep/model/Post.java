@@ -1,5 +1,7 @@
 package com.permutassep.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Date;
 
 /**
@@ -7,12 +9,37 @@ import java.util.Date;
  */
 public class Post {
 
+    @SerializedName("user")
     private User mUser;
-    private Place mPlaceFrom;
-    private Place mPlaceTo;
+    @SerializedName("post")
+    private String postText;
+    @SerializedName("place_from_state")
+    private short stateFrom;
+    @SerializedName("place_from_city")
+    private short cityFrom;
+    @SerializedName("place_from_town")
+    private short townFrom;
+    @SerializedName("place_from_lat")
+    private double latFrom;
+    @SerializedName("place_from_lon")
+    private double lonFrom;
+    @SerializedName("place_to_state")
+    private short stateTo;
+    @SerializedName("place_to_city")
+    private short cityTo;
+    @SerializedName("place_to_town")
+    private short townTo;
+    @SerializedName("place_to_lat")
+    private double latTo;
+    @SerializedName("place_to_lon")
+    private double lonTo;
+    @SerializedName("workday_type")
     private String mWorkdayType;
+    @SerializedName("position_type")
     private String mPositionType;
+    @SerializedName("post_date")
     private Date mPostDate;
+    @SerializedName("is_teaching_career")
     private boolean mIsTeachingCareer;
 
 
@@ -24,20 +51,92 @@ public class Post {
         this.mUser = user;
     }
 
-    public Place getPlaceFrom() {
-        return mPlaceFrom;
+    public String getPostText() {
+        return postText;
     }
 
-    public void setPlaceFrom(Place mPlaceFrom) {
-        this.mPlaceFrom = mPlaceFrom;
+    public void setPostText(String postText) {
+        this.postText = postText;
     }
 
-    public Place getPlaceTo() {
-        return mPlaceTo;
+    public short getStateFrom() {
+        return stateFrom;
     }
 
-    public void setPlaceTo(Place mPlaceTo) {
-        this.mPlaceTo = mPlaceTo;
+    public void setStateFrom(short stateFrom) {
+        this.stateFrom = stateFrom;
+    }
+
+    public short getCityFrom() {
+        return cityFrom;
+    }
+
+    public void setCityFrom(short cityFrom) {
+        this.cityFrom = cityFrom;
+    }
+
+    public short getTownFrom() {
+        return townFrom;
+    }
+
+    public void setTownFrom(short townFrom) {
+        this.townFrom = townFrom;
+    }
+
+    public double getLatFrom() {
+        return latFrom;
+    }
+
+    public void setLatFrom(double latFrom) {
+        this.latFrom = latFrom;
+    }
+
+    public double getLonFrom() {
+        return lonFrom;
+    }
+
+    public void setLonFrom(double lonFrom) {
+        this.lonFrom = lonFrom;
+    }
+
+    public short getStateTo() {
+        return stateTo;
+    }
+
+    public void setStateTo(short stateTo) {
+        this.stateTo = stateTo;
+    }
+
+    public short getCityTo() {
+        return cityTo;
+    }
+
+    public void setCityTo(short cityTo) {
+        this.cityTo = cityTo;
+    }
+
+    public short getTownTo() {
+        return townTo;
+    }
+
+    public void setTownTo(short townTo) {
+        this.townTo = townTo;
+    }
+
+    public double getLatTo() {
+        return latTo;
+    }
+
+    public void setLatTo(double latTo) {
+        this.latTo = latTo;
+    }
+
+    public double getLonTo() {
+        return lonTo;
+    }
+
+    public void setLonTo(double lonTo) {
+        this.lonTo = lonTo;
     }
 
     public String getPositionType() {
@@ -76,8 +175,17 @@ public class Post {
     public String toString() {
         return "Post{" +
                 "mUser=" + mUser +
-                ", mPlaceFrom=" + mPlaceFrom +
-                ", mPlaceTo=" + mPlaceTo +
+                ", postText='" + postText + '\'' +
+                ", stateFrom=" + stateFrom +
+                ", cityFrom=" + cityFrom +
+                ", townFrom=" + townFrom +
+                ", latFrom=" + latFrom +
+                ", lonFrom=" + lonFrom +
+                ", stateTo=" + stateTo +
+                ", cityTo=" + cityTo +
+                ", townTo=" + townTo +
+                ", latTo=" + latTo +
+                ", lonTo=" + lonTo +
                 ", mWorkdayType='" + mWorkdayType + '\'' +
                 ", mPositionType='" + mPositionType + '\'' +
                 ", mPostDate=" + mPostDate +
