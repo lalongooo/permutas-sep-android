@@ -3,6 +3,7 @@ package com.permutassep.ui;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.View;
@@ -18,7 +19,6 @@ import com.facebook.model.GraphUser;
 import com.facebook.widget.LoginButton;
 import com.permutassep.R;
 import com.permutassep.config.Config;
-import com.permutassep.constants.Constants;
 import com.permutassep.model.SocialUser;
 import com.permutassep.model.User;
 import com.permutassep.rest.PermutasSEPRestClient;
@@ -89,20 +89,29 @@ public class ActivitySignUp extends Activity {
                 if (f.validate()) {
 
                     showDialog(getString(R.string.app_sign_up_log_reg_dlg_title), getString(R.string.app_sign_up_log_reg_dlg_text));
+
+                    /*
+                    *  Get all the fields for the user registration
+                    * */
                     String name = etName.getText().toString();
                     String email = etEmail.getText().toString();
-                    String password = etPassword.getText().toString();
+                    final String password = etPassword.getText().toString();
                     String phone = etPhone.getText().toString();
-
                     User u = new User(name, email, phone, password);
-                    ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getBaseContext(), Config.APP_PREFERENCES_NAME, MODE_PRIVATE);
-                    complexPreferences.putObject(Constants.PREF_USER_KEY, u);
-                    complexPreferences.commit();
 
-                    PermutasSEPRestClient.get().newUser(u, new Callback<User>() {
+                    /*
+                    * Perform the call to the REST service
+                    * */
+                    new PermutasSEPRestClient().get().newUser(u, new Callback<User>() {
                         @Override
                         public void success(User user, retrofit.client.Response response) {
                             hideDialog();
+                            ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getBaseContext(), Config.APP_PREFERENCES_NAME, MODE_PRIVATE);
+                            user.setPassword(password);
+                            complexPreferences.putObject(PrefUtils.PREF_USER_KEY, user);
+                            complexPreferences.commit();
+
+                            PrefUtils.setNormalUser(getApplicationContext(), true);
                             goToMainActivity();
                         }
 
@@ -143,7 +152,7 @@ public class ActivitySignUp extends Activity {
                         );
 
                         ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getBaseContext(), Config.APP_PREFERENCES_NAME, MODE_PRIVATE);
-                        complexPreferences.putObject(Constants.PREF_USER_KEY, socialUser);
+                        complexPreferences.putObject(PrefUtils.PREF_USER_KEY, socialUser);
                         complexPreferences.commit();
 
                         goToMainActivity();

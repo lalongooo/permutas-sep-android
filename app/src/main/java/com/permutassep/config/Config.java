@@ -42,4 +42,8 @@ public class Config {
      */
     public static final String PERMUTAS_SEP_REST_BASE_URL = "https://permuta-sep.herokuapp.com/api/";
 
+    /**
+     * Date format used in the entire application
+     */
+    public static final String APP_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
 }

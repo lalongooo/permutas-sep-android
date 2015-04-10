@@ -20,9 +20,9 @@ public class Post {
     @SerializedName("place_from_town")
     private short townFrom;
     @SerializedName("place_from_lat")
-    private double latFrom;
+    private String latFrom;
     @SerializedName("place_from_lon")
-    private double lonFrom;
+    private String lonFrom;
     @SerializedName("place_to_state")
     private short stateTo;
     @SerializedName("place_to_city")
@@ -30,9 +30,9 @@ public class Post {
     @SerializedName("place_to_town")
     private short townTo;
     @SerializedName("place_to_lat")
-    private double latTo;
+    private String latTo;
     @SerializedName("place_to_lon")
-    private double lonTo;
+    private String lonTo;
     @SerializedName("workday_type")
     private String mWorkdayType;
     @SerializedName("position_type")
@@ -83,19 +83,19 @@ public class Post {
         this.townFrom = townFrom;
     }
 
-    public double getLatFrom() {
+    public String getLatFrom() {
         return latFrom;
     }
 
-    public void setLatFrom(double latFrom) {
+    public void setLatFrom(String latFrom) {
         this.latFrom = latFrom;
     }
 
-    public double getLonFrom() {
+    public String getLonFrom() {
         return lonFrom;
     }
 
-    public void setLonFrom(double lonFrom) {
+    public void setLonFrom(String lonFrom) {
         this.lonFrom = lonFrom;
     }
 
@@ -123,19 +123,19 @@ public class Post {
         this.townTo = townTo;
     }
 
-    public double getLatTo() {
+    public String getLatTo() {
         return latTo;
     }
 
-    public void setLatTo(double latTo) {
+    public void setLatTo(String latTo) {
         this.latTo = latTo;
     }
 
-    public double getLonTo() {
+    public String getLonTo() {
         return lonTo;
     }
 
-    public void setLonTo(double lonTo) {
+    public void setLonTo(String lonTo) {
         this.lonTo = lonTo;
     }
 

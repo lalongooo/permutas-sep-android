@@ -3,6 +3,7 @@ package com.permutassep.rest;
 import com.permutassep.config.Config;
 
 import retrofit.RestAdapter;
+import retrofit.converter.Converter;
 
 /**
  * Created by jorge.hernandez on 2/24/2015.
@@ -10,23 +11,24 @@ import retrofit.RestAdapter;
 public class PermutasSEPRestClient {
 
     private static IPermutasSEPService restClient;
-    private static String BASE_URL = Config.PERMUTAS_SEP_REST_BASE_URL;
+    private RestAdapter restAdapter;
 
-    static {
-        setupRestClient();
-    }
-
-    private PermutasSEPRestClient() {}
-
-    public static IPermutasSEPService get() {
-        return restClient;
-    }
-
-    private static void setupRestClient() {
-        RestAdapter restAdapter = new RestAdapter.Builder()
+    public PermutasSEPRestClient() {
+        restAdapter = new RestAdapter.Builder()
                 .setLogLevel(RestAdapter.LogLevel.FULL)
-                .setEndpoint(BASE_URL)
+                .setEndpoint(Config.PERMUTAS_SEP_REST_BASE_URL)
                 .build();
-        restClient = restAdapter.create(IPermutasSEPService.class);
+    }
+
+    public PermutasSEPRestClient(Converter converter) {
+        restAdapter = new RestAdapter.Builder()
+                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .setEndpoint(Config.PERMUTAS_SEP_REST_BASE_URL)
+                .setConverter(converter)
+                .build();
+    }
+
+    public IPermutasSEPService get() {
+        return restAdapter.create(IPermutasSEPService.class);
     }
 }

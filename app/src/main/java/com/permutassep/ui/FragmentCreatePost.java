@@ -41,9 +41,9 @@ import com.example.android.wizardpager.wizard.ui.PageFragmentCallbacks;
 import com.example.android.wizardpager.wizard.ui.ReviewFragment;
 import com.example.android.wizardpager.wizard.ui.StepPagerStrip;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.permutassep.R;
 import com.permutassep.config.Config;
-import com.permutassep.constants.Constants;
 import com.permutassep.model.City;
 import com.permutassep.model.PermutaSepWizardModel;
 import com.permutassep.model.Place;
@@ -51,11 +51,16 @@ import com.permutassep.model.Post;
 import com.permutassep.model.State;
 import com.permutassep.model.Town;
 import com.permutassep.model.User;
+import com.permutassep.rest.PermutasSEPRestClient;
+import com.permutassep.utils.UserTypeAdapter;
 
 import java.util.Date;
 import java.util.List;
 
 import br.kots.mob.complex.preferences.ComplexPreferences;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.converter.GsonConverter;
 
 public class FragmentCreatePost extends Fragment implements
         PageFragmentCallbacks,
@@ -159,8 +164,7 @@ public class FragmentCreatePost extends Fragment implements
                                             for (Page p : mWizardModel.getCurrentPageSequence()) {
                                                 switch (p.getKey()){
                                                     case PermutaSepWizardModel.CONTACT_INFO_KEY:
-                                                        User user = ComplexPreferences.getComplexPreferences(getActivity(), Config.APP_PREFERENCES_NAME, Context.MODE_PRIVATE).getObject(Constants.PREF_USER_KEY, User.class);
-                                                        post.setUser(user);
+                                                        User user = ComplexPreferences.getComplexPreferences(getActivity(), Config.APP_PREFERENCES_NAME, Context.MODE_PRIVATE).getObject(PrefUtils.PREF_USER_KEY, User.class);
                                                         post.setUser(user);
                                                         break;
                                                     case PermutaSepWizardModel.CITY_FROM_KEY:
@@ -171,8 +175,8 @@ public class FragmentCreatePost extends Fragment implements
                                                         post.setStateTo(sf.getId());
                                                         post.setCityTo(Short.valueOf(cf.getId()));
                                                         post.setTownTo(Short.valueOf(tf.getClave()));
-                                                        post.setLatTo(Double.valueOf(tf.getLatitud()));
-                                                        post.setLonTo(Double.valueOf(tf.getLongitud()));
+                                                        post.setLatTo(tf.getLatitud());
+                                                        post.setLonTo(tf.getLongitud());
                                                         break;
                                                     case PermutaSepWizardModel.CITY_TO_KEY:
                                                         State st =  p.getData().getParcelable(ProfessorCityToPage.STATE_TO_DATA_KEY);
@@ -182,8 +186,8 @@ public class FragmentCreatePost extends Fragment implements
                                                         post.setStateFrom(st.getId());
                                                         post.setCityFrom(Short.valueOf(ct.getId()));
                                                         post.setTownFrom(Short.valueOf(tt.getClave()));
-                                                        post.setLatFrom(Double.valueOf(tt.getLatitud()));
-                                                        post.setLonFrom(Double.valueOf(tt.getLongitud()));
+                                                        post.setLatFrom(tt.getLatitud());
+                                                        post.setLonFrom(tt.getLongitud());
                                                         break;
                                                     case PermutaSepWizardModel.POSITION_TYPE_KEY:
                                                         post.setPositionType(p.getData().getString(p.SIMPLE_DATA_KEY));
@@ -200,7 +204,20 @@ public class FragmentCreatePost extends Fragment implements
                                                 }
                                             }
 
-                                            String postJson = new Gson().toJson(post);
+                                            GsonBuilder gsonBuilder = new GsonBuilder()
+                                                    .registerTypeHierarchyAdapter(User.class, new UserTypeAdapter())
+                                                    .setDateFormat(Config.APP_DATE_FORMAT);
+                                            Gson gson = gsonBuilder.create();
+
+                                            new PermutasSEPRestClient(new GsonConverter(gson)).get().newPost(post, new Callback<Post>() {
+                                                @Override
+                                                public void success(Post post, retrofit.client.Response response) {
+                                                }
+
+                                                @Override
+                                                public void failure(RetrofitError error) {
+                                                }
+                                            });
 
                                         }
                                     })

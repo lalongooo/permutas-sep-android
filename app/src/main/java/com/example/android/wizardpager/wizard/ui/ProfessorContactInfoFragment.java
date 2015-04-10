@@ -32,10 +32,10 @@ import android.widget.TextView;
 import com.example.android.wizardpager.wizard.model.ProfessorContactInfoPage;
 import com.permutassep.R;
 import com.permutassep.config.Config;
-import com.permutassep.constants.Constants;
 import com.permutassep.model.SocialUser;
 import com.permutassep.model.User;
 import com.permutassep.ui.ActivityMain;
+import com.permutassep.ui.PrefUtils;
 
 import br.kots.mob.complex.preferences.ComplexPreferences;
 
@@ -135,10 +135,10 @@ public class ProfessorContactInfoFragment extends Fragment {
 
                 ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), Config.APP_PREFERENCES_NAME, Context.MODE_PRIVATE);
 
-                User user = complexPreferences.getObject(Constants.PREF_USER_KEY, User.class);
+                User user = complexPreferences.getObject(PrefUtils.PREF_USER_KEY, User.class);
                 user.setEmail((editable != null) ? editable.toString() : null);
 
-                complexPreferences.putObject(Constants.PREF_USER_KEY, user);
+                complexPreferences.putObject(PrefUtils.PREF_USER_KEY, user);
                 complexPreferences.commit();
             }
         });
@@ -158,10 +158,10 @@ public class ProfessorContactInfoFragment extends Fragment {
 
                 ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), Config.APP_PREFERENCES_NAME, Context.MODE_PRIVATE);
 
-                User user = complexPreferences.getObject(Constants.PREF_USER_KEY, User.class);
+                User user = complexPreferences.getObject(PrefUtils.PREF_USER_KEY, User.class);
                 user.setPhone((editable != null) ? editable.toString() : null);
 
-                complexPreferences.putObject(Constants.PREF_USER_KEY, user);
+                complexPreferences.putObject(PrefUtils.PREF_USER_KEY, user);
                 complexPreferences.commit();
 
 
@@ -169,7 +169,7 @@ public class ProfessorContactInfoFragment extends Fragment {
         });
 
         ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), Config.APP_PREFERENCES_NAME, Context.MODE_PRIVATE);
-        User user = complexPreferences.getObject(Constants.PREF_USER_KEY, SocialUser.class);
+        User user = complexPreferences.getObject(PrefUtils.PREF_USER_KEY, SocialUser.class);
 
         if(user != null){
             mNameView.setText(user.getName() != null && user.getName() != "" ? user.getName() : "");

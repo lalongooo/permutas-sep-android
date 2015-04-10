@@ -17,7 +17,6 @@ import com.facebook.model.GraphUser;
 import com.facebook.widget.LoginButton;
 import com.permutassep.R;
 import com.permutassep.config.Config;
-import com.permutassep.constants.Constants;
 import com.permutassep.model.SocialUser;
 import com.throrinstudio.android.common.libs.validator.Form;
 import com.throrinstudio.android.common.libs.validator.Validate;
@@ -103,7 +102,7 @@ public class ActivityLogin extends Activity {
                         );
 
                         ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getBaseContext(), Config.APP_PREFERENCES_NAME, MODE_PRIVATE);
-                        complexPreferences.putObject(Constants.PREF_USER_KEY, socialUser);
+                        complexPreferences.putObject(PrefUtils.PREF_USER_KEY, socialUser);
                         complexPreferences.commit();
 
                         goToMainActivity();
