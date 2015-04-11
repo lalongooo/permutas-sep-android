@@ -9,6 +9,10 @@ import java.util.Date;
  */
 public class Post {
 
+
+
+    @SerializedName("id")
+    private int id;
     @SerializedName("user")
     private User mUser;
     @SerializedName("post")
@@ -42,6 +46,13 @@ public class Post {
     @SerializedName("is_teaching_career")
     private boolean mIsTeachingCareer;
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public User getUser() {
         return mUser;
