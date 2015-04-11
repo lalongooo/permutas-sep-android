@@ -46,12 +46,12 @@ import com.permutassep.R;
 import com.permutassep.config.Config;
 import com.permutassep.model.City;
 import com.permutassep.model.PermutaSepWizardModel;
-import com.permutassep.model.Place;
 import com.permutassep.model.Post;
 import com.permutassep.model.State;
 import com.permutassep.model.Town;
 import com.permutassep.model.User;
 import com.permutassep.rest.PermutasSEPRestClient;
+import com.permutassep.utils.PostTypeAdapter;
 import com.permutassep.utils.UserTypeAdapter;
 
 import java.util.Date;
@@ -205,7 +205,8 @@ public class FragmentCreatePost extends Fragment implements
                                             }
 
                                             GsonBuilder gsonBuilder = new GsonBuilder()
-                                                    .registerTypeHierarchyAdapter(User.class, new UserTypeAdapter())
+                                                    .registerTypeHierarchyAdapter(User.class, new UserTypeAdapter(getActivity()))
+                                                    .registerTypeHierarchyAdapter(Post.class, new PostTypeAdapter(getActivity()))
                                                     .setDateFormat(Config.APP_DATE_FORMAT);
                                             Gson gson = gsonBuilder.create();
 
