@@ -18,6 +18,7 @@ package com.permutassep.ui;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -77,6 +78,7 @@ public class FragmentCreatePost extends Fragment implements
 
     private Button mNextButton;
     private Button mPrevButton;
+    private ProgressDialog pDlg;
 
     private List<Page> mCurrentPageSequence;
     private StepPagerStrip mStepPagerStrip;
@@ -204,6 +206,8 @@ public class FragmentCreatePost extends Fragment implements
                                                 }
                                             }
 
+                                            showDialog(getString(R.string.wizard_post_dlg_title), getString(R.string.wizard_post_dlg_text));
+
                                             GsonBuilder gsonBuilder = new GsonBuilder()
                                                     .registerTypeHierarchyAdapter(User.class, new UserTypeAdapter(getActivity()))
                                                     .registerTypeHierarchyAdapter(Post.class, new PostTypeAdapter(getActivity()))
@@ -213,10 +217,14 @@ public class FragmentCreatePost extends Fragment implements
                                             new PermutasSEPRestClient(new GsonConverter(gson)).get().newPost(post, new Callback<Post>() {
                                                 @Override
                                                 public void success(Post post, retrofit.client.Response response) {
+                                                    replaceFragment();
+                                                    hideDialog();
                                                 }
 
                                                 @Override
                                                 public void failure(RetrofitError error) {
+                                                    // TODO: Add the error message dialog
+                                                    hideDialog();
                                                 }
                                             });
 
@@ -342,6 +350,15 @@ public class FragmentCreatePost extends Fragment implements
         return false;
     }
 
+    private void showDialog(String title, String text) {
+        pDlg = ProgressDialog.show(getActivity(), title, text, true);
+    }
+
+    private void hideDialog() {
+        if (pDlg != null)
+            pDlg.dismiss();
+    }
+
     public class MyPagerAdapter extends FragmentStatePagerAdapter {
         private int mCutOffPage;
         private Fragment mPrimaryItem;
@@ -394,5 +411,9 @@ public class FragmentCreatePost extends Fragment implements
         public int getCutOffPage() {
             return mCutOffPage;
         }
+    }
+
+    private void replaceFragment(){
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentNewsFeed()).commit();
     }
 }
