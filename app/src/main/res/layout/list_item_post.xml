@@ -1,85 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:padding="10dp">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/imageView"
-        android:src="@drawable/default_profile_picture"
-        android:layout_alignParentTop="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/default_profile_picture" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Jorge E. Hernández"
         android:id="@+id/tvUserName"
-        android:layout_alignTop="@+id/imageView"
-        android:layout_toRightOf="@+id/imageView"
-        android:layout_toEndOf="@+id/imageView"
-        android:layout_marginLeft="10dp"
-        android:layout_marginStart="10dp" />
-
-    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="VER"
+        android:layout_alignTop="@+id/imageView"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@+id/imageView"
+        android:layout_toRightOf="@+id/imageView"
+        android:text="Jorge E. Hernández" />
+
+    <TextView
         android:id="@+id/tvFromLabel"
-        android:textStyle="bold"
-        android:textColor="#fff40000"
-        android:layout_below="@+id/tvPostText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/tvPostText"
         android:layout_alignStart="@+id/tvPostText"
-        android:layout_marginTop="10dp"/>
+        android:layout_below="@+id/tvPostText"
+        android:layout_marginTop="10dp"
+        android:text="VER"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#fff40000"
+        android:textStyle="bold" />
 
     <TextView
+        android:id="@+id/tvToLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="NLE"
-        android:id="@+id/tvToLabel"
-        android:textStyle="bold"
-        android:textColor="#00CC66"
+        android:layout_alignTop="@+id/tvFromLabel"
         android:layout_marginLeft="26dp"
         android:layout_marginStart="26dp"
-        android:layout_alignTop="@+id/tvFromLabel"
+        android:layout_toEndOf="@+id/tvFromLabel"
         android:layout_toRightOf="@+id/tvFromLabel"
-        android:layout_toEndOf="@+id/tvFromLabel" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:text="NLE"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Secundaria "
-        android:id="@+id/tvAcademicLevelLabel"
-        android:textStyle="bold"
-        android:layout_alignTop="@+id/tvToLabel"
-        android:layout_toRightOf="@+id/tvUserName"
-        android:layout_toEndOf="@+id/tvUserName" />
+        android:textColor="#00CC66"
+        android:textStyle="bold" />
 
     <TextView
+        android:id="@+id/tvAcademicLevelLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hace 6 horas"
+        android:layout_alignTop="@+id/tvToLabel"
+        android:layout_marginLeft="26dp"
+        android:layout_marginStart="26dp"
+        android:layout_toEndOf="@+id/tvToLabel"
+        android:layout_toRightOf="@+id/tvToLabel"
+        android:text="Secundaria "
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textStyle="bold" />
+
+    <TextView
         android:id="@+id/tvPostDate"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="Hace 6 horas"
         android:textSize="10sp" />
 
     <TextView
+        android:id="@+id/tvPostText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Este es un texto largo de ejemplo, para ver la ubicacion del elemento en cada elemento de la lista de publicaciones"
-        android:id="@+id/tvPostText"
-        android:textSize="12sp"
-        android:layout_below="@+id/tvUserName"
         android:layout_alignLeft="@+id/tvUserName"
         android:layout_alignStart="@+id/tvUserName"
-        android:layout_marginTop="13dp" />
+        android:layout_below="@+id/tvUserName"
+        android:layout_marginTop="5dp"
+        android:text="Este es un texto largo de ejemplo, para ver la ubicacion del elemento en cada elemento de la lista de publicaciones"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="12sp" />
 </RelativeLayout>

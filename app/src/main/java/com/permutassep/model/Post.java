@@ -9,8 +9,6 @@ import java.util.Date;
  */
 public class Post {
 
-
-
     @SerializedName("id")
     private int id;
     @SerializedName("user")

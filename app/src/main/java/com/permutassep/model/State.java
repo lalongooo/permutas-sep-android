@@ -10,10 +10,17 @@ public class State implements Parcelable {
     @Expose
     private short id;
     private String mStateName;
+    private String mShortCode;
 
     public State(short id, String stateName) {
         this.id = id;
         this.mStateName = stateName;
+    }
+
+    public State(short id, String stateName, String shortCode) {
+        this.id = id;
+        this.mStateName = stateName;
+        this.mShortCode = shortCode;
     }
 
     public String getStateName() {
@@ -27,6 +34,12 @@ public class State implements Parcelable {
     }
     public void setId(short id) {
         this.id = id;
+    }
+    public String getShortCode() {
+        return mShortCode;
+    }
+    public void setShortCode(String shortCode) {
+        this.mShortCode = shortCode;
     }
 
     @Override

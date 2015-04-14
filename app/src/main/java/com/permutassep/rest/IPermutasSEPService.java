@@ -3,8 +3,11 @@ package com.permutassep.rest;
 import com.permutassep.model.Post;
 import com.permutassep.model.User;
 
+import java.util.List;
+
 import retrofit.Callback;
 import retrofit.http.Body;
+import retrofit.http.GET;
 import retrofit.http.POST;
 
 public interface  IPermutasSEPService {
@@ -14,4 +17,7 @@ public interface  IPermutasSEPService {
 
     @POST("/posts/")
     void newPost(@Body Post post, Callback<Post> callback);
+
+    @GET("/posts/")
+    void getPosts(Callback<List<Post>> callback);
 }

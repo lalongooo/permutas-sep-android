@@ -85,6 +85,20 @@
     <string name="main_loading_localities">Cargando localidades</string>
     <string name="please_wait">Por favor, espera...</string>
 
+    <string name="time_ago_prefix"></string>
+    <string name="time_ago_suffix"></string>
+    <string name="time_ago_seconds">menos de un minuto</string>
+    <string name="time_ago_minute">1 minuto</string>
+    <string name="time_ago_minutes">%d minutos</string>
+    <string name="time_ago_hour">Hace 1 hora</string>
+    <string name="time_ago_hours">Hace %d hours</string>
+    <string name="time_ago_day">1 dia</string>
+    <string name="time_ago_days">%d dias</string>
+    <string name="time_ago_month">Hace 1 mes</string>
+    <string name="time_ago_months">%d meses</string>
+    <string name="time_ago_year">Hace 1 año</string>
+    <string name="time_ago_years">%d años</string>
+
     <string-array name="states">
         <item>Todo México</item>
         <item>Aguascalientes</item>
@@ -119,6 +133,42 @@
         <item>Veracruz de Ignacio de la Llave</item>
         <item>Yucatán</item>
         <item>Zacatecas</item>
+    </string-array>
+
+    <string-array name="state_codes">
+        <item>ALL</item>
+        <item>AGU</item>
+        <item>BCN</item>
+        <item>BCS</item>
+        <item>CAM</item>
+        <item>COA</item>
+        <item>COL</item>
+        <item>CHP</item>
+        <item>CHH</item>
+        <item>DIF</item>
+        <item>DUR</item>
+        <item>GUA</item>
+        <item>GRO</item>
+        <item>HID</item>
+        <item>JAL</item>
+        <item>MEX</item>
+        <item>MIC</item>
+        <item>MOR</item>
+        <item>NAY</item>
+        <item>NLE</item>
+        <item>OAX</item>
+        <item>PUE</item>
+        <item>QUE</item>
+        <item>ROO</item>
+        <item>SLP</item>
+        <item>SIN</item>
+        <item>SON</item>
+        <item>TAB</item>
+        <item>TAM</item>
+        <item>TLA</item>
+        <item>VER</item>
+        <item>YUC</item>
+        <item>ZAC</item>
     </string-array>
 
 </resources>
