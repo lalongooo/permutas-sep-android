@@ -23,6 +23,7 @@ import com.mikepenz.materialdrawer.model.interfaces.Nameable;
 import com.permutassep.R;
 import com.permutassep.config.Config;
 import com.permutassep.model.User;
+import com.permutassep.utils.PrefUtils;
 
 import br.kots.mob.complex.preferences.ComplexPreferences;
 

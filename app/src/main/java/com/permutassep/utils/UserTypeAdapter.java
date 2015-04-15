@@ -7,7 +7,6 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import com.permutassep.config.Config;
 import com.permutassep.model.User;
-import com.permutassep.ui.PrefUtils;
 
 import java.io.IOException;
 

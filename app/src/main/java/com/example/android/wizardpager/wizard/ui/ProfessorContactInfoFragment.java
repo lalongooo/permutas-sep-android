@@ -36,7 +36,7 @@ import com.permutassep.config.Config;
 import com.permutassep.model.SocialUser;
 import com.permutassep.model.User;
 import com.permutassep.ui.ActivityMain;
-import com.permutassep.ui.PrefUtils;
+import com.permutassep.utils.PrefUtils;
 
 import br.kots.mob.complex.preferences.ComplexPreferences;
 

@@ -1,4 +1,4 @@
-package com.permutassep.ui;
+package com.permutassep.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;

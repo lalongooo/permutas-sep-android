@@ -14,6 +14,7 @@ import com.permutassep.adapter.AppOverviewAdapter;
 import com.permutassep.config.Config;
 import com.permutassep.model.SocialUser;
 import com.permutassep.model.User;
+import com.permutassep.utils.PrefUtils;
 import com.viewpagerindicator.CirclePageIndicator;
 import com.viewpagerindicator.PageIndicator;
 
