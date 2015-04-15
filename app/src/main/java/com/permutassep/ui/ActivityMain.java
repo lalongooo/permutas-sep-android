@@ -1,6 +1,7 @@
 package com.permutassep.ui;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -21,6 +22,9 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.Nameable;
 import com.permutassep.R;
 import com.permutassep.config.Config;
+import com.permutassep.model.User;
+
+import br.kots.mob.complex.preferences.ComplexPreferences;
 
 public class ActivityMain extends ActionBarActivity {
 
@@ -108,11 +112,15 @@ public class ActivityMain extends ActionBarActivity {
 		}
 	};
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
 
-        menu.findItem(R.id.action_post).setIcon(new IconicsDrawable(this, GoogleMaterial.Icon.gmd_add).color(Color.WHITE).actionBarSize());
+        User user = ComplexPreferences.getComplexPreferences(this, Config.APP_PREFERENCES_NAME, Context.MODE_PRIVATE).getObject(PrefUtils.PREF_USER_KEY, User.class);
+        if(user !=  null){
 
+            // Inflate the menu; this adds items to the action bar if it is present.
+            getMenuInflater().inflate(R.menu.main, menu);
+            menu.findItem(R.id.action_post).setIcon(new IconicsDrawable(this, GoogleMaterial.Icon.gmd_add).color(Color.WHITE).actionBarSize());
+
+        }
         return true;
     }
 
