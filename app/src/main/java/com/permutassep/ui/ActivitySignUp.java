@@ -3,7 +3,6 @@ package com.permutassep.ui;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.View;
@@ -19,7 +18,6 @@ import com.facebook.model.GraphUser;
 import com.facebook.widget.LoginButton;
 import com.permutassep.R;
 import com.permutassep.config.Config;
-import com.permutassep.model.SocialUser;
 import com.permutassep.model.User;
 import com.permutassep.rest.PermutasSEPRestClient;
 import com.throrinstudio.android.common.libs.validator.Form;
@@ -139,23 +137,47 @@ public class ActivitySignUp extends Activity {
         if (state.isOpened()) {
             Request.executeMeRequestAsync(session, new Request.GraphUserCallback() {
                 @Override
-                public void onCompleted(GraphUser user, Response response) {
-                    if (user != null) {
+                public void onCompleted(GraphUser fbUser, Response response) {
+                    if (fbUser != null) {
 
-                        SocialUser socialUser = new SocialUser(
-                                user.getName()
-                                , user.getProperty("email") != null ? user.getProperty("email").toString() : ""
-                                , ""
-                                , ""
-                                , SocialUser.SocialNetwork.FACEBOOK
-                                , user.getId()
-                        );
+                        final String email = fbUser.getProperty("email") != null ? fbUser.getProperty("email").toString() : "";
+                        final String fbUserId = fbUser.getId();
 
-                        ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getBaseContext(), Config.APP_PREFERENCES_NAME, MODE_PRIVATE);
-                        complexPreferences.putObject(PrefUtils.PREF_USER_KEY, socialUser);
-                        complexPreferences.commit();
+                        // TODO: Is very important to change this code. Due to deadlines, we need to make it this way :(
+                        User u;
+                        if (email != "") {
+                            u = new User(fbUser.getName(), email, "0000000000", fbUser.getId());
+                        } else {
+                            u = new User(fbUser.getName(), fbUser.getId().concat("@facebook.com"), "0000000000", "facebook");
+                        }
 
-                        goToMainActivity();
+                        /*
+                        * * Perform the call to the REST service
+                        * */
+                        new PermutasSEPRestClient().get().newUser(u, new Callback<User>() {
+                            @Override
+                            public void success(User user, retrofit.client.Response response) {
+                                hideDialog();
+                                ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getBaseContext(), Config.APP_PREFERENCES_NAME, MODE_PRIVATE);
+
+                                if (email != "") {
+                                    user.setPassword(fbUserId);
+                                } else {
+                                    user.setPassword("facebook");
+                                }
+
+                                complexPreferences.putObject(PrefUtils.PREF_USER_KEY, user);
+                                complexPreferences.commit();
+
+                                PrefUtils.setNormalUser(getApplicationContext(), true);
+                                goToMainActivity();
+                            }
+
+                            @Override
+                            public void failure(RetrofitError error) {
+                                hideDialog();
+                            }
+                        });
                     }
                 }
             });

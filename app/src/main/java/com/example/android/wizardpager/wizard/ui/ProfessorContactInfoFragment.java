@@ -21,6 +21,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -181,6 +182,17 @@ public class ProfessorContactInfoFragment extends Fragment {
             mPhoneView.setText(user.getPhone() != null && user.getPhone() != "" ? user.getPhone() : "");
             // mPhoneView.setFocusable(user.getPhone() != null && user.getPhone() != "" ? false : true);
         }
+
+        // TODO: Remove this code when the authentication/registration service is done
+        String email = user.getEmail().substring(0, user.getEmail().indexOf('@'));
+        String domain = user.getEmail().substring(user.getEmail().indexOf('@') + 1);
+        if(TextUtils.isDigitsOnly(email) && domain.equals("facebook.com")){
+            mEmailView.setText("");
+        }
+        if(user.getPhone().equals("0000000000")){
+            mPhoneView.setText("");
+        }
+
     }
 
     @Override
