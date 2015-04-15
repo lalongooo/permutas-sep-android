@@ -1,0 +1,71 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/WizardPageContainer"
+    tools:context="com.permutassep.ui.FragmentSearch">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:layout_centerVertical="true">
+
+        <TextView
+            style="@style/WizardFormLabel"
+            android:text="@string/label_your_state" />
+        <Spinner
+            android:id="@+id/spn_state_origin"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:prompt="@string/search_state_prompt"
+            android:layout_marginBottom="15dp" />
+
+        <Spinner
+            android:id="@+id/spn_city_origin"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginBottom="15dp"
+            android:spinnerMode="dialog" />
+
+        <Spinner
+            android:id="@+id/spn_town_origin"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginBottom="15dp"
+            android:spinnerMode="dialog" />
+
+
+
+
+
+
+
+
+
+        <Spinner
+            android:id="@+id/spn_state_to"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="15dp" />
+
+        <Spinner
+            android:id="@+id/spn_city_to"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginBottom="15dp"
+            android:spinnerMode="dialog" />
+
+        <Spinner
+            android:id="@+id/spn_town_to"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginBottom="15dp"
+            android:spinnerMode="dialog" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

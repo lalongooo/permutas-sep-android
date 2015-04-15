@@ -131,13 +131,8 @@ public class ActivityMain extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_post) {
-            replaceFragment(R.id.action_post);
-            result.setSelection(-1);
-            return true;
-        }
-        return false; //super.onOptionsItemSelected(item);
+        replaceFragment(item.getItemId());
+        return false;
     }
 
     private void replaceFragment(int id){
@@ -148,6 +143,9 @@ public class ActivityMain extends ActionBarActivity {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentSettings()).commit();
         }else if(id == R.id.action_post){
             getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentCreatePost()).commit();
+            result.setSelection(-1);
+        }else if(id == R.id.action_search){
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentSearch()).commit();
         }
     }
 }

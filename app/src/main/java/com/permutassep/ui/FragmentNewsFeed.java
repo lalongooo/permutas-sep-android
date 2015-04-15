@@ -19,7 +19,6 @@ import com.permutassep.rest.PermutasSEPRestClient;
 import com.permutassep.utils.PostTypeAdapter;
 import com.permutassep.utils.UserTypeAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit.Callback;

@@ -43,6 +43,10 @@
     <string name="app_sign_up_log_reg_dlg_title">Espera...</string>
     <string name="app_sign_up_log_reg_dlg_text">Te estamos registrando</string>
 
+    <string name="search_state_prompt">Estado</string>
+    <string name="search_city_prompt">Municipio</string>
+    <string name="search_town_prompt">Localidad</string>
+
     <string name="app_login_sign_up_already_have_account">Ya tengo cuenta</string>
     <string name="app_login_sign_up_log_in">Iniciar sesión</string>
     <string name="app_login_sign_up_want_to_register">Quiero registrarme</string>
@@ -175,5 +179,8 @@
         <item>YUC</item>
         <item>ZAC</item>
     </string-array>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
