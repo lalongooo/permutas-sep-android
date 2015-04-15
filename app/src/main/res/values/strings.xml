@@ -55,8 +55,11 @@
     <string name="app_login_login_with_fb">O iniciar sesión con</string>
     <string name="app_login_btn_login_with_fb">Iniciar sesión con Facebook</string>
 
+    <string name="app_news_feed_dlg_title">Espera...</string>
+    <string name="app_news_feed_dlg_text">Cargando publicaciones</string>
+    <string name="app_nav_drawer_1">Inicio</string>
+    <string name="app_nav_drawer_2">Ajustes</string>
 
-    
     <string name="tos_dialog_text">Al seleccionar \"Aceptar\" usted acepta los Términos y condiciones del uso de esta aplicación.</string>
     <string name="tos_dialog_cancel">Cancelar</string>
     <string name="tos_dialog_accept">Aceptar</string>
@@ -93,7 +96,7 @@
     <string name="time_ago_minute">1 minuto</string>
     <string name="time_ago_minutes">%d minutos</string>
     <string name="time_ago_hour">Hace 1 hora</string>
-    <string name="time_ago_hours">Hace %d hours</string>
+    <string name="time_ago_hours">Hace %d horas</string>
     <string name="time_ago_day">1 dia</string>
     <string name="time_ago_days">%d dias</string>
     <string name="time_ago_month">Hace 1 mes</string>
