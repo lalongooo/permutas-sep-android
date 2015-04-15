@@ -70,7 +70,7 @@ public class ActivityMain extends ActionBarActivity {
                         new DividerDrawerItem(),
                         new SecondaryDrawerItem().withName(getString(R.string.app_nav_drawer_2)).withIdentifier(DrawerItems.SETTINGS.id).withIcon(GoogleMaterial.Icon.gmd_settings)
                 )
-                .withSelectedItem(1)
+                .withSelectedItem(0)
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l, IDrawerItem drawerItem) {
@@ -86,6 +86,7 @@ public class ActivityMain extends ActionBarActivity {
                 })
                 .build();
         result.getListView().setVerticalScrollBarEnabled(false);
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentNewsFeed()).commit();
 	}
 	
 	private void showTOSDialog() {
