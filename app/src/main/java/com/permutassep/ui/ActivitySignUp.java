@@ -43,7 +43,6 @@ public class ActivitySignUp extends Activity {
     private EditText etPassword;
     private ProgressDialog pDlg;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

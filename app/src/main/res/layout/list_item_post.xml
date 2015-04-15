@@ -22,7 +22,9 @@
         android:layout_marginStart="10dp"
         android:layout_toEndOf="@+id/imageView"
         android:layout_toRightOf="@+id/imageView"
-        android:text="Jorge E. Hernández" />
+        android:text="Jorge E. Hernández"
+        android:textStyle="bold"
+        android:textSize="15sp" />
 
     <TextView
         android:id="@+id/tvFromLabel"
@@ -42,8 +44,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/tvFromLabel"
-        android:layout_marginLeft="26dp"
-        android:layout_marginStart="26dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
         android:layout_toEndOf="@+id/tvFromLabel"
         android:layout_toRightOf="@+id/tvFromLabel"
         android:text="NLE"
@@ -56,8 +58,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/tvToLabel"
-        android:layout_marginLeft="26dp"
-        android:layout_marginStart="26dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
         android:layout_toEndOf="@+id/tvToLabel"
         android:layout_toRightOf="@+id/tvToLabel"
         android:text="Secundaria "
@@ -84,5 +86,5 @@
         android:layout_marginTop="5dp"
         android:text="Este es un texto largo de ejemplo, para ver la ubicacion del elemento en cada elemento de la lista de publicaciones"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textSize="12sp" />
+        android:textSize="14sp" />
 </RelativeLayout>

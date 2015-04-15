@@ -1,5 +1,6 @@
 package com.permutassep.ui;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -28,12 +29,15 @@ import retrofit.converter.GsonConverter;
 
 public class FragmentNewsFeed extends Fragment {
 
+    private ProgressDialog pDlg;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_news_feed, container, false);
         final ListView lv = (ListView) rootView.findViewById(R.id.news_feed_list);
 
+        showDialog(getString(R.string.app_news_feed_dlg_title), getString(R.string.app_news_feed_dlg_text));
         GsonBuilder gsonBuilder = new GsonBuilder()
                 .registerTypeHierarchyAdapter(User.class, new UserTypeAdapter(getActivity()))
                 .registerTypeHierarchyAdapter(Post.class, new PostTypeAdapter(getActivity()))
@@ -45,15 +49,26 @@ public class FragmentNewsFeed extends Fragment {
                 if(!posts.isEmpty()){
                     PostAdapter adapter = new PostAdapter(getActivity(), posts);
                     lv.setAdapter(adapter);
+                    hideDialog();
                 }
             }
 
             @Override
             public void failure(RetrofitError error) {
                 // TODO: Add the error message dialog
+                hideDialog();
             }
         });
 
         return rootView;
+    }
+
+    private void showDialog(String title, String text) {
+        pDlg = ProgressDialog.show(getActivity(), title, text, true);
+    }
+
+    private void hideDialog() {
+        if (pDlg != null)
+            pDlg.dismiss();
     }
 }
