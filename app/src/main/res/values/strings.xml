@@ -46,6 +46,7 @@
     <string name="search_state_prompt">Estado</string>
     <string name="search_city_prompt">Municipio</string>
     <string name="search_town_prompt">Localidad</string>
+    <string name="search_fragment_title">Búsqueda</string>
 
     <string name="app_login_sign_up_already_have_account">Ya tengo cuenta</string>
     <string name="app_login_sign_up_log_in">Iniciar sesión</string>
