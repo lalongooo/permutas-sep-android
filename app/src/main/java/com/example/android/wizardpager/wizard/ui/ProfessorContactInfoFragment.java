@@ -33,7 +33,6 @@ import android.widget.TextView;
 import com.example.android.wizardpager.wizard.model.ProfessorContactInfoPage;
 import com.permutassep.R;
 import com.permutassep.config.Config;
-import com.permutassep.model.SocialUser;
 import com.permutassep.model.User;
 import com.permutassep.ui.ActivityMain;
 import com.permutassep.utils.PrefUtils;
@@ -170,29 +169,32 @@ public class ProfessorContactInfoFragment extends Fragment {
         });
 
         ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), Config.APP_PREFERENCES_NAME, Context.MODE_PRIVATE);
-        User user = complexPreferences.getObject(PrefUtils.PREF_USER_KEY, SocialUser.class);
+        User user = complexPreferences.getObject(PrefUtils.PREF_USER_KEY, User.class);
 
         if(user != null){
-            mNameView.setText(user.getName() != null && user.getName() != "" ? user.getName() : "");
+            mNameView.setText(!TextUtils.isEmpty(user.getName()) ? user.getName() : "");
             // mNameView.setFocusable(user.getName() != null && user.getName() != "" ? false : true);
 
-            mEmailView.setText(user.getEmail() != null && user.getEmail() != "" ? user.getEmail() : "");
+            mEmailView.setText(!TextUtils.isEmpty(user.getEmail()) ? user.getEmail() : "");
             // mEmailView.setFocusable(user.getEmail() != null && user.getEmail() != "" ? false : true);
 
-            mPhoneView.setText(user.getPhone() != null && user.getPhone() != "" ? user.getPhone() : "");
+            mPhoneView.setText(!TextUtils.isEmpty(user.getPhone()) ? user.getPhone() : "");
             // mPhoneView.setFocusable(user.getPhone() != null && user.getPhone() != "" ? false : true);
         }
 
         // TODO: Remove this code when the authentication/registration service is done
-        String email = user.getEmail().substring(0, user.getEmail().indexOf('@'));
-        String domain = user.getEmail().substring(user.getEmail().indexOf('@') + 1);
-        if(TextUtils.isDigitsOnly(email) && domain.equals("facebook.com")){
-            mEmailView.setText("");
+        if(!TextUtils.isEmpty(user.getEmail())){
+            String email = user.getEmail().substring(0, user.getEmail().indexOf('@'));
+            String domain = user.getEmail().substring(user.getEmail().indexOf('@') + 1);
+            if(TextUtils.isDigitsOnly(email) && domain.equals("facebook.com")){
+                mEmailView.setText("");
+            }
         }
-        if(user.getPhone().equals("0000000000")){
-            mPhoneView.setText("");
+        if(!TextUtils.isEmpty(user.getPhone())){
+            if(user.getPhone().equals("0000000000")){
+                mPhoneView.setText("");
+            }
         }
-
     }
 
     @Override

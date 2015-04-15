@@ -108,6 +108,7 @@ public class ActivitySignUp extends Activity {
                             ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getBaseContext(), Config.APP_PREFERENCES_NAME, MODE_PRIVATE);
                             user.setPassword(password);
                             complexPreferences.putObject(PrefUtils.PREF_USER_KEY, user);
+                            complexPreferences.putObject(PrefUtils.PREF_ORIGINAL_USER_KEY, user);
                             complexPreferences.commit();
 
                             PrefUtils.setNormalUser(getApplicationContext(), true);
@@ -168,6 +169,7 @@ public class ActivitySignUp extends Activity {
                                 }
 
                                 complexPreferences.putObject(PrefUtils.PREF_USER_KEY, user);
+                                complexPreferences.putObject(PrefUtils.PREF_ORIGINAL_USER_KEY, user);
                                 complexPreferences.commit();
 
                                 PrefUtils.setNormalUser(getApplicationContext(), true);

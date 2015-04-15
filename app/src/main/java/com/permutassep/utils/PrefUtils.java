@@ -14,9 +14,15 @@ public class PrefUtils {
 
     /*
     * Preference to store the current user logged
-    * in the application.
+    * in the application (the email and phone of this user can be modified on each post).
     * */
     public static final String PREF_USER_KEY = "user";
+
+    /*
+    * Preference to store the current user logged
+    * in the application. This user data, cannot be modified
+    * */
+    public static final String PREF_ORIGINAL_USER_KEY = "user";
 
     /*
     * Boolean preference value to indicate that the current user
