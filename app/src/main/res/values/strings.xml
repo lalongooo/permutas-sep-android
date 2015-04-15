@@ -46,6 +46,7 @@
     <string name="app_login_sign_up_log_in">Iniciar sesión</string>
     <string name="app_login_sign_up_want_to_register">Quiero registrarme</string>
     <string name="app_login_sign_up_want_to_register_cta">Registrarme</string>
+    <string name="app_login_sign_up_continue"><u>Continuar sin registrarme</u></string>
 
     <string name="app_login_username">Tu nombre de usuario o correo</string>
     <string name="app_login_password">Tu contraseña</string>

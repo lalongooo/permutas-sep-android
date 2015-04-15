@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.permutassep.R;
 
@@ -12,6 +13,7 @@ public class ActivityLoginSignUp extends Activity {
 
     private Button btnRegister;
     private Button btnLogin;
+    private TextView tvContinue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,16 @@ public class ActivityLoginSignUp extends Activity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(ActivityLoginSignUp.this, ActivityLogin.class));
+            }
+        });
+
+        tvContinue = (TextView) findViewById(R.id.tvContinue);
+        tvContinue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent().setClass(ActivityLoginSignUp.this, ActivityMain.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(i);
             }
         });
     }

@@ -10,7 +10,8 @@
         android:layout_centerVertical="true"
         android:orientation="vertical"
         android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp">
+        android:layout_marginRight="16dp"
+        android:id="@+id/linearLayout">
 
         <TextView
             android:id="@+id/tvAlreadyRegistered"
@@ -21,6 +22,7 @@
             android:layout_gravity="center_horizontal"
             android:text="@string/app_login_sign_up_already_have_account"
             android:layout_marginBottom="16dp"
+            android:textColor="@color/primary"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <Button
@@ -29,7 +31,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="30dp"
-            android:text="@string/app_login_sign_up_log_in" />
+            android:textColor="@color/primary"
+            android:text="@string/app_login_sign_up_log_in"
+            android:textStyle="bold" />
 
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
@@ -76,6 +80,7 @@
             android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
             android:text="@string/app_login_sign_up_want_to_register"
+            android:textColor="@color/primary"
             android:layout_marginBottom="16dp"
             android:layout_marginTop="30dp"
             android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -85,8 +90,24 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="30dp"
-            android:text="@string/app_login_sign_up_want_to_register_cta" />
+            android:layout_marginBottom="60dp"
+            android:textColor="@color/primary"
+            android:text="@string/app_login_sign_up_want_to_register_cta"
+            android:textStyle="bold" />
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvContinue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/app_login_sign_up_continue"
+        android:textColor="@color/primary"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_below="@+id/linearLayout"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold|normal" />
+
+
 </RelativeLayout>
