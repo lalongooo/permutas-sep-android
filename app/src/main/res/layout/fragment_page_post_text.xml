@@ -44,9 +44,10 @@
                 android:gravity="top|left"
                 android:hint="@string/wizard_post_text_hint"
                 android:inputType="textMultiLine"
-                android:lines="8"
+                android:lines="10"
+                android:maxLength="500"
                 android:maxLines="10"
-                android:minLines="6"
+                android:minLines="1"
                 android:saveEnabled="false"
                 android:scrollbars="vertical" />
 

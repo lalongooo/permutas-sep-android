@@ -1,14 +1,11 @@
 package com.permutassep.adapter;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.permutassep.R;
@@ -33,7 +30,6 @@ public class PostAdapter extends BaseAdapter {
         inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         states = Utils.getStates(a);
     }
-
 
     public int getCount() {
         return data.size();
