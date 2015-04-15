@@ -5,6 +5,13 @@
 
     <item
         android:id="@+id/action_post"
-        android:title="@string/action_settings"
+        android:title="@string/action_post"
+        android:visible="false"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/action_search"
+        android:title="@string/action_search"
+
         app:showAsAction="ifRoom"/>
 </menu>

@@ -18,7 +18,8 @@
     <string name="app_name">Permutas SEP</string>
     <string name="facebook_app_id">143269149215368</string>
     <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Publicar permuta</string>
+    <string name="action_post">Publicar permuta</string>
+    <string name="action_search">Buscar</string>
 
     <string name="wizard_contact_suggest_data_completion_dialog_msg">Si completas los datos en esta seccion, podrán contactarte con mayor facilidad. Presiona Siguiente si no quieres agregar mayor información</string>
     <string name="wizard_post_text_label">Información adicional</string>
