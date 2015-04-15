@@ -136,6 +136,7 @@ public class ActivitySignUp extends Activity {
 
     private void onSessionStateChange(Session session, SessionState state, Exception exception) {
         if (state.isOpened()) {
+            showDialog(getString(R.string.app_sign_up_log_reg_dlg_title), getString(R.string.app_sign_up_log_reg_dlg_text));
             Request.executeMeRequestAsync(session, new Request.GraphUserCallback() {
                 @Override
                 public void onCompleted(GraphUser fbUser, Response response) {
@@ -172,11 +173,13 @@ public class ActivitySignUp extends Activity {
                                 complexPreferences.commit();
 
                                 PrefUtils.setNormalUser(getApplicationContext(), true);
+                                hideDialog();
                                 goToMainActivity();
                             }
 
                             @Override
                             public void failure(RetrofitError error) {
+                                // TODO: Add an error message dialog
                                 hideDialog();
                             }
                         });
