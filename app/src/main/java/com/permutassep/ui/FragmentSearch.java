@@ -12,22 +12,33 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Spinner;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.permutassep.R;
 import com.permutassep.adapter.CitySpinnerBaseAdapter;
 import com.permutassep.adapter.StateSpinnerBaseAdapter;
 import com.permutassep.adapter.TownSpinnerBaseAdapter;
+import com.permutassep.config.Config;
 import com.permutassep.inegifacil.rest.InegiFacilRestClient;
 import com.permutassep.model.City;
+import com.permutassep.model.Post;
 import com.permutassep.model.State;
 import com.permutassep.model.Town;
+import com.permutassep.model.User;
+import com.permutassep.rest.PermutasSEPRestClient;
+import com.permutassep.utils.PostTypeAdapter;
+import com.permutassep.utils.UserTypeAdapter;
 import com.permutassep.utils.Utils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import retrofit.converter.GsonConverter;
 
 public class FragmentSearch extends Fragment {
 
@@ -308,7 +319,45 @@ public class FragmentSearch extends Fragment {
     View.OnClickListener listener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Log.i("","");
+
+            Map<String, String> params = new HashMap<>();
+
+            if(stateFromSelectedPosition != 0){
+                params.put("place_from_state",String.valueOf(stateFromSelectedPosition));
+            }
+            if(cityFromSelectedPosition != 0){
+                params.put("place_from_city", String.valueOf(cityFromSelectedPosition));
+            }
+            if(!townFromSelectedPosition.equals("")){
+                params.put("place_from_town",townFromSelectedPosition);
+            }
+            if(stateToSelectedPosition != 0){
+                params.put("place_to_state", String.valueOf(stateToSelectedPosition));
+            }
+            if(cityToSelectedPosition != 0){
+                params.put("place_to_city", String.valueOf(cityToSelectedPosition));
+            }
+            if(!townToSelectedPosition.equals("")){
+                params.put("place_to_town", townToSelectedPosition);
+            }
+
+
+            GsonBuilder gsonBuilder = new GsonBuilder()
+                    .registerTypeHierarchyAdapter(User.class, new UserTypeAdapter(getActivity()))
+                    .registerTypeHierarchyAdapter(Post.class, new PostTypeAdapter(getActivity()))
+                    .setDateFormat(Config.APP_DATE_FORMAT);
+            Gson gson = gsonBuilder.create();
+            new PermutasSEPRestClient(new GsonConverter(gson)).get().searchPosts(params, new Callback<List<Post>>() {
+                @Override
+                public void success(List<Post> posts, Response response) {
+                    Log.i("", "");
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    Log.i("", "");
+                }
+            });
 
         }
     };
