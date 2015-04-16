@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.Spinner;
 
 import com.permutassep.R;
@@ -31,6 +32,7 @@ import retrofit.client.Response;
 public class FragmentSearch extends Fragment {
 
     private ProgressDialog pDlg;
+    private Button btnSearch;
     private Spinner spnStateFrom;
     private Spinner spnMunicipalityFrom;
     private Spinner spnLocalityFrom;
@@ -40,10 +42,10 @@ public class FragmentSearch extends Fragment {
 
     private int stateFromSelectedPosition = 0;
     private int cityFromSelectedPosition = 0;
-    private int townFromSelectedPosition = 0;
+    private String townFromSelectedPosition = "";
     private int stateToSelectedPosition = 0;
     private int cityToSelectedPosition = 0;
-    private int townToSelectedPosition = 0;
+    private String townToSelectedPosition = "";
 
     private List<State> mStatesFrom = new ArrayList<>();
     private List<City> mCitiesFrom = new ArrayList<>();
@@ -56,6 +58,8 @@ public class FragmentSearch extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_search, container, false);
+        btnSearch = (Button) rootView.findViewById(R.id.btnSearch);
+        btnSearch.setOnClickListener(listener);
         spnStateFrom = ((Spinner) rootView.findViewById(R.id.spn_state_origin));
         spnMunicipalityFrom = ((Spinner) rootView.findViewById(R.id.spn_city_origin));
         spnLocalityFrom = ((Spinner) rootView.findViewById(R.id.spn_town_origin));
@@ -67,9 +71,7 @@ public class FragmentSearch extends Fragment {
         setupSpinners();
 
         return rootView;
-
     }
-
 
     private void setupSpinners() {
 
@@ -92,7 +94,6 @@ public class FragmentSearch extends Fragment {
 
                     stateFromSelectedPosition = position;
                     cityFromSelectedPosition = 0;
-                    townFromSelectedPosition = 0;
 
                     try {
                         InegiFacilRestClient.get().getCities(String.valueOf(selectedState.getId()), new Callback<ArrayList<City>>() {
@@ -136,7 +137,6 @@ public class FragmentSearch extends Fragment {
                     showDialog(getString(R.string.please_wait), getString(R.string.main_loading_localities));
                     mTownsFrom.clear();
                     cityFromSelectedPosition = position;
-                    townFromSelectedPosition = 0;
 
                     try {
                         InegiFacilRestClient.get().getTowns(String.valueOf(selectedCity.getClaveEntidad()), String.valueOf(selectedCity.getClaveMunicipio()), new Callback<ArrayList<Town>>() {
@@ -174,7 +174,7 @@ public class FragmentSearch extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 Town town = (Town) parent.getItemAtPosition(position);
-                townFromSelectedPosition = position;
+                townFromSelectedPosition = town.getClave();
             }
 
             @Override
@@ -203,7 +203,6 @@ public class FragmentSearch extends Fragment {
 
                     stateToSelectedPosition = position;
                     cityToSelectedPosition = 0;
-                    townToSelectedPosition = 0;
 
                     try {
                         InegiFacilRestClient.get().getCities(String.valueOf(selectedState.getId()), new Callback<ArrayList<City>>() {
@@ -247,7 +246,6 @@ public class FragmentSearch extends Fragment {
                     showDialog(getString(R.string.please_wait), getString(R.string.main_loading_localities));
                     mTownsTo.clear();
                     cityToSelectedPosition = position;
-                    townToSelectedPosition = 0;
 
                     try {
                         InegiFacilRestClient.get().getTowns(String.valueOf(selectedCity.getClaveEntidad()), String.valueOf(selectedCity.getClaveMunicipio()), new Callback<ArrayList<Town>>() {
@@ -285,7 +283,7 @@ public class FragmentSearch extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 Town town = (Town) parent.getItemAtPosition(position);
-                townToSelectedPosition = position;
+                townToSelectedPosition = town.getClave();
             }
 
             @Override
@@ -297,7 +295,6 @@ public class FragmentSearch extends Fragment {
 
     }
 
-
     private void resetSpinner(Spinner spinner) {
         if (spinner.getAdapter() != null && spinner.getAdapter().getCount() > 0) {
             spinner.setAdapter(null);
@@ -307,6 +304,14 @@ public class FragmentSearch extends Fragment {
     private void showDialog(String title, String text) {
         pDlg = ProgressDialog.show(getActivity(), title, text, true);
     }
+
+    View.OnClickListener listener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Log.i("","");
+
+        }
+    };
 
     private void hideDialog() {
         if (pDlg != null)

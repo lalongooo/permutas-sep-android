@@ -65,6 +65,7 @@
 
     <string name="app_news_feed_dlg_title">Espera...</string>
     <string name="app_news_feed_dlg_text">Cargando publicaciones</string>
+
     <string name="app_nav_drawer_1">Inicio</string>
     <string name="app_nav_drawer_2">Ajustes</string>
 

@@ -175,22 +175,23 @@ public class FragmentCreatePost extends Fragment implements
                                                         City cf = p.getData().getParcelable(ProfessorCityFromPage.MUNICIPALITY_DATA_KEY);
                                                         Town tf = p.getData().getParcelable(ProfessorCityFromPage.LOCALITY_DATA_KEY);
 
-                                                        post.setStateTo(sf.getId());
-                                                        post.setCityTo(Short.valueOf(cf.getId()));
-                                                        post.setTownTo(Short.valueOf(tf.getClave()));
-                                                        post.setLatTo(tf.getLatitud());
-                                                        post.setLonTo(tf.getLongitud());
+                                                        post.setStateFrom(sf.getId());
+                                                        post.setCityFrom(Short.valueOf(String.valueOf(cf.getClaveMunicipio())));
+                                                        post.setTownFrom(Short.valueOf(tf.getClave()));
+                                                        post.setLatFrom(tf.getLatitud());
+                                                        post.setLonFrom(tf.getLongitud());
                                                         break;
                                                     case PermutaSepWizardModel.CITY_TO_KEY:
                                                         State st =  p.getData().getParcelable(ProfessorCityToPage.STATE_TO_DATA_KEY);
                                                         City ct = p.getData().getParcelable(ProfessorCityToPage.MUNICIPALITY_TO_DATA_KEY);
                                                         Town tt = p.getData().getParcelable(ProfessorCityToPage.LOCALITY_TO_DATA_KEY);
 
-                                                        post.setStateFrom(st.getId());
-                                                        post.setCityFrom(Short.valueOf(ct.getId()));
-                                                        post.setTownFrom(Short.valueOf(tt.getClave()));
-                                                        post.setLatFrom(tt.getLatitud());
-                                                        post.setLonFrom(tt.getLongitud());
+                                                        post.setStateTo(st.getId());
+                                                        post.setCityTo(Short.valueOf(String.valueOf(ct.getClaveMunicipio())));
+                                                        post.setTownTo(Short.valueOf(tt.getClave()));
+                                                        post.setLatTo(tt.getLatitud());
+                                                        post.setLonTo(tt.getLongitud());
+
                                                         break;
                                                     case PermutaSepWizardModel.POSITION_TYPE_KEY:
                                                         post.setPositionType(p.getData().getString(p.SIMPLE_DATA_KEY));

@@ -4,11 +4,13 @@ import com.permutassep.model.Post;
 import com.permutassep.model.User;
 
 import java.util.List;
+import java.util.Map;
 
 import retrofit.Callback;
 import retrofit.http.Body;
 import retrofit.http.GET;
 import retrofit.http.POST;
+import retrofit.http.QueryMap;
 
 public interface  IPermutasSEPService {
 
@@ -20,4 +22,7 @@ public interface  IPermutasSEPService {
 
     @GET("/posts/")
     void getPosts(Callback<List<Post>> callback);
+
+    @GET("/posts/")
+    void searchPosts(@QueryMap Map<String, String> parameters, Callback<List<Post>> callback);
 }
