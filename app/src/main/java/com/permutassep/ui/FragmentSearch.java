@@ -19,6 +19,7 @@ import com.permutassep.inegifacil.rest.InegiFacilRestClient;
 import com.permutassep.model.City;
 import com.permutassep.model.State;
 import com.permutassep.model.Town;
+import com.permutassep.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,23 +31,38 @@ import retrofit.client.Response;
 public class FragmentSearch extends Fragment {
 
     private ProgressDialog pDlg;
-    private Spinner spnState;
-    private Spinner spnMunicipality;
-    private Spinner spnLocality;
-    private int stateSelectedPosition = 0;
-    private int citySelectedPosition = 0;
-    private int townSelectedPosition = 0;
-    private List<State> mStates = new ArrayList<>();
-    private List<City> mCities = new ArrayList<>();
-    private List<Town> mTowns = new ArrayList<>();
+    private Spinner spnStateFrom;
+    private Spinner spnMunicipalityFrom;
+    private Spinner spnLocalityFrom;
+    private Spinner spnStateTo;
+    private Spinner spnMunicipalityTo;
+    private Spinner spnLocalityTo;
+
+    private int stateFromSelectedPosition = 0;
+    private int cityFromSelectedPosition = 0;
+    private int townFromSelectedPosition = 0;
+    private int stateToSelectedPosition = 0;
+    private int cityToSelectedPosition = 0;
+    private int townToSelectedPosition = 0;
+
+    private List<State> mStatesFrom = new ArrayList<>();
+    private List<City> mCitiesFrom = new ArrayList<>();
+    private List<Town> mTownsFrom = new ArrayList<>();
+    private List<State> mStatesTo = new ArrayList<>();
+    private List<City> mCitiesTo = new ArrayList<>();
+    private List<Town> mTownsTo = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_search, container, false);
-        spnState = ((Spinner) rootView.findViewById(R.id.spn_state_origin));
-        spnMunicipality = ((Spinner) rootView.findViewById(R.id.spn_city_origin));
-        spnLocality = ((Spinner) rootView.findViewById(R.id.spn_town_origin));
+        spnStateFrom = ((Spinner) rootView.findViewById(R.id.spn_state_origin));
+        spnMunicipalityFrom = ((Spinner) rootView.findViewById(R.id.spn_city_origin));
+        spnLocalityFrom = ((Spinner) rootView.findViewById(R.id.spn_town_origin));
+
+        spnStateTo = ((Spinner) rootView.findViewById(R.id.spn_state_to));
+        spnMunicipalityTo = ((Spinner) rootView.findViewById(R.id.spn_city_to));
+        spnLocalityTo = ((Spinner) rootView.findViewById(R.id.spn_town_to));
 
         setupSpinners();
 
@@ -57,36 +73,33 @@ public class FragmentSearch extends Fragment {
 
     private void setupSpinners() {
 
-        if (spnState.getAdapter() == null) {
-            String[] states = getResources().getStringArray(R.array.states);
-            for (short i = 0; i < states.length; i++) {
-                mStates.add(new State(i, states[i]));
-            }
-            spnState.setAdapter(new StateSpinnerBaseAdapter(getActivity(), mStates));
-        }
+        mStatesFrom = Utils.getStateList(getActivity());
+        spnStateFrom.setAdapter(new StateSpinnerBaseAdapter(getActivity(), mStatesFrom));
 
-        spnState.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spnStateFrom.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 State selectedState = (State) parent.getItemAtPosition(position);
-                if (position != stateSelectedPosition && selectedState.getId() != 0) {
+
+                if (position != stateFromSelectedPosition && selectedState.getId() != 0) {
 
                     showDialog(getString(R.string.please_wait), getString(R.string.main_loading_cities));
                     // Remove localities
-                    resetSpinner(spnLocality);
-                    mCities.clear();
-                    mTowns.clear();
-                    stateSelectedPosition = position;
-                    citySelectedPosition = 0;
-                    townSelectedPosition = 0;
+                    resetSpinner(spnLocalityFrom);
+                    mCitiesFrom.clear();
+                    mTownsFrom.clear();
+
+                    stateFromSelectedPosition = position;
+                    cityFromSelectedPosition = 0;
+                    townFromSelectedPosition = 0;
 
                     try {
                         InegiFacilRestClient.get().getCities(String.valueOf(selectedState.getId()), new Callback<ArrayList<City>>() {
                             @Override
                             public void success(ArrayList<City> cities, Response response) {
-                                mCities = cities;
-                                spnMunicipality.setAdapter(new CitySpinnerBaseAdapter(getActivity(), cities));
+                                mCitiesFrom = cities;
+                                spnMunicipalityFrom.setAdapter(new CitySpinnerBaseAdapter(getActivity(), cities));
                                 hideDialog();
                             }
 
@@ -101,8 +114,8 @@ public class FragmentSearch extends Fragment {
                     }
                 } else {
                     if (selectedState.getId() == 0) {
-                        resetSpinner(spnMunicipality);
-                        resetSpinner(spnLocality);
+                        resetSpinner(spnMunicipalityFrom);
+                        resetSpinner(spnLocalityFrom);
                     }
                 }
             }
@@ -113,24 +126,24 @@ public class FragmentSearch extends Fragment {
         });
 
 
-        spnMunicipality.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spnMunicipalityFrom.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 City selectedCity = (City) parent.getItemAtPosition(position);
-                if (citySelectedPosition != position && position != 0 && getUserVisibleHint()) {
+                if (cityFromSelectedPosition != position && position != 0 && getUserVisibleHint()) {
 
                     showDialog(getString(R.string.please_wait), getString(R.string.main_loading_localities));
-                    mTowns.clear();
-                    citySelectedPosition = position;
-                    townSelectedPosition = 0;
+                    mTownsFrom.clear();
+                    cityFromSelectedPosition = position;
+                    townFromSelectedPosition = 0;
 
                     try {
                         InegiFacilRestClient.get().getTowns(String.valueOf(selectedCity.getClaveEntidad()), String.valueOf(selectedCity.getClaveMunicipio()), new Callback<ArrayList<Town>>() {
                             @Override
                             public void success(ArrayList<Town> towns, Response response) {
-                                mTowns = towns;
-                                spnLocality.setAdapter(new TownSpinnerBaseAdapter(getActivity(), towns));
+                                mTownsFrom = towns;
+                                spnLocalityFrom.setAdapter(new TownSpinnerBaseAdapter(getActivity(), towns));
                                 hideDialog();
                             }
 
@@ -145,7 +158,7 @@ public class FragmentSearch extends Fragment {
                     }
                 } else {
                     if (position != 0) {
-                        resetSpinner(spnLocality);
+                        resetSpinner(spnLocalityFrom);
                     }
                 }
             }
@@ -156,12 +169,12 @@ public class FragmentSearch extends Fragment {
         });
 
 
-        spnLocality.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spnLocalityFrom.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 Town town = (Town) parent.getItemAtPosition(position);
-                townSelectedPosition = position;
+                townFromSelectedPosition = position;
             }
 
             @Override
@@ -169,6 +182,119 @@ public class FragmentSearch extends Fragment {
 
             }
         });
+
+
+        mStatesTo = Utils.getStateList(getActivity());
+        spnStateTo.setAdapter(new StateSpinnerBaseAdapter(getActivity(), mStatesTo));
+
+        spnStateTo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                State selectedState = (State) parent.getItemAtPosition(position);
+
+                if (position != stateToSelectedPosition && selectedState.getId() != 0) {
+
+                    showDialog(getString(R.string.please_wait), getString(R.string.main_loading_cities));
+                    // Remove localities
+                    resetSpinner(spnLocalityTo);
+                    mCitiesTo.clear();
+                    mTownsTo.clear();
+
+                    stateToSelectedPosition = position;
+                    cityToSelectedPosition = 0;
+                    townToSelectedPosition = 0;
+
+                    try {
+                        InegiFacilRestClient.get().getCities(String.valueOf(selectedState.getId()), new Callback<ArrayList<City>>() {
+                            @Override
+                            public void success(ArrayList<City> cities, Response response) {
+                                mCitiesTo = cities;
+                                spnMunicipalityTo.setAdapter(new CitySpinnerBaseAdapter(getActivity(), cities));
+                                hideDialog();
+                            }
+
+                            @Override
+                            public void failure(RetrofitError error) {
+                                hideDialog();
+                            }
+                        });
+
+                    } catch (Exception ex) {
+                        Log.d("An error ocurred", ex.getMessage());
+                    }
+                } else {
+                    if (selectedState.getId() == 0) {
+                        resetSpinner(spnMunicipalityTo);
+                        resetSpinner(spnLocalityTo);
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+
+        spnMunicipalityTo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                City selectedCity = (City) parent.getItemAtPosition(position);
+                if (cityToSelectedPosition != position && position != 0 && getUserVisibleHint()) {
+
+                    showDialog(getString(R.string.please_wait), getString(R.string.main_loading_localities));
+                    mTownsTo.clear();
+                    cityToSelectedPosition = position;
+                    townToSelectedPosition = 0;
+
+                    try {
+                        InegiFacilRestClient.get().getTowns(String.valueOf(selectedCity.getClaveEntidad()), String.valueOf(selectedCity.getClaveMunicipio()), new Callback<ArrayList<Town>>() {
+                            @Override
+                            public void success(ArrayList<Town> towns, Response response) {
+                                mTownsTo = towns;
+                                spnLocalityTo.setAdapter(new TownSpinnerBaseAdapter(getActivity(), towns));
+                                hideDialog();
+                            }
+
+                            @Override
+                            public void failure(RetrofitError error) {
+                                hideDialog();
+                            }
+                        });
+
+                    } catch (Exception ex) {
+                        Log.d("An error occurred", ex.getMessage());
+                    }
+                } else {
+                    if (position != 0) {
+                        resetSpinner(spnLocalityTo);
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+
+        spnLocalityTo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                Town town = (Town) parent.getItemAtPosition(position);
+                townToSelectedPosition = position;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
     }
 
 
