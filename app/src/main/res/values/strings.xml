@@ -50,6 +50,12 @@
     <string name="search_fragment_origin_label">Origen</string>
     <string name="search_fragment_target_label">Destino</string>
     <string name="search_fragment_btn_search">Buscar</string>
+    <string name="search_fragment_dlg_title">Espera</string>
+    <string name="search_fragment_dlg_text">Buscando...</string>
+    <string name="search_fragment_filters_error_msg">Ocurrió un error en tu búsqueda</string>
+    <string name="search_fragment_accept">Aceptar</string>
+    <string name="search_fragment_search_error_msg">Ocurrió un error en tu búsqueda</string>
+    <string name="search_fragment_search_no_restlts">No se encontraron resultados</string>
 
     <string name="app_login_sign_up_already_have_account">Ya tengo cuenta</string>
     <string name="app_login_sign_up_log_in">Iniciar sesión</string>

@@ -146,6 +146,7 @@ public class ActivityMain extends ActionBarActivity {
             result.setSelection(-1);
         }else if(id == R.id.action_search){
             getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentSearch()).commit();
+            result.setSelection(-1);
         }
     }
 }

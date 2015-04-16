@@ -1,8 +1,12 @@
 package com.permutassep.ui;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -126,6 +130,8 @@ public class FragmentSearch extends Fragment {
                     }
                 } else {
                     if (selectedState.getId() == 0) {
+                        cityFromSelectedPosition = 0;
+                        townFromSelectedPosition = "";
                         resetSpinner(spnMunicipalityFrom);
                         resetSpinner(spnLocalityFrom);
                     }
@@ -169,6 +175,7 @@ public class FragmentSearch extends Fragment {
                     }
                 } else {
                     if (position != 0) {
+                        townFromSelectedPosition = "";
                         resetSpinner(spnLocalityFrom);
                     }
                 }
@@ -235,6 +242,8 @@ public class FragmentSearch extends Fragment {
                     }
                 } else {
                     if (selectedState.getId() == 0) {
+                        cityToSelectedPosition = 0;
+                        townToSelectedPosition = "";
                         resetSpinner(spnMunicipalityTo);
                         resetSpinner(spnLocalityTo);
                     }
@@ -278,6 +287,7 @@ public class FragmentSearch extends Fragment {
                     }
                 } else {
                     if (position != 0) {
+                        townToSelectedPosition = "";
                         resetSpinner(spnLocalityTo);
                     }
                 }
@@ -312,36 +322,41 @@ public class FragmentSearch extends Fragment {
         }
     }
 
-    private void showDialog(String title, String text) {
-        pDlg = ProgressDialog.show(getActivity(), title, text, true);
-    }
-
     View.OnClickListener listener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
 
             Map<String, String> params = new HashMap<>();
 
-            if(stateFromSelectedPosition != 0){
-                params.put("place_from_state",String.valueOf(stateFromSelectedPosition));
-            }
-            if(cityFromSelectedPosition != 0){
-                params.put("place_from_city", String.valueOf(cityFromSelectedPosition));
-            }
-            if(!townFromSelectedPosition.equals("")){
-                params.put("place_from_town",townFromSelectedPosition);
-            }
-            if(stateToSelectedPosition != 0){
-                params.put("place_to_state", String.valueOf(stateToSelectedPosition));
-            }
-            if(cityToSelectedPosition != 0){
-                params.put("place_to_city", String.valueOf(cityToSelectedPosition));
-            }
-            if(!townToSelectedPosition.equals("")){
-                params.put("place_to_town", townToSelectedPosition);
+            try {
+                if(stateFromSelectedPosition != 0){
+                    params.put("place_from_state",String.valueOf(stateFromSelectedPosition));
+                }
+                if(cityFromSelectedPosition != 0){
+                    params.put("place_from_city", String.valueOf(cityFromSelectedPosition));
+                }
+                if(!townFromSelectedPosition.equals("")){
+                    params.put("place_from_town",townFromSelectedPosition);
+                }
+                if(stateToSelectedPosition != 0){
+                    params.put("place_to_state", String.valueOf(stateToSelectedPosition));
+                }
+                if(cityToSelectedPosition != 0){
+                    params.put("place_to_city", String.valueOf(cityToSelectedPosition));
+                }
+                if(!townToSelectedPosition.equals("")){
+                    params.put("place_to_town", townToSelectedPosition);
+                }
+            } catch (Exception e) {
+                showSimpleDialog(R.string.search_fragment_filters_error_msg, R.string.search_fragment_accept, new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
             }
 
-
+            showDialog(getString(R.string.search_fragment_dlg_title), getString(R.string.search_fragment_dlg_text));
             GsonBuilder gsonBuilder = new GsonBuilder()
                     .registerTypeHierarchyAdapter(User.class, new UserTypeAdapter(getActivity()))
                     .registerTypeHierarchyAdapter(Post.class, new PostTypeAdapter(getActivity()))
@@ -350,20 +365,49 @@ public class FragmentSearch extends Fragment {
             new PermutasSEPRestClient(new GsonConverter(gson)).get().searchPosts(params, new Callback<List<Post>>() {
                 @Override
                 public void success(List<Post> posts, Response response) {
-                    Log.i("", "");
+                    hideDialog();
+                    if(response.getReason().equals("OK")){
+                        if(posts.isEmpty()){
+                            showSimpleDialog(R.string.search_fragment_search_no_restlts, R.string.search_fragment_accept, new DialogInterface.OnClickListener(){
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                }
+                            });
+                        }else{
+
+                        }
+                    }
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
-                    Log.i("", "");
+                    // TODO: Show a message when an error occurs.
+                    hideDialog();
                 }
             });
 
         }
     };
 
+    private void showDialog(String title, String text) {
+        pDlg = ProgressDialog.show(getActivity(), title, text, true);
+    }
+
     private void hideDialog() {
         if (pDlg != null)
             pDlg.dismiss();
+    }
+
+    private void showSimpleDialog(final int dlgMessage, final int btnText, final DialogInterface.OnClickListener onClickListener){
+        DialogFragment dg = new DialogFragment() {
+            @Override
+            public Dialog onCreateDialog(Bundle savedInstanceState) {
+                return new AlertDialog.Builder(getActivity())
+                        .setMessage(dlgMessage)
+                        .setPositiveButton(btnText, onClickListener)
+                        .create();
+            }
+        };
+        dg.show(getActivity().getSupportFragmentManager(), "search_filters__dialog");
     }
 }

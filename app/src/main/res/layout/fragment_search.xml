@@ -17,6 +17,7 @@
 
             <TextView
                 style="@style/WizardPageTitle"
+                android:layout_marginTop="10dp"
                 android:layout_marginLeft="0dp"
                 android:text="@string/search_fragment_title" />
 
@@ -35,12 +36,14 @@
                 android:id="@+id/spn_city_origin"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
+                android:prompt="@string/search_city_prompt"
                 android:spinnerMode="dialog" />
 
             <Spinner
                 android:id="@+id/spn_town_origin"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
+                android:prompt="@string/search_town_prompt"
                 android:spinnerMode="dialog" />
 
 
@@ -54,18 +57,21 @@
                 android:id="@+id/spn_state_to"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
+                android:prompt="@string/search_state_prompt"
                 android:spinnerMode="dialog" />
 
             <Spinner
                 android:id="@+id/spn_city_to"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
+                android:prompt="@string/search_city_prompt"
                 android:spinnerMode="dialog" />
 
             <Spinner
                 android:id="@+id/spn_town_to"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
+                android:prompt="@string/search_town_prompt"
                 android:spinnerMode="dialog" />
 
         </LinearLayout>
