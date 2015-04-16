@@ -1,6 +1,7 @@
 package com.permutassep.ui;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,54 +19,42 @@ import com.permutassep.model.Post;
 import com.permutassep.model.User;
 import com.permutassep.rest.PermutasSEPRestClient;
 import com.permutassep.utils.PostTypeAdapter;
+import com.permutassep.utils.PrefUtils;
 import com.permutassep.utils.UserTypeAdapter;
 import com.permutassep.utils.Utils;
 
 import java.util.List;
 
+import br.kots.mob.complex.preferences.ComplexPreferences;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 import retrofit.converter.GsonConverter;
 
-public class FragmentNewsFeed extends Fragment {
+public class FragmentResult extends Fragment {
 
     private ProgressDialog pDlg;
+
+    private List<Post> posts;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_news_feed, container, false);
         final ListView lv = (ListView) rootView.findViewById(R.id.news_feed_list);
+        getActivity().setTitle(R.string.app_main_toolbar_search_results);
 
-        showDialog(getString(R.string.app_news_feed_dlg_title), getString(R.string.app_news_feed_dlg_text));
-        GsonBuilder gsonBuilder = new GsonBuilder()
-                .registerTypeHierarchyAdapter(User.class, new UserTypeAdapter(getActivity()))
-                .registerTypeHierarchyAdapter(Post.class, new PostTypeAdapter(getActivity()))
-                .setDateFormat(Config.APP_DATE_FORMAT);
-        Gson gson = gsonBuilder.create();
-        new PermutasSEPRestClient(new GsonConverter(gson)).get().getPosts(new Callback<List<Post>>() {
-            @Override
-            public void success(List<Post> posts, Response response) {
-                if(!posts.isEmpty()){
-                    PostAdapter adapter = new PostAdapter(getActivity(), posts);
-                    lv.setAdapter(adapter);
-                    hideDialog();
-                }
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                hideDialog();
-                Utils.showSimpleDialog(R.string.app_news_feed_get_posts_err, R.string.search_fragment_accept, getActivity(), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                });
-            }
-        });
-
+        PostAdapter adapter = new PostAdapter(getActivity(), getPosts());
+        lv.setAdapter(adapter);
         return rootView;
+    }
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
     }
 
     private void showDialog(String title, String text) {

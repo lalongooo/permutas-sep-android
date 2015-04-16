@@ -16,13 +16,8 @@
             android:paddingRight="16dp">
 
             <TextView
-                style="@style/WizardPageTitle"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="0dp"
-                android:text="@string/search_fragment_title" />
-
-            <TextView
                 style="@style/WizardFormLabel"
+                android:layout_marginTop="10dp"
                 android:text="@string/search_fragment_origin_label" />
 
             <Spinner

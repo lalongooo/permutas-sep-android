@@ -1,7 +1,15 @@
 package com.permutassep.utils;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Typeface;
+import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 
 import com.permutassep.R;
@@ -47,5 +55,19 @@ public class Utils {
             states.add(s);
         }
         return states;
+    }
+
+    public static void showSimpleDialog(final int dlgMessage, final int btnText, FragmentActivity activity, final DialogInterface.OnClickListener onClickListener){
+        DialogFragment dg = new DialogFragment() {
+            @Override
+            public Dialog onCreateDialog(Bundle savedInstanceState) {
+                return new AlertDialog.Builder(getActivity())
+                        .setMessage(dlgMessage)
+                        .setPositiveButton(btnText, onClickListener)
+                        .setCancelable(false)
+                        .create();
+            }
+        };
+        dg.show(activity.getSupportFragmentManager(), "simple_dialog");
     }
 }

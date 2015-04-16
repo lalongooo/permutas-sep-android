@@ -46,7 +46,6 @@
     <string name="search_state_prompt">Estado</string>
     <string name="search_city_prompt">Municipio</string>
     <string name="search_town_prompt">Localidad</string>
-    <string name="search_fragment_title">Búsqueda</string>
     <string name="search_fragment_origin_label">Origen</string>
     <string name="search_fragment_target_label">Destino</string>
     <string name="search_fragment_btn_search">Buscar</string>
@@ -71,6 +70,7 @@
 
     <string name="app_news_feed_dlg_title">Espera...</string>
     <string name="app_news_feed_dlg_text">Cargando publicaciones</string>
+    <string name="app_news_feed_get_posts_err">Servicio no disponible. Intenta mas tarde</string>
 
     <string name="app_nav_drawer_1">Inicio</string>
     <string name="app_nav_drawer_2">Ajustes</string>
@@ -100,6 +100,9 @@
     <string name="submit_confirm_message">Presiona Aceptar para publicar tu permuta</string>
     <string name="submit_confirm_button">Aceptar</string>
 
+    <string name="app_main_toolbar_post_action">Publicar permuta</string>
+    <string name="app_main_toolbar_search_action">Búsqueda</string>
+    <string name="app_main_toolbar_search_results">Resultados</string>
     <string name="main_select_state">Selecciona Estado</string>
     <string name="main_loading_cities">Cargando ciudades</string>
     <string name="main_loading_localities">Cargando localidades</string>

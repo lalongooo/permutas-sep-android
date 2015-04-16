@@ -3,7 +3,9 @@ package com.permutassep.ui;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
@@ -31,6 +33,7 @@ import com.permutassep.model.Town;
 import com.permutassep.model.User;
 import com.permutassep.rest.PermutasSEPRestClient;
 import com.permutassep.utils.PostTypeAdapter;
+import com.permutassep.utils.PrefUtils;
 import com.permutassep.utils.UserTypeAdapter;
 import com.permutassep.utils.Utils;
 
@@ -39,6 +42,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import br.kots.mob.complex.preferences.ComplexPreferences;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -329,29 +333,28 @@ public class FragmentSearch extends Fragment {
             Map<String, String> params = new HashMap<>();
 
             try {
-                if(stateFromSelectedPosition != 0){
-                    params.put("place_from_state",String.valueOf(stateFromSelectedPosition));
+                if (stateFromSelectedPosition != 0) {
+                    params.put("place_from_state", String.valueOf(stateFromSelectedPosition));
                 }
-                if(cityFromSelectedPosition != 0){
+                if (cityFromSelectedPosition != 0) {
                     params.put("place_from_city", String.valueOf(cityFromSelectedPosition));
                 }
-                if(!townFromSelectedPosition.equals("")){
-                    params.put("place_from_town",townFromSelectedPosition);
+                if (!townFromSelectedPosition.equals("")) {
+                    params.put("place_from_town", townFromSelectedPosition);
                 }
-                if(stateToSelectedPosition != 0){
+                if (stateToSelectedPosition != 0) {
                     params.put("place_to_state", String.valueOf(stateToSelectedPosition));
                 }
-                if(cityToSelectedPosition != 0){
+                if (cityToSelectedPosition != 0) {
                     params.put("place_to_city", String.valueOf(cityToSelectedPosition));
                 }
-                if(!townToSelectedPosition.equals("")){
+                if (!townToSelectedPosition.equals("")) {
                     params.put("place_to_town", townToSelectedPosition);
                 }
             } catch (Exception e) {
-                showSimpleDialog(R.string.search_fragment_filters_error_msg, R.string.search_fragment_accept, new DialogInterface.OnClickListener(){
+                Utils.showSimpleDialog(R.string.search_fragment_filters_error_msg, R.string.search_fragment_accept, getActivity(), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
                     }
                 });
             }
@@ -366,15 +369,19 @@ public class FragmentSearch extends Fragment {
                 @Override
                 public void success(List<Post> posts, Response response) {
                     hideDialog();
-                    if(response.getReason().equals("OK")){
-                        if(posts.isEmpty()){
-                            showSimpleDialog(R.string.search_fragment_search_no_restlts, R.string.search_fragment_accept, new DialogInterface.OnClickListener(){
+                    if (response.getReason().equals("OK")) {
+                        if (posts.isEmpty()) {
+                            Utils.showSimpleDialog(R.string.search_fragment_search_no_restlts, R.string.search_fragment_accept, getActivity(), new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                 }
                             });
-                        }else{
+                        } else {
+                            ComplexPreferences.getComplexPreferences(getActivity(), Config.APP_PREFERENCES_NAME, Context.MODE_PRIVATE).putObject(PrefUtils.PREF_SEARCH_RESULTS, posts);
 
+                            FragmentResult fr = new FragmentResult();
+                            fr.setPosts(posts);
+                            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, fr).commit();
                         }
                     }
                 }
@@ -396,18 +403,5 @@ public class FragmentSearch extends Fragment {
     private void hideDialog() {
         if (pDlg != null)
             pDlg.dismiss();
-    }
-
-    private void showSimpleDialog(final int dlgMessage, final int btnText, final DialogInterface.OnClickListener onClickListener){
-        DialogFragment dg = new DialogFragment() {
-            @Override
-            public Dialog onCreateDialog(Bundle savedInstanceState) {
-                return new AlertDialog.Builder(getActivity())
-                        .setMessage(dlgMessage)
-                        .setPositiveButton(btnText, onClickListener)
-                        .create();
-            }
-        };
-        dg.show(getActivity().getSupportFragmentManager(), "search_filters__dialog");
     }
 }

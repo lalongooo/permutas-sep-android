@@ -1,7 +1,6 @@
 package com.permutassep.ui;
 
 import android.app.AlertDialog;
-import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
@@ -42,6 +41,7 @@ public class ActivityMain extends ActionBarActivity {
     }
 
     public Drawer.Result result;
+    private Toolbar toolbar;
 
     private OnFilterChangedListener onFilterChangedListener;
 
@@ -58,7 +58,7 @@ public class ActivityMain extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.activity_main_toolbar);
+        toolbar= (Toolbar) findViewById(R.id.activity_main_toolbar);
         toolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(toolbar);
 
@@ -144,9 +144,11 @@ public class ActivityMain extends ActionBarActivity {
         }else if(id == R.id.action_post){
             getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentCreatePost()).commit();
             result.setSelection(-1);
+            toolbar.setTitle(R.string.app_main_toolbar_post_action);
         }else if(id == R.id.action_search){
             getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentSearch()).commit();
             result.setSelection(-1);
+            toolbar.setTitle(R.string.app_main_toolbar_search_action);
         }
     }
 }

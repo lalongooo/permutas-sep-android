@@ -25,6 +25,11 @@ public class PrefUtils {
     public static final String PREF_ORIGINAL_USER_KEY = "user";
 
     /*
+    * Preference to store the searchi results
+    * */
+    public static final String PREF_SEARCH_RESULTS = "user";
+
+    /*
     * Boolean preference value to indicate that the current user
     * was registered with email/password credentials. If it's false, it means
     * that the user was logged/registered using a social network login.
