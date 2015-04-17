@@ -1,4 +1,4 @@
-package com.permutassep.utils;
+package com.permutassep.adapter;
 
 import android.content.Context;
 
@@ -8,6 +8,7 @@ import com.google.gson.stream.JsonWriter;
 import com.permutassep.config.Config;
 import com.permutassep.model.Post;
 import com.permutassep.model.User;
+import com.permutassep.utils.PrefUtils;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

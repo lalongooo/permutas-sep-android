@@ -1,14 +1,10 @@
 package com.permutassep.ui;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,9 +28,9 @@ import com.permutassep.model.State;
 import com.permutassep.model.Town;
 import com.permutassep.model.User;
 import com.permutassep.rest.PermutasSEPRestClient;
-import com.permutassep.utils.PostTypeAdapter;
+import com.permutassep.adapter.PostTypeAdapter;
 import com.permutassep.utils.PrefUtils;
-import com.permutassep.utils.UserTypeAdapter;
+import com.permutassep.adapter.UserTypeAdapter;
 import com.permutassep.utils.Utils;
 
 import java.util.ArrayList;
