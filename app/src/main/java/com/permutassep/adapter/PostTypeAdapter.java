@@ -114,6 +114,7 @@ public class PostTypeAdapter extends TypeAdapter<Post> {
         out.name("place_to_state").value(post.getStateTo());
         out.name("place_to_city").value(post.getCityTo());
         out.name("place_to_town").value(post.getTownTo());
+        out.name("academic_level").value(post.getAcademicLevel());
 
         User u = ComplexPreferences.getComplexPreferences(context, Config.APP_PREFERENCES_NAME, Context.MODE_PRIVATE).getObject(PrefUtils.PREF_USER_KEY, User.class);
         out.name("user").value(u.getId());
