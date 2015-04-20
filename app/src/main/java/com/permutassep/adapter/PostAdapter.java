@@ -62,10 +62,7 @@ public class PostAdapter extends BaseAdapter {
         tvUserName.setText(p.getUser().getName());
         tvFromLabel.setText(states.get((String.valueOf(p.getStateFrom()))).getShortCode());
         tvToLabel.setText(states.get(String.valueOf(p.getStateTo())).getShortCode());
-
-        // TODO: Confirm this field with @krescruz
-        // tvAcademicLevelLabel.setText();
-
+        tvAcademicLevelLabel.setText(p.getAcademicLevel());
         tvPostDate.setText(new TimeAgo(activity).timeAgo(p.getPostDate()));
         tvPostText.setText(p.getPostText());
 

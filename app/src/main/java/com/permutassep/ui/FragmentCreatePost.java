@@ -193,6 +193,9 @@ public class FragmentCreatePost extends Fragment implements
                                                         post.setLonTo(tt.getLongitud());
 
                                                         break;
+                                                    case PermutaSepWizardModel.ACADEMIC_LEVEL_KEY:
+                                                        post.setAcademicLevel(p.getData().getString(p.SIMPLE_DATA_KEY));
+                                                        break;
                                                     case PermutaSepWizardModel.POSITION_TYPE_KEY:
                                                         post.setPositionType(p.getData().getString(p.SIMPLE_DATA_KEY));
                                                         break;

@@ -43,6 +43,8 @@ public class Post {
     private Date mPostDate;
     @SerializedName("is_teaching_career")
     private boolean mIsTeachingCareer;
+    @SerializedName("academic_level")
+    private String mAcademicLevel;
 
     public int getId() {
         return id;
@@ -180,25 +182,35 @@ public class Post {
         this.mPostDate = postDate;
     }
 
+    public String getAcademicLevel() {
+        return mAcademicLevel;
+    }
+
+    public void setAcademicLevel(String mAcademicLevel) {
+        this.mAcademicLevel = mAcademicLevel;
+    }
+
     @Override
     public String toString() {
         return "Post{" +
-                "mUser=" + mUser +
+                "id=" + id +
+                ", mUser=" + mUser +
                 ", postText='" + postText + '\'' +
                 ", stateFrom=" + stateFrom +
                 ", cityFrom=" + cityFrom +
                 ", townFrom=" + townFrom +
-                ", latFrom=" + latFrom +
-                ", lonFrom=" + lonFrom +
+                ", latFrom='" + latFrom + '\'' +
+                ", lonFrom='" + lonFrom + '\'' +
                 ", stateTo=" + stateTo +
                 ", cityTo=" + cityTo +
                 ", townTo=" + townTo +
-                ", latTo=" + latTo +
-                ", lonTo=" + lonTo +
+                ", latTo='" + latTo + '\'' +
+                ", lonTo='" + lonTo + '\'' +
                 ", mWorkdayType='" + mWorkdayType + '\'' +
                 ", mPositionType='" + mPositionType + '\'' +
                 ", mPostDate=" + mPostDate +
                 ", mIsTeachingCareer=" + mIsTeachingCareer +
+                ", mAcademicLevel='" + mAcademicLevel + '\'' +
                 '}';
     }
 }

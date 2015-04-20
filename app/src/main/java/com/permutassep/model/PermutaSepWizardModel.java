@@ -22,6 +22,7 @@ public class PermutaSepWizardModel extends AbstractWizardModel {
     public static final String POSITION_TYPE_KEY = "position_type_page_key";
     public static final String WORKDAY_TYPE_KEY = "workday_type_page_key";
     public static final String TEACHING_CAREER_KEY = "teaching_career_page_key";
+    public static final String ACADEMIC_LEVEL_KEY = "academic_level_page_key";
 
 	@Override
 	protected PageList onNewRootPageList() {
@@ -29,6 +30,7 @@ public class PermutaSepWizardModel extends AbstractWizardModel {
                 new ProfessorContactInfoPage(this, "Tu información").setRequired(true).setKey(CONTACT_INFO_KEY),
                 new ProfessorCityFromPage(this, "Tu ciudad de origen").setRequired(true).setKey(CITY_FROM_KEY),
                 new ProfessorCityToPage(this, "Tu lugar deseado").setRequired(true).setKey(CITY_TO_KEY),
+                new SingleFixedChoicePage(this, "Nivel académico").setChoices("Pre-escolar", "Primaria", "Secundaria", "Tele-secundaria", "Administrativo", "Intendencia").setRequired(true).setKey(ACADEMIC_LEVEL_KEY),
                 new SingleFixedChoicePage(this, "Tipo de plaza").setChoices("Estatal", "Federal").setRequired(true).setKey(POSITION_TYPE_KEY),
                 new SingleFixedChoicePage(this, "Tipo de jornada").setChoices("Jornada Regular", "Jornada ampliada", "Tiempo completo").setRequired(true).setKey(WORKDAY_TYPE_KEY),
                 new SingleFixedChoicePage(this, "Carrera magisterial").setChoices("Si", "No").setRequired(true).setKey(TEACHING_CAREER_KEY),
