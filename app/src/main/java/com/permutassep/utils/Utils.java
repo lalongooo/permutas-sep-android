@@ -6,6 +6,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Typeface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -44,9 +46,14 @@ public class Utils {
         return states;
     }
 
-    public static List<State> getStateList(Context c) {
-        String[] state_descr = c.getResources().getStringArray(R.array.states);
-        String[] state_codes = c.getResources().getStringArray(R.array.state_codes);
+    /**
+     * Retrieves a list of the Mexico states.
+     *
+     * @param context The current context
+     */
+    public static List<State> getStateList(Context context) {
+        String[] state_descr = context.getResources().getStringArray(R.array.states);
+        String[] state_codes = context.getResources().getStringArray(R.array.state_codes);
 
         List<State> states = new ArrayList<>();
 
@@ -69,5 +76,18 @@ public class Utils {
             }
         };
         dg.show(activity.getSupportFragmentManager(), "simple_dialog");
+    }
+
+    /**
+     * Check if the device is connected to the internet
+     *
+     * @param context The current context
+     */
+    public static Boolean isNetworkAvailable(Context context) {
+
+        ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+
+        return  (networkInfo != null && networkInfo.isConnected());
     }
 }

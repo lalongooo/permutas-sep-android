@@ -38,6 +38,16 @@ public class FragmentNewsFeed extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_news_feed, container, false);
         final ListView lv = (ListView) rootView.findViewById(R.id.news_feed_list);
 
+        if(!Utils.isNetworkAvailable(getActivity())){
+            Utils.showSimpleDialog(R.string.network_availability_dlg_text, R.string.search_fragment_accept, getActivity(), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    getActivity().finish();
+                }
+            });
+            return rootView;
+        }
+
         showDialog(getString(R.string.app_news_feed_dlg_title), getString(R.string.app_news_feed_dlg_text));
         GsonBuilder gsonBuilder = new GsonBuilder()
                 .registerTypeHierarchyAdapter(User.class, new UserTypeAdapter(getActivity()))

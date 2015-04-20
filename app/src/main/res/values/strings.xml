@@ -42,7 +42,7 @@
     <string name="app_sign_up_log_in_with">O registrate con</string>
     <string name="app_sign_up_log_reg_dlg_title">Espera...</string>
     <string name="app_sign_up_log_reg_dlg_text">Te estamos registrando</string>
-
+    <string name="network_availability_dlg_text">Su dispositivo no tiene acceso a Internet.</string>
     <string name="search_state_prompt">Estado</string>
     <string name="search_city_prompt">Municipio</string>
     <string name="search_town_prompt">Localidad</string>
