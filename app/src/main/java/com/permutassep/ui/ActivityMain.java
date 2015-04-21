@@ -27,7 +27,7 @@ import com.permutassep.utils.PrefUtils;
 
 import br.kots.mob.complex.preferences.ComplexPreferences;
 
-public class ActivityMain extends ActionBarActivity {
+public class ActivityMain extends ActionBarActivity{
 
     public enum DrawerItems {
         HOME(1000),
@@ -138,15 +138,15 @@ public class ActivityMain extends ActionBarActivity {
     private void replaceFragment(int id){
 
         if(id == DrawerItems.HOME.id && !(getSupportFragmentManager().findFragmentById(R.id.fragmentContainer) instanceof FragmentNewsFeed)){
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentNewsFeed()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentNewsFeed()).addToBackStack("news_feed").commit();
         }else if(id == DrawerItems.SETTINGS.id){
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentSettings()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentSettings()).addToBackStack("settings").commit();
         }else if(id == R.id.action_post){
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentCreatePost()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentCreatePost()).addToBackStack("create_post").commit();
             result.setSelection(-1);
             toolbar.setTitle(R.string.app_main_toolbar_post_action);
         }else if(id == R.id.action_search){
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentSearch()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentSearch()).addToBackStack("search").commit();
             result.setSelection(-1);
             toolbar.setTitle(R.string.app_main_toolbar_search_action);
         }

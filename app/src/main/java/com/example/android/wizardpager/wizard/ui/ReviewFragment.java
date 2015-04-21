@@ -72,11 +72,11 @@ public class ReviewFragment extends ListFragment implements ModelCallbacks {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
-        if (!(((ActivityMain) activity).getSupportFragmentManager().getFragments().get(0) instanceof Callbacks)) {
+        if (!(((ActivityMain) activity).getSupportFragmentManager().getFragments().get(1) instanceof Callbacks)) {
             throw new ClassCastException("Activity must implement fragment's callbacks");
         }
 
-        mCallbacks = (Callbacks) ((ActivityMain) activity).getSupportFragmentManager().getFragments().get(0);;
+        mCallbacks = (Callbacks) ((ActivityMain) activity).getSupportFragmentManager().getFragments().get(1);;
 
         mWizardModel = mCallbacks.onGetModel();
         mWizardModel.registerListener(this);
