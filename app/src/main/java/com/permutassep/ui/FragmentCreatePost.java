@@ -420,5 +420,7 @@ public class FragmentCreatePost extends Fragment implements
 
     private void replaceFragment(){
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentNewsFeed()).commit();
+        getActivity().invalidateOptionsMenu();
+        getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 }

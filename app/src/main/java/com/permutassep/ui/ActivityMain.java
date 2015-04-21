@@ -19,7 +19,6 @@ import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
-import com.mikepenz.materialdrawer.model.interfaces.Nameable;
 import com.permutassep.R;
 import com.permutassep.config.Config;
 import com.permutassep.model.User;
@@ -74,11 +73,6 @@ public class ActivityMain extends ActionBarActivity{
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l, IDrawerItem drawerItem) {
-                        if (drawerItem != null) {
-                            if (drawerItem instanceof Nameable) {
-                                toolbar.setTitle(((Nameable) drawerItem).getName());
-                            }
-                        }
                         if(drawerItem != null){
                             replaceFragment(drawerItem.getIdentifier());
                         }
@@ -138,17 +132,38 @@ public class ActivityMain extends ActionBarActivity{
     private void replaceFragment(int id){
 
         if(id == DrawerItems.HOME.id && !(getSupportFragmentManager().findFragmentById(R.id.fragmentContainer) instanceof FragmentNewsFeed)){
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentNewsFeed()).addToBackStack("news_feed").commit();
+
+            if(getSupportFragmentManager().getBackStackEntryCount() > 0){
+                this.onBackPressed();
+            }else{
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentNewsFeed()).commit();
+            }
+            toolbar.setTitle(R.string.app_name);
+            invalidateOptionsMenu();
+
         }else if(id == DrawerItems.SETTINGS.id){
             getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentSettings()).addToBackStack("settings").commit();
         }else if(id == R.id.action_post){
+
             getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentCreatePost()).addToBackStack("create_post").commit();
             result.setSelection(-1);
             toolbar.setTitle(R.string.app_main_toolbar_post_action);
+            toolbar.getMenu().clear();
+
+
         }else if(id == R.id.action_search){
+
             getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentSearch()).addToBackStack("search").commit();
             result.setSelection(-1);
             toolbar.setTitle(R.string.app_main_toolbar_search_action);
+            toolbar.getMenu().clear();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        invalidateOptionsMenu();
+        toolbar.setTitle(R.string.app_name);
+        super.onBackPressed();
     }
 }
