@@ -80,6 +80,9 @@ public class FragmentSearch extends Fragment {
         spnMunicipalityTo = ((Spinner) rootView.findViewById(R.id.spn_city_to));
         spnLocalityTo = ((Spinner) rootView.findViewById(R.id.spn_town_to));
 
+        getActivity().setTitle(R.string.app_main_toolbar_search_action);
+        getActivity().invalidateOptionsMenu();
+
         setupSpinners();
 
         return rootView;
@@ -373,7 +376,7 @@ public class FragmentSearch extends Fragment {
 
                             FragmentResult fr = new FragmentResult();
                             fr.setPosts(posts);
-                            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, fr).commit();
+                            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, fr).addToBackStack("search_results").commit();
                         }
                     }
                 }

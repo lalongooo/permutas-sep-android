@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -110,15 +111,17 @@ public class ActivityMain extends ActionBarActivity{
 	};
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
+        if (f instanceof FragmentNewsFeed){
+            getMenuInflater().inflate(R.menu.main, menu);
 
-        User user = ComplexPreferences.getComplexPreferences(this, Config.APP_PREFERENCES_NAME, Context.MODE_PRIVATE).getObject(PrefUtils.PREF_USER_KEY, User.class);
-        if(user !=  null){
-            menu.findItem(R.id.action_post).setIcon(new IconicsDrawable(this, GoogleMaterial.Icon.gmd_add).color(Color.WHITE).actionBarSize()).setVisible(true);
+            User user = ComplexPreferences.getComplexPreferences(this, Config.APP_PREFERENCES_NAME, Context.MODE_PRIVATE).getObject(PrefUtils.PREF_USER_KEY, User.class);
+            if(user !=  null){
+                menu.findItem(R.id.action_post).setIcon(new IconicsDrawable(this, GoogleMaterial.Icon.gmd_add).color(Color.WHITE).actionBarSize()).setVisible(true);
+            }
+
+            menu.findItem(R.id.action_search).setIcon(new IconicsDrawable(this, GoogleMaterial.Icon.gmd_search).color(Color.WHITE).actionBarSize());
         }
-
-        menu.findItem(R.id.action_search).setIcon(new IconicsDrawable(this, GoogleMaterial.Icon.gmd_search).color(Color.WHITE).actionBarSize());
 
         return true;
     }
@@ -133,36 +136,26 @@ public class ActivityMain extends ActionBarActivity{
 
         if(id == DrawerItems.HOME.id && !(getSupportFragmentManager().findFragmentById(R.id.fragmentContainer) instanceof FragmentNewsFeed)){
 
-            if(getSupportFragmentManager().getBackStackEntryCount() > 0){
-                this.onBackPressed();
-            }else{
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentNewsFeed()).commit();
-            }
-            toolbar.setTitle(R.string.app_name);
-            invalidateOptionsMenu();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentNewsFeed()).commit();
 
         }else if(id == DrawerItems.SETTINGS.id){
+
             getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentSettings()).addToBackStack("settings").commit();
+
         }else if(id == R.id.action_post){
 
             getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentCreatePost()).addToBackStack("create_post").commit();
             result.setSelection(-1);
-            toolbar.setTitle(R.string.app_main_toolbar_post_action);
-            toolbar.getMenu().clear();
-
 
         }else if(id == R.id.action_search){
 
             getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentSearch()).addToBackStack("search").commit();
             result.setSelection(-1);
-            toolbar.setTitle(R.string.app_main_toolbar_search_action);
-            toolbar.getMenu().clear();
         }
     }
 
     @Override
     public void onBackPressed() {
-        invalidateOptionsMenu();
         toolbar.setTitle(R.string.app_name);
         super.onBackPressed();
     }

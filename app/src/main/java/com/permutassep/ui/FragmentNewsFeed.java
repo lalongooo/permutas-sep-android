@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +37,9 @@ public class FragmentNewsFeed extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_news_feed, container, false);
+        getActivity().setTitle(R.string.app_name);
+        getActivity().invalidateOptionsMenu();
+        getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         final ListView lv = (ListView) rootView.findViewById(R.id.news_feed_list);
 
         if(!Utils.isNetworkAvailable(getActivity())){

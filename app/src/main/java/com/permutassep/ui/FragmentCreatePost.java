@@ -88,6 +88,8 @@ public class FragmentCreatePost extends Fragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_createpost, container, false);
+        getActivity().setTitle(R.string.app_main_toolbar_post_action);
+        getActivity().invalidateOptionsMenu();
 
         if (savedInstanceState != null) {
             mWizardModel.load(savedInstanceState.getBundle("model"));
@@ -421,6 +423,5 @@ public class FragmentCreatePost extends Fragment implements
     private void replaceFragment(){
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentNewsFeed()).commit();
         getActivity().invalidateOptionsMenu();
-        getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 }

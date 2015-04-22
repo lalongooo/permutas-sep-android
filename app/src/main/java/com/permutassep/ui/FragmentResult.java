@@ -1,6 +1,5 @@
 package com.permutassep.ui;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -16,8 +15,6 @@ import java.util.List;
 
 public class FragmentResult extends Fragment {
 
-    private ProgressDialog pDlg;
-
     private List<Post> posts;
 
     @Override
@@ -26,6 +23,7 @@ public class FragmentResult extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_news_feed, container, false);
         final ListView lv = (ListView) rootView.findViewById(R.id.news_feed_list);
         getActivity().setTitle(R.string.app_main_toolbar_search_results);
+        getActivity().invalidateOptionsMenu();
 
         PostAdapter adapter = new PostAdapter(getActivity(), getPosts());
         lv.setAdapter(adapter);
@@ -38,14 +36,5 @@ public class FragmentResult extends Fragment {
 
     public void setPosts(List<Post> posts) {
         this.posts = posts;
-    }
-
-    private void showDialog(String title, String text) {
-        pDlg = ProgressDialog.show(getActivity(), title, text, true);
-    }
-
-    private void hideDialog() {
-        if (pDlg != null)
-            pDlg.dismiss();
     }
 }
