@@ -2,10 +2,8 @@ package com.permutassep.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 
 import com.permutassep.config.Config;
-import com.permutassep.model.User;
 
 /**
  * Created by jorge.hernandez on 4/10/2015.
@@ -23,11 +21,6 @@ public class PrefUtils {
     * in the application. This user data, cannot be modified
     * */
     public static final String PREF_ORIGINAL_USER_KEY = "user";
-
-    /*
-    * Preference to store the searchi results
-    * */
-    public static final String PREF_SEARCH_RESULTS = "user";
 
     /*
     * Boolean preference value to indicate that the current user

@@ -1,7 +1,6 @@
 package com.permutassep.ui;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,8 +17,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.permutassep.R;
 import com.permutassep.adapter.CitySpinnerBaseAdapter;
+import com.permutassep.adapter.PostTypeAdapter;
 import com.permutassep.adapter.StateSpinnerBaseAdapter;
 import com.permutassep.adapter.TownSpinnerBaseAdapter;
+import com.permutassep.adapter.UserTypeAdapter;
 import com.permutassep.config.Config;
 import com.permutassep.inegifacil.rest.InegiFacilRestClient;
 import com.permutassep.model.City;
@@ -28,9 +29,6 @@ import com.permutassep.model.State;
 import com.permutassep.model.Town;
 import com.permutassep.model.User;
 import com.permutassep.rest.PermutasSEPRestClient;
-import com.permutassep.adapter.PostTypeAdapter;
-import com.permutassep.utils.PrefUtils;
-import com.permutassep.adapter.UserTypeAdapter;
 import com.permutassep.utils.Utils;
 
 import java.util.ArrayList;
@@ -38,7 +36,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import br.kots.mob.complex.preferences.ComplexPreferences;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -373,7 +370,6 @@ public class FragmentSearch extends Fragment {
                                 }
                             });
                         } else {
-                            ComplexPreferences.getComplexPreferences(getActivity(), Config.APP_PREFERENCES_NAME, Context.MODE_PRIVATE).putObject(PrefUtils.PREF_SEARCH_RESULTS, posts);
 
                             FragmentResult fr = new FragmentResult();
                             fr.setPosts(posts);
