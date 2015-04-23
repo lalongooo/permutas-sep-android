@@ -50,6 +50,8 @@ public class PostTypeAdapter extends TypeAdapter<Post> {
                     p.setPostDate(formatter.parse(in.nextString()));
                 } else if (name.equals("is_teaching_career")) {
                     p.setIsTeachingCareer(in.nextBoolean());
+                } else if (name.equals("academic_level")) {
+                    p.setAcademicLevel(in.nextString());
                 } else if (name.equals("post")) {
                     p.setPostText(in.nextString());
                 } else if (name.equals("place_from_lon")) {

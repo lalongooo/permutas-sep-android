@@ -216,7 +216,7 @@ public class FragmentCreatePost extends Fragment implements
                                             showDialog(getString(R.string.wizard_post_dlg_title), getString(R.string.wizard_post_dlg_text));
 
                                             GsonBuilder gsonBuilder = new GsonBuilder()
-                                                    .registerTypeHierarchyAdapter(User.class, new UserTypeAdapter(getActivity()))
+                                                    // .registerTypeHierarchyAdapter(User.class, new UserTypeAdapter(getActivity()))
                                                     .registerTypeHierarchyAdapter(Post.class, new PostTypeAdapter(getActivity()))
                                                     .setDateFormat(Config.APP_DATE_FORMAT);
                                             Gson gson = gsonBuilder.create();
