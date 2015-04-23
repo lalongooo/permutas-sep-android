@@ -22,18 +22,6 @@
     <!-- app:strokeColor="#FF000000" -->
     <!-- app:strokeWidth="2dp" /> -->
 
-    <com.viewpagerindicator.CirclePageIndicator
-        android:id="@+id/indicator"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/btnContainer"
-        android:paddingBottom="20dp"
-        android:paddingTop="30dp"
-        app:fillColor="#ff000000"
-        app:pageColor="#ffffff"
-        app:radius="6dp"
-        app:strokeWidth="2dp" />
-
     <RelativeLayout
         android:id="@+id/btnContainer"
         android:layout_width="fill_parent"
@@ -52,6 +40,18 @@
             android:layout_margin="13dp"
             android:onClick="startOnClick"
             android:text="@string/app_overview_start_button" />
+
+        <com.viewpagerindicator.CirclePageIndicator
+            android:id="@+id/indicator"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="20dp"
+            android:paddingTop="30dp"
+            app:fillColor="#ff000000"
+            app:pageColor="#ffffff"
+            app:radius="6dp"
+            app:strokeWidth="2dp"
+            android:layout_alignParentBottom="true"/>
 
         <!--<Button-->
         <!--android:id="@+id/btnSignUp"-->
