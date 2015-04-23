@@ -9,7 +9,7 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:drawablePadding="15dp"
-        android:drawableTop="@drawable/app_overview_2_smartphone"
+        android:drawableTop="@drawable/ic_launcher"
         android:text="@string/app_name"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="@dimen/splash_text_size"

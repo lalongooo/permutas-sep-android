@@ -1,45 +1,58 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/content"
-    android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical">
+    android:layout_width="fill_parent"
+    android:fillViewport="true">
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/pager"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"></android.support.v4.view.ViewPager>
-
-    <!-- <com.viewpagerindicator.CirclePageIndicator -->
-    <!-- android:id="@+id/indicator" -->
-    <!-- android:layout_width="fill_parent" -->
-    <!-- android:layout_height="wrap_content" -->
-    <!-- android:padding="10dip" -->
-    <!-- app:fillColor="#FF888888" -->
-    <!-- app:pageColor="#88FF0000" -->
-    <!-- app:radius="10dp" -->
-    <!-- app:strokeColor="#FF000000" -->
-    <!-- app:strokeWidth="2dp" /> -->
-
-    <RelativeLayout
-        android:id="@+id/btnContainer"
-        android:layout_width="fill_parent"
+    <FrameLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="30dp">
+        android:background="#fafafa">
 
-
-        <Button
-            android:id="@+id/btnLogin"
-            android:layout_width="160dp"
+        <FrameLayout
+            android:layout_gravity="top"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:layout_margin="13dp"
-            android:onClick="startOnClick"
-            android:text="@string/app_overview_start_button" />
+            android:layout_marginTop="88dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:id="@+id/icon_image1"
+                android:src="@drawable/app_overview_1_buy"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:id="@+id/icon_image2"/>
+
+        </FrameLayout>
+
+        <android.support.v4.view.ViewPager
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/intro_view_pager"/>
+
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="300dp"
+            android:background="@drawable/regbtn_states"
+            android:layout_gravity="center_horizontal"
+            android:textSize="16dp"
+            android:textColor="#ffffff"
+            android:gravity="center"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:id="@+id/start_messaging_button"/>
+
+
 
         <com.viewpagerindicator.CirclePageIndicator
             android:id="@+id/indicator"
@@ -47,22 +60,15 @@
             android:layout_height="wrap_content"
             android:paddingBottom="20dp"
             android:paddingTop="30dp"
-            app:fillColor="#ff000000"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="26dp"
+            app:fillColor="#2CA5E0"
             app:pageColor="#ffffff"
             app:radius="6dp"
-            app:strokeWidth="2dp"
+            app:strokeWidth="1dp"
+            app:strokeColor="#2CA5E0"
             android:layout_alignParentBottom="true"/>
 
-        <!--<Button-->
-        <!--android:id="@+id/btnSignUp"-->
-        <!--android:layout_width="160dp"-->
-        <!--android:layout_height="53dp"-->
-        <!--android:layout_alignParentEnd="true"-->
-        <!--android:layout_alignParentRight="true"-->
-        <!--android:layout_centerVertical="true"-->
-        <!--android:text="@string/app_overview_signup_button"-->
-        <!--android:layout_margin="13dp" />-->
+    </FrameLayout>
 
-    </RelativeLayout>
-
-</RelativeLayout>
+</ScrollView>
