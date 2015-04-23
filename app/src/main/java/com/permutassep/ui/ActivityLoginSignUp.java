@@ -11,8 +11,8 @@ import com.permutassep.R;
 
 public class ActivityLoginSignUp extends Activity {
 
-    private Button btnRegister;
-    private Button btnLogin;
+    private TextView btnRegister;
+    private TextView btnLogin;
     private TextView tvContinue;
 
     @Override
@@ -23,7 +23,7 @@ public class ActivityLoginSignUp extends Activity {
     }
 
     private void setUI() {
-        btnRegister = (Button) findViewById(R.id.btnRegister);
+        btnRegister = (TextView) findViewById(R.id.btnRegister);
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -31,7 +31,7 @@ public class ActivityLoginSignUp extends Activity {
             }
         });
 
-        btnLogin = (Button) findViewById(R.id.btnLogin);
+        btnLogin = (TextView) findViewById(R.id.btnLogin);
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

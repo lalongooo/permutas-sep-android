@@ -4,14 +4,14 @@
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:orientation="vertical"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:id="@+id/linearLayout">
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/tvAlreadyRegistered"
@@ -20,20 +20,40 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
-            android:text="@string/app_login_sign_up_already_have_account"
             android:layout_marginBottom="16dp"
-            android:textColor="@color/primary"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:text="@string/app_login_sign_up_already_have_account"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/primary" />
 
-        <Button
+        <!--<Button-->
+            <!--android:id="@+id/btnLogin"-->
+            <!--android:layout_width="300dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center_horizontal"-->
+            <!--android:layout_marginBottom="30dp"-->
+            <!--android:text="@string/app_login_sign_up_log_in"-->
+            <!--android:textColor="@color/primary"-->
+            <!--android:textStyle="bold" />-->
+
+
+        <TextView
             android:id="@+id/btnLogin"
-            android:layout_width="300dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_marginBottom="30dp"
-            android:textColor="@color/primary"
+            android:background="@drawable/regbtn_states"
+            android:gravity="center"
             android:text="@string/app_login_sign_up_log_in"
-            android:textStyle="bold" />
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="10dp"
+            android:textColor="#ffffff"
+            android:textSize="16dp" />
+
 
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
@@ -48,18 +68,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:background="@android:color/darker_gray" />
-
-            <!--<TextView-->
-                <!--android:id="@+id/textView3"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_alignParentTop="true"-->
-                <!--android:layout_centerHorizontal="true"-->
-                <!--android:layout_marginRight="4dp"-->
-                <!--android:text="@string/app_sign_up_log_in_with"-->
-                <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
-                <!--android:textSize="15dp" />-->
+                android:background="#2CA5E0" />
 
             <View
                 android:layout_width="150dp"
@@ -67,7 +76,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:background="@android:color/darker_gray" />
+                android:background="#2CA5E0" />
 
         </RelativeLayout>
 
@@ -79,21 +88,41 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
-            android:text="@string/app_login_sign_up_want_to_register"
-            android:textColor="@color/primary"
             android:layout_marginBottom="16dp"
             android:layout_marginTop="30dp"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:text="@string/app_login_sign_up_want_to_register"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/primary" />
 
-        <Button
+        <!--<Button-->
+            <!--android:id="@+id/btnRegister1"-->
+            <!--android:layout_width="300dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center_horizontal"-->
+            <!--android:layout_marginBottom="60dp"-->
+            <!--android:text="@string/app_login_sign_up_want_to_register_cta"-->
+            <!--android:textColor="@color/primary"-->
+            <!--android:textStyle="bold" />-->
+
+
+
+        <TextView
             android:id="@+id/btnRegister"
-            android:layout_width="300dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="60dp"
-            android:textColor="@color/primary"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/regbtn_states"
+            android:gravity="center"
             android:text="@string/app_login_sign_up_want_to_register_cta"
-            android:textStyle="bold" />
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="10dp"
+            android:textColor="#ffffff"
+            android:textSize="16dp" />
 
     </LinearLayout>
 
@@ -101,13 +130,12 @@
         android:id="@+id/tvContinue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="@string/app_login_sign_up_continue"
-        android:textColor="@color/primary"
-        android:textAppearance="?android:attr/textAppearanceMedium"
         android:layout_below="@+id/linearLayout"
         android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/app_login_sign_up_continue"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/primary"
         android:textStyle="bold|normal" />
-
 
 </RelativeLayout>

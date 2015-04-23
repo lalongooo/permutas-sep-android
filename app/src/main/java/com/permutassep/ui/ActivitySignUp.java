@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.facebook.Request;
 import com.facebook.Response;
@@ -36,7 +37,7 @@ import retrofit.RetrofitError;
 public class ActivitySignUp extends Activity {
 
     private UiLifecycleHelper uiHelper;
-    private Button btnRegister;
+    private TextView btnRegister;
     private EditText etName;
     private EditText etEmail;
     private EditText etPhone;
@@ -78,7 +79,7 @@ public class ActivitySignUp extends Activity {
         f.addValidates(vPhone);
         f.addValidates(vPassword);
 
-        btnRegister = (Button) findViewById(R.id.btnRegister);
+        btnRegister = (TextView) findViewById(R.id.btnRegister);
         btnRegister.setOnClickListener(new View.OnClickListener() {
 
             @Override

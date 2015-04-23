@@ -58,7 +58,7 @@
 
     <string name="app_login_sign_up_already_have_account">Ya tengo cuenta</string>
     <string name="app_login_sign_up_log_in">Iniciar sesión</string>
-    <string name="app_login_sign_up_want_to_register">Quiero registrarme</string>
+    <string name="app_login_sign_up_want_to_register">No tengo cuenta</string>
     <string name="app_login_sign_up_want_to_register_cta">Registrarme</string>
     <string name="app_login_sign_up_continue"><u>Entrar como anónimo</u></string>
 

@@ -58,7 +58,8 @@ public class FragmentNewsFeed extends Fragment {
                 .registerTypeHierarchyAdapter(Post.class, new PostTypeAdapter(getActivity()))
                 .setDateFormat(Config.APP_DATE_FORMAT);
         Gson gson = gsonBuilder.create();
-        new PermutasSEPRestClient(new GsonConverter(gson)).get().getPosts(new Callback<List<Post>>() {
+        //new PermutasSEPRestClient(new GsonConverter(gson)).get().getPosts(new Callback<List<Post>>() {
+        new PermutasSEPRestClient().get().getPosts(new Callback<List<Post>>() {
             @Override
             public void success(List<Post> posts, Response response) {
                 if(!posts.isEmpty()){

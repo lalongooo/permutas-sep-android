@@ -1,13 +1,19 @@
 package com.permutassep.model;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by lalongooo on 02/03/15.
  */
 public class User {
 
+    @SerializedName("id")
     private int id;
+    @SerializedName("name")
     private String name;
+    @SerializedName("email")
     private String email;
+    @SerializedName("phone")
     private String phone;
     private String password;
 

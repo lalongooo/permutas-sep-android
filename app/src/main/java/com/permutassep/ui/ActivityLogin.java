@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.facebook.Request;
 import com.facebook.Response;
@@ -33,7 +34,7 @@ public class ActivityLogin extends Activity {
 
     private EditText etNameOrUsername;
     private EditText etPassword;
-    private Button btnLogin;
+    private TextView btnLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +62,7 @@ public class ActivityLogin extends Activity {
         f.addValidates(vName);
         f.addValidates(vPassword);
 
-        btnLogin = (Button) findViewById(R.id.btnLogin);
+        btnLogin = (TextView) findViewById(R.id.btnLogin);
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

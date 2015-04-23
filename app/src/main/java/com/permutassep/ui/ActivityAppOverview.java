@@ -18,9 +18,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.permutassep.R;
+import com.permutassep.config.Config;
+import com.permutassep.model.SocialUser;
+import com.permutassep.model.User;
+import com.permutassep.utils.PrefUtils;
 import com.permutassep.utils.Utils;
 import com.viewpagerindicator.CirclePageIndicator;
 import com.viewpagerindicator.PageIndicator;
+
+import br.kots.mob.complex.preferences.ComplexPreferences;
 
 public class ActivityAppOverview extends Activity{
     private ViewPager viewPager;
@@ -147,12 +153,16 @@ public class ActivityAppOverview extends Activity{
         startMessagingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (startPressed) {
-                    return;
+                ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getApplicationContext(), Config.APP_PREFERENCES_NAME, MODE_PRIVATE);
+                User user = complexPreferences.getObject(PrefUtils.PREF_USER_KEY, SocialUser.class);
+
+                Intent i = new Intent();
+                if(user != null){
+                    i.setClass(ActivityAppOverview.this, ActivityMain.class);
+                }else{
+                    i.setClass(ActivityAppOverview.this, ActivityLoginSignUp.class);
                 }
-                startPressed = true;
-                Intent intent2 = new Intent(ActivityAppOverview.this, ActivityMain.class);
-                startActivity(intent2);
+                startActivity(i);
                 finish();
             }
         });
