@@ -141,7 +141,9 @@ public class ActivityLogin extends ActionBarActivity {
                                 Utils.showSimpleDialog(R.string.app_login_dlg_login_err_not_registered_text, R.string.accept, ActivityLogin.this, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-
+                                        Session session = Session.getActiveSession();
+                                        session.closeAndClearTokenInformation();
+                                        finish();
                                     }
                                 });
                             }
