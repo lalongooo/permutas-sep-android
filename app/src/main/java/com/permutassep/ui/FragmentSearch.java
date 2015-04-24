@@ -357,8 +357,8 @@ public class FragmentSearch extends Fragment {
 
             showDialog(getString(R.string.search_fragment_dlg_title), getString(R.string.search_fragment_dlg_text));
             GsonBuilder gsonBuilder = new GsonBuilder()
-                    .registerTypeHierarchyAdapter(User.class, new UserTypeAdapter(getActivity()))
-                    .registerTypeHierarchyAdapter(Post.class, new PostTypeAdapter(getActivity()))
+                    // .registerTypeHierarchyAdapter(User.class, new UserTypeAdapter(getActivity()))
+                    // .registerTypeHierarchyAdapter(Post.class, new PostTypeAdapter(getActivity()))
                     .setDateFormat(Config.APP_DATE_FORMAT);
             Gson gson = gsonBuilder.create();
             new PermutasSEPRestClient(new GsonConverter(gson)).get().searchPosts(params, new Callback<List<Post>>() {
