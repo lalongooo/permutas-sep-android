@@ -66,6 +66,9 @@
     <string name="app_login_username">Tu correo electrónico</string>
     <string name="app_login_password">Tu contraseña</string>
     <string name="app_login_btn_login">Iniciar sesión</string>
+    <string name="app_login_dlg_login_title">Iniciar sesión</string>
+    <string name="app_login_dlg_login_err_text">Usuario o contraseña incorrectos</string>
+    <string name="app_login_dlg_login_logging_in">Iniciando sesión</string>
     <string name="app_login_login_with_fb">O iniciar sesión con</string>
     <string name="app_login_btn_login_with_fb">Iniciar sesión con Facebook</string>
 

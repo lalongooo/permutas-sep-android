@@ -1,11 +1,12 @@
 package com.permutassep.ui;
 
-import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -18,8 +19,12 @@ import com.facebook.model.GraphUser;
 import com.facebook.widget.LoginButton;
 import com.permutassep.R;
 import com.permutassep.config.Config;
+import com.permutassep.model.AuthModel;
 import com.permutassep.model.SocialUser;
+import com.permutassep.model.User;
+import com.permutassep.rest.PermutasSEPRestClient;
 import com.permutassep.utils.PrefUtils;
+import com.permutassep.utils.Utils;
 import com.throrinstudio.android.common.libs.validator.Form;
 import com.throrinstudio.android.common.libs.validator.Validate;
 import com.throrinstudio.android.common.libs.validator.validator.EmailValidator;
@@ -28,14 +33,17 @@ import com.throrinstudio.android.common.libs.validator.validator.NotEmptyValidat
 import java.util.Arrays;
 
 import br.kots.mob.complex.preferences.ComplexPreferences;
+import retrofit.Callback;
+import retrofit.RetrofitError;
 
-public class ActivityLogin extends Activity {
+public class ActivityLogin extends ActionBarActivity {
 
     private UiLifecycleHelper uiHelper;
 
     private EditText etNameOrUsername;
     private EditText etPassword;
     private TextView btnLogin;
+    private ProgressDialog pDlg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,16 +76,31 @@ public class ActivityLogin extends Activity {
             @Override
             public void onClick(View v) {
                 if (f.validate()) {
-                    // TODO: Add login method to the REST service
-                    goToMainActivity();
+                    showDialog(getString(R.string.app_login_dlg_login_title), getString(R.string.app_login_dlg_login_logging_in));
+                    new PermutasSEPRestClient().get().login(new AuthModel(etNameOrUsername.getText().toString(), etPassword.getText().toString()), new Callback<User>() {
+                        @Override
+                        public void success(User user, retrofit.client.Response response) {
+                            hideDialog();
+                            goToMainActivity();
+                        }
+
+                        @Override
+                        public void failure(RetrofitError error) {
+                            hideDialog();
+                            Utils.showSimpleDialog(R.string.app_login_dlg_login_err_text, R.string.accept, ActivityLogin.this, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            });
+                        }
+                    });
                 }
             }
         });
 
         LoginButton authButton = (LoginButton) findViewById(R.id.btnFbLogin);
         authButton.setReadPermissions(Arrays.asList("email"));
-
-
     }
 
     private Session.StatusCallback callback = new Session.StatusCallback() {
@@ -147,6 +170,14 @@ public class ActivityLogin extends Activity {
         uiHelper.onSaveInstanceState(outState);
     }
 
+    private void showDialog(String title, String text) {
+        pDlg = ProgressDialog.show(this, title, text, true);
+    }
+
+    private void hideDialog() {
+        if (pDlg != null)
+            pDlg.dismiss();
+    }
 
     private void goToMainActivity() {
         Intent i = new Intent().setClass(ActivityLogin.this, ActivityMain.class);
