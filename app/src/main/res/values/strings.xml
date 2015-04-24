@@ -63,7 +63,7 @@
     <string name="app_login_sign_up_user_exist">Ya te encuentras registrado, por favor, inicia sesión.</string>
     <string name="app_login_sign_up_continue"><u>Entrar como anónimo</u></string>
 
-    <string name="app_login_username">Tu nombre de usuario o correo</string>
+    <string name="app_login_username">Tu correo electrónico</string>
     <string name="app_login_password">Tu contraseña</string>
     <string name="app_login_btn_login">Iniciar sesión</string>
     <string name="app_login_login_with_fb">O iniciar sesión con</string>
