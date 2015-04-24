@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBarActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -20,7 +21,6 @@ import com.facebook.widget.LoginButton;
 import com.permutassep.R;
 import com.permutassep.config.Config;
 import com.permutassep.model.AuthModel;
-import com.permutassep.model.SocialUser;
 import com.permutassep.model.User;
 import com.permutassep.rest.PermutasSEPRestClient;
 import com.permutassep.utils.PrefUtils;
@@ -113,25 +113,39 @@ public class ActivityLogin extends ActionBarActivity {
 
     private void onSessionStateChange(Session session, SessionState state, Exception exception) {
         if (state.isOpened()) {
+            showDialog(getString(R.string.app_login_dlg_login_title), getString(R.string.app_login_dlg_login_logging_in));
             Request.executeMeRequestAsync(session, new Request.GraphUserCallback() {
                 @Override
-                public void onCompleted(GraphUser user, Response response) {
-                    if (user != null) {
+                public void onCompleted(GraphUser fbUser, Response response) {
+                    if (fbUser != null) {
 
-                        SocialUser socialUser = new SocialUser(
-                                user.getName()
-                                , user.getProperty("email") != null ? user.getProperty("email").toString() : ""
-                                , ""
-                                , ""
-                                , SocialUser.SocialNetwork.FACEBOOK
-                                , user.getId()
+                        String email = fbUser.getProperty("email") != null ? fbUser.getProperty("email").toString() : "";
+                        AuthModel auth = new AuthModel(
+                                TextUtils.isEmpty(email) ? fbUser.getId().concat("@facebook.com") : email,
+                                TextUtils.isEmpty(email) ? "facebook" : fbUser.getId()
                         );
 
-                        ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getBaseContext(), Config.APP_PREFERENCES_NAME, MODE_PRIVATE);
-                        complexPreferences.putObject(PrefUtils.PREF_USER_KEY, socialUser);
-                        complexPreferences.commit();
+                        new PermutasSEPRestClient().get().login(auth, new Callback<User>() {
+                            @Override
+                            public void success(User user, retrofit.client.Response response) {
+                                ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getBaseContext(), Config.APP_PREFERENCES_NAME, MODE_PRIVATE);
+                                complexPreferences.putObject(PrefUtils.PREF_USER_KEY, user);
+                                complexPreferences.commit();
+                                hideDialog();
+                                goToMainActivity();
+                            }
 
-                        goToMainActivity();
+                            @Override
+                            public void failure(RetrofitError error) {
+                                hideDialog();
+                                Utils.showSimpleDialog(R.string.app_login_dlg_login_err_not_registered_text, R.string.accept, ActivityLogin.this, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                    }
+                                });
+                            }
+                        });
                     }
                 }
             });
