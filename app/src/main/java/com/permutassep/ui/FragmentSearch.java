@@ -348,7 +348,7 @@ public class FragmentSearch extends Fragment {
                     params.put("place_to_town", townToSelectedPosition);
                 }
             } catch (Exception e) {
-                Utils.showSimpleDialog(R.string.search_fragment_filters_error_msg, R.string.search_fragment_accept, getActivity(), new DialogInterface.OnClickListener() {
+                Utils.showSimpleDialog(R.string.search_fragment_filters_error_msg, R.string.accept, getActivity(), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                     }
@@ -367,7 +367,7 @@ public class FragmentSearch extends Fragment {
                     hideDialog();
                     if (response.getReason().equals("OK")) {
                         if (posts.isEmpty()) {
-                            Utils.showSimpleDialog(R.string.search_fragment_search_no_restlts, R.string.search_fragment_accept, getActivity(), new DialogInterface.OnClickListener() {
+                            Utils.showSimpleDialog(R.string.search_fragment_search_no_restlts, R.string.accept, getActivity(), new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                 }

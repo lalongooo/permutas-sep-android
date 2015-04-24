@@ -1,5 +1,6 @@
 package com.permutassep.rest;
 
+import com.permutassep.model.AuthModel;
 import com.permutassep.model.Post;
 import com.permutassep.model.User;
 
@@ -25,4 +26,7 @@ public interface  IPermutasSEPService {
 
     @GET("/posts/")
     void searchPosts(@QueryMap Map<String, String> parameters, Callback<List<Post>> callback);
+
+    @POST("/login/")
+    void login(@Body AuthModel authModel, Callback<User> callback);
 }

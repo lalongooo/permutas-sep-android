@@ -18,7 +18,6 @@ import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
-import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.permutassep.R;
 import com.permutassep.config.Config;
@@ -67,8 +66,8 @@ public class ActivityMain extends ActionBarActivity{
                 .withToolbar(toolbar)
                 .addDrawerItems(
                         new PrimaryDrawerItem().withName(getString(R.string.app_nav_drawer_1)).withIdentifier(DrawerItems.HOME.id).withIcon(GoogleMaterial.Icon.gmd_home),
-                        new DividerDrawerItem(),
-                        new SecondaryDrawerItem().withName(getString(R.string.app_nav_drawer_2)).withIdentifier(DrawerItems.SETTINGS.id).withIcon(GoogleMaterial.Icon.gmd_settings)
+                        new DividerDrawerItem()
+                        // new SecondaryDrawerItem().withName(getString(R.string.app_nav_drawer_2)).withIdentifier(DrawerItems.SETTINGS.id).withIcon(GoogleMaterial.Icon.gmd_settings)
                 )
                 .withSelectedItem(0)
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {

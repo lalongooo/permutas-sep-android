@@ -1,12 +1,12 @@
 package com.permutassep.ui;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -19,9 +19,11 @@ import com.facebook.model.GraphUser;
 import com.facebook.widget.LoginButton;
 import com.permutassep.R;
 import com.permutassep.config.Config;
+import com.permutassep.model.AuthModel;
 import com.permutassep.model.User;
 import com.permutassep.rest.PermutasSEPRestClient;
 import com.permutassep.utils.PrefUtils;
+import com.permutassep.utils.Utils;
 import com.throrinstudio.android.common.libs.validator.Form;
 import com.throrinstudio.android.common.libs.validator.Validate;
 import com.throrinstudio.android.common.libs.validator.validator.EmailValidator;
@@ -34,7 +36,7 @@ import br.kots.mob.complex.preferences.ComplexPreferences;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 
-public class ActivitySignUp extends Activity {
+public class ActivitySignUp extends ActionBarActivity {
 
     private UiLifecycleHelper uiHelper;
     private TextView btnRegister;
@@ -43,6 +45,7 @@ public class ActivitySignUp extends Activity {
     private EditText etPhone;
     private EditText etPassword;
     private ProgressDialog pDlg;
+    private LoginButton authButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,7 +127,7 @@ public class ActivitySignUp extends Activity {
             }
         });
 
-        LoginButton authButton = (LoginButton) findViewById(R.id.btnLogin);
+        authButton = (LoginButton) findViewById(R.id.btnLogin);
         authButton.setReadPermissions(Arrays.asList("email"));
     }
 
@@ -147,7 +150,7 @@ public class ActivitySignUp extends Activity {
                         final String fbUserId = fbUser.getId();
 
                         // TODO: Is very important to change this code. Due to deadlines, we need to make it this way :(
-                        User u;
+                        final User u;
                         if (email != "") {
                             u = new User(fbUser.getName(), email, "0000000000", fbUser.getId());
                         } else {
@@ -155,33 +158,55 @@ public class ActivitySignUp extends Activity {
                         }
 
                         /*
-                        * * Perform the call to the REST service
+                        * * Validate if the user already exists
                         * */
-                        new PermutasSEPRestClient().get().newUser(u, new Callback<User>() {
+                        new PermutasSEPRestClient().get().login(new AuthModel(u.getEmail(), u.getPassword()), new Callback<User>() {
                             @Override
                             public void success(User user, retrofit.client.Response response) {
-                                hideDialog();
-                                ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getBaseContext(), Config.APP_PREFERENCES_NAME, MODE_PRIVATE);
 
-                                if (email != "") {
-                                    user.setPassword(fbUserId);
-                                } else {
-                                    user.setPassword("facebook");
-                                }
+                                /*
+                                * * Perform the call to the REST service
+                                * */
+                                new PermutasSEPRestClient().get().newUser(u, new Callback<User>() {
+                                    @Override
+                                    public void success(User user, retrofit.client.Response response) {
+                                        hideDialog();
+                                        ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getBaseContext(), Config.APP_PREFERENCES_NAME, MODE_PRIVATE);
 
-                                complexPreferences.putObject(PrefUtils.PREF_USER_KEY, user);
-                                complexPreferences.putObject(PrefUtils.PREF_ORIGINAL_USER_KEY, user);
-                                complexPreferences.commit();
+                                        if (email != "") {
+                                            user.setPassword(fbUserId);
+                                        } else {
+                                            user.setPassword("facebook");
+                                        }
 
-                                PrefUtils.setNormalUser(getApplicationContext(), true);
-                                hideDialog();
-                                goToMainActivity();
+                                        complexPreferences.putObject(PrefUtils.PREF_USER_KEY, user);
+                                        complexPreferences.putObject(PrefUtils.PREF_ORIGINAL_USER_KEY, user);
+                                        complexPreferences.commit();
+
+                                        PrefUtils.setNormalUser(getApplicationContext(), true);
+                                        hideDialog();
+                                        goToMainActivity();
+                                    }
+
+                                    @Override
+                                    public void failure(RetrofitError error) {
+                                        // TODO: Add an error message dialog
+                                        hideDialog();
+                                    }
+                                });
                             }
 
                             @Override
                             public void failure(RetrofitError error) {
-                                // TODO: Add an error message dialog
                                 hideDialog();
+                                Utils.showSimpleDialog(R.string.app_login_sign_up_user_exist, R.string.accept, ActivitySignUp.this, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Session session = Session.getActiveSession();
+                                        session.closeAndClearTokenInformation();
+                                        finish();
+                                    }
+                                });
                             }
                         });
                     }

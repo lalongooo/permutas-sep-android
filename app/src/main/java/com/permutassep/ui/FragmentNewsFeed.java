@@ -14,12 +14,12 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.permutassep.R;
 import com.permutassep.adapter.PostAdapter;
+import com.permutassep.adapter.PostTypeAdapter;
+import com.permutassep.adapter.UserTypeAdapter;
 import com.permutassep.config.Config;
 import com.permutassep.model.Post;
 import com.permutassep.model.User;
 import com.permutassep.rest.PermutasSEPRestClient;
-import com.permutassep.adapter.PostTypeAdapter;
-import com.permutassep.adapter.UserTypeAdapter;
 import com.permutassep.utils.Utils;
 
 import java.util.List;
@@ -27,7 +27,6 @@ import java.util.List;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
-import retrofit.converter.GsonConverter;
 
 public class FragmentNewsFeed extends Fragment {
 
@@ -43,7 +42,7 @@ public class FragmentNewsFeed extends Fragment {
         final ListView lv = (ListView) rootView.findViewById(R.id.news_feed_list);
 
         if(!Utils.isNetworkAvailable(getActivity())){
-            Utils.showSimpleDialog(R.string.network_availability_dlg_text, R.string.search_fragment_accept, getActivity(), new DialogInterface.OnClickListener() {
+            Utils.showSimpleDialog(R.string.network_availability_dlg_text, R.string.accept, getActivity(), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     getActivity().finish();
@@ -72,7 +71,7 @@ public class FragmentNewsFeed extends Fragment {
             @Override
             public void failure(RetrofitError error) {
                 hideDialog();
-                Utils.showSimpleDialog(R.string.app_news_feed_get_posts_err, R.string.search_fragment_accept, getActivity(), new DialogInterface.OnClickListener() {
+                Utils.showSimpleDialog(R.string.app_news_feed_get_posts_err, R.string.accept, getActivity(), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                     }

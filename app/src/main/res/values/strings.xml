@@ -52,7 +52,7 @@
     <string name="search_fragment_dlg_title">Espera</string>
     <string name="search_fragment_dlg_text">Buscando...</string>
     <string name="search_fragment_filters_error_msg">Ocurrió un error en tu búsqueda</string>
-    <string name="search_fragment_accept">Aceptar</string>
+    <string name="accept">Aceptar</string>
     <string name="search_fragment_search_error_msg">Ocurrió un error en tu búsqueda</string>
     <string name="search_fragment_search_no_restlts">No se encontraron resultados</string>
 
@@ -60,6 +60,7 @@
     <string name="app_login_sign_up_log_in">Iniciar sesión</string>
     <string name="app_login_sign_up_want_to_register">No tengo cuenta</string>
     <string name="app_login_sign_up_want_to_register_cta">Registrarme</string>
+    <string name="app_login_sign_up_user_exist"><u>Ya te encuentras regitrado, por favor, inicia sesión.</u></string>
     <string name="app_login_sign_up_continue"><u>Entrar como anónimo</u></string>
 
     <string name="app_login_username">Tu nombre de usuario o correo</string>
