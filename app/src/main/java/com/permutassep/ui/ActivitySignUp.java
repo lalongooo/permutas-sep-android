@@ -99,30 +99,57 @@ public class ActivitySignUp extends ActionBarActivity {
                     String email = etEmail.getText().toString();
                     final String password = etPassword.getText().toString();
                     String phone = etPhone.getText().toString();
-                    User u = new User(name, email, phone, password);
+                    final User u = new User(name, email, phone, password);
+
 
                     /*
-                    * Perform the call to the REST service
+                    * * Validate if the user already exists
                     * */
-                    new PermutasSEPRestClient().get().newUser(u, new Callback<User>() {
+                    new PermutasSEPRestClient().get().login(new AuthModel(u.getEmail(), u.getPassword()), new Callback<User>() {
                         @Override
                         public void success(User user, retrofit.client.Response response) {
-                            hideDialog();
-                            ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getBaseContext(), Config.APP_PREFERENCES_NAME, MODE_PRIVATE);
-                            user.setPassword(password);
-                            complexPreferences.putObject(PrefUtils.PREF_USER_KEY, user);
-                            complexPreferences.putObject(PrefUtils.PREF_ORIGINAL_USER_KEY, user);
-                            complexPreferences.commit();
 
-                            PrefUtils.setNormalUser(getApplicationContext(), true);
-                            goToMainActivity();
+                            hideDialog();
+                            Utils.showSimpleDialog(R.string.app_login_sign_up_user_exist, R.string.accept, ActivitySignUp.this, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Session session = Session.getActiveSession();
+                                    session.closeAndClearTokenInformation();
+                                    finish();
+                                }
+                            });
                         }
 
                         @Override
                         public void failure(RetrofitError error) {
-                            hideDialog();
+                            /*
+                            * * Perform the call to the REST service
+                            * */
+                            new PermutasSEPRestClient().get().newUser(u, new Callback<User>() {
+                                @Override
+                                public void success(User user, retrofit.client.Response response) {
+                                    hideDialog();
+                                    ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getBaseContext(), Config.APP_PREFERENCES_NAME, MODE_PRIVATE);
+                                    user.setPassword(password);
+                                    complexPreferences.putObject(PrefUtils.PREF_USER_KEY, user);
+                                    complexPreferences.putObject(PrefUtils.PREF_ORIGINAL_USER_KEY, user);
+                                    complexPreferences.commit();
+
+                                    PrefUtils.setNormalUser(getApplicationContext(), true);
+                                    hideDialog();
+                                    goToMainActivity();
+                                }
+
+                                @Override
+                                public void failure(RetrofitError error) {
+                                    // TODO: Add an error message dialog
+                                    hideDialog();
+                                }
+                            });
                         }
                     });
+
+
                 }
             }
         });
@@ -164,7 +191,21 @@ public class ActivitySignUp extends ActionBarActivity {
                             @Override
                             public void success(User user, retrofit.client.Response response) {
 
-                                /*
+                                hideDialog();
+                                Utils.showSimpleDialog(R.string.app_login_sign_up_user_exist, R.string.accept, ActivitySignUp.this, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Session session = Session.getActiveSession();
+                                        session.closeAndClearTokenInformation();
+                                        finish();
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void failure(RetrofitError error) {
+
+                                                                /*
                                 * * Perform the call to the REST service
                                 * */
                                 new PermutasSEPRestClient().get().newUser(u, new Callback<User>() {
@@ -194,19 +235,7 @@ public class ActivitySignUp extends ActionBarActivity {
                                         hideDialog();
                                     }
                                 });
-                            }
 
-                            @Override
-                            public void failure(RetrofitError error) {
-                                hideDialog();
-                                Utils.showSimpleDialog(R.string.app_login_sign_up_user_exist, R.string.accept, ActivitySignUp.this, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        Session session = Session.getActiveSession();
-                                        session.closeAndClearTokenInformation();
-                                        finish();
-                                    }
-                                });
                             }
                         });
                     }
