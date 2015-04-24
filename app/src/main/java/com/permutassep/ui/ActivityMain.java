@@ -132,7 +132,7 @@ public class ActivityMain extends ActionBarActivity{
         return false;
     }
 
-    private void replaceFragment(int id){
+    public void replaceFragment(int id){
 
         if(id == DrawerItems.HOME.id && !(getSupportFragmentManager().findFragmentById(R.id.fragmentContainer) instanceof FragmentNewsFeed)){
 
