@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -135,20 +136,20 @@ public class ActivityMain extends ActionBarActivity{
 
         if(id == DrawerItems.HOME.id && !(getSupportFragmentManager().findFragmentById(R.id.fragmentContainer) instanceof FragmentNewsFeed)){
 
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentNewsFeed()).commit();
+            getSupportFragmentManager().popBackStackImmediate("news_feed", FragmentManager.POP_BACK_STACK_INCLUSIVE);
 
         }else if(id == DrawerItems.SETTINGS.id){
 
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentSettings()).addToBackStack("settings").commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentSettings()).addToBackStack("news_feed").commit();
 
         }else if(id == R.id.action_post){
 
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentCreatePost()).addToBackStack("create_post").commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentCreatePost()).addToBackStack("news_feed").commit();
             result.setSelection(-1);
 
         }else if(id == R.id.action_search){
 
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentSearch()).addToBackStack("search").commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentSearch()).addToBackStack("news_feed").commit();
             result.setSelection(-1);
         }
     }

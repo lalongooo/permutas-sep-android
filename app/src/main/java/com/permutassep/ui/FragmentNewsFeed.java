@@ -65,6 +65,8 @@ public class FragmentNewsFeed extends Fragment {
                     PostAdapter adapter = new PostAdapter(getActivity(), posts);
                     lv.setAdapter(adapter);
                     hideDialog();
+                }else{
+                    hideDialog();
                 }
             }
 
