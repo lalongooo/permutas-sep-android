@@ -1,5 +1,6 @@
 package com.permutassep.ui;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,6 +11,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.Request;
 import com.facebook.Response;
@@ -44,6 +46,7 @@ public class ActivityLogin extends ActionBarActivity {
     private EditText etPassword;
     private TextView btnLogin;
     private ProgressDialog pDlg;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +99,8 @@ public class ActivityLogin extends ActionBarActivity {
                         }
                     });
                 }
+
+
             }
         });
 
@@ -120,34 +125,29 @@ public class ActivityLogin extends ActionBarActivity {
                     if (fbUser != null) {
 
                         String email = fbUser.getProperty("email") != null ? fbUser.getProperty("email").toString() : "";
-                        AuthModel auth = new AuthModel(
-                                TextUtils.isEmpty(email) ? fbUser.getId().concat("@facebook.com") : email,
-                                TextUtils.isEmpty(email) ? "facebook" : fbUser.getId()
-                        );
+                        if(TextUtils.isEmpty(email)){
+                            final EditText input = new EditText(ActivityLogin.this);
+                            AlertDialog.Builder alert = new AlertDialog.Builder(ActivityLogin.this);
+                            alert.setView(input);
+                            alert.setTitle(R.string.app_login_fb_dlg_missing_email_title);
+                            alert.setMessage(R.string.app_login_fb_dlg_missing_email_text);
+                            alert.setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    login(input.getText().toString());
+                                }
+                            });
 
-                        new PermutasSEPRestClient().get().login(auth, new Callback<User>() {
-                            @Override
-                            public void success(User user, retrofit.client.Response response) {
-                                ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getBaseContext(), Config.APP_PREFERENCES_NAME, MODE_PRIVATE);
-                                complexPreferences.putObject(PrefUtils.PREF_USER_KEY, user);
-                                complexPreferences.commit();
-                                hideDialog();
-                                goToMainActivity();
-                            }
-
-                            @Override
-                            public void failure(RetrofitError error) {
-                                hideDialog();
-                                Utils.showSimpleDialog(R.string.app_login_dlg_login_err_not_registered_text, R.string.accept, ActivityLogin.this, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        Session session = Session.getActiveSession();
-                                        session.closeAndClearTokenInformation();
-                                        finish();
-                                    }
-                                });
-                            }
-                        });
+                            alert.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    Session session = Session.getActiveSession();
+                                    session.closeAndClearTokenInformation();
+                                    finish();
+                                }
+                            });
+                            alert.show();
+                        }else{
+                            login(email);
+                        }
                     }
                 }
             });
@@ -199,5 +199,41 @@ public class ActivityLogin extends ActionBarActivity {
         Intent i = new Intent().setClass(ActivityLogin.this, ActivityMain.class);
         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(i);
+    }
+
+
+    private void login(String email){
+
+        if (new EmailValidator(getApplicationContext()).isValid(email)){
+            new PermutasSEPRestClient().get().login(new AuthModel(email, Config.TEM_PWD), new Callback<User>() {
+                @Override
+                public void success(User user, retrofit.client.Response response) {
+                    ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getBaseContext(), Config.APP_PREFERENCES_NAME, MODE_PRIVATE);
+                    complexPreferences.putObject(PrefUtils.PREF_USER_KEY, user);
+                    complexPreferences.commit();
+                    hideDialog();
+                    goToMainActivity();
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    hideDialog();
+                    Utils.showSimpleDialog(R.string.app_login_dlg_login_err_not_registered_text, R.string.accept, ActivityLogin.this, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Session session = Session.getActiveSession();
+                            session.closeAndClearTokenInformation();
+                            finish();
+                        }
+                    });
+                }
+            });
+        }else{
+            Toast.makeText(getApplicationContext(), R.string.app_login_fb_dlg_wrong_email, Toast.LENGTH_LONG).show();
+            Session session = Session.getActiveSession();
+            session.closeAndClearTokenInformation();
+            finish();
+        }
+
     }
 }

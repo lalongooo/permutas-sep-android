@@ -46,4 +46,7 @@ public class Config {
      * Date format used in the entire application
      */
     public static final String APP_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
+
+    public static final String TEM_PWD = "*12345ABCDEF*";
+
 }

@@ -36,6 +36,8 @@
 
     <string name="app_sign_up">Registrarme</string>
     <string name="app_sign_up_facebook_login_button">Registrarme con Facebook</string>
+    <string name="app_sign_up_finish_fb_registration">Terminar registro</string>
+    <string name="app_sign_up_finish_fb_text">Completa la información necesaria para tu registro:</string>
     <string name="app_sign_up_hint_name">Tu nombre</string>
     <string name="app_sign_up_hint_email">Tu correo</string>
     <string name="app_sign_up_hint_password">Tu contraseña</string>
@@ -53,6 +55,7 @@
     <string name="search_fragment_dlg_text">Buscando...</string>
     <string name="search_fragment_filters_error_msg">Ocurrió un error en tu búsqueda</string>
     <string name="accept">Aceptar</string>
+    <string name="cancel">Cancelar</string>
     <string name="search_fragment_search_error_msg">Ocurrió un error en tu búsqueda</string>
     <string name="search_fragment_search_no_restlts">No se encontraron resultados</string>
 
@@ -65,6 +68,9 @@
 
     <string name="app_login_username">Tu correo electrónico</string>
     <string name="app_login_password">Tu contraseña</string>
+    <string name="app_login_fb_dlg_missing_email_title">Email</string>
+    <string name="app_login_fb_dlg_missing_email_text">No obtuvimos tu email de Facebook, por favor captura tu email.</string>
+    <string name="app_login_fb_dlg_wrong_email">Por favor, captura un email válido</string>
     <string name="app_login_btn_login">Iniciar sesión</string>
     <string name="app_login_dlg_login_title">Iniciar sesión</string>
     <string name="app_login_dlg_login_err_text">Usuario o contraseña incorrectos</string>

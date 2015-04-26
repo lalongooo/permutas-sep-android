@@ -1,14 +1,14 @@
 package com.throrinstudio.android.common.libs.validator.validator;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 
 import com.permutassep.R;
 import com.throrinstudio.android.common.libs.validator.AbstractValidator;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class EmailValidator extends AbstractValidator {
 
@@ -47,11 +47,12 @@ public class EmailValidator extends AbstractValidator {
                 Matcher matcher = pattern.matcher(email);
                 return matcher.matches();
             } else {
-                Pattern pattern = Pattern.compile(".+@.+\\.[a-z]+");
+                Pattern pattern = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
                 Matcher matcher = pattern.matcher(email);
                 return matcher.matches();
             }
         }
+
         return false;
     }
 

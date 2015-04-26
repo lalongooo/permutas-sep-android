@@ -148,8 +148,6 @@ public class ActivitySignUp extends ActionBarActivity {
                             });
                         }
                     });
-
-
                 }
             }
         });
@@ -176,68 +174,12 @@ public class ActivitySignUp extends ActionBarActivity {
                         final String email = fbUser.getProperty("email") != null ? fbUser.getProperty("email").toString() : "";
                         final String fbUserId = fbUser.getId();
 
-                        // TODO: Is very important to change this code. Due to deadlines, we need to make it this way :(
-                        final User u;
-                        if (email != "") {
-                            u = new User(fbUser.getName(), email, "0000000000", fbUser.getId());
-                        } else {
-                            u = new User(fbUser.getName(), fbUser.getId().concat("@facebook.com"), "0000000000", "facebook");
-                        }
-
-                        /*
-                        * * Validate if the user already exists
-                        * */
-                        new PermutasSEPRestClient().get().login(new AuthModel(u.getEmail(), u.getPassword()), new Callback<User>() {
-                            @Override
-                            public void success(User user, retrofit.client.Response response) {
-
-                                hideDialog();
-                                Utils.showSimpleDialog(R.string.app_login_sign_up_user_exist, R.string.accept, ActivitySignUp.this, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        Session session = Session.getActiveSession();
-                                        session.closeAndClearTokenInformation();
-                                        finish();
-                                    }
-                                });
-                            }
-
-                            @Override
-                            public void failure(RetrofitError error) {
-
-                                                                /*
-                                * * Perform the call to the REST service
-                                * */
-                                new PermutasSEPRestClient().get().newUser(u, new Callback<User>() {
-                                    @Override
-                                    public void success(User user, retrofit.client.Response response) {
-                                        hideDialog();
-                                        ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getBaseContext(), Config.APP_PREFERENCES_NAME, MODE_PRIVATE);
-
-                                        if (email != "") {
-                                            user.setPassword(fbUserId);
-                                        } else {
-                                            user.setPassword("facebook");
-                                        }
-
-                                        complexPreferences.putObject(PrefUtils.PREF_USER_KEY, user);
-                                        complexPreferences.putObject(PrefUtils.PREF_ORIGINAL_USER_KEY, user);
-                                        complexPreferences.commit();
-
-                                        PrefUtils.setNormalUser(getApplicationContext(), true);
-                                        hideDialog();
-                                        goToMainActivity();
-                                    }
-
-                                    @Override
-                                    public void failure(RetrofitError error) {
-                                        // TODO: Add an error message dialog
-                                        hideDialog();
-                                    }
-                                });
-
-                            }
-                        });
+                        Intent i = new Intent().setClass(ActivitySignUp.this, ActivityCompleteFbData.class);
+                        i.putExtra("name", fbUser.getName());
+                        i.putExtra("email", email);
+                        startActivity(i);
+                        finish();
+                        hideDialog();
                     }
                 }
             });
