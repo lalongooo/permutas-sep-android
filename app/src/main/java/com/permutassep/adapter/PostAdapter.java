@@ -51,8 +51,9 @@ public class PostAdapter extends BaseAdapter {
         }
 
         TextView tvUserName = (TextView) vi.findViewById(R.id.tvUserName);
-        TextView tvFromLabel = (TextView) vi.findViewById(R.id.tvFromLabel);
-        TextView tvToLabel = (TextView) vi.findViewById(R.id.tvToLabel);
+        TextView tvPostUserEmail = (TextView) vi.findViewById(R.id.tvPostUserEmail);
+        TextView tvFromLabel = (TextView) vi.findViewById(R.id.tvFrom);
+        TextView tvToLabel = (TextView) vi.findViewById(R.id.tvTo);
         TextView tvAcademicLevelLabel = (TextView) vi.findViewById(R.id.tvAcademicLevelLabel);
         TextView tvPostDate = (TextView) vi.findViewById(R.id.tvPostDate);
         TextView tvPostText = (TextView) vi.findViewById(R.id.tvPostText);
@@ -60,8 +61,9 @@ public class PostAdapter extends BaseAdapter {
         Post p = data.get(position);
 
         tvUserName.setText(p.getUser().getName());
-        tvFromLabel.setText(states.get((String.valueOf(p.getStateFrom()))).getShortCode());
-        tvToLabel.setText(states.get(String.valueOf(p.getStateTo())).getShortCode());
+        tvPostUserEmail.setText(p.getUser().getEmail());
+        tvFromLabel.setText(states.get((String.valueOf(p.getStateFrom()))).getStateName());
+        tvToLabel.setText(states.get(String.valueOf(p.getStateTo())).getStateName());
         tvAcademicLevelLabel.setText(p.getAcademicLevel());
         tvPostDate.setText(new TimeAgo(activity).timeAgo(p.getPostDate()));
         tvPostText.setText(p.getPostText());
