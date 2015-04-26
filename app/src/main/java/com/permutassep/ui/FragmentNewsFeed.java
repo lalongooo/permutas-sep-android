@@ -1,5 +1,6 @@
 package com.permutassep.ui;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.google.gson.Gson;
@@ -29,6 +31,18 @@ import retrofit.converter.GsonConverter;
 public class FragmentNewsFeed extends Fragment {
 
     private ProgressDialog pDlg;
+    private PostAdapter adapter;
+    private FragmentPostDetail.OnPostItemSelectedListener onPostItemSelectedListener;
+
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        if(!(getActivity() instanceof FragmentPostDetail.OnPostItemSelectedListener)) {
+            throw new ClassCastException("Activity must implement OnPostItemSelectedListener");
+        } else {
+            onPostItemSelectedListener = (FragmentPostDetail.OnPostItemSelectedListener) getActivity();
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -58,7 +72,7 @@ public class FragmentNewsFeed extends Fragment {
             @Override
             public void success(List<Post> posts, Response response) {
                 if(!posts.isEmpty()){
-                    PostAdapter adapter = new PostAdapter(getActivity(), posts);
+                    adapter = new PostAdapter(getActivity(), posts);
                     lv.setAdapter(adapter);
                     hideDialog();
                 }else{
@@ -74,6 +88,13 @@ public class FragmentNewsFeed extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {
                     }
                 });
+            }
+        });
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                onPostItemSelectedListener.showPostDetail(((Post)adapter.getItem(position)));
             }
         });
 

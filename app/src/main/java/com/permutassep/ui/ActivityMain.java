@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 
+import com.google.gson.Gson;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.materialdrawer.Drawer;
@@ -22,12 +23,13 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.permutassep.R;
 import com.permutassep.config.Config;
+import com.permutassep.model.Post;
 import com.permutassep.model.User;
 import com.permutassep.utils.PrefUtils;
 
 import br.kots.mob.complex.preferences.ComplexPreferences;
 
-public class ActivityMain extends ActionBarActivity{
+public class ActivityMain extends ActionBarActivity implements  FragmentPostDetail.OnPostItemSelectedListener{
 
     public enum DrawerItems {
         HOME(1000),
@@ -130,6 +132,12 @@ public class ActivityMain extends ActionBarActivity{
     public boolean onOptionsItemSelected(MenuItem item) {
         replaceFragment(item.getItemId());
         return false;
+    }
+
+    @Override
+    public void showPostDetail(Post post) {
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, FragmentPostDetail.instance(new Gson().toJson(post))).addToBackStack("news_feed").commit();
+        result.setSelection(-1);
     }
 
     public void replaceFragment(int id){
