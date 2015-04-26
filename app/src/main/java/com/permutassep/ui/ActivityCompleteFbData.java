@@ -53,12 +53,12 @@ public class ActivityCompleteFbData extends ActionBarActivity {
 
         if (!TextUtils.isEmpty(name)) {
             etName.setText(name);
-            etName.setKeyListener(null);
+            etName.setFocusable(false);
         }
 
         if (!TextUtils.isEmpty(email)) {
             etEmail.setText(email);
-            etEmail.setKeyListener(null);
+            etEmail.setFocusable(false);
         }
 
         Validate vName = new Validate(etName);

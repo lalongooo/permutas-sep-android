@@ -1,6 +1,7 @@
 <resources>
 
     <style name="AppThemeTemp" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorAccent">@color/primary</item>
     </style>
 
     <style name="WindowAnimationTransition">
@@ -31,7 +32,7 @@
         <item name="android:layout_marginRight">16dp</item>
         <item name="android:paddingLeft">?android:attr/listPreferredItemPaddingLeft</item>
         <item name="android:textSize">36sp</item>
-        <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="android:textColor">@color/primary</item>
     </style>
 
     <style name="WizardFormLabel">

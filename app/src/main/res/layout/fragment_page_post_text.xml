@@ -43,7 +43,7 @@
                 android:layout_marginBottom="16dp"
                 android:gravity="top|left"
                 android:hint="@string/wizard_post_text_hint"
-                android:inputType="textMultiLine"
+                android:inputType="textMultiLine|textCapSentences"
                 android:lines="10"
                 android:maxLength="500"
                 android:maxLines="10"

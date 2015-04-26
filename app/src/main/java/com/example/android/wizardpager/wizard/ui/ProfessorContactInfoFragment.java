@@ -173,27 +173,13 @@ public class ProfessorContactInfoFragment extends Fragment {
 
         if(user != null){
             mNameView.setText(!TextUtils.isEmpty(user.getName()) ? user.getName() : "");
-            // mNameView.setFocusable(user.getName() != null && user.getName() != "" ? false : true);
+            mNameView.setFocusable(user.getName() != null && user.getName() != "" ? false : true);
 
             mEmailView.setText(!TextUtils.isEmpty(user.getEmail()) ? user.getEmail() : "");
-            // mEmailView.setFocusable(user.getEmail() != null && user.getEmail() != "" ? false : true);
+            mEmailView.setFocusable(user.getEmail() != null && user.getEmail() != "" ? false : true);
 
             mPhoneView.setText(!TextUtils.isEmpty(user.getPhone()) ? user.getPhone() : "");
-            // mPhoneView.setFocusable(user.getPhone() != null && user.getPhone() != "" ? false : true);
-        }
-
-        // TODO: Remove this code when the authentication/registration service is done
-        if(!TextUtils.isEmpty(user.getEmail())){
-            String email = user.getEmail().substring(0, user.getEmail().indexOf('@'));
-            String domain = user.getEmail().substring(user.getEmail().indexOf('@') + 1);
-            if(TextUtils.isDigitsOnly(email) && domain.equals("facebook.com")){
-                mEmailView.setText("");
-            }
-        }
-        if(!TextUtils.isEmpty(user.getPhone())){
-            if(user.getPhone().equals("0000000000")){
-                mPhoneView.setText("");
-            }
+            mPhoneView.setFocusable(user.getPhone() != null && user.getPhone() != "" ? false : true);
         }
     }
 

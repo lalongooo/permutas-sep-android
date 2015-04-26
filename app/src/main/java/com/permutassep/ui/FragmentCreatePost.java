@@ -44,6 +44,7 @@ import com.example.android.wizardpager.wizard.ui.StepPagerStrip;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.permutassep.R;
+import com.permutassep.adapter.PostTypeAdapter;
 import com.permutassep.config.Config;
 import com.permutassep.model.City;
 import com.permutassep.model.PermutaSepWizardModel;
@@ -52,9 +53,7 @@ import com.permutassep.model.State;
 import com.permutassep.model.Town;
 import com.permutassep.model.User;
 import com.permutassep.rest.PermutasSEPRestClient;
-import com.permutassep.adapter.PostTypeAdapter;
 import com.permutassep.utils.PrefUtils;
-import com.permutassep.adapter.UserTypeAdapter;
 
 import java.util.Date;
 import java.util.List;
@@ -83,7 +82,7 @@ public class FragmentCreatePost extends Fragment implements
 
     private List<Page> mCurrentPageSequence;
     private StepPagerStrip mStepPagerStrip;
-    boolean suggestDataCompletion = true;
+    boolean suggestDataCompletion = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
