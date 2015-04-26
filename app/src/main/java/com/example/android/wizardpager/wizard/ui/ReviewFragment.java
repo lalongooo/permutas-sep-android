@@ -31,7 +31,7 @@ import com.example.android.wizardpager.wizard.model.AbstractWizardModel;
 import com.example.android.wizardpager.wizard.model.ModelCallbacks;
 import com.example.android.wizardpager.wizard.model.Page;
 import com.example.android.wizardpager.wizard.model.ReviewItem;
-import com.permutassep.R;
+import com.lalongooo.permutassep.R;
 import com.permutassep.ui.ActivityMain;
 
 import java.util.ArrayList;

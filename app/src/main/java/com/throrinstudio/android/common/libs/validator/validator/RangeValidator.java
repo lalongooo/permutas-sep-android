@@ -3,9 +3,8 @@ package com.throrinstudio.android.common.libs.validator.validator;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 
+import com.lalongooo.permutassep.R;
 import com.throrinstudio.android.common.libs.validator.AbstractValidator;
-import com.permutassep.R;
-
 
 /**
  * Validates whether the given value is between a range of values

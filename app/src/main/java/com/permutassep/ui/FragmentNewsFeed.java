@@ -14,7 +14,7 @@ import android.widget.ListView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.permutassep.R;
+import com.lalongooo.permutassep.R;
 import com.permutassep.adapter.PostAdapter;
 import com.permutassep.config.Config;
 import com.permutassep.model.Post;

@@ -17,7 +17,7 @@ import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
 import com.facebook.model.GraphUser;
 import com.facebook.widget.LoginButton;
-import com.permutassep.R;
+import com.lalongooo.permutassep.R;
 import com.permutassep.config.Config;
 import com.permutassep.model.AuthModel;
 import com.permutassep.model.User;

@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.facebook.Session;
-import com.permutassep.R;
+import com.lalongooo.permutassep.R;
 import com.permutassep.config.Config;
 import com.permutassep.model.AuthModel;
 import com.permutassep.model.User;

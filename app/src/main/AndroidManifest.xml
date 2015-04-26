@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.permutassep"
+    package="com.lalongooo.permutassep"
     android:versionCode="1"
     android:versionName="1.0">
 
@@ -17,7 +17,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppThemeTemp">
         <activity
-            android:name=".ui.ActivityAppOverview"
+            android:name="com.permutassep.ui.ActivityAppOverview"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -27,23 +27,23 @@
         </activity>
 
         <activity
-            android:name=".ui.ActivityLogin"
+            android:name="com.permutassep.ui.ActivityLogin"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.ActivityLoginSignUp"
+            android:name="com.permutassep.ui.ActivityLoginSignUp"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.ActivityMain"
+            android:name="com.permutassep.ui.ActivityMain"
             android:label="@string/app_name"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.ActivitySignUp"
+            android:name="com.permutassep.ui.ActivitySignUp"
             android:label="@string/app_name"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.ActivityCompleteFbData"
+            android:name="com.permutassep.ui.ActivityCompleteFbData"
             android:label="@string/app_name"
             android:screenOrientation="portrait"/>
         <activity

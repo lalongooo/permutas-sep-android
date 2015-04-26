@@ -16,8 +16,7 @@ import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
-
-import com.permutassep.R;
+import com.lalongooo.permutassep.R;
 import com.permutassep.model.State;
 
 import java.util.ArrayList;

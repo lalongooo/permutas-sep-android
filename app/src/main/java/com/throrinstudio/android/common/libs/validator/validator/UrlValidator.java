@@ -1,13 +1,13 @@
 package com.throrinstudio.android.common.libs.validator.validator;
 
-import java.util.regex.Pattern;
-
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.util.Patterns;
 
-import com.permutassep.R;
+import com.lalongooo.permutassep.R;
 import com.throrinstudio.android.common.libs.validator.AbstractValidator;
+
+import java.util.regex.Pattern;
 
 public class UrlValidator extends AbstractValidator {
 

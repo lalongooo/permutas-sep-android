@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.permutassep.R;
+import com.lalongooo.permutassep.R;
 import com.permutassep.adapter.PostAdapter;
 import com.permutassep.model.Post;
 

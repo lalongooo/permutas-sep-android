@@ -1,14 +1,14 @@
 package com.throrinstudio.android.common.libs.validator.validator;
 
-import java.util.regex.Pattern;
-
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.util.Patterns;
 
+import com.lalongooo.permutassep.R;
 import com.throrinstudio.android.common.libs.validator.AbstractValidator;
 import com.throrinstudio.android.common.libs.validator.ValidatorException;
-import com.permutassep.R;
+
+import java.util.regex.Pattern;
 
 /**
  * Validator to check if Phone number is correct.

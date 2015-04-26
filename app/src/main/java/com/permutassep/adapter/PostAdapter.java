@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.permutassep.R;
+import com.lalongooo.permutassep.R;
 import com.permutassep.model.Post;
 import com.permutassep.model.State;
 import com.permutassep.utils.TimeAgo;

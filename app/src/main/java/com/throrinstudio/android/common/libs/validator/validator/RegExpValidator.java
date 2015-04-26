@@ -1,13 +1,13 @@
 package com.throrinstudio.android.common.libs.validator.validator;
 
-import java.util.regex.Pattern;
-
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 
-import com.permutassep.R;
+import com.lalongooo.permutassep.R;
 import com.throrinstudio.android.common.libs.validator.AbstractValidator;
 import com.throrinstudio.android.common.libs.validator.ValidatorException;
+
+import java.util.regex.Pattern;
 
 /**
  * This validator test value with custom Regex Pattern.

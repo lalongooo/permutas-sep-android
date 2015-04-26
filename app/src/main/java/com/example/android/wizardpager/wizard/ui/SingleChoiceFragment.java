@@ -29,7 +29,7 @@ import android.widget.TextView;
 
 import com.example.android.wizardpager.wizard.model.Page;
 import com.example.android.wizardpager.wizard.model.SingleFixedChoicePage;
-import com.permutassep.R;
+import com.lalongooo.permutassep.R;
 import com.permutassep.ui.ActivityMain;
 
 import java.util.ArrayList;

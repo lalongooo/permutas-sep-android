@@ -1,10 +1,11 @@
 package com.permutassep.utils;
 
-import java.util.Date;
 import android.content.Context;
 import android.content.res.Resources;
 
-import com.permutassep.R;
+import com.lalongooo.permutassep.R;
+
+import java.util.Date;
 
 public class TimeAgo {
 

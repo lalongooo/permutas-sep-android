@@ -4,10 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
-import com.permutassep.R;
+import com.lalongooo.permutassep.R;
 
 public class ActivityLoginSignUp extends Activity {
 

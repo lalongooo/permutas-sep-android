@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.permutassep.R;
+import com.lalongooo.permutassep.R;
 
 public class FragmentSettings extends Fragment{
 

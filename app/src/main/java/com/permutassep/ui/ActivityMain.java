@@ -15,13 +15,13 @@ import android.view.View;
 import android.widget.AdapterView;
 
 import com.google.gson.Gson;
+import com.lalongooo.permutassep.R;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
-import com.permutassep.R;
 import com.permutassep.config.Config;
 import com.permutassep.model.Post;
 import com.permutassep.model.User;

@@ -4,8 +4,7 @@ package com.throrinstudio.android.common.libs.validator.validate;
 import android.content.Context;
 import android.text.TextUtils;
 import android.widget.TextView;
-
-import com.permutassep.R;
+import com.lalongooo.permutassep.R;
 import com.throrinstudio.android.common.libs.validator.AbstractValidate;
 
 public class ConfirmValidate extends AbstractValidate {

@@ -1,13 +1,12 @@
 package com.throrinstudio.android.common.libs.validator.validator;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 
+import com.lalongooo.permutassep.R;
 import com.throrinstudio.android.common.libs.validator.AbstractValidator;
-import com.permutassep.R;
+
+import java.util.regex.Pattern;
 
 /**
  * Validates whether ip digits is between 0-255 digits, has only numbers and is the correct format

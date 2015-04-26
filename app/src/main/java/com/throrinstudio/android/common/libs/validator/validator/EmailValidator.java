@@ -4,7 +4,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 
-import com.permutassep.R;
+import com.lalongooo.permutassep.R;
 import com.throrinstudio.android.common.libs.validator.AbstractValidator;
 
 import java.util.regex.Matcher;

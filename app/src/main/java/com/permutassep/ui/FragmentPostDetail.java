@@ -10,9 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.lalongooo.permutassep.R;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.iconics.typeface.FontAwesome;
-import com.permutassep.R;
 import com.permutassep.model.City;
 import com.permutassep.model.Post;
 import com.permutassep.model.State;

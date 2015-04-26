@@ -43,7 +43,7 @@ import com.example.android.wizardpager.wizard.ui.ReviewFragment;
 import com.example.android.wizardpager.wizard.ui.StepPagerStrip;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.permutassep.R;
+import com.lalongooo.permutassep.R;
 import com.permutassep.adapter.PostTypeAdapter;
 import com.permutassep.config.Config;
 import com.permutassep.model.City;

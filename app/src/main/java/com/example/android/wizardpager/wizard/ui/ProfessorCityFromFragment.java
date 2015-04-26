@@ -34,14 +34,14 @@ import android.widget.TextView;
 
 import com.example.android.wizardpager.wizard.model.Page;
 import com.example.android.wizardpager.wizard.model.ProfessorCityFromPage;
-import com.permutassep.R;
+import com.lalongooo.permutassep.R;
 import com.permutassep.adapter.CitySpinnerBaseAdapter;
 import com.permutassep.adapter.StateSpinnerBaseAdapter;
 import com.permutassep.adapter.TownSpinnerBaseAdapter;
-import com.permutassep.rest.inegifacil.InegiFacilRestClient;
 import com.permutassep.model.City;
 import com.permutassep.model.State;
 import com.permutassep.model.Town;
+import com.permutassep.rest.inegifacil.InegiFacilRestClient;
 import com.permutassep.ui.ActivityMain;
 
 import java.util.ArrayList;
