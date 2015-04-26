@@ -117,7 +117,11 @@ public class FragmentPostDetail extends Fragment {
         InegiFacilRestClient.get().getTowns(String.valueOf(post.getStateFrom()), String.valueOf(post.getCityFrom()), new Callback<ArrayList<Town>>() {
             @Override
             public void success(ArrayList<Town> towns, Response response) {
-                tvTownFrom.setText(towns.get(post.getTownFrom() - 1).getNombre());
+                HashMap<String, Town> map = new HashMap<>();
+                for(Town town : towns){
+                    map.put(town.getClave(), town);
+                }
+                tvTownFrom.setText(map.get(("0000".substring(0,"0000".length()-String.valueOf(post.getTownFrom()).length()))+String.valueOf(post.getTownFrom())).getNombre());
             }
 
             @Override
@@ -141,7 +145,11 @@ public class FragmentPostDetail extends Fragment {
         InegiFacilRestClient.get().getTowns(String.valueOf(post.getStateTo()), String.valueOf(post.getCityTo()), new Callback<ArrayList<Town>>() {
             @Override
             public void success(ArrayList<Town> towns, Response response) {
-                tvTownTo.setText(towns.get(post.getTownTo() - 1).getNombre());
+                HashMap<String, Town> map = new HashMap<>();
+                for(Town town : towns){
+                    map.put(town.getClave(), town);
+                }
+                tvTownTo.setText(map.get(("0000".substring(0,"0000".length()-String.valueOf(post.getTownTo()).length()))+String.valueOf(post.getTownTo())).getNombre());
                 hideDialog();
             }
 
