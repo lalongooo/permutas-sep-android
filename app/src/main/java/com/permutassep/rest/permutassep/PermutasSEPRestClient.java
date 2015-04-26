@@ -1,4 +1,4 @@
-package com.permutassep.rest;
+package com.permutassep.rest.permutassep;
 
 import com.permutassep.config.Config;
 

@@ -15,7 +15,7 @@ import com.permutassep.R;
 import com.permutassep.config.Config;
 import com.permutassep.model.AuthModel;
 import com.permutassep.model.User;
-import com.permutassep.rest.PermutasSEPRestClient;
+import com.permutassep.rest.permutassep.PermutasSEPRestClient;
 import com.permutassep.utils.PrefUtils;
 import com.permutassep.utils.Utils;
 import com.throrinstudio.android.common.libs.validator.Form;

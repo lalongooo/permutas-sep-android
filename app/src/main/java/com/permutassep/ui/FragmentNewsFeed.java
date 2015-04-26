@@ -16,7 +16,7 @@ import com.permutassep.R;
 import com.permutassep.adapter.PostAdapter;
 import com.permutassep.config.Config;
 import com.permutassep.model.Post;
-import com.permutassep.rest.PermutasSEPRestClient;
+import com.permutassep.rest.permutassep.PermutasSEPRestClient;
 import com.permutassep.utils.Utils;
 
 import java.util.List;

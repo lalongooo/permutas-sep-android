@@ -1,4 +1,4 @@
-package com.permutassep.rest;
+package com.permutassep.rest.permutassep;
 
 import com.permutassep.model.AuthModel;
 import com.permutassep.model.Post;

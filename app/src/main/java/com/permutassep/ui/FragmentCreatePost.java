@@ -52,7 +52,7 @@ import com.permutassep.model.Post;
 import com.permutassep.model.State;
 import com.permutassep.model.Town;
 import com.permutassep.model.User;
-import com.permutassep.rest.PermutasSEPRestClient;
+import com.permutassep.rest.permutassep.PermutasSEPRestClient;
 import com.permutassep.utils.PrefUtils;
 
 import java.util.Date;

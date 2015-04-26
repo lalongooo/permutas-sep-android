@@ -1,4 +1,4 @@
-package com.permutassep.inegifacil.rest;
+package com.permutassep.rest.inegifacil;
 
 import com.permutassep.model.City;
 import com.permutassep.model.Town;

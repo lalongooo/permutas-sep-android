@@ -1,4 +1,4 @@
-package com.permutassep.inegifacil.rest;
+package com.permutassep.rest.inegifacil;
 
 import com.permutassep.config.Config;
 

@@ -38,7 +38,7 @@ import com.permutassep.R;
 import com.permutassep.adapter.CitySpinnerBaseAdapter;
 import com.permutassep.adapter.StateSpinnerBaseAdapter;
 import com.permutassep.adapter.TownSpinnerBaseAdapter;
-import com.permutassep.inegifacil.rest.InegiFacilRestClient;
+import com.permutassep.rest.inegifacil.InegiFacilRestClient;
 import com.permutassep.model.City;
 import com.permutassep.model.State;
 import com.permutassep.model.Town;

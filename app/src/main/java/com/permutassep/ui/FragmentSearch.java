@@ -20,12 +20,12 @@ import com.permutassep.adapter.CitySpinnerBaseAdapter;
 import com.permutassep.adapter.StateSpinnerBaseAdapter;
 import com.permutassep.adapter.TownSpinnerBaseAdapter;
 import com.permutassep.config.Config;
-import com.permutassep.inegifacil.rest.InegiFacilRestClient;
+import com.permutassep.rest.inegifacil.InegiFacilRestClient;
 import com.permutassep.model.City;
 import com.permutassep.model.Post;
 import com.permutassep.model.State;
 import com.permutassep.model.Town;
-import com.permutassep.rest.PermutasSEPRestClient;
+import com.permutassep.rest.permutassep.PermutasSEPRestClient;
 import com.permutassep.utils.Utils;
 
 import java.util.ArrayList;
