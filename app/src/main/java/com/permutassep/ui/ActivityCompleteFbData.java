@@ -101,6 +101,7 @@ public class ActivityCompleteFbData extends ActionBarActivity {
                             u.setName(etName.getText().toString());
                             u.setEmail(etEmail.getText().toString());
                             u.setPhone(etPhone.getText().toString());
+                            u.setSocialUserId(getIntent().getExtras().getString("fbUserId"));
                             u.setPassword(Config.TEM_PWD);
 
                             new PermutasSEPRestClient().get().newUser(u, new Callback<User>() {
@@ -108,7 +109,7 @@ public class ActivityCompleteFbData extends ActionBarActivity {
                                 @Override
                                 public void success(User user, retrofit.client.Response response) {
                                     ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getBaseContext(), Config.APP_PREFERENCES_NAME, MODE_PRIVATE);
-                                    user.setPassword("facebook");
+                                    user.setPassword(Config.TEM_PWD);
                                     complexPreferences.putObject(PrefUtils.PREF_USER_KEY, user);
                                     complexPreferences.putObject(PrefUtils.PREF_ORIGINAL_USER_KEY, user);
                                     complexPreferences.commit();

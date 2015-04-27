@@ -15,6 +15,8 @@ public class User {
     private String email;
     @SerializedName("phone")
     private String phone;
+    @SerializedName("social_user_id")
+    private String socialUserId;
     private String password;
 
     public User(){}
@@ -85,6 +87,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getSocialUserId() {
+        return socialUserId;
+    }
+
+    public void setSocialUserId(String socialUserId) {
+        this.socialUserId = socialUserId;
     }
 
     @Override

@@ -172,11 +172,11 @@ public class ActivitySignUp extends ActionBarActivity {
                     if (fbUser != null) {
 
                         final String email = fbUser.getProperty("email") != null ? fbUser.getProperty("email").toString() : "";
-                        final String fbUserId = fbUser.getId();
 
                         Intent i = new Intent().setClass(ActivitySignUp.this, ActivityCompleteFbData.class);
                         i.putExtra("name", fbUser.getName());
                         i.putExtra("email", email);
+                        i.putExtra("fbUserId", fbUser.getId());
                         startActivity(i);
                         finish();
                         hideDialog();
