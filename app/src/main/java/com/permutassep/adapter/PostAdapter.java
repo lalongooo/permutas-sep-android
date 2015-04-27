@@ -6,9 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lalongooo.permutassep.R;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.permutassep.model.Post;
 import com.permutassep.model.State;
 import com.permutassep.utils.TimeAgo;
@@ -23,12 +27,24 @@ public class PostAdapter extends BaseAdapter {
     private Activity activity;
     private List<Post> data;
     private HashMap<String, State> states;
+    private DisplayImageOptions options;
 
     public PostAdapter(Activity a, List<Post> posts) {
         activity = a;
         data = posts;
         inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         states = Utils.getStates(a);
+
+        options = new DisplayImageOptions.Builder()
+                .showImageOnLoading(R.drawable.default_profile_picture)
+                .showImageForEmptyUri(R.drawable.default_profile_picture)
+                .showImageOnFail(R.drawable.default_profile_picture)
+                .cacheInMemory(true)
+                .cacheOnDisk(false)
+                .considerExifParams(false)
+                .displayer(new RoundedBitmapDisplayer(20))
+                .build();
+
     }
 
     public int getCount() {
@@ -57,6 +73,7 @@ public class PostAdapter extends BaseAdapter {
         TextView tvAcademicLevelLabel = (TextView) vi.findViewById(R.id.tvAcademicLevelLabel);
         TextView tvPostDate = (TextView) vi.findViewById(R.id.tvPostDate);
         TextView tvPostText = (TextView) vi.findViewById(R.id.tvPostText);
+        ImageView profilePicture = (ImageView) vi.findViewById(R.id.imageView);
 
         Post p = data.get(position);
 
@@ -67,6 +84,8 @@ public class PostAdapter extends BaseAdapter {
         tvAcademicLevelLabel.setText(p.getAcademicLevel());
         tvPostDate.setText(new TimeAgo(activity).timeAgo(p.getPostDate()));
         tvPostText.setText(p.getPostText());
+
+        ImageLoader.getInstance().displayImage("https://graph.facebook.com/" + p.getUser().getSocialUserId() + "/picture?width=100&height=100", profilePicture, options);
 
         return vi;
     }
