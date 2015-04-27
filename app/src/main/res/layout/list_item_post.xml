@@ -23,6 +23,7 @@
         android:layout_marginStart="10dp"
         android:layout_toEndOf="@+id/imageView"
         android:layout_toRightOf="@+id/imageView"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Jorge E. Hernández"
         android:textStyle="bold"
         android:textSize="15sp" />
@@ -64,13 +65,14 @@
         android:id="@+id/tvAcademicLevelLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/tvFrom"
-        android:layout_marginLeft="20dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:text="Secundaria "
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textStyle="bold" />
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textStyle="bold"
+        android:textColor="@color/primary"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/tvToLabel"
+        android:layout_alignLeft="@+id/tvUserName"
+        android:layout_alignStart="@+id/tvUserName" />
 
     <TextView
         android:id="@+id/tvPostDate"
