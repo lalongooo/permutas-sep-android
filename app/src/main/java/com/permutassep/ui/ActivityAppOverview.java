@@ -2,13 +2,13 @@ package com.permutassep.ui;
 
 import android.animation.ObjectAnimator;
 import android.animation.StateListAnimator;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -27,7 +27,7 @@ import com.viewpagerindicator.PageIndicator;
 
 import br.kots.mob.complex.preferences.ComplexPreferences;
 
-public class ActivityAppOverview extends Activity{
+public class ActivityAppOverview extends ActionBarActivity {
     private ViewPager viewPager;
     private PageIndicator indicator;
     private ImageView topImage1;
@@ -40,7 +40,6 @@ public class ActivityAppOverview extends Activity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_app_overview);

@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +15,7 @@ import android.widget.Spinner;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.lalongooo.permutassep.R;
+import com.permutassep.BaseFragment;
 import com.permutassep.adapter.CitySpinnerBaseAdapter;
 import com.permutassep.adapter.StateSpinnerBaseAdapter;
 import com.permutassep.adapter.TownSpinnerBaseAdapter;
@@ -38,7 +38,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 import retrofit.converter.GsonConverter;
 
-public class FragmentSearch extends Fragment {
+public class FragmentSearch extends BaseFragment {
 
     private ProgressDialog pDlg;
     private Button btnSearch;

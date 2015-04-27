@@ -2,7 +2,6 @@ package com.permutassep.ui;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,12 +9,13 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.lalongooo.permutassep.R;
+import com.permutassep.BaseFragment;
 import com.permutassep.adapter.PostAdapter;
 import com.permutassep.model.Post;
 
 import java.util.List;
 
-public class FragmentResult extends Fragment {
+public class FragmentResult extends BaseFragment {
 
     private List<Post> posts;
     private PostAdapter adapter;

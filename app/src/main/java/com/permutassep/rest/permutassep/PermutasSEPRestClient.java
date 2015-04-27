@@ -15,14 +15,12 @@ public class PermutasSEPRestClient {
 
     public PermutasSEPRestClient() {
         restAdapter = new RestAdapter.Builder()
-                .setLogLevel(RestAdapter.LogLevel.FULL)
                 .setEndpoint(Config.PERMUTAS_SEP_REST_BASE_URL)
                 .build();
     }
 
     public PermutasSEPRestClient(Converter converter) {
         restAdapter = new RestAdapter.Builder()
-                .setLogLevel(RestAdapter.LogLevel.FULL)
                 .setEndpoint(Config.PERMUTAS_SEP_REST_BASE_URL)
                 .setConverter(converter)
                 .build();

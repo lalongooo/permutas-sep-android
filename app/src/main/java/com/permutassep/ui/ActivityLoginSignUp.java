@@ -1,14 +1,14 @@
 package com.permutassep.ui;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.TextView;
 
 import com.lalongooo.permutassep.R;
 
-public class ActivityLoginSignUp extends Activity {
+public class ActivityLoginSignUp extends ActionBarActivity {
 
     private TextView btnRegister;
     private TextView btnLogin;

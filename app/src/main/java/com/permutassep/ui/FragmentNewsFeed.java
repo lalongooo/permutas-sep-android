@@ -15,6 +15,7 @@ import android.widget.ListView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.lalongooo.permutassep.R;
+import com.permutassep.BaseFragment;
 import com.permutassep.adapter.PostAdapter;
 import com.permutassep.config.Config;
 import com.permutassep.model.Post;
@@ -28,7 +29,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 import retrofit.converter.GsonConverter;
 
-public class FragmentNewsFeed extends Fragment {
+public class FragmentNewsFeed extends BaseFragment {
 
     private ProgressDialog pDlg;
     private PostAdapter adapter;

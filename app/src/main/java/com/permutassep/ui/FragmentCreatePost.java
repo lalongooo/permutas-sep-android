@@ -44,6 +44,7 @@ import com.example.android.wizardpager.wizard.ui.StepPagerStrip;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.lalongooo.permutassep.R;
+import com.permutassep.BaseFragment;
 import com.permutassep.adapter.PostTypeAdapter;
 import com.permutassep.config.Config;
 import com.permutassep.model.City;
@@ -63,7 +64,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.converter.GsonConverter;
 
-public class FragmentCreatePost extends Fragment implements
+public class FragmentCreatePost extends BaseFragment implements
         PageFragmentCallbacks,
         ReviewFragment.Callbacks,
         ModelCallbacks {

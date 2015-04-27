@@ -2,6 +2,7 @@ package com.permutassep.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +43,7 @@ public class PostAdapter extends BaseAdapter {
                 .cacheInMemory(true)
                 .cacheOnDisk(false)
                 .considerExifParams(false)
-                .displayer(new RoundedBitmapDisplayer(20))
+                .displayer(new RoundedBitmapDisplayer(10))
                 .build();
 
     }
@@ -85,7 +86,9 @@ public class PostAdapter extends BaseAdapter {
         tvPostDate.setText(new TimeAgo(activity).timeAgo(p.getPostDate()));
         tvPostText.setText(p.getPostText());
 
-        ImageLoader.getInstance().displayImage("https://graph.facebook.com/" + p.getUser().getSocialUserId() + "/picture?width=100&height=100", profilePicture, options);
+        if(!TextUtils.isEmpty(p.getUser().getSocialUserId())){
+            ImageLoader.getInstance().displayImage("https://graph.facebook.com/" + p.getUser().getSocialUserId() + "/picture?width=200&height=200", profilePicture, options);
+        }
 
         return vi;
     }

@@ -2,7 +2,7 @@ package com.permutassep.ui;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +13,8 @@ import com.google.gson.Gson;
 import com.lalongooo.permutassep.R;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.iconics.typeface.FontAwesome;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.permutassep.BaseFragment;
 import com.permutassep.model.City;
 import com.permutassep.model.Post;
 import com.permutassep.model.State;
@@ -28,13 +30,14 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class FragmentPostDetail extends Fragment {
+public class FragmentPostDetail extends BaseFragment {
 
     private static final String EXTRA_POS_TO_SHOW = "post";
     private Post post;
     private HashMap<String, State> states;
     private ProgressDialog pDlg;
     private ImageView ivArrow;
+    private ImageView imageView;
 
     private TextView tvUserName;
     private TextView tvPostDate;
@@ -72,7 +75,10 @@ public class FragmentPostDetail extends Fragment {
         states = Utils.getStates(getActivity());
         ivArrow =  (ImageView) rootView.findViewById(R.id.ivArrow);
         ivArrow.setImageDrawable(new IconicsDrawable(getActivity(), FontAwesome.Icon.faw_angle_right).sizeDp(30));
-
+        imageView = (ImageView) rootView.findViewById(R.id.imageView);
+        if(!TextUtils.isEmpty(post.getUser().getSocialUserId())){
+            ImageLoader.getInstance().displayImage("https://graph.facebook.com/" + post.getUser().getSocialUserId() + "/picture?width=200&height=200", imageView);
+        }
 
         tvUserName = (TextView) rootView.findViewById(R.id.tvUserName);
         tvPostDate = (TextView) rootView.findViewById(R.id.tvPostDate);
