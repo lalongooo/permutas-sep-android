@@ -8,16 +8,15 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lalongooo.permutassep.R;
+import com.permutassep.BaseActivity;
 import com.permutassep.config.Config;
 import com.permutassep.model.User;
 import com.permutassep.utils.PrefUtils;
@@ -27,7 +26,7 @@ import com.viewpagerindicator.PageIndicator;
 
 import br.kots.mob.complex.preferences.ComplexPreferences;
 
-public class ActivityAppOverview extends ActionBarActivity {
+public class ActivityAppOverview extends BaseActivity {
     private ViewPager viewPager;
     private PageIndicator indicator;
     private ImageView topImage1;

@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,6 +23,7 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.permutassep.BaseActivity;
 import com.permutassep.config.Config;
 import com.permutassep.model.Post;
 import com.permutassep.model.User;
@@ -31,7 +31,7 @@ import com.permutassep.utils.PrefUtils;
 
 import br.kots.mob.complex.preferences.ComplexPreferences;
 
-public class ActivityMain extends ActionBarActivity implements  FragmentPostDetail.OnPostItemSelectedListener{
+public class ActivityMain extends BaseActivity implements  FragmentPostDetail.OnPostItemSelectedListener{
 
     public enum DrawerItems {
         HOME(1000),

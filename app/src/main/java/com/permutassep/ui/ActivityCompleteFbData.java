@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -12,6 +11,7 @@ import android.widget.TextView;
 
 import com.facebook.Session;
 import com.lalongooo.permutassep.R;
+import com.permutassep.BaseActivity;
 import com.permutassep.config.Config;
 import com.permutassep.model.AuthModel;
 import com.permutassep.model.User;
@@ -28,7 +28,7 @@ import br.kots.mob.complex.preferences.ComplexPreferences;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 
-public class ActivityCompleteFbData extends ActionBarActivity {
+public class ActivityCompleteFbData extends BaseActivity {
 
     private EditText etName;
     private EditText etEmail;

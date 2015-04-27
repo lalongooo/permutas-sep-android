@@ -18,6 +18,7 @@ import com.facebook.UiLifecycleHelper;
 import com.facebook.model.GraphUser;
 import com.facebook.widget.LoginButton;
 import com.lalongooo.permutassep.R;
+import com.permutassep.BaseActivity;
 import com.permutassep.config.Config;
 import com.permutassep.model.AuthModel;
 import com.permutassep.model.User;
@@ -36,7 +37,7 @@ import br.kots.mob.complex.preferences.ComplexPreferences;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 
-public class ActivitySignUp extends ActionBarActivity {
+public class ActivitySignUp extends BaseActivity {
 
     private UiLifecycleHelper uiHelper;
     private TextView btnRegister;

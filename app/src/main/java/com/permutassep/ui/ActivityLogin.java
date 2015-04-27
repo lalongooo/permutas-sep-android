@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -21,6 +20,7 @@ import com.facebook.UiLifecycleHelper;
 import com.facebook.model.GraphUser;
 import com.facebook.widget.LoginButton;
 import com.lalongooo.permutassep.R;
+import com.permutassep.BaseActivity;
 import com.permutassep.config.Config;
 import com.permutassep.model.AuthModel;
 import com.permutassep.model.User;
@@ -38,7 +38,7 @@ import br.kots.mob.complex.preferences.ComplexPreferences;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 
-public class ActivityLogin extends ActionBarActivity {
+public class ActivityLogin extends BaseActivity {
 
     private UiLifecycleHelper uiHelper;
 
