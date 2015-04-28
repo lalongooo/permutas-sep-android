@@ -16,7 +16,7 @@ Los maestros que trabajan lejos de su lugar de origen, han recurrido a diferente
 
 Los medios a los que han recurrido los profesores son Blogs y grupos de Facebook, en donde cada uno de ellos publica su permuta deseada y espera a que otro mas lo contacte por ese medio.
 
-Este sistema adoptado tiene 2 problemas:
+Este sistema adoptado tiene 3 problemas:
 
 - Es dificil encontrar una publicación que esté destinada a determinado determinado centro de trabajo en determinado lugar.
 - La información no está centralizada y los porfesores tienen que buscar entre blogs y diversos grupos de Facebook.
