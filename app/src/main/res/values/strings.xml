@@ -86,6 +86,9 @@
     <string name="app_nav_drawer_1">Inicio</string>
     <string name="app_nav_drawer_2">Ajustes</string>
 
+    <string name="app_post_detail_call">Llamar</string>
+    <string name="app_post_detail_email">Email</string>
+
     <string name="tos_dialog_text">Al seleccionar \"Aceptar\" usted acepta los Términos y condiciones del uso de esta aplicación.</string>
     <string name="tos_dialog_cancel">Cancelar</string>
     <string name="tos_dialog_accept">Aceptar</string>

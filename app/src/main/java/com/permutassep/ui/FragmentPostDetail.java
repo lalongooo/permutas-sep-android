@@ -1,11 +1,13 @@
 package com.permutassep.ui;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -56,6 +58,8 @@ public class FragmentPostDetail extends BaseFragment {
     private TextView tvIsTeachingCareer;
     private TextView textStateFromCode;
     private TextView textStateToCode;
+    private Button btnCall;
+    private Button btnMail;
 
 
     public static FragmentPostDetail instance(String post) {
@@ -102,6 +106,25 @@ public class FragmentPostDetail extends BaseFragment {
         tvIsTeachingCareer = (TextView) rootView.findViewById(R.id.tvIsTeachingCareer);
         textStateFromCode = (TextView) rootView.findViewById(R.id.textStateFromCode);
         textStateToCode = (TextView) rootView.findViewById(R.id.textStateToCode);
+        btnCall = (Button) rootView.findViewById(R.id.btnCall);
+        btnCall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent callIntent = new Intent(Intent.ACTION_CALL);
+                callIntent.setData(Uri.parse("tel:".concat(post.getUser().getPhone())));
+                startActivity(callIntent);
+            }
+        });
+
+        btnMail = (Button) rootView.findViewById(R.id.btnEmail);
+        btnMail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto",post.getUser().getEmail(), null));
+                startActivity(Intent.createChooser(emailIntent, "Enviar mail:"));
+            }
+        });
+
 
         tvUserName.setText(post.getUser().getName());
 
@@ -118,7 +141,11 @@ public class FragmentPostDetail extends BaseFragment {
         InegiFacilRestClient.get().getCities(String.valueOf(post.getStateFrom()), new Callback<ArrayList<City>>() {
             @Override
             public void success(ArrayList<City> cities, Response response) {
-                tvCityFrom.setText(cities.get(post.getCityFrom()).getNombreMunicipio());
+                HashMap<Integer, City> map = new HashMap<>();
+                for (City city : cities) {
+                    map.put(city.getClaveMunicipio(), city);
+                }
+                tvCityFrom.setText(map.get(Integer.valueOf(post.getCityFrom())).getNombreMunicipio());
             }
 
             @Override
@@ -146,7 +173,11 @@ public class FragmentPostDetail extends BaseFragment {
         InegiFacilRestClient.get().getCities(String.valueOf(post.getStateTo()), new Callback<ArrayList<City>>() {
             @Override
             public void success(ArrayList<City> cities, Response response) {
-                tvCityTo.setText(cities.get(post.getCityTo()).getNombreMunicipio());
+                HashMap<Integer, City> map = new HashMap<>();
+                for (City city : cities) {
+                    map.put(city.getClaveMunicipio(), city);
+                }
+                tvCityTo.setText(map.get(Integer.valueOf(post.getCityTo())).getNombreMunicipio());
             }
 
             @Override

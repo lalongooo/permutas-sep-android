@@ -142,7 +142,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/labelsValues"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:text="Secundaria "
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@color/primary"
@@ -167,7 +167,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/tvAcademicLevel"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:text="Plaza Federal"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@color/primary"
@@ -316,5 +316,38 @@
             android:text="Hace 6 horas"
             android:textSize="10sp" />
 
+        <LinearLayout
+            style="?android:attr/buttonBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnCall"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/finish_background"
+                android:text="@string/app_post_detail_call"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btnEmail"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/finish_background"
+                android:text="@string/app_post_detail_email"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
     </RelativeLayout>
+
+
 </ScrollView>
