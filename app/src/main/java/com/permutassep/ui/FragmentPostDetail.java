@@ -13,7 +13,6 @@ import com.google.gson.Gson;
 import com.lalongooo.permutassep.R;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.iconics.typeface.FontAwesome;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.permutassep.BaseFragment;
 import com.permutassep.model.City;
 import com.permutassep.model.Post;
@@ -21,6 +20,7 @@ import com.permutassep.model.State;
 import com.permutassep.model.Town;
 import com.permutassep.rest.inegifacil.InegiFacilRestClient;
 import com.permutassep.utils.Utils;
+import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -73,12 +73,17 @@ public class FragmentPostDetail extends BaseFragment {
 
         post = new Gson().fromJson(getArguments().getString(EXTRA_POS_TO_SHOW), Post.class);
         states = Utils.getStates(getActivity());
-        ivArrow =  (ImageView) rootView.findViewById(R.id.ivArrow);
+        ivArrow = (ImageView) rootView.findViewById(R.id.ivArrow);
         ivArrow.setImageDrawable(new IconicsDrawable(getActivity(), FontAwesome.Icon.faw_angle_right).sizeDp(30));
         imageView = (ImageView) rootView.findViewById(R.id.imageView);
-        if(!TextUtils.isEmpty(post.getUser().getSocialUserId())){
-            ImageLoader.getInstance().displayImage("https://graph.facebook.com/" + post.getUser().getSocialUserId() + "/picture?width=200&height=200", imageView);
-        }
+        Picasso.with(getActivity())
+                .load("https://graph.facebook.com/" + post.getUser().getSocialUserId() + "/picture?width=100&height=100")
+                .placeholder(R.drawable.default_profile_picture)
+                .error(R.drawable.default_profile_picture)
+                .resizeDimen(R.dimen.list_detail_image_size, R.dimen.list_detail_image_size)
+                .centerInside()
+                .tag(getActivity())
+                .into(imageView);
 
         tvUserName = (TextView) rootView.findViewById(R.id.tvUserName);
         tvPostDate = (TextView) rootView.findViewById(R.id.tvPostDate);
@@ -124,10 +129,10 @@ public class FragmentPostDetail extends BaseFragment {
             @Override
             public void success(ArrayList<Town> towns, Response response) {
                 HashMap<String, Town> map = new HashMap<>();
-                for(Town town : towns){
+                for (Town town : towns) {
                     map.put(town.getClave(), town);
                 }
-                tvTownFrom.setText(map.get(("0000".substring(0,"0000".length()-String.valueOf(post.getTownFrom()).length()))+String.valueOf(post.getTownFrom())).getNombre());
+                tvTownFrom.setText(map.get(("0000".substring(0, "0000".length() - String.valueOf(post.getTownFrom()).length())) + String.valueOf(post.getTownFrom())).getNombre());
             }
 
             @Override
@@ -152,10 +157,10 @@ public class FragmentPostDetail extends BaseFragment {
             @Override
             public void success(ArrayList<Town> towns, Response response) {
                 HashMap<String, Town> map = new HashMap<>();
-                for(Town town : towns){
+                for (Town town : towns) {
                     map.put(town.getClave(), town);
                 }
-                tvTownTo.setText(map.get(("0000".substring(0,"0000".length()-String.valueOf(post.getTownTo()).length()))+String.valueOf(post.getTownTo())).getNombre());
+                tvTownTo.setText(map.get(("0000".substring(0, "0000".length() - String.valueOf(post.getTownTo()).length())) + String.valueOf(post.getTownTo())).getNombre());
                 hideDialog();
             }
 
@@ -182,7 +187,7 @@ public class FragmentPostDetail extends BaseFragment {
     }
 
     private void showDialog(String title, String text) {
-        if(pDlg == null){
+        if (pDlg == null) {
             pDlg = ProgressDialog.show(getActivity(), title, text, true);
         }
     }

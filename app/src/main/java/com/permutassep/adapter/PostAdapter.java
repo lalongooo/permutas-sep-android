@@ -11,41 +11,33 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lalongooo.permutassep.R;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.permutassep.model.Post;
 import com.permutassep.model.State;
 import com.permutassep.utils.TimeAgo;
 import com.permutassep.utils.Utils;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 import java.util.List;
 
 public class PostAdapter extends BaseAdapter {
-
-    private static LayoutInflater inflater;
     private Activity activity;
     private List<Post> data;
     private HashMap<String, State> states;
-    private DisplayImageOptions options;
+
+    private TextView tvUserName;
+    private TextView tvPostUserEmail;
+    private TextView tvFromLabel;
+    private TextView tvToLabel;
+    private TextView tvAcademicLevelLabel;
+    private TextView tvPostDate;
+    private TextView tvPostText;
+    private TextView tvPostUserPhone;
 
     public PostAdapter(Activity a, List<Post> posts) {
         activity = a;
         data = posts;
-        inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         states = Utils.getStates(a);
-
-        options = new DisplayImageOptions.Builder()
-                .showImageOnLoading(R.drawable.default_profile_picture)
-                .showImageForEmptyUri(R.drawable.default_profile_picture)
-                .showImageOnFail(R.drawable.default_profile_picture)
-                .cacheInMemory(true)
-                .cacheOnDisk(false)
-                .considerExifParams(false)
-                .displayer(new RoundedBitmapDisplayer(10))
-                .build();
-
     }
 
     public int getCount() {
@@ -60,21 +52,26 @@ public class PostAdapter extends BaseAdapter {
         return position;
     }
 
-    public View getView(int position, View convertView, ViewGroup parent) {
-        View vi = convertView;
+    public View getView(int position, View view, ViewGroup parent) {
 
-        if (convertView == null) {
-            vi = inflater.inflate(R.layout.list_item_post, null);
+        ViewHolder holder;
+        if (view == null) {
+            view = LayoutInflater.from(activity).inflate(R.layout.list_item_post, parent, false);
+            holder = new ViewHolder();
+            holder.image = (ImageView) view.findViewById(R.id.imageView);
+            view.setTag(holder);
+        } else {
+            holder = (ViewHolder) view.getTag();
         }
 
-        TextView tvUserName = (TextView) vi.findViewById(R.id.tvUserName);
-        TextView tvPostUserEmail = (TextView) vi.findViewById(R.id.tvPostUserEmail);
-        TextView tvFromLabel = (TextView) vi.findViewById(R.id.tvFrom);
-        TextView tvToLabel = (TextView) vi.findViewById(R.id.tvTo);
-        TextView tvAcademicLevelLabel = (TextView) vi.findViewById(R.id.tvAcademicLevelLabel);
-        TextView tvPostDate = (TextView) vi.findViewById(R.id.tvPostDate);
-        TextView tvPostText = (TextView) vi.findViewById(R.id.tvPostText);
-        ImageView profilePicture = (ImageView) vi.findViewById(R.id.imageView);
+        tvUserName = (TextView) view.findViewById(R.id.tvUserName);
+        tvPostUserEmail = (TextView) view.findViewById(R.id.tvPostUserEmail);
+        tvFromLabel = (TextView) view.findViewById(R.id.tvFrom);
+        tvToLabel = (TextView) view.findViewById(R.id.tvTo);
+        tvAcademicLevelLabel = (TextView) view.findViewById(R.id.tvAcademicLevelLabel);
+        tvPostDate = (TextView) view.findViewById(R.id.tvPostDate);
+        tvPostText = (TextView) view.findViewById(R.id.tvPostText);
+        tvPostUserPhone = (TextView) view.findViewById(R.id.tvPostUserPhone);
 
         Post p = data.get(position);
 
@@ -85,11 +82,20 @@ public class PostAdapter extends BaseAdapter {
         tvAcademicLevelLabel.setText(p.getAcademicLevel());
         tvPostDate.setText(new TimeAgo(activity).timeAgo(p.getPostDate()));
         tvPostText.setText(p.getPostText());
+        tvPostUserPhone.setText(p.getUser().getPhone());
 
-        if(!TextUtils.isEmpty(p.getUser().getSocialUserId())){
-            ImageLoader.getInstance().displayImage("https://graph.facebook.com/" + p.getUser().getSocialUserId() + "/picture?width=200&height=200", profilePicture, options);
-        }
+        Picasso.with(activity)
+                    .load("https://graph.facebook.com/" + p.getUser().getSocialUserId() + "/picture?width=100&height=100")
+                    .placeholder(R.drawable.default_profile_picture)
+                    .error(R.drawable.default_profile_picture)
+                    .resizeDimen(R.dimen.list_detail_image_size, R.dimen.list_detail_image_size)
+                    .centerInside()
+                    .tag(activity)
+                    .into(holder.image);
+        return view;
+    }
 
-        return vi;
+    static class ViewHolder {
+        ImageView image;
     }
 }
