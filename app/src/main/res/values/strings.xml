@@ -133,6 +133,19 @@
     <string name="time_ago_year">Hace 1 año</string>
     <string name="time_ago_years">%d años</string>
 
+    <!--GA Events Categories-->
+    <string name="ga_event_category_ux">UX</string>
+
+    <!--GA Event Actions-->
+    <string name="ga_event_action_click">CLICK</string>
+
+
+    <string name="ga_fb_login_action_label_on_completed">FBLogin:onCompleted</string>
+    <string name="ga_fb_login_action_label_authorized_email">FBLogin:authorizedEmail</string>
+    <string name="ga_fb_login_action_label_unauthorized_email">FBLogin:unAuthorizedEmail</string>
+    <string name="ga_login_action_label_bad_userorpassword">Login:BadUserOrPassword</string>
+    <string name="ga_login_action_label_success">Login:Success</string>
+
     <string-array name="states">
         <item>Todo México</item>
         <item>Aguascalientes</item>

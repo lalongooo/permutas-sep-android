@@ -19,8 +19,11 @@ import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
 import com.facebook.model.GraphUser;
 import com.facebook.widget.LoginButton;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.lalongooo.permutassep.R;
 import com.permutassep.BaseActivity;
+import com.permutassep.PermutasSEPApplication;
 import com.permutassep.config.Config;
 import com.permutassep.model.AuthModel;
 import com.permutassep.model.User;
@@ -83,6 +86,15 @@ public class ActivityLogin extends BaseActivity {
                     new PermutasSEPRestClient().get().login(new AuthModel(etNameOrUsername.getText().toString(), etPassword.getText().toString()), new Callback<User>() {
                         @Override
                         public void success(User user, retrofit.client.Response response) {
+                            Tracker t = ((PermutasSEPApplication) getApplication()).getTracker();
+                            t.send(new HitBuilders.EventBuilder()
+                                    .setCategory(getString(R.string.ga_event_category_ux))
+                                    .setAction(getString(R.string.ga_event_action_click))
+                                    .setLabel(getString(R.string.ga_login_action_label_success))
+                                    .build());
+                            ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getBaseContext(), Config.APP_PREFERENCES_NAME, MODE_PRIVATE);
+                            complexPreferences.putObject(PrefUtils.PREF_USER_KEY, user);
+                            complexPreferences.commit();
                             hideDialog();
                             goToMainActivity();
                         }
@@ -90,6 +102,13 @@ public class ActivityLogin extends BaseActivity {
                         @Override
                         public void failure(RetrofitError error) {
                             hideDialog();
+                            // Get tracker.
+                            Tracker t = ((PermutasSEPApplication) getApplication()).getTracker();
+                            t.send(new HitBuilders.EventBuilder()
+                                    .setCategory(getString(R.string.ga_event_category_ux))
+                                    .setAction(getString(R.string.ga_event_action_click))
+                                    .setLabel(getString(R.string.ga_login_action_label_bad_userorpassword))
+                                    .build());
                             Utils.showSimpleDialog(R.string.app_login_dlg_login_err_text, R.string.accept, ActivityLogin.this, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
@@ -124,8 +143,24 @@ public class ActivityLogin extends BaseActivity {
                 public void onCompleted(GraphUser fbUser, Response response) {
                     if (fbUser != null) {
 
+                        // Get tracker.
+                        Tracker t = ((PermutasSEPApplication) getApplication()).getTracker();
+                        t.send(new HitBuilders.EventBuilder()
+                                .setCategory(getString(R.string.ga_event_category_ux))
+                                .setAction(getString(R.string.ga_event_action_click))
+                                .setLabel(getString(R.string.ga_fb_login_action_label_on_completed))
+                                .build());
+
                         String email = fbUser.getProperty("email") != null ? fbUser.getProperty("email").toString() : "";
-                        if(TextUtils.isEmpty(email)){
+                        if (TextUtils.isEmpty(email)) {
+
+                            t = ((PermutasSEPApplication) getApplication()).getTracker();
+                            t.send(new HitBuilders.EventBuilder()
+                                    .setCategory(getString(R.string.ga_event_category_ux))
+                                    .setAction(getString(R.string.ga_event_action_click))
+                                    .setLabel(getString(R.string.ga_fb_login_action_label_unauthorized_email))
+                                    .build());
+
                             final EditText input = new EditText(ActivityLogin.this);
                             AlertDialog.Builder alert = new AlertDialog.Builder(ActivityLogin.this);
                             alert.setView(input);
@@ -145,7 +180,12 @@ public class ActivityLogin extends BaseActivity {
                                 }
                             });
                             alert.show();
-                        }else{
+                        } else {
+                            t.send(new HitBuilders.EventBuilder()
+                                    .setCategory(getString(R.string.ga_event_category_ux))
+                                    .setAction(getString(R.string.ga_event_action_click))
+                                    .setLabel(getString(R.string.ga_fb_login_action_label_authorized_email))
+                                    .build());
                             login(email);
                         }
                     }
@@ -202,9 +242,9 @@ public class ActivityLogin extends BaseActivity {
     }
 
 
-    private void login(String email){
+    private void login(String email) {
 
-        if (new EmailValidator(getApplicationContext()).isValid(email)){
+        if (new EmailValidator(getApplicationContext()).isValid(email)) {
             new PermutasSEPRestClient().get().login(new AuthModel(email, Config.TEM_PWD), new Callback<User>() {
                 @Override
                 public void success(User user, retrofit.client.Response response) {
@@ -228,7 +268,7 @@ public class ActivityLogin extends BaseActivity {
                     });
                 }
             });
-        }else{
+        } else {
             Toast.makeText(getApplicationContext(), R.string.app_login_fb_dlg_wrong_email, Toast.LENGTH_LONG).show();
             Session session = Session.getActiveSession();
             session.closeAndClearTokenInformation();

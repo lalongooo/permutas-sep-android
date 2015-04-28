@@ -14,7 +14,7 @@ public class PermutasSEPApplication extends Application {
         super();
     }
 
-    synchronized Tracker getTracker() {
+    public synchronized Tracker getTracker() {
 
         GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
         analytics.getLogger().setLogLevel(Logger.LogLevel.VERBOSE);
