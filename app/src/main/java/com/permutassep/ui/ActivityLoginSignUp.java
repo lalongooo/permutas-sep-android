@@ -5,8 +5,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.lalongooo.permutassep.R;
 import com.permutassep.BaseActivity;
+import com.permutassep.PermutasSEPApplication;
 
 public class ActivityLoginSignUp extends BaseActivity {
 
@@ -42,6 +45,14 @@ public class ActivityLoginSignUp extends BaseActivity {
         tvContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Tracker t = ((PermutasSEPApplication) getApplication()).getTracker();
+                t.send(new HitBuilders.EventBuilder()
+                        .setCategory(getString(R.string.ga_event_category_ux))
+                        .setAction(getString(R.string.ga_event_action_click))
+                        .setLabel(getString(R.string.ga_login_action_anonymous))
+                        .build());
+
                 Intent i = new Intent().setClass(ActivityLoginSignUp.this, ActivityMain.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(i);
