@@ -11,11 +11,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.google.gson.Gson;
 import com.lalongooo.permutassep.R;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.iconics.typeface.FontAwesome;
 import com.permutassep.BaseFragment;
+import com.permutassep.PermutasSEPApplication;
 import com.permutassep.model.City;
 import com.permutassep.model.Post;
 import com.permutassep.model.State;
@@ -110,6 +113,14 @@ public class FragmentPostDetail extends BaseFragment {
         btnCall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Tracker t = ((PermutasSEPApplication) getActivity().getApplication()).getTracker();
+                t.send(new HitBuilders.EventBuilder()
+                        .setCategory(getString(R.string.ga_event_category_ux))
+                        .setAction(getString(R.string.ga_event_action_click))
+                        .setLabel(getString(R.string.ga_call_intent))
+                        .build());
+
                 Intent callIntent = new Intent(Intent.ACTION_CALL);
                 callIntent.setData(Uri.parse("tel:".concat(post.getUser().getPhone())));
                 startActivity(callIntent);
@@ -120,6 +131,12 @@ public class FragmentPostDetail extends BaseFragment {
         btnMail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Tracker t = ((PermutasSEPApplication) getActivity().getApplication()).getTracker();
+                t.send(new HitBuilders.EventBuilder()
+                        .setCategory(getString(R.string.ga_event_category_ux))
+                        .setAction(getString(R.string.ga_event_action_click))
+                        .setLabel(getString(R.string.ga_mail_intent))
+                        .build());
                 Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto",post.getUser().getEmail(), null));
                 startActivity(Intent.createChooser(emailIntent, "Enviar mail:"));
             }
