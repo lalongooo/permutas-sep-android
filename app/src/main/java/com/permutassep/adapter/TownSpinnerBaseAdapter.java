@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.permutassep.model.Town;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -22,6 +24,14 @@ public class TownSpinnerBaseAdapter extends BaseAdapter {
     private List<Town> towns = new ArrayList<>();
 
     public TownSpinnerBaseAdapter(Context context, List<Town> towns) {
+
+        Collections.sort(towns, new Comparator<Town>() {
+            @Override
+            public int compare(Town t1, Town t2) {
+                return t1.getNombre().compareTo(t2.getNombre());
+            }
+        });
+
         this.context = context;
         this.towns = towns;
     }
