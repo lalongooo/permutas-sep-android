@@ -59,6 +59,8 @@
     <string name="search_fragment_search_error_msg">Ocurrió un error en tu búsqueda</string>
     <string name="search_fragment_search_no_restlts">No se encontraron resultados</string>
 
+    <string name="my_posts_toolbar_text">Mis publicaciones</string>
+
     <string name="app_login_sign_up_already_have_account">Ya tengo cuenta</string>
     <string name="app_login_sign_up_log_in">Iniciar sesión</string>
     <string name="app_login_sign_up_want_to_register">No tengo cuenta</string>
@@ -84,7 +86,8 @@
     <string name="app_news_feed_get_posts_err">Servicio no disponible. Intenta mas tarde</string>
 
     <string name="app_nav_drawer_1">Inicio</string>
-    <string name="app_nav_drawer_2">Ajustes</string>
+    <string name="app_nav_drawer_2">Mis publicaciones</string>
+    <string name="app_nav_drawer_3">Ajustes</string>
 
     <string name="app_post_detail_call">Llamar</string>
     <string name="app_post_detail_email">Email</string>

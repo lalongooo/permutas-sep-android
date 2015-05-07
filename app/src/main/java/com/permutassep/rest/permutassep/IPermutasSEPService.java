@@ -11,12 +11,16 @@ import retrofit.Callback;
 import retrofit.http.Body;
 import retrofit.http.GET;
 import retrofit.http.POST;
+import retrofit.http.Path;
 import retrofit.http.QueryMap;
 
 public interface  IPermutasSEPService {
 
     @POST("/users/")
     void newUser(@Body User user, Callback<User> callback);
+
+    @GET("/users/{id}/posts")
+    void myPosts(@Path("id") int id, Callback<List<Post>> callback);
 
     @POST("/posts/")
     void newPost(@Body Post post, Callback<Post> callback);

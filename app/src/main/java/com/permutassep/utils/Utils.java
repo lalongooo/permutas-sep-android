@@ -17,11 +17,15 @@ import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import com.lalongooo.permutassep.R;
+import com.permutassep.config.Config;
 import com.permutassep.model.State;
+import com.permutassep.model.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import br.kots.mob.complex.preferences.ComplexPreferences;
 
 public class Utils {
 
@@ -143,5 +147,14 @@ public class Utils {
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 
         return (networkInfo != null && networkInfo.isConnected());
+    }
+
+    /**
+     * Retrieves the current logged user
+     *
+     * @param context The current context
+     */
+    public static User getUser(Context context){
+        return ComplexPreferences.getComplexPreferences(context, Config.APP_PREFERENCES_NAME, Context.MODE_PRIVATE).getObject(PrefUtils.PREF_USER_KEY, User.class);
     }
 }

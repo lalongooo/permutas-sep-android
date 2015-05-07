@@ -20,6 +20,7 @@ import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.permutassep.BaseActivity;
 import com.permutassep.config.Config;
@@ -33,7 +34,8 @@ public class ActivityMain extends BaseActivity implements  FragmentPostDetail.On
 
     public enum DrawerItems {
         HOME(1000),
-        SETTINGS(1001);
+        MY_POSTS(1001),
+        SETTINGS(1002);
 
         public int id;
 
@@ -69,8 +71,9 @@ public class ActivityMain extends BaseActivity implements  FragmentPostDetail.On
                 .withToolbar(toolbar)
                 .addDrawerItems(
                         new PrimaryDrawerItem().withName(getString(R.string.app_nav_drawer_1)).withIdentifier(DrawerItems.HOME.id).withIcon(GoogleMaterial.Icon.gmd_home),
-                        new DividerDrawerItem()
-                        // new SecondaryDrawerItem().withName(getString(R.string.app_nav_drawer_2)).withIdentifier(DrawerItems.SETTINGS.id).withIcon(GoogleMaterial.Icon.gmd_settings)
+                        new DividerDrawerItem(),
+                        new SecondaryDrawerItem().withName(getString(R.string.app_nav_drawer_2)).withIdentifier(DrawerItems.MY_POSTS.id).withIcon(GoogleMaterial.Icon.gmd_content_paste)
+                        // new SecondaryDrawerItem().withName(getString(R.string.app_nav_drawer_3)).withIdentifier(DrawerItems.SETTINGS.id).withIcon(GoogleMaterial.Icon.gmd_settings)
                 )
                 .withSelectedItem(0)
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
@@ -145,6 +148,10 @@ public class ActivityMain extends BaseActivity implements  FragmentPostDetail.On
         if(id == DrawerItems.HOME.id && !(getSupportFragmentManager().findFragmentById(R.id.fragmentContainer) instanceof FragmentNewsFeed)){
 
             getSupportFragmentManager().popBackStackImmediate("news_feed", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
+        }else if(id == DrawerItems.MY_POSTS.id){
+
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentMyPosts()).addToBackStack("news_feed").commit();
 
         }else if(id == DrawerItems.SETTINGS.id){
 

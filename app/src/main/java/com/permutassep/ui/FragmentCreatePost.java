@@ -55,6 +55,7 @@ import com.permutassep.model.Town;
 import com.permutassep.model.User;
 import com.permutassep.rest.permutassep.PermutasSEPRestClient;
 import com.permutassep.utils.PrefUtils;
+import com.permutassep.utils.Utils;
 
 import java.util.Date;
 import java.util.List;
@@ -169,8 +170,8 @@ public class FragmentCreatePost extends BaseFragment implements
                                             for (Page p : mWizardModel.getCurrentPageSequence()) {
                                                 switch (p.getKey()){
                                                     case PermutaSepWizardModel.CONTACT_INFO_KEY:
-                                                        User user = ComplexPreferences.getComplexPreferences(getActivity(), Config.APP_PREFERENCES_NAME, Context.MODE_PRIVATE).getObject(PrefUtils.PREF_USER_KEY, User.class);
-                                                        post.setUser(user);
+                                                        // TODO: Use the Utils class to retrieve the current logged user
+                                                        post.setUser(Utils.getUser(getActivity()));
                                                         break;
                                                     case PermutaSepWizardModel.CITY_FROM_KEY:
                                                         State sf = p.getData().getParcelable(ProfessorCityFromPage.STATE_DATA_KEY);
