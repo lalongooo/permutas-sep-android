@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -15,8 +16,11 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.lalongooo.permutassep.R;
 import com.permutassep.BaseActivity;
+import com.permutassep.PermutasSEPApplication;
 import com.permutassep.config.Config;
 import com.permutassep.model.User;
 import com.permutassep.utils.PrefUtils;
@@ -138,7 +142,12 @@ public class ActivityAppOverview extends BaseActivity {
 
             @Override
             public void onPageSelected(int position) {
-
+                Tracker t = ((PermutasSEPApplication) getApplication()).getTracker();
+                t.send(new HitBuilders.EventBuilder()
+                        .setCategory(getString(R.string.ga_event_category_ux))
+                        .setAction(getString(R.string.ga_event_action_swipe))
+                        .setLabel("Page " + String.valueOf(position))
+                        .build());
             }
 
             @Override

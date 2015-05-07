@@ -141,6 +141,7 @@
 
     <!--GA Event Actions-->
     <string name="ga_event_action_click">CLICK</string>
+    <string name="ga_event_action_swipe">SWIPE</string>
 
 
     <string name="ga_fb_login_action_label_on_completed">FBLogin:onCompleted</string>
