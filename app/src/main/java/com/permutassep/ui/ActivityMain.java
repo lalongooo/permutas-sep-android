@@ -139,7 +139,13 @@ public class ActivityMain extends BaseActivity implements  FragmentPostDetail.On
 
     @Override
     public void showPostDetail(Post post) {
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, FragmentPostDetail.instance(new Gson().toJson(post))).addToBackStack("news_feed").commit();
+        String backStackEntryName = null;
+        if((getSupportFragmentManager().findFragmentById(R.id.fragmentContainer) instanceof FragmentNewsFeed)){
+            backStackEntryName = "news_feed";
+        }else if((getSupportFragmentManager().findFragmentById(R.id.fragmentContainer) instanceof FragmentMyPosts)){
+            backStackEntryName = "my_posts";
+        }
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, FragmentPostDetail.instance(new Gson().toJson(post))).addToBackStack(backStackEntryName).commit();
         result.setSelection(-1);
     }
 
@@ -149,23 +155,34 @@ public class ActivityMain extends BaseActivity implements  FragmentPostDetail.On
 
             getSupportFragmentManager().popBackStackImmediate("news_feed", FragmentManager.POP_BACK_STACK_INCLUSIVE);
 
-        }else if(id == DrawerItems.MY_POSTS.id){
-
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentMyPosts()).addToBackStack("news_feed").commit();
-
+        }else if(id == DrawerItems.MY_POSTS.id && !(getSupportFragmentManager().findFragmentById(R.id.fragmentContainer) instanceof FragmentMyPosts)){
+            int backStackEntryCount = getSupportFragmentManager().getBackStackEntryCount();
+            if(backStackEntryCount > 0 && getSupportFragmentManager().getBackStackEntryAt(backStackEntryCount-1).getName().equals("my_posts")){
+                super.onBackPressed();
+            }else{
+                getSupportFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentMyPosts()).addToBackStack("news_feed").commit();
+            }
         }else if(id == DrawerItems.SETTINGS.id){
-
             getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentSettings()).addToBackStack("news_feed").commit();
-
         }else if(id == R.id.action_post){
 
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentCreatePost()).addToBackStack("news_feed").commit();
             result.setSelection(-1);
+            if(getSupportFragmentManager().findFragmentById(R.id.fragmentContainer) instanceof FragmentMyPosts){
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentCreatePost()).addToBackStack("my_posts").commit();
+            }else{
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentCreatePost()).addToBackStack("news_feed").commit();
+            }
 
         }else if(id == R.id.action_search){
 
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentSearch()).addToBackStack("news_feed").commit();
             result.setSelection(-1);
+            if(getSupportFragmentManager().findFragmentById(R.id.fragmentContainer) instanceof FragmentMyPosts){
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentSearch()).addToBackStack("my_posts").commit();
+            }else{
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentSearch()).addToBackStack("news_feed").commit();
+            }
+
         }
     }
 
