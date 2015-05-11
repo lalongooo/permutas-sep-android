@@ -30,7 +30,7 @@ public class PermutaSepWizardModel extends AbstractWizardModel {
                 new ProfessorContactInfoPage(this, "Tu información").setRequired(true).setKey(CONTACT_INFO_KEY),
                 new ProfessorCityFromPage(this, "Tu ciudad de origen").setRequired(true).setKey(CITY_FROM_KEY),
                 new ProfessorCityToPage(this, "Tu lugar deseado").setRequired(true).setKey(CITY_TO_KEY),
-                new SingleFixedChoicePage(this, "Nivel académico").setChoices("Pre-escolar", "Educación Especial", "Primaria", "Secundaria", "Tele-secundaria", "Administrativo", "Intendencia").setRequired(true).setKey(ACADEMIC_LEVEL_KEY),
+                new SingleFixedChoicePage(this, "Nivel académico").setChoices("Educación Especial", "Pre-escolar", "Primaria", "Secundaria", "Tele-secundaria", "Medio superior","Administrativo", "Intendencia").setRequired(true).setKey(ACADEMIC_LEVEL_KEY),
                 new SingleFixedChoicePage(this, "Tipo de plaza").setChoices("Estatal", "Federal").setRequired(true).setKey(POSITION_TYPE_KEY),
                 new SingleFixedChoicePage(this, "Tipo de jornada").setChoices("Jornada Regular", "Jornada ampliada", "Tiempo completo").setRequired(true).setKey(WORKDAY_TYPE_KEY),
                 new SingleFixedChoicePage(this, "Carrera magisterial").setChoices("Si", "No").setRequired(true).setKey(TEACHING_CAREER_KEY),
