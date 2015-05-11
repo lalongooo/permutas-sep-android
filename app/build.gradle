@@ -29,7 +29,7 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp:2.0.0'
     compile 'com.android.support:appcompat-v7:21.0.3'
     compile 'com.mikepenz.iconics:library:0.7.5@aar'
-    compile('com.mikepenz.materialdrawer:library:1.0.2@aar') {
+    compile('com.mikepenz.materialdrawer:library:2.9.5@aar') {
         transitive = true
     }
 }

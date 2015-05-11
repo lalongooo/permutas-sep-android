@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -18,15 +19,20 @@ import com.lalongooo.permutassep.R;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.accountswitcher.AccountHeader;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
+import com.mikepenz.materialdrawer.model.ProfileSettingDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.permutassep.BaseActivity;
 import com.permutassep.config.Config;
 import com.permutassep.model.Post;
 import com.permutassep.model.User;
 import com.permutassep.utils.PrefUtils;
+import com.permutassep.utils.Utils;
 
 import br.kots.mob.complex.preferences.ComplexPreferences;
 
@@ -45,6 +51,7 @@ public class ActivityMain extends BaseActivity implements  FragmentPostDetail.On
     }
 
     public Drawer.Result result;
+    private AccountHeader.Result headerResult = null;
     private Toolbar toolbar;
 
     private OnFilterChangedListener onFilterChangedListener;
@@ -66,8 +73,19 @@ public class ActivityMain extends BaseActivity implements  FragmentPostDetail.On
         toolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(toolbar);
 
+        final IProfile profile = new ProfileDrawerItem().withName(Utils.getUser(this).getName()).withEmail(Utils.getUser(this).getEmail()).withIcon(Uri.parse("https://graph.facebook.com/" + Utils.getUser(this).getSocialUserId() + "/picture?width=460&height=460"));
+
+        // Create the AccountHeader
+        headerResult = new AccountHeader()
+                .withActivity(this)
+                .withHeaderBackground(R.drawable.header)
+                .addProfiles(profile)
+                .withSavedInstance(savedInstanceState)
+                .build();
+
         result = new Drawer()
                 .withActivity(this)
+                .withAccountHeader(headerResult)
                 .withToolbar(toolbar)
                 .addDrawerItems(
                         new PrimaryDrawerItem().withName(getString(R.string.app_nav_drawer_1)).withIdentifier(DrawerItems.HOME.id).withIcon(GoogleMaterial.Icon.gmd_home),
@@ -79,7 +97,7 @@ public class ActivityMain extends BaseActivity implements  FragmentPostDetail.On
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l, IDrawerItem drawerItem) {
-                        if(drawerItem != null){
+                        if (drawerItem != null) {
                             replaceFragment(drawerItem.getIdentifier());
                         }
                     }
