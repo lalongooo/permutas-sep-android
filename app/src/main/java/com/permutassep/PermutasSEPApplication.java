@@ -17,7 +17,6 @@ public class PermutasSEPApplication extends Application {
     public synchronized Tracker getTracker() {
 
         GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
-        analytics.setDryRun(true);
         analytics.getLogger().setLogLevel(Logger.LogLevel.VERBOSE);
         Tracker t = analytics.newTracker(PROPERTY_ID);
         t.enableAdvertisingIdCollection(true);
