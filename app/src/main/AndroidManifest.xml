@@ -39,7 +39,7 @@
         <activity
             android:name="com.permutassep.ui.ActivityMain"
             android:label="@string/app_name"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name="com.permutassep.ui.ActivitySignUp"
             android:label="@string/app_name"
@@ -60,17 +60,6 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-
-        <meta-data
-            android:name="AA_DB_NAME"
-            android:value="permutas-sep.db" />
-        <meta-data
-            android:name="AA_DB_VERSION"
-            android:value="1" />
-
-        <meta-data
-            android:name="AA_MODELS"
-            android:value="com.permutassep.model.Post, com.permutassep.model.User" />
     </application>
 
 </manifest>
