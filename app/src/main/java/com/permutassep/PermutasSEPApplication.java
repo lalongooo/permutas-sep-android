@@ -1,6 +1,5 @@
 package com.permutassep;
 
-import android.app.Application;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -12,7 +11,7 @@ import com.google.android.gms.analytics.Tracker;
 import com.mikepenz.materialdrawer.util.DrawerImageLoader;
 import com.squareup.picasso.Picasso;
 
-public class PermutasSEPApplication extends Application {
+public class PermutasSEPApplication extends com.activeandroid.app.Application {
 
     private static final String PROPERTY_ID = "UA-62325816-2";
 
@@ -46,6 +45,7 @@ public class PermutasSEPApplication extends Application {
     public synchronized Tracker getTracker() {
 
         GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
+        analytics.setDryRun(true);
         analytics.getLogger().setLogLevel(Logger.LogLevel.VERBOSE);
         Tracker t = analytics.newTracker(PROPERTY_ID);
         t.enableAdvertisingIdCollection(true);

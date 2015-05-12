@@ -1,22 +1,35 @@
 package com.permutassep.model;
 
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
 import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by lalongooo on 02/03/15.
  */
-public class User {
+public class User extends Model {
 
     @SerializedName("id")
+    @Column(name = "id_")
     private int id;
+
     @SerializedName("name")
+    @Column(name = "name")
     private String name;
+
     @SerializedName("email")
+    @Column(name = "email")
     private String email;
+
     @SerializedName("phone")
+    @Column(name = "phone")
     private String phone;
+
     @SerializedName("social_user_id")
+    @Column(name = "social_user_id")
     private String socialUserId;
+
+    @Column(name = "password")
     private String password;
 
     public User(){}
@@ -49,7 +62,7 @@ public class User {
         this.password = password;
     }
 
-    public int getId() {
+    public int getId_() {
         return id;
     }
 

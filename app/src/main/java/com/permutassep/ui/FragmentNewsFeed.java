@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.activeandroid.ActiveAndroid;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.lalongooo.permutassep.R;
@@ -73,6 +73,18 @@ public class FragmentNewsFeed extends BaseFragment {
             @Override
             public void success(List<Post> posts, Response response) {
                 if(!posts.isEmpty()){
+
+                    ActiveAndroid.beginTransaction();
+                    try {
+                        for (Post p : posts){
+                            p.save();
+                        }
+                        ActiveAndroid.setTransactionSuccessful();
+                    }
+                    finally {
+                        ActiveAndroid.endTransaction();
+                    }
+
                     adapter = new PostAdapter(getActivity(), posts);
                     lv.setAdapter(adapter);
                     hideDialog();

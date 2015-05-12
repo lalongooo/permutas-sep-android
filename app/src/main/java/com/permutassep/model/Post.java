@@ -1,5 +1,7 @@
 package com.permutassep.model;
 
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
@@ -7,46 +9,84 @@ import java.util.Date;
 /**
  * Created by lalongooo on 01/03/15.
  */
-public class Post {
+public class Post extends Model{
 
     @SerializedName("id")
+    @Column(name = "id_")
     private int id;
+
     @SerializedName("user")
+    @Column(name = "user")
     private User mUser;
+
     @SerializedName("post")
+    @Column(name = "post")
     private String postText;
+
     @SerializedName("place_from_state")
+    @Column(name = "place_from_state")
     private short stateFrom;
+
     @SerializedName("place_from_city")
+    @Column(name = "place_from_city")
     private short cityFrom;
+
     @SerializedName("place_from_town")
+    @Column(name = "place_from_town")
     private short townFrom;
+
     @SerializedName("place_from_lat")
+    @Column(name = "place_from_lat")
     private String latFrom;
+
     @SerializedName("place_from_lon")
+    @Column(name = "place_from_lon")
     private String lonFrom;
+
     @SerializedName("place_to_state")
+    @Column(name = "place_to_state")
     private short stateTo;
+
     @SerializedName("place_to_city")
+    @Column(name = "place_to_city")
     private short cityTo;
+
     @SerializedName("place_to_town")
+    @Column(name = "place_to_town")
     private short townTo;
+
     @SerializedName("place_to_lat")
+    @Column(name = "place_to_lat")
     private String latTo;
+
     @SerializedName("place_to_lon")
+    @Column(name = "place_to_lon")
     private String lonTo;
+
     @SerializedName("workday_type")
+    @Column(name = "workday_type")
     private String mWorkdayType;
+
     @SerializedName("position_type")
+    @Column(name = "position_type")
     private String mPositionType;
+
     @SerializedName("post_date")
+    @Column(name = "post_date")
     private Date mPostDate;
+
     @SerializedName("is_teaching_career")
+    @Column(name = "is_teaching_career")
     private boolean mIsTeachingCareer;
+
     @SerializedName("academic_level")
+    @Column(name = "academic_level")
     private String mAcademicLevel;
 
-    public int getId() {
+    public Post() {
+    }
+
+    public int getId_() {
         return id;
     }
 

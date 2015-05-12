@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,7 +68,7 @@ public class FragmentMyPosts extends BaseFragment {
                 .registerTypeHierarchyAdapter(Post.class, new PostTypeAdapter(getActivity()))
                 .setDateFormat(Config.APP_DATE_FORMAT);
         Gson gson = gsonBuilder.create();
-        new PermutasSEPRestClient(new GsonConverter(gson)).get().myPosts(Utils.getUser(getActivity()).getId(), new Callback<List<Post>>() {
+        new PermutasSEPRestClient(new GsonConverter(gson)).get().myPosts(Utils.getUser(getActivity()).getId_(), new Callback<List<Post>>() {
             @Override
             public void success(List<Post> posts, Response response) {
                 if(!posts.isEmpty()){
