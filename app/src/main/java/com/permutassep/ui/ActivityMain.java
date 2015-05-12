@@ -169,39 +169,62 @@ public class ActivityMain extends BaseActivity implements  FragmentPostDetail.On
 
     public void replaceFragment(int id){
 
-        if(id == DrawerItems.HOME.id && !(getSupportFragmentManager().findFragmentById(R.id.fragmentContainer) instanceof FragmentNewsFeed)){
+        result.setSelection(-1);
 
-            getSupportFragmentManager().popBackStackImmediate("news_feed", FragmentManager.POP_BACK_STACK_INCLUSIVE);
-
-        }else if(id == DrawerItems.MY_POSTS.id && !(getSupportFragmentManager().findFragmentById(R.id.fragmentContainer) instanceof FragmentMyPosts)){
-            int backStackEntryCount = getSupportFragmentManager().getBackStackEntryCount();
-            if(backStackEntryCount > 0 && getSupportFragmentManager().getBackStackEntryAt(backStackEntryCount-1).getName().equals("my_posts")){
-                super.onBackPressed();
-            }else{
-                getSupportFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentMyPosts()).addToBackStack("news_feed").commit();
-            }
-        }else if(id == DrawerItems.SETTINGS.id){
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentSettings()).addToBackStack("news_feed").commit();
-        }else if(id == R.id.action_post){
-
-            result.setSelection(-1);
-            if(getSupportFragmentManager().findFragmentById(R.id.fragmentContainer) instanceof FragmentMyPosts){
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentCreatePost()).addToBackStack("my_posts").commit();
-            }else{
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentCreatePost()).addToBackStack("news_feed").commit();
-            }
-
-        }else if(id == R.id.action_search){
-
-            result.setSelection(-1);
-            if(getSupportFragmentManager().findFragmentById(R.id.fragmentContainer) instanceof FragmentMyPosts){
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentSearch()).addToBackStack("my_posts").commit();
-            }else{
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentSearch()).addToBackStack("news_feed").commit();
-            }
-
+        // Action Post
+        if(id == R.id.action_post){
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentCreatePost()).addToBackStack("news_feed").commit();
         }
+
+        // Action Search
+        if(id == R.id.action_search) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentSearch()).addToBackStack("news_feed").commit();
+        }
+        // Action My posts
+        if(id == DrawerItems.MY_POSTS.id) {
+            getSupportFragmentManager().popBackStackImmediate("news_feed", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentMyPosts()).addToBackStack("news_feed").commit();
+        }
+
+
+
+
+
+
+
+//        if(id == DrawerItems.HOME.id && !(getSupportFragmentManager().findFragmentById(R.id.fragmentContainer) instanceof FragmentNewsFeed)){
+//
+//            getSupportFragmentManager().popBackStackImmediate("news_feed", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+//
+//        }else if(id == DrawerItems.MY_POSTS.id && !(getSupportFragmentManager().findFragmentById(R.id.fragmentContainer) instanceof FragmentMyPosts)){
+//            int backStackEntryCount = getSupportFragmentManager().getBackStackEntryCount();
+//            if(backStackEntryCount > 0 && getSupportFragmentManager().getBackStackEntryAt(backStackEntryCount-1).getName().equals("my_posts")){
+//                super.onBackPressed();
+//            }else{
+//                getSupportFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+//                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentMyPosts()).addToBackStack("news_feed").commit();
+//            }
+//        }else if(id == DrawerItems.SETTINGS.id){
+//            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentSettings()).addToBackStack("news_feed").commit();
+//        }else if(id == R.id.action_post){
+//
+//            result.setSelection(-1);
+//            if(getSupportFragmentManager().findFragmentById(R.id.fragmentContainer) instanceof FragmentMyPosts){
+//                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentCreatePost()).addToBackStack("my_posts").commit();
+//            }else{
+//                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentCreatePost()).addToBackStack("news_feed").commit();
+//            }
+//
+//        }else if(id == R.id.action_search){
+//
+//            result.setSelection(-1);
+//            if(getSupportFragmentManager().findFragmentById(R.id.fragmentContainer) instanceof FragmentMyPosts){
+//                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentSearch()).addToBackStack("my_posts").commit();
+//            }else{
+//                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentSearch()).addToBackStack("news_feed").commit();
+//            }
+//
+//        }
     }
 
     @Override

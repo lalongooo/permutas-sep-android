@@ -64,33 +64,37 @@ public class FragmentNewsFeed extends BaseFragment {
             return rootView;
         }
 
-        showDialog(getString(R.string.app_news_feed_dlg_title), getString(R.string.app_news_feed_dlg_text));
-        GsonBuilder gsonBuilder = new GsonBuilder()
-                .setDateFormat(Config.APP_DATE_FORMAT);
-        Gson gson = gsonBuilder.create();
-        new PermutasSEPRestClient(new GsonConverter(gson)).get().getPosts(new Callback<List<Post>>() {
-        // new PermutasSEPRestClient().get().getPosts(new Callback<List<Post>>() {
-            @Override
-            public void success(List<Post> posts, Response response) {
-                if(!posts.isEmpty()){
-                    adapter = new PostAdapter(getActivity(), posts);
-                    lv.setAdapter(adapter);
-                    hideDialog();
-                }else{
-                    hideDialog();
-                }
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                hideDialog();
-                Utils.showSimpleDialog(R.string.app_news_feed_get_posts_err, R.string.accept, getActivity(), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+        if(adapter == null){
+            showDialog(getString(R.string.app_news_feed_dlg_title), getString(R.string.app_news_feed_dlg_text));
+            GsonBuilder gsonBuilder = new GsonBuilder()
+                    .setDateFormat(Config.APP_DATE_FORMAT);
+            Gson gson = gsonBuilder.create();
+            new PermutasSEPRestClient(new GsonConverter(gson)).get().getPosts(new Callback<List<Post>>() {
+                // new PermutasSEPRestClient().get().getPosts(new Callback<List<Post>>() {
+                @Override
+                public void success(List<Post> posts, Response response) {
+                    if(!posts.isEmpty()){
+                        adapter = new PostAdapter(getActivity(), posts);
+                        lv.setAdapter(adapter);
+                        hideDialog();
+                    }else{
+                        hideDialog();
                     }
-                });
-            }
-        });
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    hideDialog();
+                    Utils.showSimpleDialog(R.string.app_news_feed_get_posts_err, R.string.accept, getActivity(), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
+                }
+            });
+        }else{
+            lv.setAdapter(adapter);
+        }
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
