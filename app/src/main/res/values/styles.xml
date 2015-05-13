@@ -2,6 +2,7 @@
 
     <style name="AppThemeTemp" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorAccent">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
     </style>
 
     <style name="WindowAnimationTransition">

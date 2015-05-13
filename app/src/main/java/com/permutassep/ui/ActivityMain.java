@@ -20,11 +20,8 @@ import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.accountswitcher.AccountHeader;
-import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
-import com.mikepenz.materialdrawer.model.ProfileSettingDrawerItem;
-import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.permutassep.BaseActivity;
@@ -36,7 +33,20 @@ import com.permutassep.utils.Utils;
 
 import br.kots.mob.complex.preferences.ComplexPreferences;
 
-public class ActivityMain extends BaseActivity implements  FragmentPostDetail.OnPostItemSelectedListener{
+public class ActivityMain extends BaseActivity implements  FragmentPostDetail.OnPostItemSelectedListener, FragmentManager.OnBackStackChangedListener{
+
+    @Override
+    public void onBackStackChanged() {
+
+        Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
+
+        if(f instanceof FragmentNewsFeed){
+            result.setSelectionByIdentifier(DrawerItems.HOME.id, false);
+        }else if(f instanceof FragmentMyPosts){
+            result.setSelectionByIdentifier(DrawerItems.MY_POSTS.id, false);
+        }
+
+    }
 
     public enum DrawerItems {
         HOME(1000),
@@ -53,16 +63,6 @@ public class ActivityMain extends BaseActivity implements  FragmentPostDetail.On
     public Drawer.Result result;
     private AccountHeader.Result headerResult = null;
     private Toolbar toolbar;
-
-    private OnFilterChangedListener onFilterChangedListener;
-
-    public void setOnFilterChangedListener(OnFilterChangedListener onFilterChangedListener) {
-        this.onFilterChangedListener = onFilterChangedListener;
-    }
-
-    public interface OnFilterChangedListener {
-        public void onFilterChanged(int filter);
-    }
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -89,8 +89,7 @@ public class ActivityMain extends BaseActivity implements  FragmentPostDetail.On
                 .withToolbar(toolbar)
                 .addDrawerItems(
                         new PrimaryDrawerItem().withName(getString(R.string.app_nav_drawer_1)).withIdentifier(DrawerItems.HOME.id).withIcon(GoogleMaterial.Icon.gmd_home),
-                        new DividerDrawerItem(),
-                        new SecondaryDrawerItem().withName(getString(R.string.app_nav_drawer_2)).withIdentifier(DrawerItems.MY_POSTS.id).withIcon(GoogleMaterial.Icon.gmd_content_paste)
+                        new PrimaryDrawerItem().withName(getString(R.string.app_nav_drawer_2)).withIdentifier(DrawerItems.MY_POSTS.id).withIcon(GoogleMaterial.Icon.gmd_content_paste)
                         // new SecondaryDrawerItem().withName(getString(R.string.app_nav_drawer_3)).withIdentifier(DrawerItems.SETTINGS.id).withIcon(GoogleMaterial.Icon.gmd_settings)
                 )
                 .withSelectedItem(0)
@@ -104,6 +103,7 @@ public class ActivityMain extends BaseActivity implements  FragmentPostDetail.On
                 })
                 .build();
         result.getListView().setVerticalScrollBarEnabled(false);
+        getSupportFragmentManager().addOnBackStackChangedListener(this);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentNewsFeed()).commit();
 	}
 	
@@ -169,15 +169,20 @@ public class ActivityMain extends BaseActivity implements  FragmentPostDetail.On
 
     public void replaceFragment(int id){
 
-        result.setSelection(-1);
+        // Action Home
+        if(id == DrawerItems.HOME.id){
+            getSupportFragmentManager().popBackStackImmediate("news_feed", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        }
 
         // Action Post
         if(id == R.id.action_post){
+            result.setSelection(-1);
             getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentCreatePost()).addToBackStack("news_feed").commit();
         }
 
         // Action Search
         if(id == R.id.action_search) {
+            result.setSelection(-1);
             getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentSearch()).addToBackStack("news_feed").commit();
         }
         // Action My posts
@@ -185,46 +190,6 @@ public class ActivityMain extends BaseActivity implements  FragmentPostDetail.On
             getSupportFragmentManager().popBackStackImmediate("news_feed", FragmentManager.POP_BACK_STACK_INCLUSIVE);
             getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentMyPosts()).addToBackStack("news_feed").commit();
         }
-
-
-
-
-
-
-
-//        if(id == DrawerItems.HOME.id && !(getSupportFragmentManager().findFragmentById(R.id.fragmentContainer) instanceof FragmentNewsFeed)){
-//
-//            getSupportFragmentManager().popBackStackImmediate("news_feed", FragmentManager.POP_BACK_STACK_INCLUSIVE);
-//
-//        }else if(id == DrawerItems.MY_POSTS.id && !(getSupportFragmentManager().findFragmentById(R.id.fragmentContainer) instanceof FragmentMyPosts)){
-//            int backStackEntryCount = getSupportFragmentManager().getBackStackEntryCount();
-//            if(backStackEntryCount > 0 && getSupportFragmentManager().getBackStackEntryAt(backStackEntryCount-1).getName().equals("my_posts")){
-//                super.onBackPressed();
-//            }else{
-//                getSupportFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-//                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentMyPosts()).addToBackStack("news_feed").commit();
-//            }
-//        }else if(id == DrawerItems.SETTINGS.id){
-//            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentSettings()).addToBackStack("news_feed").commit();
-//        }else if(id == R.id.action_post){
-//
-//            result.setSelection(-1);
-//            if(getSupportFragmentManager().findFragmentById(R.id.fragmentContainer) instanceof FragmentMyPosts){
-//                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentCreatePost()).addToBackStack("my_posts").commit();
-//            }else{
-//                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentCreatePost()).addToBackStack("news_feed").commit();
-//            }
-//
-//        }else if(id == R.id.action_search){
-//
-//            result.setSelection(-1);
-//            if(getSupportFragmentManager().findFragmentById(R.id.fragmentContainer) instanceof FragmentMyPosts){
-//                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentSearch()).addToBackStack("my_posts").commit();
-//            }else{
-//                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentSearch()).addToBackStack("news_feed").commit();
-//            }
-//
-//        }
     }
 
     @Override
