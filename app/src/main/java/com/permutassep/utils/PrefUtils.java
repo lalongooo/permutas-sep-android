@@ -29,6 +29,21 @@ public class PrefUtils {
     * */
     public static final String PREF_IS_NORMAL_USER = "pref_is_normal__user";
 
+    /*
+    * Boolean indicating whether we performed the (first-time) drawer opened.
+    * */
+    public static final String PREF_DRAWER_OPENED = "pref_drawer_first_time_opened";
+
+    public static boolean firstTimeDrawerOpened(final Context context) {
+        SharedPreferences sp = context.getSharedPreferences(Config.APP_PREFERENCES_NAME, Context.MODE_PRIVATE);
+        return sp.getBoolean(PREF_DRAWER_OPENED, false);
+    }
+
+    public static void markFirstTimeDrawerOpened(final Context context) {
+        SharedPreferences sp = context.getSharedPreferences(Config.APP_PREFERENCES_NAME, Context.MODE_PRIVATE);
+        sp.edit().putBoolean(PREF_DRAWER_OPENED, true).commit();
+    }
+
     public static void setNormalUser(Context context, boolean isNormalUser) {
         SharedPreferences sp = context.getSharedPreferences(Config.APP_PREFERENCES_NAME, Context.MODE_PRIVATE);
         sp.edit().putBoolean(PREF_IS_NORMAL_USER, isNormalUser).commit();

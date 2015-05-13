@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +34,12 @@ public class FragmentNewsFeed extends BaseFragment {
     private PostAdapter adapter;
     private FragmentPostDetail.OnPostItemSelectedListener onPostItemSelectedListener;
 
+
+    private OnFirstLoadCompleteListener onFirstLoadCompleteListener;
+    public interface OnFirstLoadCompleteListener {
+        public void firstLoadCompleted();
+    }
+
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
@@ -42,6 +47,12 @@ public class FragmentNewsFeed extends BaseFragment {
             throw new ClassCastException("Activity must implement OnPostItemSelectedListener");
         } else {
             onPostItemSelectedListener = (FragmentPostDetail.OnPostItemSelectedListener) getActivity();
+        }
+
+        if(!(getActivity() instanceof OnFirstLoadCompleteListener)) {
+            throw new ClassCastException("Activity must implement OnFirstLoadCompleteListener");
+        } else {
+            onFirstLoadCompleteListener = (OnFirstLoadCompleteListener) getActivity();
         }
     }
 
@@ -77,6 +88,7 @@ public class FragmentNewsFeed extends BaseFragment {
                         adapter = new PostAdapter(getActivity(), posts);
                         lv.setAdapter(adapter);
                         hideDialog();
+                        onFirstLoadCompleteListener.firstLoadCompleted();
                     }else{
                         hideDialog();
                     }

@@ -33,7 +33,11 @@ import com.permutassep.utils.Utils;
 
 import br.kots.mob.complex.preferences.ComplexPreferences;
 
-public class ActivityMain extends BaseActivity implements  FragmentPostDetail.OnPostItemSelectedListener, FragmentManager.OnBackStackChangedListener{
+public class ActivityMain extends BaseActivity
+        implements
+        FragmentPostDetail.OnPostItemSelectedListener,
+        FragmentManager.OnBackStackChangedListener,
+        FragmentNewsFeed.OnFirstLoadCompleteListener{
 
     @Override
     public void onBackStackChanged() {
@@ -156,6 +160,14 @@ public class ActivityMain extends BaseActivity implements  FragmentPostDetail.On
     }
 
     @Override
+    public void firstLoadCompleted() {
+        if(!PrefUtils.firstTimeDrawerOpened(this)){
+            result.openDrawer();
+            PrefUtils.markFirstTimeDrawerOpened(this);
+        }
+    }
+
+    @Override
     public void showPostDetail(Post post) {
         String backStackEntryName = null;
         if((getSupportFragmentManager().findFragmentById(R.id.fragmentContainer) instanceof FragmentNewsFeed)){
@@ -165,6 +177,12 @@ public class ActivityMain extends BaseActivity implements  FragmentPostDetail.On
         }
         getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, FragmentPostDetail.instance(new Gson().toJson(post))).addToBackStack(backStackEntryName).commit();
         result.setSelection(-1);
+    }
+
+    @Override
+    public void onBackPressed() {
+        toolbar.setTitle(R.string.app_name);
+        super.onBackPressed();
     }
 
     public void replaceFragment(int id){
@@ -190,11 +208,5 @@ public class ActivityMain extends BaseActivity implements  FragmentPostDetail.On
             getSupportFragmentManager().popBackStackImmediate("news_feed", FragmentManager.POP_BACK_STACK_INCLUSIVE);
             getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentMyPosts()).addToBackStack("news_feed").commit();
         }
-    }
-
-    @Override
-    public void onBackPressed() {
-        toolbar.setTitle(R.string.app_name);
-        super.onBackPressed();
     }
 }
