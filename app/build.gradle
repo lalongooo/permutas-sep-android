@@ -32,4 +32,5 @@ dependencies {
     compile('com.mikepenz.materialdrawer:library:2.9.5@aar') {
         transitive = true
     }
+    compile 'com.github.nicolasjafelle:paginglistview:1.2'
 }
