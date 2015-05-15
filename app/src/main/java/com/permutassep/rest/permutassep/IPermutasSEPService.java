@@ -13,6 +13,7 @@ import retrofit.http.Body;
 import retrofit.http.GET;
 import retrofit.http.POST;
 import retrofit.http.Path;
+import retrofit.http.Query;
 import retrofit.http.QueryMap;
 
 public interface  IPermutasSEPService {
@@ -32,8 +33,8 @@ public interface  IPermutasSEPService {
     @GET("/posts/")
     void searchPosts(@QueryMap Map<String, String> parameters, Callback<List<Post>> callback);
 
-    @GET("/posts/?page_size=2")
-    void getPostPage(Callback<PostPage> callback);
+    @GET("/posts/")
+    void getPostPage(@Query("page") String page, @Query("page_size") String pageSize, Callback<PostPage> callback);
 
     @POST("/login/")
     void login(@Body AuthModel authModel, Callback<User> callback);
