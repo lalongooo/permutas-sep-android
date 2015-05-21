@@ -47,6 +47,11 @@ public class Config {
      */
     public static final String APP_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
 
+	/**
+	 * Number of publications per page in the news feed screen (fragment).
+	 */
+	public static final int NEWS_FEED_ITEMS_PER_PAGE = 15;
+
     public static final String TEM_PWD = "*12345ABCDEF*";
 
 }
