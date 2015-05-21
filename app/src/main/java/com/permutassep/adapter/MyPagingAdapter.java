@@ -17,7 +17,7 @@ import com.squareup.picasso.Picasso;
 import java.util.HashMap;
 
 
-public class MyPagingAdaper extends PagingBaseAdapter<Post> {
+public class MyPagingAdapter extends PagingBaseAdapter<Post> {
 
 
     private Activity activity;
@@ -31,7 +31,7 @@ public class MyPagingAdaper extends PagingBaseAdapter<Post> {
     private TextView tvPostText;
     private TextView tvPostUserPhone;
 
-    public MyPagingAdaper(Activity a){
+    public MyPagingAdapter(Activity a){
         super();
         activity = a;
         states = Utils.getStates(a);
