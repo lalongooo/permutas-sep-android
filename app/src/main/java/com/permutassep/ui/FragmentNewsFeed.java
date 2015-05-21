@@ -17,6 +17,7 @@ import com.lalongooo.permutassep.R;
 import com.permutassep.BaseFragment;
 import com.permutassep.adapter.PostAdapter;
 import com.permutassep.config.Config;
+import com.permutassep.interfaces.FirstLaunchCompleteListener;
 import com.permutassep.model.Post;
 import com.permutassep.rest.permutassep.PermutasSEPRestClient;
 import com.permutassep.utils.Utils;
@@ -33,12 +34,7 @@ public class FragmentNewsFeed extends BaseFragment {
     private ProgressDialog pDlg;
     private PostAdapter adapter;
     private FragmentPostDetail.OnPostItemSelectedListener onPostItemSelectedListener;
-
-
-    private OnFirstLoadCompleteListener onFirstLoadCompleteListener;
-    public interface OnFirstLoadCompleteListener {
-        public void firstLoadCompleted();
-    }
+    private FirstLaunchCompleteListener firstLaunchCompleteListener;
 
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -49,10 +45,10 @@ public class FragmentNewsFeed extends BaseFragment {
             onPostItemSelectedListener = (FragmentPostDetail.OnPostItemSelectedListener) getActivity();
         }
 
-        if(!(getActivity() instanceof OnFirstLoadCompleteListener)) {
+        if(!(getActivity() instanceof FirstLaunchCompleteListener)) {
             throw new ClassCastException("Activity must implement OnFirstLoadCompleteListener");
         } else {
-            onFirstLoadCompleteListener = (OnFirstLoadCompleteListener) getActivity();
+            firstLaunchCompleteListener = (FirstLaunchCompleteListener) getActivity();
         }
     }
 
@@ -88,7 +84,7 @@ public class FragmentNewsFeed extends BaseFragment {
                         adapter = new PostAdapter(getActivity(), posts);
                         lv.setAdapter(adapter);
                         hideDialog();
-                        onFirstLoadCompleteListener.firstLoadCompleted();
+                        firstLaunchCompleteListener.onFirstLaunchComplete();
                     }else{
                         hideDialog();
                     }
