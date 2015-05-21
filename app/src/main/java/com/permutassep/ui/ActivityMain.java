@@ -26,6 +26,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.permutassep.BaseActivity;
 import com.permutassep.config.Config;
+import com.permutassep.interfaces.FirstLaunchCompleteListener;
 import com.permutassep.model.Post;
 import com.permutassep.model.User;
 import com.permutassep.utils.PrefUtils;
@@ -37,14 +38,14 @@ public class ActivityMain extends BaseActivity
         implements
         FragmentPostDetail.OnPostItemSelectedListener,
         FragmentManager.OnBackStackChangedListener,
-        FragmentNewsFeed.OnFirstLoadCompleteListener{
+        FirstLaunchCompleteListener {
 
     @Override
     public void onBackStackChanged() {
 
         Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
 
-        if(f instanceof FragmentNewsFeed){
+        if(f instanceof FragmentPagedNewsFeed){
             result.setSelectionByIdentifier(DrawerItems.HOME.id, false);
         }else if(f instanceof FragmentMyPosts){
             result.setSelectionByIdentifier(DrawerItems.MY_POSTS.id, false);
@@ -108,7 +109,7 @@ public class ActivityMain extends BaseActivity
                 .build();
         result.getListView().setVerticalScrollBarEnabled(false);
         getSupportFragmentManager().addOnBackStackChangedListener(this);
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentNewsFeed()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentPagedNewsFeed()).commit();
 	}
 	
 	private void showTOSDialog() {
@@ -139,7 +140,7 @@ public class ActivityMain extends BaseActivity
     public boolean onCreateOptionsMenu(Menu menu) {
 
         Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
-        if (f instanceof FragmentNewsFeed){
+        if (f instanceof FragmentPagedNewsFeed){
             getMenuInflater().inflate(R.menu.main, menu);
 
             User user = ComplexPreferences.getComplexPreferences(this, Config.APP_PREFERENCES_NAME, Context.MODE_PRIVATE).getObject(PrefUtils.PREF_USER_KEY, User.class);
@@ -160,17 +161,9 @@ public class ActivityMain extends BaseActivity
     }
 
     @Override
-    public void firstLoadCompleted() {
-        if(!PrefUtils.firstTimeDrawerOpened(this)){
-            result.openDrawer();
-            PrefUtils.markFirstTimeDrawerOpened(this);
-        }
-    }
-
-    @Override
     public void showPostDetail(Post post) {
         String backStackEntryName = null;
-        if((getSupportFragmentManager().findFragmentById(R.id.fragmentContainer) instanceof FragmentNewsFeed)){
+        if((getSupportFragmentManager().findFragmentById(R.id.fragmentContainer) instanceof FragmentPagedNewsFeed)){
             backStackEntryName = "news_feed";
         }else if((getSupportFragmentManager().findFragmentById(R.id.fragmentContainer) instanceof FragmentMyPosts)){
             backStackEntryName = "my_posts";
@@ -183,6 +176,14 @@ public class ActivityMain extends BaseActivity
     public void onBackPressed() {
         toolbar.setTitle(R.string.app_name);
         super.onBackPressed();
+    }
+
+    @Override
+    public void onFirstLaunchComplete() {
+        if(!PrefUtils.firstTimeDrawerOpened(this)){
+            result.openDrawer();
+            PrefUtils.markFirstTimeDrawerOpened(this);
+        }
     }
 
     public void replaceFragment(int id){
