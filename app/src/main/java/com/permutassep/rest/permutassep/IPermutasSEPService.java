@@ -34,7 +34,7 @@ public interface  IPermutasSEPService {
     void searchPosts(@QueryMap Map<String, String> parameters, Callback<List<Post>> callback);
 
     @GET("/posts/")
-    void getPostPage(@Query("page") String page, @Query("page_size") String pageSize, Callback<PostPage> callback);
+    void getPostPage(@Query("page") int page, @Query("page_size") int pageSize, Callback<PostPage> callback);
 
     @POST("/login/")
     void login(@Body AuthModel authModel, Callback<User> callback);
