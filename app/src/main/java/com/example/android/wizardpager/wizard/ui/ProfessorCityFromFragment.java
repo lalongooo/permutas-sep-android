@@ -322,7 +322,6 @@ public class ProfessorCityFromFragment extends Fragment {
         outState.putInt(ProfessorCityFromFragment.STATE_FROM_SELECTED_KEY, stateSelectedPosition);
         outState.putInt(ProfessorCityFromFragment.CITY_FROM_SELECTED_KEY, citySelectedPosition);
         outState.putInt(ProfessorCityFromFragment.TOWN_FROM_SELECTED_KEY, townSelectedPosition);
-        Log.i("onSaveInstanceState","onSaveInstanceState launched!");
     }
 
 }

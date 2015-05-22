@@ -3,7 +3,7 @@ package com.permutassep.ui;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -64,7 +64,7 @@ public class FragmentSearch extends BaseFragment {
     private List<Town> mTownsTo = new ArrayList<>();
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_search, container, false);
         btnSearch = (Button) rootView.findViewById(R.id.btnSearch);
@@ -104,8 +104,9 @@ public class FragmentSearch extends BaseFragment {
                     mCitiesFrom.clear();
                     mTownsFrom.clear();
 
-                    stateFromSelectedPosition = position;
+                    stateFromSelectedPosition = selectedState.getId();
                     cityFromSelectedPosition = 0;
+                    townFromSelectedPosition = "";
 
                     try {
                         InegiFacilRestClient.get().getCities(String.valueOf(selectedState.getId()), new Callback<ArrayList<City>>() {
@@ -127,6 +128,7 @@ public class FragmentSearch extends BaseFragment {
                     }
                 } else {
                     if (selectedState.getId() == 0) {
+                        stateFromSelectedPosition = 0;
                         cityFromSelectedPosition = 0;
                         townFromSelectedPosition = "";
                         resetSpinner(spnMunicipalityFrom);
@@ -150,7 +152,7 @@ public class FragmentSearch extends BaseFragment {
 
                     showDialog(getString(R.string.please_wait), getString(R.string.main_loading_localities));
                     mTownsFrom.clear();
-                    cityFromSelectedPosition = position;
+                    cityFromSelectedPosition = selectedCity.getClaveMunicipio();
 
                     try {
                         InegiFacilRestClient.get().getTowns(String.valueOf(selectedCity.getClaveEntidad()), String.valueOf(selectedCity.getClaveMunicipio()), new Callback<ArrayList<Town>>() {
@@ -216,7 +218,7 @@ public class FragmentSearch extends BaseFragment {
                     mCitiesTo.clear();
                     mTownsTo.clear();
 
-                    stateToSelectedPosition = position;
+                    stateToSelectedPosition = selectedState.getId();
                     cityToSelectedPosition = 0;
 
                     try {
@@ -262,7 +264,7 @@ public class FragmentSearch extends BaseFragment {
 
                     showDialog(getString(R.string.please_wait), getString(R.string.main_loading_localities));
                     mTownsTo.clear();
-                    cityToSelectedPosition = position;
+                    cityToSelectedPosition = selectedCity.getClaveMunicipio();
 
                     try {
                         InegiFacilRestClient.get().getTowns(String.valueOf(selectedCity.getClaveEntidad()), String.valueOf(selectedCity.getClaveMunicipio()), new Callback<ArrayList<Town>>() {
@@ -295,7 +297,6 @@ public class FragmentSearch extends BaseFragment {
             }
         });
 
-
         spnLocalityTo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -309,8 +310,6 @@ public class FragmentSearch extends BaseFragment {
 
             }
         });
-
-
     }
 
     private void resetSpinner(Spinner spinner) {
@@ -319,7 +318,7 @@ public class FragmentSearch extends BaseFragment {
         }
     }
 
-    View.OnClickListener listener = new View.OnClickListener() {
+    private View.OnClickListener listener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
 
@@ -371,7 +370,10 @@ public class FragmentSearch extends BaseFragment {
 
                             FragmentResult fr = new FragmentResult();
                             fr.setPosts(posts);
-                            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, fr).addToBackStack("search_results").commit();
+
+                            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                            ft.hide(FragmentSearch.this);
+                            ft.add(R.id.fragmentContainer, fr).addToBackStack("search_results").commit();
                         }
                     }
                 }

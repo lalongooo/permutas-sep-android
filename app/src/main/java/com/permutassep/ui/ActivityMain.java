@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -168,7 +169,12 @@ public class ActivityMain extends BaseActivity
         }else if((getSupportFragmentManager().findFragmentById(R.id.fragmentContainer) instanceof FragmentMyPosts)){
             backStackEntryName = "my_posts";
         }
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, FragmentPostDetail.instance(new Gson().toJson(post))).addToBackStack(backStackEntryName).commit();
+        // getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, FragmentPostDetail.instance(new Gson().toJson(post))).addToBackStack(backStackEntryName).commit();
+
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.hide(getSupportFragmentManager().findFragmentById(R.id.fragmentContainer));
+        ft.add(R.id.fragmentContainer, FragmentPostDetail.instance(new Gson().toJson(post))).addToBackStack(backStackEntryName).commit();
+
         result.setSelection(-1);
     }
 
