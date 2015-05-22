@@ -44,7 +44,14 @@ public class ActivityMain extends BaseActivity
     @Override
     public void onBackStackChanged() {
 
+
         Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
+
+        if(PrefUtils.shouldReloadNewsFeed(this)){
+            getSupportFragmentManager().beginTransaction().remove(getSupportFragmentManager().findFragmentById(R.id.fragmentContainer)).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentPagedNewsFeed()).commit();
+            PrefUtils.markNewsFeedToReload(this, false);
+        }
 
         if(f instanceof FragmentPagedNewsFeed){
             result.setSelectionByIdentifier(DrawerItems.HOME.id, false);

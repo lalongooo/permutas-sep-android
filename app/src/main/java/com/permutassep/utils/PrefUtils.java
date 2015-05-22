@@ -34,6 +34,11 @@ public class PrefUtils {
     * */
     public static final String PREF_DRAWER_OPENED = "pref_drawer_first_time_opened";
 
+    /*
+    * Boolean indicating that the news feed should be reloaded
+    * */
+    public static final String PREF_RELOAD_NEWS_FEED = "pref_reload_news_feed";
+
     public static boolean firstTimeDrawerOpened(final Context context) {
         SharedPreferences sp = context.getSharedPreferences(Config.APP_PREFERENCES_NAME, Context.MODE_PRIVATE);
         return sp.getBoolean(PREF_DRAWER_OPENED, false);
@@ -42,6 +47,16 @@ public class PrefUtils {
     public static void markFirstTimeDrawerOpened(final Context context) {
         SharedPreferences sp = context.getSharedPreferences(Config.APP_PREFERENCES_NAME, Context.MODE_PRIVATE);
         sp.edit().putBoolean(PREF_DRAWER_OPENED, true).commit();
+    }
+
+    public static boolean shouldReloadNewsFeed(final Context context) {
+        SharedPreferences sp = context.getSharedPreferences(Config.APP_PREFERENCES_NAME, Context.MODE_PRIVATE);
+        return sp.getBoolean(PREF_RELOAD_NEWS_FEED, false);
+    }
+
+    public static void markNewsFeedToReload(final Context context, boolean reloaded) {
+        SharedPreferences sp = context.getSharedPreferences(Config.APP_PREFERENCES_NAME, Context.MODE_PRIVATE);
+        sp.edit().putBoolean(PREF_RELOAD_NEWS_FEED, reloaded).commit();
     }
 
     public static void setNormalUser(Context context, boolean isNormalUser) {

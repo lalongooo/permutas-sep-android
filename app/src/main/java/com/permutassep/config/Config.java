@@ -40,7 +40,9 @@ public class Config {
     /**
      * Endpoint of the PermutasSEP REST service
      */
-    public static final String PERMUTAS_SEP_REST_BASE_URL = "https://permuta-sep.herokuapp.com/api/";
+	public static final String PERMUTAS_SEP_REST_BASE_URL = "http://permuta-sep-dev.herokuapp.com/api/";
+	public static final String PERMUTAS_SEP_REST_AUTH_U = "permuta";
+	public static final String PERMUTAS_SEP_REST_AUTH_P = "kc.ll#15";
 
     /**
      * Date format used in the entire application

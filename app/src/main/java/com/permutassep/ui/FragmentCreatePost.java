@@ -422,6 +422,7 @@ public class FragmentCreatePost extends BaseFragment implements
     }
 
     private void replaceFragment(){
-        getActivity().onBackPressed();
+        PrefUtils.markNewsFeedToReload(getActivity(), true);
+        getActivity().getSupportFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 }
