@@ -58,6 +58,7 @@ public class ActivityMain extends BaseActivity
         }else if(f instanceof FragmentMyPosts){
             result.setSelectionByIdentifier(DrawerItems.MY_POSTS.id, false);
         }
+        invalidateOptionsMenu();
 
     }
 
@@ -68,7 +69,7 @@ public class ActivityMain extends BaseActivity
 
         public int id;
 
-        private DrawerItems(int id) {
+        DrawerItems(int id) {
             this.id = id;
         }
     }
