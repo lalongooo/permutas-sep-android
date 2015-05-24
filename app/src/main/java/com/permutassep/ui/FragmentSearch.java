@@ -77,9 +77,6 @@ public class FragmentSearch extends BaseFragment {
         spnMunicipalityTo = ((Spinner) rootView.findViewById(R.id.spn_city_to));
         spnLocalityTo = ((Spinner) rootView.findViewById(R.id.spn_town_to));
 
-        getActivity().setTitle(R.string.app_main_toolbar_search_action);
-        //getActivity().invalidateOptionsMenu();
-
         setupSpinners();
 
         return rootView;

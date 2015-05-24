@@ -75,9 +75,8 @@ public class FragmentPostDetail extends BaseFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_post_detail, container, false);
-        //getActivity().invalidateOptionsMenu();
 
+        View rootView = inflater.inflate(R.layout.fragment_post_detail, container, false);
         post = new Gson().fromJson(getArguments().getString(EXTRA_POS_TO_SHOW), Post.class);
         states = Utils.getStates(getActivity());
         ivArrow = (ImageView) rootView.findViewById(R.id.ivArrow);

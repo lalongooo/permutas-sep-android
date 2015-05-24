@@ -49,8 +49,6 @@ public class FragmentMyPosts extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_news_feed, container, false);
-        getActivity().setTitle(R.string.my_posts_toolbar_text);
-        //getActivity().invalidateOptionsMenu();
         final ListView lv = (ListView) rootView.findViewById(R.id.news_feed_list);
 
         if(!Utils.isNetworkAvailable(getActivity())){
