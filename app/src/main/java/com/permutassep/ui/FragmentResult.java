@@ -37,7 +37,7 @@ public class FragmentResult extends BaseFragment {
         View rootView = inflater.inflate(R.layout.fragment_news_feed, container, false);
         final ListView lv = (ListView) rootView.findViewById(R.id.news_feed_list);
         getActivity().setTitle(R.string.app_main_toolbar_search_results);
-        getActivity().invalidateOptionsMenu();
+        //getActivity().invalidateOptionsMenu();
 
         adapter = new PostAdapter(getActivity(), getPosts());
         lv.setAdapter(adapter);

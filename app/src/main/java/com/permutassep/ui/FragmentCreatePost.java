@@ -87,7 +87,7 @@ public class FragmentCreatePost extends BaseFragment implements
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_createpost, container, false);
         getActivity().setTitle(R.string.app_main_toolbar_post_action);
-        getActivity().invalidateOptionsMenu();
+        // getActivity().invalidateOptionsMenu();
 
         if (savedInstanceState != null) {
             mWizardModel.load(savedInstanceState.getBundle("model"));
@@ -194,16 +194,16 @@ public class FragmentCreatePost extends BaseFragment implements
 
                                                         break;
                                                     case PermutaSepWizardModel.ACADEMIC_LEVEL_KEY:
-                                                        post.setAcademicLevel(p.getData().getString(p.SIMPLE_DATA_KEY));
+                                                        post.setAcademicLevel(p.getData().getString(Page.SIMPLE_DATA_KEY));
                                                         break;
                                                     case PermutaSepWizardModel.POSITION_TYPE_KEY:
-                                                        post.setPositionType(p.getData().getString(p.SIMPLE_DATA_KEY));
+                                                        post.setPositionType(p.getData().getString(Page.SIMPLE_DATA_KEY));
                                                         break;
                                                     case PermutaSepWizardModel.WORKDAY_TYPE_KEY:
-                                                        post.setWorkdayType(p.getData().getString(p.SIMPLE_DATA_KEY));
+                                                        post.setWorkdayType(p.getData().getString(Page.SIMPLE_DATA_KEY));
                                                         break;
                                                     case PermutaSepWizardModel.TEACHING_CAREER_KEY:
-                                                        post.setIsTeachingCareer(p.getData().getString(p.SIMPLE_DATA_KEY).equals("Si") ? true : false);
+                                                        post.setIsTeachingCareer(p.getData().getString(Page.SIMPLE_DATA_KEY).equals("Si") ? true : false);
                                                         break;
                                                     case PermutaSepWizardModel.POST_TEXT_KEY:
                                                         post.setPostText(p.getData().getString(PostTextPage.TEXT_DATA_KEY));

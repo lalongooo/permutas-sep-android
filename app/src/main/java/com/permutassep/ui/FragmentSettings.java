@@ -12,7 +12,7 @@ public class FragmentSettings extends BaseFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        getActivity().invalidateOptionsMenu();
+        //getActivity().invalidateOptionsMenu();
         return inflater.inflate(R.layout.fragment_settings, container, false);
     }
 }

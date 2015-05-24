@@ -57,7 +57,7 @@ public class FragmentNewsFeed extends BaseFragment {
 
         View rootView = inflater.inflate(R.layout.fragment_news_feed, container, false);
         getActivity().setTitle(R.string.app_name);
-        getActivity().invalidateOptionsMenu();
+        //getActivity().invalidateOptionsMenu();
         getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         final ListView lv = (ListView) rootView.findViewById(R.id.news_feed_list);
 

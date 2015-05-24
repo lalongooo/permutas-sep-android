@@ -52,7 +52,7 @@ public class FragmentPagedNewsFeed extends BaseFragment {
         }
 
         getActivity().setTitle(R.string.app_name);
-        getActivity().invalidateOptionsMenu();
+        //getActivity().invalidateOptionsMenu();
         getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         listView = (PagingListView) rootView.findViewById(R.id.paging_list_view);
         if (adapter == null) {
