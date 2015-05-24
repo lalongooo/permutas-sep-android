@@ -3,6 +3,7 @@ package com.throrinstudio.android.common.libs.validator.validator;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
+
 import com.lalongooo.permutassep.R;
 import com.throrinstudio.android.common.libs.validator.AbstractValidator;
 

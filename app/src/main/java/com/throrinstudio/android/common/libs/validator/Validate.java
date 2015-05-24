@@ -1,12 +1,12 @@
 package com.throrinstudio.android.common.libs.validator;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.graphics.drawable.Drawable;
 import android.widget.TextView;
 
 import com.throrinstudio.android.common.libs.validator.interfaces.CustomErrorNotification;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Validate extends AbstractValidate {
 

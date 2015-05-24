@@ -1,8 +1,5 @@
 package com.permutassep;
 
-import android.support.v7.view.ActionMode;
-
-import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.common.GooglePlayServicesUtil;

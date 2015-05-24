@@ -1,9 +1,9 @@
 package com.throrinstudio.android.common.libs.validator;
 
+import android.widget.TextView;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import android.widget.TextView;
 
 /**
  * Form Validation Class
