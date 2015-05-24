@@ -3,6 +3,7 @@ package com.permutassep.ui;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 
+import com.facebook.Session;
 import com.google.gson.Gson;
 import com.lalongooo.permutassep.R;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
@@ -165,7 +167,15 @@ public class ActivityMain extends BaseActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        replaceFragment(item.getItemId());
+        if(item.getItemId() == R.id.action_logout){
+            Session session = Session.getActiveSession();
+            session.closeAndClearTokenInformation();
+            PrefUtils.clearApplicationPreferences(this);
+            startActivity(new Intent(ActivityMain.this, ActivityLoginSignUp.class));
+            finish();
+        }else{
+            replaceFragment(item.getItemId());
+        }
         return false;
     }
 

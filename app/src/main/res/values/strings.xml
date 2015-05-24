@@ -20,6 +20,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_post">Publicar permuta</string>
     <string name="action_search">Buscar</string>
+    <string name="action_logout">Cerrar sesión</string>
 
     <string name="wizard_contact_suggest_data_completion_dialog_msg">Si completas los datos en esta seccion, podrán contactarte con mayor facilidad. Presiona Siguiente si no quieres agregar mayor información</string>
     <string name="wizard_post_text_label">Información adicional</string>

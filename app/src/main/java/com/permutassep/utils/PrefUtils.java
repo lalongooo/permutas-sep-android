@@ -63,4 +63,9 @@ public class PrefUtils {
         SharedPreferences sp = context.getSharedPreferences(Config.APP_PREFERENCES_NAME, Context.MODE_PRIVATE);
         sp.edit().putBoolean(PREF_IS_NORMAL_USER, isNormalUser).commit();
     }
+
+    public static void clearApplicationPreferences(Context context) {
+        SharedPreferences sp = context.getSharedPreferences(Config.APP_PREFERENCES_NAME, Context.MODE_PRIVATE);
+        sp.edit().clear().commit();
+    }
 }
