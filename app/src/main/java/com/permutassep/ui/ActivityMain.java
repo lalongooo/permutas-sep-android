@@ -219,8 +219,11 @@ public class ActivityMain extends BaseActivity
 
     @Override
     public void onBackPressed() {
-        //toolbar.setTitle(R.string.app_name);
-        super.onBackPressed();
+        if (result != null && result.isDrawerOpen()) {
+            result.closeDrawer();
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @Override
