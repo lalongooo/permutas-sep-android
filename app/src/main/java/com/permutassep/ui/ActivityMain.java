@@ -121,9 +121,9 @@ public class ActivityMain extends BaseActivity
                     .withToolbar(toolbar)
                     .addDrawerItems(
                             new PrimaryDrawerItem().withName(getString(R.string.app_nav_drawer_1)).withIdentifier(DrawerItems.HOME.id).withIcon(GoogleMaterial.Icon.gmd_home),
-                            new PrimaryDrawerItem().withName(getString(R.string.app_nav_drawer_2)).withIdentifier(DrawerItems.MY_POSTS.id).withIcon(GoogleMaterial.Icon.gmd_content_paste),
-                            new DividerDrawerItem(),
-                            new PrimaryDrawerItem().withName(getString(R.string.app_nav_drawer_3)).withIdentifier(DrawerItems.SETTINGS.id).withIcon(GoogleMaterial.Icon.gmd_settings)
+                            new PrimaryDrawerItem().withName(getString(R.string.app_nav_drawer_2)).withIdentifier(DrawerItems.MY_POSTS.id).withIcon(GoogleMaterial.Icon.gmd_content_paste)
+//                            new DividerDrawerItem(),
+//                            new PrimaryDrawerItem().withName(getString(R.string.app_nav_drawer_3)).withIdentifier(DrawerItems.SETTINGS.id).withIcon(GoogleMaterial.Icon.gmd_settings)
                     )
                     .withSelectedItem(0)
                     .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
