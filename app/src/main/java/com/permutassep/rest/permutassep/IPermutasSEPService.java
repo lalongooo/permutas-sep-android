@@ -11,6 +11,7 @@ import java.util.Map;
 import retrofit.Callback;
 import retrofit.http.Body;
 import retrofit.http.GET;
+import retrofit.http.PATCH;
 import retrofit.http.POST;
 import retrofit.http.Path;
 import retrofit.http.Query;
@@ -38,4 +39,7 @@ public interface  IPermutasSEPService {
 
     @POST("/login/")
     void login(@Body AuthModel authModel, Callback<User> callback);
+
+    @PATCH("/users/{id}")
+    void updateUser(@Path("id") int id, @Body User user, Callback<User> callback);
 }

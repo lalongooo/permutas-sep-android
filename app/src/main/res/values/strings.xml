@@ -27,14 +27,14 @@
     <string name="wizard_post_text_hint">p. ej. "Escuela bien ubicada"</string>
     <string name="wizard_post_dlg_title">Espera...</string>
     <string name="wizard_post_dlg_text">Estamos publicando tu permuta</string>
-    
+
     <string name="app_overview_1st_item_text">Queremos que la información esté al alcance de todos</string>
     <string name="app_overview_2nd_item_text">Creemos que nuestra solución hará a mas personas felices</string>
     <string name="app_overview_3rd_item_text">Esperamos que encuentres pronto tu permuta&#8230;de verdad.</string>
-    <string name="app_overview_4th_item_text">Si crees importante este aporte, considera una donación.</string>    
+    <string name="app_overview_4th_item_text">Si crees importante este aporte, considera una donación.</string>
     <string name="app_overview_start_button">Comenzar a publicar!</string>
     <string name="app_overview_signup_button">Registrarse</string>
-
+    <string name="edit_profile_button_edit">Actualizar datos</string>
     <string name="app_sign_up">Registrarme</string>
     <string name="app_sign_up_facebook_login_button">Registrarme con Facebook</string>
     <string name="app_sign_up_finish_fb_registration">Terminar registro</string>
@@ -88,7 +88,7 @@
 
     <string name="app_nav_drawer_1">Inicio</string>
     <string name="app_nav_drawer_2">Mis publicaciones</string>
-    <string name="app_nav_drawer_3">Ajustes</string>
+    <string name="app_nav_drawer_3">Editar Perfil</string>
 
     <string name="app_post_detail_call">Llamar</string>
     <string name="app_post_detail_email">Email</string>
@@ -96,7 +96,7 @@
     <string name="tos_dialog_text">Al seleccionar \"Aceptar\" usted acepta los Términos y condiciones del uso de esta aplicación.</string>
     <string name="tos_dialog_cancel">Cancelar</string>
     <string name="tos_dialog_accept">Aceptar</string>
-    
+
     <string name="act_splash_cont_descr">Application icon</string>
     <string name="act_splash_by_lalongooo">By @lalongooo</string>
 
@@ -121,6 +121,7 @@
     <string name="app_main_toolbar_post_action">Publicar permuta</string>
     <string name="app_main_toolbar_search_action">Búsqueda</string>
     <string name="app_main_toolbar_search_results">Resultados</string>
+    <string name="app_main_toolbar_edit_profile">Editar perfil</string>
     <string name="main_select_state">Selecciona Estado</string>
     <string name="main_loading_cities">Cargando ciudades</string>
     <string name="main_loading_localities">Cargando localidades</string>
@@ -229,7 +230,7 @@
         <item>ZAC</item>
     </string-array>
 
-<!-- TODO: Remove or change this placeholder text -->
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

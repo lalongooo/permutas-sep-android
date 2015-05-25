@@ -22,6 +22,7 @@ import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.accountswitcher.AccountHeader;
+import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
@@ -66,6 +67,8 @@ public class ActivityMain extends BaseActivity
             setTitle(R.string.app_main_toolbar_search_results);
         }else if(f instanceof FragmentCreatePost){
             setTitle(R.string.app_main_toolbar_post_action);
+        }else if(f instanceof FragmentSettings){
+            setTitle(R.string.app_main_toolbar_edit_profile);
         }
 
         invalidateOptionsMenu();
@@ -118,8 +121,9 @@ public class ActivityMain extends BaseActivity
                     .withToolbar(toolbar)
                     .addDrawerItems(
                             new PrimaryDrawerItem().withName(getString(R.string.app_nav_drawer_1)).withIdentifier(DrawerItems.HOME.id).withIcon(GoogleMaterial.Icon.gmd_home),
-                            new PrimaryDrawerItem().withName(getString(R.string.app_nav_drawer_2)).withIdentifier(DrawerItems.MY_POSTS.id).withIcon(GoogleMaterial.Icon.gmd_content_paste)
-                            // new SecondaryDrawerItem().withName(getString(R.string.app_nav_drawer_3)).withIdentifier(DrawerItems.SETTINGS.id).withIcon(GoogleMaterial.Icon.gmd_settings)
+                            new PrimaryDrawerItem().withName(getString(R.string.app_nav_drawer_2)).withIdentifier(DrawerItems.MY_POSTS.id).withIcon(GoogleMaterial.Icon.gmd_content_paste),
+                            new DividerDrawerItem(),
+                            new PrimaryDrawerItem().withName(getString(R.string.app_nav_drawer_3)).withIdentifier(DrawerItems.SETTINGS.id).withIcon(GoogleMaterial.Icon.gmd_settings)
                     )
                     .withSelectedItem(0)
                     .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
@@ -249,6 +253,12 @@ public class ActivityMain extends BaseActivity
         if(id == DrawerItems.MY_POSTS.id) {
             getSupportFragmentManager().popBackStackImmediate("news_feed", FragmentManager.POP_BACK_STACK_INCLUSIVE);
             getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentMyPosts()).addToBackStack("news_feed").commit();
+        }
+
+        // Action My posts
+        if(id == DrawerItems.SETTINGS.id) {
+            getSupportFragmentManager().popBackStackImmediate("news_feed", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentSettings()).addToBackStack("news_feed").commit();
         }
     }
 
