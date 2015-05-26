@@ -1,5 +1,17 @@
 apply plugin: 'com.android.application'
 
+def com_permutassep_debug_api_rest_endpoint = '"' + com_permutassep_debug_api_rest_endpoint + '"';
+def com_permutassep_debug_api_rest_user = '"' + com_permutassep_debug_api_rest_user + '"';
+def com_permutassep_debug_api_rest_password = '"' + com_permutassep_debug_api_rest_password + '"';
+def com_permutassep_release_api_rest_endpoint = '"' + com_permutassep_release_api_rest_endpoint + '"';
+def com_permutassep_release_api_rest_user = '"' + com_permutassep_release_api_rest_user + '"';
+def com_permutassep_release_api_rest_password = '"' + com_permutassep_release_api_rest_password + '"';
+
+def com_permutassep_release_keystore_file = com_permutassep_release_keystore_file;
+def com_permutassep_release_keystore_password = com_permutassep_release_keystore_password;
+def com_permutassep_release_key_alias = com_permutassep_release_key_alias;
+def com_permutassep_release_key_password = com_permutassep_release_key_password;
+
 android {
     compileSdkVersion 21
     buildToolsVersion '21.1.2'
@@ -10,39 +22,50 @@ android {
         targetSdkVersion 21
     }
 
+    signingConfigs{
+
+        releaseConfig{
+            storeFile file(com_permutassep_release_keystore_file);
+            storePassword(com_permutassep_release_keystore_password);
+            keyAlias(com_permutassep_release_key_alias);
+            keyPassword(com_permutassep_release_key_password);
+        }
+
+    }
+
     buildTypes {
 
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
-            buildConfigField "String", "PERMUTAS_SEP_REST_BASE_URL","\"http://permuta-sep-dev.herokuapp.com/api/\""
-            buildConfigField "String", "PERMUTAS_SEP_REST_AUTH_U","\"permuta\""
-            buildConfigField "String", "PERMUTAS_SEP_REST_AUTH_P","\"kc.ll#15\""
+            buildConfigField "String", "com_permutassep_api_rest_endpoint", com_permutassep_debug_api_rest_endpoint
+            buildConfigField "String", "com_permutassep_api_rest_user", com_permutassep_debug_api_rest_user
+            buildConfigField "String", "com_permutassep_api_rest_password", com_permutassep_debug_api_rest_password
         }
 
         release {
+            signingConfig signingConfigs.releaseConfig
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
-            buildConfigField "String", "PERMUTAS_SEP_REST_BASE_URL","\"http://permuta-sep.herokuapp.com/api/\""
-            buildConfigField "String", "PERMUTAS_SEP_REST_AUTH_U","\"permuta\""
-            buildConfigField "String", "PERMUTAS_SEP_REST_AUTH_P","\"kc.ll#15\""
+            buildConfigField "String", "com_permutassep_api_rest_endpoint", com_permutassep_release_api_rest_endpoint
+            buildConfigField "String", "com_permutassep_api_rest_user", com_permutassep_release_api_rest_user
+            buildConfigField "String", "com_permutassep_api_rest_password", com_permutassep_release_api_rest_password
         }
     }
 }
 
 dependencies {
     compile 'com.android.support:support-v4:22.1.1'
+    compile 'com.android.support:appcompat-v7:22.1.1'
     compile 'com.google.android.gms:play-services-analytics:7.0.0'
-    compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.viewpagerindicator:library:2.4.1'
     compile 'com.facebook.android:facebook-android-sdk:3.23.0'
     compile 'com.squareup.retrofit:retrofit:1.9.0'
-    compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
     compile 'com.squareup.okhttp:okhttp:2.0.0'
-    compile 'com.android.support:appcompat-v7:22.1.1'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.github.nicolasjafelle:paginglistview:1.2'
+    compile 'com.viewpagerindicator:library:2.4.1'
     compile 'com.mikepenz.iconics:library:0.7.5@aar'
     compile('com.mikepenz.materialdrawer:library:2.9.5@aar') {
         transitive = true
     }
-    compile 'com.github.nicolasjafelle:paginglistview:1.2'
 }
