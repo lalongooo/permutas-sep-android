@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Logger;
 import com.google.android.gms.analytics.Tracker;
+import com.lalongooo.permutassep.BuildConfig;
 import com.mikepenz.materialdrawer.util.DrawerImageLoader;
 import com.squareup.picasso.Picasso;
 
@@ -46,7 +47,7 @@ public class PermutasSEPApplication extends Application {
     public synchronized Tracker getTracker() {
 
         GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
-        analytics.setDryRun(true);
+        analytics.setDryRun(BuildConfig.DEBUG);
         analytics.getLogger().setLogLevel(Logger.LogLevel.VERBOSE);
         Tracker t = analytics.newTracker(PROPERTY_ID);
         t.enableAdvertisingIdCollection(true);

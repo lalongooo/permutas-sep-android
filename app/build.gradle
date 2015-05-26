@@ -11,9 +11,21 @@ android {
     }
 
     buildTypes {
+
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            buildConfigField "String", "PERMUTAS_SEP_REST_BASE_URL","\"http://permuta-sep-dev.herokuapp.com/api/\""
+            buildConfigField "String", "PERMUTAS_SEP_REST_AUTH_U","\"permuta\""
+            buildConfigField "String", "PERMUTAS_SEP_REST_AUTH_P","\"kc.ll#15\""
+        }
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            buildConfigField "String", "PERMUTAS_SEP_REST_BASE_URL","\"http://permuta-sep.herokuapp.com/api/\""
+            buildConfigField "String", "PERMUTAS_SEP_REST_AUTH_U","\"permuta\""
+            buildConfigField "String", "PERMUTAS_SEP_REST_AUTH_P","\"kc.ll#15\""
         }
     }
 }
