@@ -45,7 +45,7 @@ public class Config {
 	/**
 	 * Number of publications per page in the news feed screen (fragment).
 	 */
-	public static final int NEWS_FEED_ITEMS_PER_PAGE = 15;
+	public static final int NEWS_FEED_ITEMS_PER_PAGE = 4;
 
     public static final String TEM_PWD = "*12345ABCDEF*";
 
