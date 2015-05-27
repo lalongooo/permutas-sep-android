@@ -1,10 +1,10 @@
 package com.permutassep.adapter;
 
-import android.app.Activity;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,9 +18,9 @@ import com.squareup.picasso.Picasso;
 import java.util.HashMap;
 import java.util.List;
 
-public class PostAdapter extends BaseAdapter {
-    private Activity activity;
-    private List<Post> data;
+public class PostAdapter extends ArrayAdapter<Post> {
+    private Context context;
+    private List<Post> posts;
     private HashMap<String, State> states;
 
     private TextView tvUserName;
@@ -32,18 +32,20 @@ public class PostAdapter extends BaseAdapter {
     private TextView tvPostText;
     private TextView tvPostUserPhone;
 
-    public PostAdapter(Activity a, List<Post> posts) {
-        activity = a;
-        data = posts;
-        states = Utils.getStates(a);
+
+    public PostAdapter(Context context, List<Post> posts) {
+        super(context, -1, posts);
+        this.context = context;
+        this.posts = posts;
+        states = Utils.getStates(context);
     }
 
     public int getCount() {
-        return data.size();
+        return posts.size();
     }
 
-    public Object getItem(int position) {
-        return data.get(position);
+    public Post getItem(int position) {
+        return posts.get(position);
     }
 
     public long getItemId(int position) {
@@ -54,7 +56,7 @@ public class PostAdapter extends BaseAdapter {
 
         ViewHolder holder;
         if (view == null) {
-            view = LayoutInflater.from(activity).inflate(R.layout.list_item_post, parent, false);
+            view = LayoutInflater.from(context).inflate(R.layout.list_item_post, parent, false);
             holder = new ViewHolder();
             holder.image = (ImageView) view.findViewById(R.id.imageView);
             view.setTag(holder);
@@ -71,24 +73,24 @@ public class PostAdapter extends BaseAdapter {
         tvPostText = (TextView) view.findViewById(R.id.tvPostText);
         tvPostUserPhone = (TextView) view.findViewById(R.id.tvPostUserPhone);
 
-        Post p = data.get(position);
+        Post p = posts.get(position);
 
         tvUserName.setText(p.getUser().getName());
         tvPostUserEmail.setText(p.getUser().getEmail());
         tvFromLabel.setText(states.get((String.valueOf(p.getStateFrom()))).getStateName());
         tvToLabel.setText(states.get(String.valueOf(p.getStateTo())).getStateName());
         tvAcademicLevelLabel.setText(p.getAcademicLevel());
-        tvPostDate.setText(new TimeAgo(activity).timeAgo(p.getPostDate()));
+        tvPostDate.setText(new TimeAgo(context).timeAgo(p.getPostDate()));
         tvPostText.setText(p.getPostText());
         tvPostUserPhone.setText(p.getUser().getPhone());
 
-        Picasso.with(activity)
+        Picasso.with(context)
                     .load("https://graph.facebook.com/" + p.getUser().getSocialUserId() + "/picture?width=100&height=100")
                     .placeholder(R.drawable.default_profile_picture)
                     .error(R.drawable.default_profile_picture)
                     .resizeDimen(R.dimen.list_detail_image_size, R.dimen.list_detail_image_size)
                     .centerInside()
-                    .tag(activity)
+                    .tag(context)
                     .into(holder.image);
         return view;
     }

@@ -22,7 +22,6 @@ import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.accountswitcher.AccountHeader;
-import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
@@ -139,7 +138,7 @@ public class ActivityMain extends BaseActivity
         }
 
         getSupportFragmentManager().addOnBackStackChangedListener(this);
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentPagedNewsFeed()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new MainActivityFragment()).commit();
 	}
 	
 	private void showTOSDialog() {
