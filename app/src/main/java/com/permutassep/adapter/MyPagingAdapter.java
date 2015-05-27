@@ -15,6 +15,7 @@ import com.permutassep.utils.Utils;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
+import java.util.List;
 
 
 public class MyPagingAdapter extends PagingBaseAdapter<Post> {
@@ -35,6 +36,11 @@ public class MyPagingAdapter extends PagingBaseAdapter<Post> {
         super();
         activity = a;
         states = Utils.getStates(a);
+    }
+
+    public void addMoreItems(int location, List<Post> newItems) {
+        this.items.addAll(location, newItems);
+        notifyDataSetChanged();
     }
 
 	@Override
