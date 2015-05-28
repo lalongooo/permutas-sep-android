@@ -138,7 +138,7 @@ public class ActivityMain extends BaseActivity
         }
 
         getSupportFragmentManager().addOnBackStackChangedListener(this);
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new MainActivityFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentPagedNewsFeed()).commit();
 	}
 	
 	private void showTOSDialog() {

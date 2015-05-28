@@ -1,9 +1,12 @@
 package com.permutassep.ui;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,8 +30,10 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 import retrofit.converter.GsonConverter;
 
-public class FragmentPagedNewsFeed extends BaseFragment {
+public class FragmentPagedNewsFeed extends BaseFragment
+        implements PagingListView.Pagingable, SwipeRefreshLayout.OnRefreshListener{
 
+    private SwipeRefreshLayout swipeRefreshLayout;
     private PagingListView listView;
     private MyPagingAdapter adapter;
     private int page = 1;
@@ -52,40 +57,16 @@ public class FragmentPagedNewsFeed extends BaseFragment {
         }
 
         getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
+        swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_container);
+        swipeRefreshLayout.setOnRefreshListener(this);
         listView = (PagingListView) rootView.findViewById(R.id.paging_list_view);
         if (adapter == null) {
             adapter = new MyPagingAdapter(getActivity());
         }
         listView.setAdapter(adapter);
         listView.setHasMoreItems(true);
-        listView.setPagingableListener(new PagingListView.Pagingable() {
-            @Override
-            public void onLoadMoreItems() {
-                if (loadMore) {
-                    GsonBuilder gsonBuilder = new GsonBuilder().setDateFormat(Config.APP_DATE_FORMAT);
-                    Gson gson = gsonBuilder.create();
-                    new PermutasSEPRestClient(new GsonConverter(gson)).get().getPostPage(page, Config.NEWS_FEED_ITEMS_PER_PAGE, new Callback<PostPage>() {
-                        @Override
-                        public void success(PostPage postPage, Response response) {
-                            if (postPage.getNext() != null) {
-                                page = Integer.valueOf(Utils.splitQuery(postPage.getNext()).get("page").get(0));
-                                firstLaunchCompleteListener.onFirstLaunchComplete();
-                            } else {
-                                loadMore = false;
-                            }
-                            listView.onFinishLoading(true, postPage.getResults());
-                        }
-
-                        @Override
-                        public void failure(RetrofitError error) {
-
-                        }
-                    });
-                } else {
-                    listView.onFinishLoading(false, null);
-                }
-            }
-        });
+        listView.setPagingableListener(this);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -114,4 +95,64 @@ public class FragmentPagedNewsFeed extends BaseFragment {
         }
     }
 
+    @Override
+    public void onLoadMoreItems() {
+        if (loadMore) {
+            GsonBuilder gsonBuilder = new GsonBuilder().setDateFormat(Config.APP_DATE_FORMAT);
+            Gson gson = gsonBuilder.create();
+            new PermutasSEPRestClient(new GsonConverter(gson)).get().getPostPage(page, Config.NEWS_FEED_ITEMS_PER_PAGE, new Callback<PostPage>() {
+                @Override
+                public void success(PostPage postPage, Response response) {
+                    if (postPage.getNext() != null) {
+                        page = Integer.valueOf(Utils.splitQuery(postPage.getNext()).get("page").get(0));
+                        firstLaunchCompleteListener.onFirstLaunchComplete();
+                    } else {
+                        loadMore = false;
+                    }
+                    listView.onFinishLoading(true, postPage.getResults());
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+
+                }
+            });
+        } else {
+            listView.onFinishLoading(false, null);
+        }
+    }
+
+    @Override
+    public void onRefresh() {
+        getPosts();
+    }
+
+    private void getPosts() {
+
+        GsonBuilder gsonBuilder = new GsonBuilder().setDateFormat(Config.APP_DATE_FORMAT);
+        Gson gson = gsonBuilder.create();
+
+        new PermutasSEPRestClient(new GsonConverter(gson)).get().getPostPage(page, Config.NEWS_FEED_ITEMS_PER_PAGE, new Callback<PostPage>() {
+            @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void success(PostPage postPage, Response response) {
+                if (postPage.getNext() != null) {
+                    page = Integer.valueOf(Utils.splitQuery(postPage.getNext()).get("page").get(0));
+                }
+
+                adapter.addMoreItems(0, postPage.getResults());
+                int index = listView.getFirstVisiblePosition() + postPage.getResults().size() - 1;
+                int top = (listView.getChildAt(0) == null) ? 0 : listView.getChildAt(0).getTop();
+                adapter.notifyDataSetChanged();
+                listView.setSelectionFromTop(index, top);
+
+                swipeRefreshLayout.setRefreshing(false);
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+            }
+        });
+    }
 }

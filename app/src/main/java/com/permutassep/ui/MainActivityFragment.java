@@ -1,6 +1,7 @@
 package com.permutassep.ui;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,6 +16,7 @@ import com.lalongooo.permutassep.R;
 import com.paging.listview.PagingListView;
 import com.permutassep.adapter.MyPagingAdapter;
 import com.permutassep.config.Config;
+import com.permutassep.interfaces.FirstLaunchCompleteListener;
 import com.permutassep.model.PostPage;
 import com.permutassep.rest.permutassep.PermutasSEPRestClient;
 import com.permutassep.utils.Utils;
@@ -27,9 +29,8 @@ import retrofit.converter.GsonConverter;
 public class MainActivityFragment extends Fragment
         implements PagingListView.Pagingable, SwipeRefreshLayout.OnRefreshListener{
 
-    public MainActivityFragment() {
-    }
-
+    private FragmentPostDetail.OnPostItemSelectedListener onPostItemSelectedListener;
+    private FirstLaunchCompleteListener firstLaunchCompleteListener;
     private SwipeRefreshLayout swipeRefreshLayout;
     private PagingListView listView;
     private MyPagingAdapter adapter;
@@ -39,16 +40,21 @@ public class MainActivityFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_paged_news_feed, container, false);
 
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_container);
         swipeRefreshLayout.setOnRefreshListener(this);
 
-        listView = (PagingListView) rootView.findViewById(R.id.listView);
-        listView.setPagingableListener(MainActivityFragment.this);
+        listView = (PagingListView) rootView.findViewById(R.id.paging_list_view);
+        listView.setPagingableListener(this);
         listView.setHasMoreItems(true);
 
         return rootView;
+    }
+
+    @Override
+    public void onRefresh() {
+        getPosts();
     }
 
     private void getPosts() {
@@ -109,8 +115,19 @@ public class MainActivityFragment extends Fragment
         }
     }
 
-    @Override
-    public void onRefresh() {
-        getPosts();
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        if (!(getActivity() instanceof FragmentPostDetail.OnPostItemSelectedListener)) {
+            throw new ClassCastException("Activity must implement FragmentPostDetail.OnPostItemSelectedListener");
+        } else {
+            onPostItemSelectedListener = (FragmentPostDetail.OnPostItemSelectedListener) getActivity();
+        }
+
+        if (!(getActivity() instanceof FirstLaunchCompleteListener)) {
+            throw new ClassCastException("Activity must implement FirstLaunchCompleteListener");
+        } else {
+            firstLaunchCompleteListener = (FirstLaunchCompleteListener) getActivity();
+        }
     }
 }
