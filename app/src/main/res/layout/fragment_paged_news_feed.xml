@@ -1,13 +1,9 @@
-<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/swipe_container"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <com.paging.listview.PagingListView
         android:id="@+id/paging_list_view"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:drawSelectorOnTop="false" />
-
-</android.support.v4.widget.SwipeRefreshLayout>
+        android:layout_height="match_parent" />
+</RelativeLayout>
