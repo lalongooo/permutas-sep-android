@@ -59,6 +59,14 @@
     <string name="cancel">Cancelar</string>
     <string name="search_fragment_search_error_msg">Ocurrió un error en tu búsqueda</string>
     <string name="search_fragment_search_no_restlts">No se encontraron resultados</string>
+    <string name="new_password_toolbar_title">Cambiar contraseña</string>
+    <string name="new_password_label">Restablece tu contraseña</string>
+    <string name="new_password_recommendation">Las contraseñas fuertes incluyen números, letras y signos de puntuación.</string>
+    <string name="new_password_first_label">Contraseña nueva</string>
+    <string name="new_password_second_label">Repite tu contraseña nueva</string>
+    <string name="new_password_passwords_mismatch">Las contraseñas no coinciden</string>
+    <string name="new_password_reset">Enviar</string>
+    <string name="new_password_password_length_error">La longitud debe ser entre %1$s-%2$s caracteres</string>
 
     <string name="my_posts_toolbar_text">Mis publicaciones</string>
 

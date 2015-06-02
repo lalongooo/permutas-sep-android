@@ -49,4 +49,13 @@ public class Config {
 
     public static final String TEM_PWD = "*12345ABCDEF*";
 
+	/**
+	 * Password min length
+	 */
+	public static final int PASSWORD_MIN_LENGTH = 8;
+
+	/**
+	 * Password max length
+	 */
+	public static final int PASSWORD_MAX_LENGTH = 32;
 }
