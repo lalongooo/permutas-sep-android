@@ -1,49 +1,22 @@
 package com.permutassep.ui;
 
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.facebook.Request;
-import com.facebook.Response;
-import com.facebook.Session;
-import com.facebook.SessionState;
-import com.facebook.UiLifecycleHelper;
-import com.facebook.model.GraphUser;
-import com.facebook.widget.LoginButton;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 import com.lalongooo.permutassep.R;
 import com.permutassep.BaseActivity;
-import com.permutassep.PermutasSEPApplication;
 import com.permutassep.config.Config;
-import com.permutassep.model.AuthModel;
-import com.permutassep.model.User;
-import com.permutassep.rest.permutassep.PermutasSEPRestClient;
-import com.permutassep.utils.PrefUtils;
-import com.permutassep.utils.Utils;
 import com.throrinstudio.android.common.libs.validator.Form;
 import com.throrinstudio.android.common.libs.validator.Validate;
-import com.throrinstudio.android.common.libs.validator.validator.EmailValidator;
 import com.throrinstudio.android.common.libs.validator.validator.LengthValidator;
 import com.throrinstudio.android.common.libs.validator.validator.NotEmptyValidator;
-import com.throrinstudio.android.common.libs.validator.validator.RangeValidator;
-
-import java.util.Arrays;
-
-import br.kots.mob.complex.preferences.ComplexPreferences;
-import retrofit.Callback;
-import retrofit.RetrofitError;
 
 public class ActivityNewPassword extends BaseActivity {
 
@@ -62,6 +35,10 @@ public class ActivityNewPassword extends BaseActivity {
         setTitle(R.string.new_password_toolbar_title);
 
         setUI();
+
+        for (String param : getIntent().getData().getQueryParameterNames()){
+            Log.d(param, getIntent().getData().getQueryParameter(param));
+        }
     }
 
     private void setUI() {
@@ -85,10 +62,13 @@ public class ActivityNewPassword extends BaseActivity {
         btnResetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(f.validate()){
-                    if(etPasswordOne.getText().toString().equals(etPasswordTwo.getText().toString())){
-
-                    }else{
+                if (f.validate()) {
+                    if (etPasswordOne.getText().toString().equals(etPasswordTwo.getText().toString())) {
+                        Intent i = new Intent().setClass(ActivityNewPassword.this, ActivityMain.class);
+                        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(i);
+                        finish();
+                    } else {
                         Toast.makeText(getApplicationContext(), R.string.new_password_passwords_mismatch, Toast.LENGTH_SHORT).show();
                     }
                 }

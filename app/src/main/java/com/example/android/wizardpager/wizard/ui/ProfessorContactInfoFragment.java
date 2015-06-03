@@ -36,6 +36,7 @@ import com.permutassep.config.Config;
 import com.permutassep.model.User;
 import com.permutassep.ui.ActivityMain;
 import com.permutassep.utils.PrefUtils;
+import com.permutassep.utils.Utils;
 
 import br.kots.mob.complex.preferences.ComplexPreferences;
 
@@ -168,8 +169,7 @@ public class ProfessorContactInfoFragment extends Fragment {
             }
         });
 
-        ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), Config.APP_PREFERENCES_NAME, Context.MODE_PRIVATE);
-        User user = complexPreferences.getObject(PrefUtils.PREF_USER_KEY, User.class);
+        User user = Utils.getUser(getActivity());
 
         if(user != null){
             mNameView.setText(!TextUtils.isEmpty(user.getName()) ? user.getName() : "");

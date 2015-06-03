@@ -20,14 +20,10 @@ import com.google.android.gms.analytics.Tracker;
 import com.lalongooo.permutassep.R;
 import com.permutassep.BaseActivity;
 import com.permutassep.PermutasSEPApplication;
-import com.permutassep.config.Config;
 import com.permutassep.model.User;
-import com.permutassep.utils.PrefUtils;
 import com.permutassep.utils.Utils;
 import com.viewpagerindicator.CirclePageIndicator;
 import com.viewpagerindicator.PageIndicator;
-
-import br.kots.mob.complex.preferences.ComplexPreferences;
 
 public class ActivityAppOverview extends BaseActivity {
     private ViewPager viewPager;
@@ -158,9 +154,7 @@ public class ActivityAppOverview extends BaseActivity {
         startMessagingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getApplicationContext(), Config.APP_PREFERENCES_NAME, MODE_PRIVATE);
-                User user = complexPreferences.getObject(PrefUtils.PREF_USER_KEY, User.class);
-
+                User user = Utils.getUser(getApplicationContext());
                 Intent i = new Intent();
                 if(user != null){
                     i.setClass(ActivityAppOverview.this, ActivityMain.class);

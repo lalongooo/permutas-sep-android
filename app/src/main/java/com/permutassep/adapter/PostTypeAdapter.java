@@ -8,14 +8,12 @@ import com.google.gson.stream.JsonWriter;
 import com.permutassep.config.Config;
 import com.permutassep.model.Post;
 import com.permutassep.model.User;
-import com.permutassep.utils.PrefUtils;
+import com.permutassep.utils.Utils;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-
-import br.kots.mob.complex.preferences.ComplexPreferences;
 
 public class PostTypeAdapter extends TypeAdapter<Post> {
 
@@ -76,7 +74,7 @@ public class PostTypeAdapter extends TypeAdapter<Post> {
                     p.setTownTo(Short.valueOf(in.nextString()));
                 } else if (name.equals("user")) {
                     in.nextInt();
-                    p.setUser(ComplexPreferences.getComplexPreferences(context, Config.APP_PREFERENCES_NAME, Context.MODE_PRIVATE).getObject(PrefUtils.PREF_USER_KEY, User.class));
+                    p.setUser(Utils.getUser(this.context));
                 }
 
             }
@@ -118,7 +116,7 @@ public class PostTypeAdapter extends TypeAdapter<Post> {
         out.name("place_to_town").value(post.getTownTo());
         out.name("academic_level").value(post.getAcademicLevel());
 
-        User u = ComplexPreferences.getComplexPreferences(context, Config.APP_PREFERENCES_NAME, Context.MODE_PRIVATE).getObject(PrefUtils.PREF_USER_KEY, User.class);
+        User u = Utils.getUser(this.context);
         out.name("user").value(u.getId());
 
         out.endObject();
