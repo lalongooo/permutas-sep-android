@@ -187,6 +187,10 @@ public class ActivityMain extends BaseActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.action_logout){
             Session session = Session.getActiveSession();
+
+            if(session == null){
+                session = Session.openActiveSessionFromCache(this);
+            }
             if(session != null){
                 session.closeAndClearTokenInformation();
             }
