@@ -15,7 +15,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 
-import com.facebook.Session;
 import com.google.gson.Gson;
 import com.lalongooo.permutassep.R;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
@@ -186,14 +185,6 @@ public class ActivityMain extends BaseActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.action_logout){
-            Session session = Session.getActiveSession();
-
-            if(session == null){
-                session = Session.openActiveSessionFromCache(this);
-            }
-            if(session != null){
-                session.closeAndClearTokenInformation();
-            }
             PrefUtils.clearApplicationPreferences(this);
             startActivity(new Intent(ActivityMain.this, ActivityLoginSignUp.class));
             finish();

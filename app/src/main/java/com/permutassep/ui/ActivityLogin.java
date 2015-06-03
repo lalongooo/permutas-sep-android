@@ -1,24 +1,23 @@
 package com.permutassep.ui;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.facebook.Request;
-import com.facebook.Response;
-import com.facebook.Session;
-import com.facebook.SessionState;
-import com.facebook.UiLifecycleHelper;
-import com.facebook.model.GraphUser;
-import com.facebook.widget.LoginButton;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.lalongooo.permutassep.R;
@@ -35,7 +34,7 @@ import com.throrinstudio.android.common.libs.validator.Validate;
 import com.throrinstudio.android.common.libs.validator.validator.EmailValidator;
 import com.throrinstudio.android.common.libs.validator.validator.NotEmptyValidator;
 
-import java.util.Arrays;
+import org.json.JSONObject;
 
 import br.kots.mob.complex.preferences.ComplexPreferences;
 import retrofit.Callback;
@@ -43,26 +42,58 @@ import retrofit.RetrofitError;
 
 public class ActivityLogin extends BaseActivity {
 
-    private UiLifecycleHelper uiHelper;
-
     private EditText etNameOrUsername;
     private EditText etPassword;
     private TextView btnLogin;
     private ProgressDialog pDlg;
+
+    private LoginButton loginButton;
+    private CallbackManager callbackManager;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        uiHelper = new UiLifecycleHelper(this, callback);
-        uiHelper.onCreate(savedInstanceState);
-
         setUI();
     }
 
     private void setUI() {
+
+        callbackManager = CallbackManager.Factory.create();
+        loginButton = (LoginButton) findViewById(R.id.btnFbLogin);
+        loginButton.setReadPermissions("email");
+        // Other app specific specialization
+
+        // Callback registration
+        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                GraphRequest request = GraphRequest.newMeRequest(
+                        loginResult.getAccessToken(),
+                        new GraphRequest.GraphJSONObjectCallback() {
+                            @Override
+                            public void onCompleted( JSONObject object,  GraphResponse response) {
+                                Log.d("onCompleted",object.toString());
+                            }
+                        });
+                Bundle parameters = new Bundle();
+                parameters.putString("fields", "id,name,link, email");
+                request.setParameters(parameters);
+                request.executeAsync();
+            }
+
+            @Override
+            public void onCancel() {
+                // App code
+            }
+
+            @Override
+            public void onError(FacebookException exception) {
+                // App code
+            }
+        });
+
 
         etNameOrUsername = (EditText) findViewById(R.id.etName);
         etPassword = (EditText) findViewById(R.id.etPassword);
@@ -122,108 +153,32 @@ public class ActivityLogin extends BaseActivity {
 
             }
         });
-
-        LoginButton authButton = (LoginButton) findViewById(R.id.btnFbLogin);
-        authButton.setReadPermissions(Arrays.asList("email"));
-    }
-
-    private Session.StatusCallback callback = new Session.StatusCallback() {
-        @Override
-        public void call(Session session, SessionState state, Exception exception) {
-            onSessionStateChange(session, state, exception);
-        }
-    };
-
-
-    private void onSessionStateChange(Session session, SessionState state, Exception exception) {
-        if (state.isOpened()) {
-            showDialog(getString(R.string.app_login_dlg_login_title), getString(R.string.app_login_dlg_login_logging_in));
-            Request.executeMeRequestAsync(session, new Request.GraphUserCallback() {
-                @Override
-                public void onCompleted(GraphUser fbUser, Response response) {
-                    if (fbUser != null) {
-
-                        // Get tracker.
-                        Tracker t = ((PermutasSEPApplication) getApplication()).getTracker();
-                        t.send(new HitBuilders.EventBuilder()
-                                .setCategory(getString(R.string.ga_event_category_ux))
-                                .setAction(getString(R.string.ga_event_action_click))
-                                .setLabel(getString(R.string.ga_fb_login_action_label_on_completed))
-                                .build());
-
-                        String email = fbUser.getProperty("email") != null ? fbUser.getProperty("email").toString() : "";
-                        if (TextUtils.isEmpty(email)) {
-
-                            t = ((PermutasSEPApplication) getApplication()).getTracker();
-                            t.send(new HitBuilders.EventBuilder()
-                                    .setCategory(getString(R.string.ga_event_category_ux))
-                                    .setAction(getString(R.string.ga_event_action_click))
-                                    .setLabel(getString(R.string.ga_fb_login_action_label_unauthorized_email))
-                                    .build());
-
-                            final EditText input = new EditText(ActivityLogin.this);
-                            AlertDialog.Builder alert = new AlertDialog.Builder(ActivityLogin.this);
-                            alert.setView(input);
-                            alert.setTitle(R.string.app_login_fb_dlg_missing_email_title);
-                            alert.setMessage(R.string.app_login_fb_dlg_missing_email_text);
-                            alert.setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int whichButton) {
-                                    login(input.getText().toString());
-                                }
-                            });
-
-                            alert.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int whichButton) {
-                                    Session session = Session.getActiveSession();
-                                    session.closeAndClearTokenInformation();
-                                    finish();
-                                }
-                            });
-                            alert.show();
-                        } else {
-                            t.send(new HitBuilders.EventBuilder()
-                                    .setCategory(getString(R.string.ga_event_category_ux))
-                                    .setAction(getString(R.string.ga_event_action_click))
-                                    .setLabel(getString(R.string.ga_fb_login_action_label_authorized_email))
-                                    .build());
-                            login(email);
-                        }
-                    }
-                }
-            });
-        } else if (state.isClosed()) {
-            // TODO: What to do when the session state is closed?
-        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        uiHelper.onResume();
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        uiHelper.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        uiHelper.onPause();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        uiHelper.onDestroy();
     }
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        uiHelper.onSaveInstanceState(outState);
     }
 
     private void showDialog(String title, String text) {
@@ -261,17 +216,12 @@ public class ActivityLogin extends BaseActivity {
                     Utils.showSimpleDialog(R.string.app_login_dlg_login_err_not_registered_text, R.string.accept, ActivityLogin.this, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            Session session = Session.getActiveSession();
-                            session.closeAndClearTokenInformation();
-                            finish();
                         }
                     });
                 }
             });
         } else {
             Toast.makeText(getApplicationContext(), R.string.app_login_fb_dlg_wrong_email, Toast.LENGTH_LONG).show();
-            Session session = Session.getActiveSession();
-            session.closeAndClearTokenInformation();
             finish();
         }
 

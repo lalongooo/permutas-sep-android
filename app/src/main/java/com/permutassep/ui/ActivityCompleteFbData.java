@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.facebook.Session;
 import com.lalongooo.permutassep.R;
 import com.permutassep.BaseActivity;
 import com.permutassep.config.Config;
@@ -87,8 +86,6 @@ public class ActivityCompleteFbData extends BaseActivity {
                             Utils.showSimpleDialog(R.string.app_login_sign_up_user_exist, R.string.accept, ActivityCompleteFbData.this, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    Session session = Session.getActiveSession();
-                                    session.closeAndClearTokenInformation();
                                     finish();
                                 }
                             });
@@ -154,7 +151,5 @@ public class ActivityCompleteFbData extends BaseActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Session session = Session.getActiveSession();
-        session.closeAndClearTokenInformation();
     }
 }

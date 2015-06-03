@@ -112,7 +112,7 @@
             android:layout_centerVertical="true"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="30dp"
-            fb:login_text="@string/app_sign_up_facebook_login_button" />
+            fb:com_facebook_login_text="@string/app_sign_up_facebook_login_button" />
 
     </LinearLayout>
 </RelativeLayout>
