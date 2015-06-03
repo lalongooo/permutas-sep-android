@@ -1,10 +1,12 @@
 package com.permutassep.ui;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -16,6 +18,8 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.facebook.login.LoginBehavior;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.analytics.HitBuilders;
@@ -34,6 +38,7 @@ import com.throrinstudio.android.common.libs.validator.Validate;
 import com.throrinstudio.android.common.libs.validator.validator.EmailValidator;
 import com.throrinstudio.android.common.libs.validator.validator.NotEmptyValidator;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import br.kots.mob.complex.preferences.ComplexPreferences;
@@ -73,8 +78,58 @@ public class ActivityLogin extends BaseActivity {
                         loginResult.getAccessToken(),
                         new GraphRequest.GraphJSONObjectCallback() {
                             @Override
-                            public void onCompleted( JSONObject object,  GraphResponse response) {
-                                Log.d("onCompleted",object.toString());
+                            public void onCompleted(JSONObject object, GraphResponse response) {
+
+                                try {
+                                    // Get tracker.
+                                    Tracker t = ((PermutasSEPApplication) getApplication()).getTracker();
+                                    t.send(new HitBuilders.EventBuilder()
+                                            .setCategory(getString(R.string.ga_event_category_ux))
+                                            .setAction(getString(R.string.ga_event_action_click))
+                                            .setLabel(getString(R.string.ga_fb_login_action_label_on_completed))
+                                            .build());
+
+                                    String email = object.getString("email") != null ? object.getString("email") : "";
+                                    if (TextUtils.isEmpty(email)) {
+
+                                        t = ((PermutasSEPApplication) getApplication()).getTracker();
+                                        t.send(new HitBuilders.EventBuilder()
+                                                .setCategory(getString(R.string.ga_event_category_ux))
+                                                .setAction(getString(R.string.ga_event_action_click))
+                                                .setLabel(getString(R.string.ga_fb_login_action_label_unauthorized_email))
+                                                .build());
+
+                                        final EditText input = new EditText(ActivityLogin.this);
+                                        AlertDialog.Builder alert = new AlertDialog.Builder(ActivityLogin.this);
+                                        alert.setView(input);
+                                        alert.setTitle(R.string.app_login_fb_dlg_missing_email_title);
+                                        alert.setMessage(R.string.app_login_fb_dlg_missing_email_text);
+                                        alert.setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int whichButton) {
+                                                login(input.getText().toString());
+                                            }
+                                        });
+
+                                        alert.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int whichButton) {
+                                                LoginManager.getInstance().logOut();
+                                                finish();
+                                            }
+                                        });
+                                        alert.show();
+                                    } else {
+                                        t.send(new HitBuilders.EventBuilder()
+                                                .setCategory(getString(R.string.ga_event_category_ux))
+                                                .setAction(getString(R.string.ga_event_action_click))
+                                                .setLabel(getString(R.string.ga_fb_login_action_label_authorized_email))
+                                                .build());
+                                        login(email);
+                                    }
+                                } catch (JSONException e) {
+                                    //TODO: Add exception handling
+                                }
+
+
                             }
                         });
                 Bundle parameters = new Bundle();
