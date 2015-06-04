@@ -21,9 +21,11 @@
     <string name="action_post">Publicar permuta</string>
     <string name="action_search">Buscar</string>
     <string name="action_logout">Cerrar sesión</string>
+    <string name="action_about">Acerca de</string>
     <string name="tos_welcome_to_ps_app">¡Gracias por usar Permutas SEP!</string>
     <string name="tos_welcome_text">Before we begin, here is some important legal information regarding your use of this app. This will only take a minute!</string>
-
+    <string name="about_activity_description">Este proyecto ha sido posible gracias a software de código abierto. Por favor, encuentre a continuación la información de este estupendo software.</string>
+    <string name="about_activity_title">Código abierto</string>
     <string name="wizard_contact_suggest_data_completion_dialog_msg">Si completas los datos en esta seccion, podrán contactarte con mayor facilidad. Presiona Siguiente si no quieres agregar mayor información</string>
     <string name="wizard_post_text_label">Información adicional</string>
     <string name="wizard_post_text_hint">p. ej. "Escuela bien ubicada"</string>

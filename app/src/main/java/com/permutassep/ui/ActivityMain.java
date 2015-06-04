@@ -18,6 +18,7 @@ import android.widget.AdapterView;
 import com.facebook.login.LoginManager;
 import com.google.gson.Gson;
 import com.lalongooo.permutassep.R;
+import com.mikepenz.aboutlibraries.Libs;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.materialdrawer.Drawer;
@@ -44,29 +45,29 @@ public class ActivityMain extends BaseActivity
 
         Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
 
-        if(PrefUtils.shouldReloadNewsFeed(this)){
+        if (PrefUtils.shouldReloadNewsFeed(this)) {
             getSupportFragmentManager().beginTransaction().remove(getSupportFragmentManager().findFragmentById(R.id.fragmentContainer)).commit();
             getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentPagedNewsFeed()).commit();
             PrefUtils.markNewsFeedToReload(this, false);
         }
 
-        if(f instanceof FragmentPagedNewsFeed){
+        if (f instanceof FragmentPagedNewsFeed) {
             setTitle(R.string.app_name);
-            if(Utils.getUser(this) != null){
+            if (Utils.getUser(this) != null) {
                 result.setSelectionByIdentifier(DrawerItems.HOME.id, false);
             }
-        }else if(f instanceof FragmentMyPosts){
+        } else if (f instanceof FragmentMyPosts) {
             setTitle(R.string.my_posts_toolbar_text);
-            if(Utils.getUser(this) != null) {
+            if (Utils.getUser(this) != null) {
                 result.setSelectionByIdentifier(DrawerItems.MY_POSTS.id, false);
             }
-        }else if(f instanceof FragmentSearch){
+        } else if (f instanceof FragmentSearch) {
             setTitle(R.string.app_main_toolbar_search_action);
-        }else if(f instanceof FragmentResult){
+        } else if (f instanceof FragmentResult) {
             setTitle(R.string.app_main_toolbar_search_results);
-        }else if(f instanceof FragmentCreatePost){
+        } else if (f instanceof FragmentCreatePost) {
             setTitle(R.string.app_main_toolbar_post_action);
-        }else if(f instanceof FragmentSettings){
+        } else if (f instanceof FragmentSettings) {
             setTitle(R.string.app_main_toolbar_edit_profile);
         }
 
@@ -90,16 +91,16 @@ public class ActivityMain extends BaseActivity
     private AccountHeader.Result headerResult = null;
     private Toolbar toolbar;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
-        toolbar= (Toolbar) findViewById(R.id.activity_main_toolbar);
+        toolbar = (Toolbar) findViewById(R.id.activity_main_toolbar);
         toolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(toolbar);
 
-        if(Utils.getUser(this) != null){
+        if (Utils.getUser(this) != null) {
 
             final IProfile profile = new ProfileDrawerItem()
                     .withName(Utils.getUser(this).getName())
@@ -139,40 +140,41 @@ public class ActivityMain extends BaseActivity
 
         getSupportFragmentManager().addOnBackStackChangedListener(this);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentPagedNewsFeed()).commit();
-	}
-	
-	private void showTOSDialog() {
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setMessage(getString(R.string.tos_dialog_text))
-				.setPositiveButton(getString(R.string.tos_dialog_accept),dialogClickListener)
-				.setNegativeButton(getString(R.string.tos_dialog_cancel),dialogClickListener).show();
-	}
+    }
 
-	DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-		@Override
-		public void onClick(DialogInterface dialog, int which) {
-			switch (which) {
-			case DialogInterface.BUTTON_POSITIVE:
-				// Save the state
-			    getSharedPreferences(Config.APP_PREFERENCES_NAME, MODE_PRIVATE)
-			        .edit()
-			        .putBoolean("tos_accepted", false)
-			        .commit();
-				break;
+    private void showTOSDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(getString(R.string.tos_dialog_text))
+                .setPositiveButton(getString(R.string.tos_dialog_accept), dialogClickListener)
+                .setNegativeButton(getString(R.string.tos_dialog_cancel), dialogClickListener).show();
+    }
 
-			case DialogInterface.BUTTON_NEGATIVE:
-				finish();
-				break;
-			}
-		}
-	};
+    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            switch (which) {
+                case DialogInterface.BUTTON_POSITIVE:
+                    // Save the state
+                    getSharedPreferences(Config.APP_PREFERENCES_NAME, MODE_PRIVATE)
+                            .edit()
+                            .putBoolean("tos_accepted", false)
+                            .commit();
+                    break;
+
+                case DialogInterface.BUTTON_NEGATIVE:
+                    finish();
+                    break;
+            }
+        }
+    };
+
     public boolean onCreateOptionsMenu(Menu menu) {
 
         Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
-        if (f instanceof FragmentPagedNewsFeed){
+        if (f instanceof FragmentPagedNewsFeed) {
             getMenuInflater().inflate(R.menu.main, menu);
 
-            if(Utils.getUser(this) !=  null){
+            if (Utils.getUser(this) != null) {
                 menu.findItem(R.id.action_post).setIcon(new IconicsDrawable(this, GoogleMaterial.Icon.gmd_add).color(Color.WHITE).actionBarSize()).setVisible(true);
                 menu.findItem(R.id.action_logout).setVisible(true);
             }
@@ -185,11 +187,20 @@ public class ActivityMain extends BaseActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.action_logout){
+        if (item.getItemId() == R.id.action_logout) {
             PrefUtils.clearApplicationPreferences(this);
             LoginManager.getInstance().logOut();
             startActivity(new Intent(ActivityMain.this, ActivityLoginSignUp.class));
             finish();
+        } else if (item.getItemId() == R.id.action_about) {
+            Intent intent = new Libs.Builder()
+                    .withFields(R.string.class.getFields())
+                    .withActivityTitle(getString(R.string.about_activity_title))
+                    .withAboutIconShown(true)
+                    .withAboutDescription(getString(R.string.about_activity_description))
+                    .withActivityStyle(Libs.ActivityStyle.LIGHT_DARK_TOOLBAR)
+                    .intent(ActivityMain.this);
+            startActivity(intent);
         } else {
             replaceFragment(item.getItemId());
         }
@@ -199,9 +210,9 @@ public class ActivityMain extends BaseActivity
     @Override
     public void showPostDetail(Post post) {
         String backStackEntryName = null;
-        if((getSupportFragmentManager().findFragmentById(R.id.fragmentContainer) instanceof FragmentPagedNewsFeed)){
+        if ((getSupportFragmentManager().findFragmentById(R.id.fragmentContainer) instanceof FragmentPagedNewsFeed)) {
             backStackEntryName = "news_feed";
-        }else if((getSupportFragmentManager().findFragmentById(R.id.fragmentContainer) instanceof FragmentMyPosts)){
+        } else if ((getSupportFragmentManager().findFragmentById(R.id.fragmentContainer) instanceof FragmentMyPosts)) {
             backStackEntryName = "my_posts";
         }
         // getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, FragmentPostDetail.instance(new Gson().toJson(post))).addToBackStack(backStackEntryName).commit();
@@ -224,45 +235,45 @@ public class ActivityMain extends BaseActivity
 
     @Override
     public void onFirstLaunchComplete() {
-        if(!PrefUtils.firstTimeDrawerOpened(this) && Utils.getUser(this) != null){
+        if (!PrefUtils.firstTimeDrawerOpened(this) && Utils.getUser(this) != null) {
             result.openDrawer();
             PrefUtils.markFirstTimeDrawerOpened(this);
         }
     }
 
-    public void replaceFragment(int id){
+    public void replaceFragment(int id) {
 
         // Action Home
-        if(id == DrawerItems.HOME.id){
+        if (id == DrawerItems.HOME.id) {
             getSupportFragmentManager().popBackStackImmediate("news_feed", FragmentManager.POP_BACK_STACK_INCLUSIVE);
         }
 
         // Action Post
-        if(id == R.id.action_post){
+        if (id == R.id.action_post) {
             clearDrawerSelection();
             getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentCreatePost()).addToBackStack("news_feed").commit();
         }
 
         // Action Search
-        if(id == R.id.action_search) {
+        if (id == R.id.action_search) {
             clearDrawerSelection();
             getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentSearch()).addToBackStack("news_feed").commit();
         }
         // Action My posts
-        if(id == DrawerItems.MY_POSTS.id) {
+        if (id == DrawerItems.MY_POSTS.id) {
             getSupportFragmentManager().popBackStackImmediate("news_feed", FragmentManager.POP_BACK_STACK_INCLUSIVE);
             getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentMyPosts()).addToBackStack("news_feed").commit();
         }
 
         // Action My posts
-        if(id == DrawerItems.SETTINGS.id) {
+        if (id == DrawerItems.SETTINGS.id) {
             getSupportFragmentManager().popBackStackImmediate("news_feed", FragmentManager.POP_BACK_STACK_INCLUSIVE);
             getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentSettings()).addToBackStack("news_feed").commit();
         }
     }
 
-    private void clearDrawerSelection(){
-        if(Utils.getUser(this) != null){
+    private void clearDrawerSelection() {
+        if (Utils.getUser(this) != null) {
             result.setSelection(-1);
         }
     }
