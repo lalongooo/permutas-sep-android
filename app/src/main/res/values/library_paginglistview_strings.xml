@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="define_PagingListView">year;owner</string>
+    <string name="library_PagingListView_author">Nicolas Jafelle</string>
+    <string name="library_PagingListView_authorWebsite">https://github.com/nicolasjafelle/PagingListView</string>
+    <string name="library_PagingListView_libraryName">PagingListView</string>
+    <string name="library_PagingListView_libraryDescription">PagingListView has the ability to add more items on it like Gmail does. Basically is a ListView with the ability to add more items on it when reaches the end of the list.</string>
+    <string name="library_PagingListView_libraryWebsite">https://github.com/nicolasjafelle/PagingListView</string>
+    <string name="library_PagingListView_licenseId">apache_2_0</string>
+    <string name="library_PagingListView_isOpenSource">true</string>
+    <string name="library_PagingListView_repositoryLink">https://github.com/nicolasjafelle/PagingListView</string>
+    <!-- Custom variables section -->
+    <string name="library_PagingListView_owner">Nicolas Jafelle</string>
+    <string name="library_PagingListView_year">2015</string>
+</resources>

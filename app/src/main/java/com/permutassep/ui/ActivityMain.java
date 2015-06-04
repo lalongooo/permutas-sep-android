@@ -19,6 +19,7 @@ import com.facebook.login.LoginManager;
 import com.google.gson.Gson;
 import com.lalongooo.permutassep.R;
 import com.mikepenz.aboutlibraries.Libs;
+import com.mikepenz.aboutlibraries.LibsBuilder;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.materialdrawer.Drawer;
@@ -193,14 +194,14 @@ public class ActivityMain extends BaseActivity
             startActivity(new Intent(ActivityMain.this, ActivityLoginSignUp.class));
             finish();
         } else if (item.getItemId() == R.id.action_about) {
-            Intent intent = new Libs.Builder()
+
+            new LibsBuilder()
                     .withFields(R.string.class.getFields())
                     .withActivityTitle(getString(R.string.about_activity_title))
                     .withAboutIconShown(true)
                     .withAboutDescription(getString(R.string.about_activity_description))
                     .withActivityStyle(Libs.ActivityStyle.LIGHT_DARK_TOOLBAR)
-                    .intent(ActivityMain.this);
-            startActivity(intent);
+                    .start(this);
         } else {
             replaceFragment(item.getItemId());
         }

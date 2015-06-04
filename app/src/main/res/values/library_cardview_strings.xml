@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="define_CardView">year;owner</string>
+    <string name="library_CardView_author">AOSP</string>
+    <string name="library_CardView_authorWebsite">https://source.android.com/</string>
+    <string name="library_CardView_libraryName">CardView</string>
+    <string name="library_CardView_libraryDescription">This library adds support for the CardView widget, which lets you show information inside cards that have a consistent look on any app. These cards are useful for material design implementations, and are used extensively in layouts for TV apps.</string>
+    <string name="library_CardView_libraryWebsite">https://developer.android.com/tools/support-library/features.html#v7-cardview</string>
+    <string name="library_CardView_licenseId">apache_2_0</string>
+    <string name="library_CardView_isOpenSource">false</string>
+    <string name="library_CardView_repositoryLink"></string>
+    <!-- Custom variables section -->
+    <string name="library_CardView_owner">AOSP</string>
+    <string name="library_CardView_year">2015</string>
+</resources> 
