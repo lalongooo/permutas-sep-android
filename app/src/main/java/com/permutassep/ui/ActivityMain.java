@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 
+import com.facebook.login.LoginManager;
 import com.google.gson.Gson;
 import com.lalongooo.permutassep.R;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
@@ -186,6 +187,7 @@ public class ActivityMain extends BaseActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.action_logout){
             PrefUtils.clearApplicationPreferences(this);
+            LoginManager.getInstance().logOut();
             startActivity(new Intent(ActivityMain.this, ActivityLoginSignUp.class));
             finish();
         } else {
