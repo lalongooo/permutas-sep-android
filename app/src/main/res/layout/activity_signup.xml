@@ -103,8 +103,7 @@
 
         </RelativeLayout>
 
-
-        <com.facebook.widget.LoginButton xmlns:fb="http://schemas.android.com/apk/res-auto"
+        <com.facebook.login.widget.LoginButton xmlns:fb="http://schemas.android.com/apk/res-auto"
             android:id="@+id/btnLogin"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
@@ -112,7 +111,11 @@
             android:layout_centerVertical="true"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="30dp"
-            fb:login_text="@string/app_sign_up_facebook_login_button" />
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="10dp"
+            fb:com_facebook_login_text="@string/app_sign_up_facebook_login_button" />
 
     </LinearLayout>
 </RelativeLayout>

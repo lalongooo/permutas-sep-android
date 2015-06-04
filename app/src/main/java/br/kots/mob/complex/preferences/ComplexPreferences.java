@@ -2,24 +2,18 @@ package br.kots.mob.complex.preferences;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.text.TextUtils;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
 
 public class ComplexPreferences {
 
     private static ComplexPreferences complexPreferences;
-    private Context context;
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
     private static Gson GSON = new Gson();
-    Type typeOfObject = new TypeToken<Object>() {
-    }.getType();
 
     private ComplexPreferences(Context context, String namePreferences, int mode) {
-        this.context = context;
         if (namePreferences == null || namePreferences.equals("")) {
             namePreferences = "complex_preferences";
         }
@@ -27,12 +21,10 @@ public class ComplexPreferences {
         editor = preferences.edit();
     }
 
-    public static ComplexPreferences getComplexPreferences(Context context,
-                                                           String namePreferences, int mode) {
+    public static ComplexPreferences getComplexPreferences(Context context, String namePreferences, int mode) {
 
         if (complexPreferences == null) {
-            complexPreferences = new ComplexPreferences(context,
-                    namePreferences, mode);
+            complexPreferences = new ComplexPreferences(context, namePreferences, mode);
         }
 
         return complexPreferences;
@@ -43,7 +35,7 @@ public class ComplexPreferences {
             throw new IllegalArgumentException("object is null");
         }
 
-        if(key.equals("") || key == null){
+        if(TextUtils.isEmpty(key)){
             throw new IllegalArgumentException("key is empty or null");
         }
 

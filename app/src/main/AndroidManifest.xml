@@ -39,7 +39,7 @@
         <activity
             android:name="com.permutassep.ui.ActivityMain"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.permutassep.ui.ActivitySignUp"
             android:label="@string/app_name"
@@ -55,17 +55,24 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE"/>
-                <data android:host="permuta-sep.herokuapp.com" android:scheme="http"/>
-                <data android:host="permuta-sep.herokuapp.com" android:scheme="https"/>
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="permuta-sep.herokuapp.com"
+                    android:scheme="http" />
+                <data
+                    android:host="permuta-sep.herokuapp.com"
+                    android:scheme="https" />
             </intent-filter>
         </activity>
 
+
         <activity
-            android:name="com.facebook.LoginActivity"
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <meta-data

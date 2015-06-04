@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.widget.ImageView;
 
+import com.facebook.FacebookSdk;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Logger;
 import com.google.android.gms.analytics.Tracker;
@@ -24,6 +25,7 @@ public class PermutasSEPApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        FacebookSdk.sdkInitialize(getApplicationContext());
 
         //initialize and create the image loader logic
         DrawerImageLoader.init(new DrawerImageLoader.IDrawerImageLoader() {
@@ -44,8 +46,10 @@ public class PermutasSEPApplication extends Application {
         });
     }
 
+    /**
+     * Retrieves the Tracker object to send hits to of Google Analytics
+     * */
     public synchronized Tracker getTracker() {
-
         GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
         analytics.setDryRun(BuildConfig.DEBUG);
         analytics.getLogger().setLogLevel(Logger.LogLevel.VERBOSE);
