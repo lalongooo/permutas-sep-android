@@ -63,7 +63,6 @@ public class ActivityLogin extends BaseActivity {
         loginButton = (LoginButton) findViewById(R.id.btnFbLogin);
         loginButton.setReadPermissions("email");
 
-        // Callback registration
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {

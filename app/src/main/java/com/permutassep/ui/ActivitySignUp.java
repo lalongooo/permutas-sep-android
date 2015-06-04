@@ -4,11 +4,20 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.Profile;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.lalongooo.permutassep.R;
 import com.permutassep.BaseActivity;
 import com.permutassep.config.Config;
@@ -23,17 +32,23 @@ import com.throrinstudio.android.common.libs.validator.validator.EmailValidator;
 import com.throrinstudio.android.common.libs.validator.validator.NotEmptyValidator;
 import com.throrinstudio.android.common.libs.validator.validator.PhoneValidator;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import br.kots.mob.complex.preferences.ComplexPreferences;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 
 public class ActivitySignUp extends BaseActivity {
+
     private TextView btnRegister;
     private EditText etName;
     private EditText etEmail;
     private EditText etPhone;
     private EditText etPassword;
     private ProgressDialog pDlg;
+    private LoginButton loginButton;
+    private CallbackManager callbackManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +58,60 @@ public class ActivitySignUp extends BaseActivity {
     }
 
     private void setUI() {
+
+        callbackManager = CallbackManager.Factory.create();
+        loginButton = (LoginButton) findViewById(R.id.btnLogin);
+        loginButton.setReadPermissions("email");
+
+        // Callback registration
+        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+
+                showDialog(getString(R.string.app_login_dlg_login_title), getString(R.string.app_login_dlg_login_logging_in));
+
+                GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(),
+                        new GraphRequest.GraphJSONObjectCallback() {
+                            @Override
+                            public void onCompleted(JSONObject object, GraphResponse response) {
+                                hideDialog();
+
+
+                                String email = null;
+
+                                try {
+                                    email = object.getString("email");
+                                } catch (JSONException e) {
+                                    email = null;
+                                }
+
+                                Intent i = new Intent().setClass(ActivitySignUp.this, ActivityCompleteFbData.class);
+                                i.putExtra("name", Profile.getCurrentProfile().getName());
+                                i.putExtra("email", email);
+                                i.putExtra("fbUserId", Profile.getCurrentProfile().getId());
+                                startActivity(i);
+                                finish();
+                                hideDialog();
+
+
+                            }
+                        });
+                Bundle parameters = new Bundle();
+                parameters.putString("fields", "id,name,link, email");
+                request.setParameters(parameters);
+                request.executeAsync();
+            }
+
+            @Override
+            public void onCancel() {
+                Toast.makeText(getApplicationContext(), R.string.app_login_fb_dlg_on_cancel, Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onError(FacebookException exception) {
+                Toast.makeText(getApplicationContext(), R.string.app_login_fb_dlg_on_error, Toast.LENGTH_LONG).show();
+            }
+        });
 
         etName = (EditText) findViewById(R.id.etName);
         etEmail = (EditText) findViewById(R.id.etEmail);
@@ -98,6 +167,7 @@ public class ActivitySignUp extends BaseActivity {
                             Utils.showSimpleDialog(R.string.app_login_sign_up_user_exist, R.string.accept, ActivitySignUp.this, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
+                                    LoginManager.getInstance().logOut();
                                     finish();
                                 }
                             });
@@ -139,21 +209,7 @@ public class ActivitySignUp extends BaseActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
     private void showDialog(String title, String text) {

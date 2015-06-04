@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.facebook.login.LoginManager;
 import com.lalongooo.permutassep.R;
 import com.permutassep.BaseActivity;
 import com.permutassep.config.Config;
@@ -151,5 +152,6 @@ public class ActivityCompleteFbData extends BaseActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        LoginManager.getInstance().logOut();
     }
 }
