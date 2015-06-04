@@ -19,7 +19,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppThemeTemp">
         <activity
-            android:name="com.permutassep.ui.ActivityLogin"
+            android:name="com.permutassep.ui.ActivityAppOverview"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -28,6 +28,10 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name="com.permutassep.ui.ActivityLogin"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.permutassep.ui.ActivityLoginSignUp"
             android:label="@string/app_name"

@@ -79,6 +79,8 @@
 
     <string name="app_login_username">Tu correo electrónico</string>
     <string name="app_login_password">Tu contraseña</string>
+    <string name="app_login_fb_dlg_on_cancel">El inicio de sesión fue cancelado</string>
+    <string name="app_login_fb_dlg_on_error">Ocurrió un error. Intenta de nuevo</string>
     <string name="app_login_fb_dlg_missing_email_title">Email</string>
     <string name="app_login_fb_dlg_missing_email_text">No obtuvimos tu email de Facebook, por favor captura tu email.</string>
     <string name="app_login_fb_dlg_wrong_email">Por favor, captura un email válido</string>
