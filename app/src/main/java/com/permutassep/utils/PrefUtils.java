@@ -2,6 +2,7 @@ package com.permutassep.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import com.permutassep.config.Config;
 
@@ -39,6 +40,9 @@ public class PrefUtils {
     * */
     public static final String PREF_RELOAD_NEWS_FEED = "pref_reload_news_feed";
 
+    /** Boolean indicating whether ToS has been accepted */
+    public static final String PREF_TOS_ACCEPTED = "pref_tos_accepted";
+
     public static boolean firstTimeDrawerOpened(final Context context) {
         SharedPreferences sp = context.getSharedPreferences(Config.APP_PREFERENCES_NAME, Context.MODE_PRIVATE);
         return sp.getBoolean(PREF_DRAWER_OPENED, false);
@@ -67,5 +71,15 @@ public class PrefUtils {
     public static void clearApplicationPreferences(Context context) {
         SharedPreferences sp = context.getSharedPreferences(Config.APP_PREFERENCES_NAME, Context.MODE_PRIVATE);
         sp.edit().clear().commit();
+    }
+
+    public static void markTosAccepted(final Context context) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        sp.edit().putBoolean(PREF_TOS_ACCEPTED, true).commit();
+    }
+
+    public static boolean isTosAccepted(final Context context) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        return sp.getBoolean(PREF_TOS_ACCEPTED, false);
     }
 }

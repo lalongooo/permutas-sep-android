@@ -6,4 +6,6 @@
     <color name="step_pager_next_tab_color">#66000000</color>
     <color name="review_green">@color/primary</color>
     <color name="text_light">@color/primary</color>
+
+    <color name="body_text_2">#8a000000</color>
 </resources>

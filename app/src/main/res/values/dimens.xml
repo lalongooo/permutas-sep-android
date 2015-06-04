@@ -10,4 +10,9 @@
     <dimen name="step_pager_tab_spacing">4dp</dimen>
     <dimen name="list_detail_image_size">120dp</dimen>
 
+    <dimen name="text_size_medium">14sp</dimen>
+    <dimen name="text_size_xlarge">20sp</dimen>
+    <dimen name="card_corner_radius">2dp</dimen>
+    <dimen name="card_elevation">2dp</dimen>
+
 </resources>
