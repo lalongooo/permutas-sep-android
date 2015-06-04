@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="define_InegiFacil">year;owner</string>
+    <string name="library_InegiFacil_author">Gobierno Fácil</string>
+    <string name="library_InegiFacil_authorWebsite">http://gobiernofacil.com/</string>
+    <string name="library_InegiFacil_libraryName">Mexican Dropdown Maker</string>
+    <string name="library_InegiFacil_libraryDescription">Descarga una lista oficial de los estados y el Distrito Federal de México, ciudades por estado, o municipios por ciudades, a través del INEGI.</string>
+    <string name="library_InegiFacil_libraryWebsite">http://inegifacil.com/dropdowns</string>
+    <string name="library_InegiFacil_licenseId"></string>
+    <string name="library_InegiFacil_isOpenSource">false</string>
+    <string name="library_InegiFacil_repositoryLink"></string>
+    <!-- Custom variables section -->
+    <string name="library_InegiFacil_owner">Gobierno Fácil</string>
+    <string name="library_InegiFacil_year">2015</string>
+</resources>
