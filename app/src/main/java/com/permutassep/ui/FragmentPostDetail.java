@@ -13,6 +13,16 @@ import android.widget.TextView;
 
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.gson.Gson;
 import com.lalongooo.permutassep.R;
 import com.mikepenz.iconics.IconicsDrawable;
@@ -35,7 +45,8 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class FragmentPostDetail extends BaseFragment {
+public class FragmentPostDetail extends BaseFragment
+        implements OnMapReadyCallback {
 
     private static final String EXTRA_POS_TO_SHOW = "post";
     private Post post;
@@ -63,7 +74,7 @@ public class FragmentPostDetail extends BaseFragment {
     private TextView textStateToCode;
     private Button btnCall;
     private Button btnMail;
-
+    private MapView mMapView;
 
     public static FragmentPostDetail instance(String post) {
         Bundle arguments = new Bundle();
@@ -226,6 +237,11 @@ public class FragmentPostDetail extends BaseFragment {
             tvIsTeachingCareer.setText("Sin carrera magisterial");
         }
 
+        mMapView = (MapView) rootView.findViewById(R.id.mapView);
+        mMapView.onCreate(savedInstanceState);
+
+        mMapView.getMapAsync(this);
+
         return rootView;
     }
 
@@ -242,5 +258,92 @@ public class FragmentPostDetail extends BaseFragment {
     private void hideDialog() {
         if (pDlg != null && pDlg.isShowing())
             pDlg.dismiss();
+    }
+
+
+
+    private LatLng getLatLng(String lat, String lng){
+        LatLng ll = null;
+
+        if(lat.length() == 6 && lng.length() == 7){
+            double hoursLat = Double.valueOf(lat.substring(0,2));
+            double minLat = Double.valueOf(lat.substring(2,4));
+            double secLat = Double.valueOf(lat.substring(4,6));
+
+            double hoursLng = Double.valueOf(lng.substring(0,3));
+            double minLng = Double.valueOf(lng.substring(3,5));
+            double secLng = Double.valueOf(lng.substring(5,7));
+
+            double decimalLat = Math.signum(hoursLat) * (Math.abs(hoursLat) + (minLat / 60.0) + (secLat / 3600.0));
+            double decimalLng = Math.signum(hoursLng) * (Math.abs(hoursLng) + (minLng / 60.0) + (secLng / 3600.0));
+
+            ll = new LatLng(decimalLat, -decimalLng);
+        }
+
+        return ll;
+    }
+
+    @Override
+    public void onMapReady(GoogleMap map) {
+
+        LatLng origin = getLatLng(post.getLatFrom(), post.getLonFrom());
+        LatLng target = getLatLng(post.getLatTo(), post.getLonTo());
+
+        PolylineOptions rectOptions = new PolylineOptions().add(origin).add(target);
+        map.addPolyline(rectOptions);
+
+        map.addMarker(new MarkerOptions().position(origin).title("Xaltokan!"));
+        map.addMarker(new MarkerOptions().position(target).title("Monterrey!"));
+
+        map.getUiSettings().setZoomControlsEnabled(true);
+        map.getUiSettings().setAllGesturesEnabled(true);
+        map.getUiSettings().setZoomGesturesEnabled(true);
+
+
+        //Calculate the markers to get their position
+        LatLngBounds.Builder b = new LatLngBounds.Builder();
+        b.include(origin);
+        b.include(target);
+
+        LatLngBounds bounds = b.build();
+        //Change the padding as per needed
+
+        CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, mMapView.getWidth(), mMapView.getHeight(), 50);
+        map.animateCamera(cu);
+    }
+
+    private LatLng midPoint(double lat1, double long1, double lat2, double long2) {
+        return new LatLng((lat1 + lat2) / 2, (long1 + long2) / 2);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mMapView.onResume();
+    }
+
+
+    @Override
+    public void onPause() {
+        mMapView.onPause();
+        super.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        mMapView.onDestroy();
+        super.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mMapView.onLowMemory();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mMapView.onSaveInstanceState(outState);
     }
 }

@@ -20,7 +20,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppThemeTemp">
         <activity
-            android:name="com.permutassep.ui.ActivityMap"
+            android:name="com.permutassep.ui.ActivityAppOverview"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
             <intent-filter>

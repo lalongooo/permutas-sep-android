@@ -74,7 +74,7 @@ public class ActivityMap extends BaseActivity
         //Change the padding as per needed
 
         int width = getResources().getDisplayMetrics().widthPixels;
-        CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, width, width, 5);
+        CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, 200, 200, 5);
         map.animateCamera(cu);
 
 
