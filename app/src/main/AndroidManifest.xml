@@ -4,13 +4,14 @@
     android:versionCode="6"
     android:versionName="6.0.0">
 
-    <uses-sdk
-        android:minSdkVersion="14"
-        android:targetSdkVersion="21" />
-
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.CALL_PHONE"></uses-permission>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
 
     <application
         android:name="com.permutassep.PermutasSEPApplication"
@@ -19,7 +20,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppThemeTemp">
         <activity
-            android:name="com.permutassep.ui.ActivityAppOverview"
+            android:name="com.permutassep.ui.ActivityMap"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -85,6 +86,9 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_api_key" />
     </application>
 
 </manifest>
