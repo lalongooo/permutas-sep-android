@@ -72,6 +72,7 @@
     <string name="new_password_passwords_mismatch">Las contraseñas no coinciden</string>
     <string name="new_password_reset">Enviar</string>
     <string name="new_password_password_length_error">La longitud debe ser entre %1$s-%2$s caracteres</string>
+    <string name="new_password_malformed_url">Dirección inválida</string>
 
     <string name="my_posts_toolbar_text">Mis publicaciones</string>
 

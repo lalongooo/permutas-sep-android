@@ -39,6 +39,13 @@ public class ActivityNewPassword extends BaseActivity {
         for (String param : getIntent().getData().getQueryParameterNames()){
             Log.d(param, getIntent().getData().getQueryParameter(param));
         }
+
+        if(getIntent() != null && getIntent().getData() != null && getIntent().getData().getLastPathSegment() != null ){
+
+        }else{
+            Toast.makeText(this, R.string.new_password_malformed_url, Toast.LENGTH_LONG).show();
+            finish();
+        }
     }
 
     private void setUI() {
