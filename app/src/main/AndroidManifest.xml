@@ -76,6 +76,14 @@
                 <data
                     android:host="permuta-sep.herokuapp.com"
                     android:scheme="https" />
+
+                <data
+                    android:host="permuta-sep-dev.herokuapp.com"
+                    android:scheme="http" />
+                <data
+                    android:host="permuta-sep-dev.herokuapp.com"
+                    android:scheme="https" />
+
             </intent-filter>
         </activity>
 

@@ -8,4 +8,5 @@
     <color name="text_light">@color/primary</color>
 
     <color name="body_text_2">#8a000000</color>
+    <color name="error_message">#DD2E44</color>
 </resources>
