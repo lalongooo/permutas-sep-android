@@ -29,7 +29,7 @@ public class ActivityNewPassword extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_password);
-        toolbar= (Toolbar) findViewById(R.id.activity_main_toolbar);
+        toolbar= (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(toolbar);
         setTitle(R.string.new_password_toolbar_title);

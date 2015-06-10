@@ -45,9 +45,7 @@ public class ActivityLogin extends BaseActivity {
 
     private EditText etNameOrUsername;
     private EditText etPassword;
-    private TextView btnLogin;
     private ProgressDialog pDlg;
-    private LoginButton loginButton;
     private CallbackManager callbackManager;
 
     @Override
@@ -60,7 +58,7 @@ public class ActivityLogin extends BaseActivity {
     private void setUI() {
 
         callbackManager = CallbackManager.Factory.create();
-        loginButton = (LoginButton) findViewById(R.id.btnFbLogin);
+        LoginButton loginButton = (LoginButton) findViewById(R.id.btnFbLogin);
         loginButton.setReadPermissions("email");
 
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
@@ -167,7 +165,7 @@ public class ActivityLogin extends BaseActivity {
         f.addValidates(vName);
         f.addValidates(vPassword);
 
-        btnLogin = (TextView) findViewById(R.id.btnLogin);
+        TextView btnLogin = (TextView) findViewById(R.id.btnLogin);
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -208,8 +206,15 @@ public class ActivityLogin extends BaseActivity {
                         }
                     });
                 }
+            }
+        });
 
 
+        TextView tvForgotPassword = (TextView) findViewById(R.id.tvForgotPassword);
+        tvForgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent().setClass(ActivityLogin.this, ActivityNewPasswordCaptureEmail.class));
             }
         });
     }

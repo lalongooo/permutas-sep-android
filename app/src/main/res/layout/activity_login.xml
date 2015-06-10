@@ -3,99 +3,99 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-        <LinearLayout android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/etName"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp">
+            android:layout_marginBottom="16dp"
+            android:hint="@string/app_login_username"
+            android:inputType="textEmailAddress"
+            android:saveEnabled="false" />
 
-            <EditText android:id="@+id/etName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:saveEnabled="false"
-                android:inputType="textEmailAddress"
-                android:hint="@string/app_login_username"
-                android:layout_marginBottom="16dp" />
+        <EditText
+            android:id="@+id/etPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:hint="@string/app_login_password"
+            android:inputType="textPassword"
+            android:saveEnabled="false" />
 
-            <EditText android:id="@+id/etPassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:saveEnabled="false"
-                android:inputType="textPassword"
-                android:hint="@string/app_login_password"
-                android:layout_marginBottom="30dp"/>
+        <TextView
+            android:id="@+id/btnLogin"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/regbtn_states"
+            android:gravity="center"
+            android:text="@string/app_login_btn_login"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@android:color/white"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvForgotPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_margin="10dp"
+            android:text="@string/new_password_forgot_password_message"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="4">
+
+            <View
+                android:layout_width="85dp"
+                android:layout_height="2dp"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:background="@android:color/darker_gray" />
 
             <TextView
-                android:id="@+id/btnLogin"
-                android:layout_width="300dp"
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="@string/app_login_btn_login"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="30dp"
-                android:background="@drawable/regbtn_states"
+                android:layout_margin="10dp"
+                android:layout_weight="2"
                 android:gravity="center"
-                android:paddingBottom="10dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:paddingTop="10dp"
-                android:textColor="#ffffff"
-                android:textSize="16dp" />
+                android:text="@string/app_login_login_with_fb"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
-
-            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_weight="3">
-
-                <View
-                    android:layout_width="95dp"
-                    android:layout_height="2dp"
-                    android:background="@android:color/darker_gray"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="@string/app_login_login_with_fb"
-                    android:id="@+id/textView3"
-                    android:textSize="15dp"
-                    android:layout_marginRight="4dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true" />
-
-                <View
-                    android:layout_width="95dp"
-                    android:layout_height="2dp"
-                    android:background="@android:color/darker_gray"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true" />
-
-            </RelativeLayout>
-
-
-            <com.facebook.login.widget.LoginButton xmlns:fb="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/btnFbLogin"
-                android:layout_width="300dp"
-                android:layout_marginTop="30dp"
-                android:layout_height="wrap_content"
-                android:paddingBottom="10dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:paddingTop="10dp"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:layout_gravity="center_horizontal"
-                fb:com_facebook_login_text="@string/app_login_btn_login_with_fb" />
+            <View
+                android:layout_width="85dp"
+                android:layout_height="2dp"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:background="@android:color/darker_gray" />
 
         </LinearLayout>
+
+
+        <com.facebook.login.widget.LoginButton xmlns:fb="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/btnFbLogin"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="10dp"
+            fb:com_facebook_login_text="@string/app_login_btn_login_with_fb" />
+
+    </LinearLayout>
 </RelativeLayout>

@@ -12,7 +12,7 @@ import com.permutassep.utils.PrefUtils;
 /**
  * Created by jorge.hernandez on 4/27/2015.
  */
-public class BaseActivity extends android.support.v7.app.ActionBarActivity{
+public class BaseActivity extends android.support.v7.app.AppCompatActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
