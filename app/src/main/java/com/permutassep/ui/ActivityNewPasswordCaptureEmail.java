@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -31,11 +32,14 @@ public class ActivityNewPasswordCaptureEmail extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_password_capture_email);
 
+
         // Toolbar setup
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(toolbar);
         setTitle(R.string.new_password_toolbar_title);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
         final EditText etEmail = (EditText) findViewById(R.id.etEmail);
         final Form f = new Form();
@@ -69,6 +73,15 @@ public class ActivityNewPasswordCaptureEmail extends BaseActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case android.R.id.home:
+                super.onBackPressed();
+        }
+        return (super.onOptionsItemSelected(menuItem));
     }
 
     private void showDialog(String title, String text) {
