@@ -1,6 +1,7 @@
 package com.permutassep.rest.permutassep;
 
 import com.permutassep.model.AuthModel;
+import com.permutassep.model.ConfirmPasswordReset;
 import com.permutassep.model.Email;
 import com.permutassep.model.Post;
 import com.permutassep.model.PostPage;
@@ -44,4 +45,7 @@ public interface  IPermutasSEPService {
 
     @POST("/reset-password/")
     void resetPassword(@Body Email email, ResponseCallback responseCallback);
+
+    @POST("/confirm-reset-password/")
+    void confirmPasswordReset(@Body ConfirmPasswordReset cpr, ResponseCallback responseCallback);
 }
