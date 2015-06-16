@@ -29,6 +29,8 @@ public class ActivityNewPassword extends BaseActivity {
     private EditText etPasswordOne;
     private EditText etPasswordTwo;
     private ProgressDialog pDlg;
+    private TextView tvLabel;
+    private TextView btnResetPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +47,9 @@ public class ActivityNewPassword extends BaseActivity {
 
     private void setUI() {
 
-        TextView btnResetPassword;
         etPasswordOne = (EditText) findViewById(R.id.etPasswordOne);
         etPasswordTwo = (EditText) findViewById(R.id.etPasswordTwo);
+        tvLabel = (TextView) findViewById(R.id.tvLabel);
 
         Validate vPasswordOne = new Validate(etPasswordOne);
         vPasswordOne.addValidator(new NotEmptyValidator(getApplicationContext()));
@@ -88,6 +90,21 @@ public class ActivityNewPassword extends BaseActivity {
                                     @Override
                                     public void failure(RetrofitError error) {
                                         hideDialog();
+                                        etPasswordOne.setText("");
+                                        etPasswordTwo.setText("");
+                                        tvLabel.setTextColor(getResources().getColor(R.color.error_message));
+                                        tvLabel.setText(R.string.new_password_capure_outdated_url);
+                                        btnResetPassword.setText(R.string.new_password_request_new_token);
+                                        btnResetPassword.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                Intent i = new Intent().setClass(ActivityNewPassword.this, ActivityNewPasswordCaptureEmail.class);
+                                                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                startActivity(i);
+                                                finish();
+                                            }
+                                        });
+
                                     }
                                 });
 

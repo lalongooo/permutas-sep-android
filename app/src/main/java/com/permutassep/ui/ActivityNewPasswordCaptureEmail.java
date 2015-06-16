@@ -15,6 +15,7 @@ import com.lalongooo.permutassep.R;
 import com.permutassep.BaseActivity;
 import com.permutassep.model.Email;
 import com.permutassep.rest.permutassep.PermutasSEPRestClient;
+import com.permutassep.utils.Utils;
 import com.throrinstudio.android.common.libs.validator.Form;
 import com.throrinstudio.android.common.libs.validator.Validate;
 import com.throrinstudio.android.common.libs.validator.validator.EmailValidator;
@@ -38,14 +39,14 @@ public class ActivityNewPasswordCaptureEmail extends BaseActivity {
         final EditText etEmail = (EditText) findViewById(R.id.etEmail);
         tvLabel = (TextView) findViewById(R.id.tvLabel);
 
-        if(getIntent().getExtras().getString("error") != null){
+        if (getIntent().getExtras() != null) {
 
             String error = getIntent().getExtras().getString("error");
-            switch(error){
+            switch (error) {
 
                 case MALFORMED_URL:
                     tvLabel.setTextColor(getResources().getColor(R.color.error_message));
-                    tvLabel.setText(R.string.new_password_capure_email_wrong);
+                    tvLabel.setText(R.string.new_password_capure_outdated_url);
                     break;
             }
 
@@ -95,7 +96,10 @@ public class ActivityNewPasswordCaptureEmail extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case android.R.id.home:
-                super.onBackPressed();
+                Intent intent = new Intent(ActivityNewPasswordCaptureEmail.this, Utils.getUser(this) == null ? ActivityLoginSignUp.class : ActivityMain.class);
+                startActivity(intent);
+                finish();
+                break;
         }
         return (super.onOptionsItemSelected(menuItem));
     }

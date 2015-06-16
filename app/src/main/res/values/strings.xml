@@ -69,6 +69,7 @@
     <string name="new_password_capure_email_hint">Correo electrónico</string>
     <string name="new_password_capure_email_wrong">No pudimos encontrar tu cuenta con esa información</string>
     <string name="new_password_capure_email_loading">Estamos buscando tu correo electrónico</string>
+    <string name="new_password_capure_outdated_url">El enlace de restablecimiento en el que has hecho clic ha expirado. Por favor, solicita uno nuevo.</string>
     <string name="new_password_email_sent_label">Revisa tu correo electrónico</string>
     <string name="new_password_email_sent_msg_1">Hemos enviado un correo electrónico a %1$s.</string>
     <string name="new_password_email_sent_msg_2">Haz clic en el enlace del correo electrónico para restablecer tu contraseña.</string>
@@ -79,6 +80,7 @@
     <string name="new_password_passwords_mismatch">Las contraseñas no coinciden</string>
     <string name="new_password_resetting_password">Restableciendo tu contraseña</string>
     <string name="new_password_reset">Enviar</string>
+    <string name="new_password_request_new_token">Solicitar nuevo enlace</string>
     <string name="new_password_password_length_error">La longitud debe ser entre %1$s-%2$s caracteres</string>
     <string name="new_password_malformed_url">Dirección inválida</string>
     <string name="my_posts_toolbar_text">Mis publicaciones</string>

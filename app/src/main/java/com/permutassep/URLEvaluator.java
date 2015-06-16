@@ -5,8 +5,10 @@ import android.os.Bundle;
 
 import com.permutassep.rest.permutassep.RestPaths;
 import com.permutassep.ui.ActivityLoginSignUp;
+import com.permutassep.ui.ActivityMain;
 import com.permutassep.ui.ActivityNewPassword;
 import com.permutassep.ui.ActivityNewPasswordCaptureEmail;
+import com.permutassep.utils.Utils;
 
 public class URLEvaluator extends BaseActivity {
 
@@ -34,11 +36,11 @@ public class URLEvaluator extends BaseActivity {
                 }
             }
         }else{
-            intent = new Intent(URLEvaluator.this, ActivityLoginSignUp.class);
+            intent = new Intent(URLEvaluator.this, Utils.getUser(this) == null ? ActivityLoginSignUp.class : ActivityMain.class);
         }
 
         if(intent == null){
-            intent = new Intent(URLEvaluator.this, ActivityLoginSignUp.class);
+            intent = new Intent(URLEvaluator.this, Utils.getUser(this) == null ? ActivityLoginSignUp.class : ActivityMain.class);
         }
 
         startActivity(intent);
