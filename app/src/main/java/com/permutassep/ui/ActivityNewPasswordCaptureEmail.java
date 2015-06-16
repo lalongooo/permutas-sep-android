@@ -26,12 +26,30 @@ import retrofit.client.Response;
 public class ActivityNewPasswordCaptureEmail extends BaseActivity {
 
     private ProgressDialog pDlg;
+    private TextView tvLabel;
+
+    public static final String MALFORMED_URL = "malformed_url";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_password_capture_email);
 
+        final EditText etEmail = (EditText) findViewById(R.id.etEmail);
+        tvLabel = (TextView) findViewById(R.id.tvLabel);
+
+        if(getIntent().getExtras().getString("error") != null){
+
+            String error = getIntent().getExtras().getString("error");
+            switch(error){
+
+                case MALFORMED_URL:
+                    tvLabel.setTextColor(getResources().getColor(R.color.error_message));
+                    tvLabel.setText(R.string.new_password_capure_email_wrong);
+                    break;
+            }
+
+        }
 
         // Toolbar setup
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -41,7 +59,6 @@ public class ActivityNewPasswordCaptureEmail extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        final EditText etEmail = (EditText) findViewById(R.id.etEmail);
         final Form f = new Form();
 
         Validate vName = new Validate(etEmail);
@@ -64,7 +81,6 @@ public class ActivityNewPasswordCaptureEmail extends BaseActivity {
 
                         @Override
                         public void failure(RetrofitError error) {
-                            TextView tvLabel = (TextView) findViewById(R.id.tvLabel);
                             tvLabel.setTextColor(getResources().getColor(R.color.error_message));
                             tvLabel.setText(R.string.new_password_capure_email_wrong);
                             hideDialog();

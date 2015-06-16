@@ -6,6 +6,7 @@ import android.os.Bundle;
 import com.permutassep.rest.permutassep.RestPaths;
 import com.permutassep.ui.ActivityLoginSignUp;
 import com.permutassep.ui.ActivityNewPassword;
+import com.permutassep.ui.ActivityNewPasswordCaptureEmail;
 
 public class URLEvaluator extends BaseActivity {
 
@@ -25,6 +26,11 @@ public class URLEvaluator extends BaseActivity {
                 if(path.equals(RestPaths.REST_PASSWORD)){
                     intent = new Intent(URLEvaluator.this, ActivityNewPassword.class);
                     intent.putExtra("token", token);
+                }
+            }else{
+                if(getIntent().getData().getPathSegments().size() > 0 && getIntent().getData().getPathSegments().get(0).equals(RestPaths.REST_PASSWORD)){
+                    intent = new Intent(URLEvaluator.this, ActivityNewPasswordCaptureEmail.class);
+                    intent.putExtra("error", ActivityNewPasswordCaptureEmail.MALFORMED_URL);
                 }
             }
         }else{
