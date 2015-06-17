@@ -14,5 +14,6 @@
     <dimen name="text_size_xlarge">20sp</dimen>
     <dimen name="card_corner_radius">2dp</dimen>
     <dimen name="card_elevation">2dp</dimen>
+    <dimen name="map_padding">5dp</dimen>
 
 </resources>

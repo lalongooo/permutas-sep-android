@@ -8,7 +8,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,6 +18,7 @@ import com.facebook.login.LoginManager;
 import com.google.gson.Gson;
 import com.lalongooo.permutassep.R;
 import com.mikepenz.aboutlibraries.Libs;
+import com.mikepenz.aboutlibraries.LibsBuilder;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.materialdrawer.Drawer;
@@ -96,7 +96,7 @@ public class ActivityMain extends BaseActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        toolbar = (Toolbar) findViewById(R.id.activity_main_toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(toolbar);
 
@@ -193,14 +193,14 @@ public class ActivityMain extends BaseActivity
             startActivity(new Intent(ActivityMain.this, ActivityLoginSignUp.class));
             finish();
         } else if (item.getItemId() == R.id.action_about) {
-            Intent intent = new Libs.Builder()
+
+            new LibsBuilder()
                     .withFields(R.string.class.getFields())
                     .withActivityTitle(getString(R.string.about_activity_title))
                     .withAboutIconShown(true)
                     .withAboutDescription(getString(R.string.about_activity_description))
                     .withActivityStyle(Libs.ActivityStyle.LIGHT_DARK_TOOLBAR)
-                    .intent(ActivityMain.this);
-            startActivity(intent);
+                    .start(this);
         } else {
             replaceFragment(item.getItemId());
         }
@@ -215,11 +215,11 @@ public class ActivityMain extends BaseActivity
         } else if ((getSupportFragmentManager().findFragmentById(R.id.fragmentContainer) instanceof FragmentMyPosts)) {
             backStackEntryName = "my_posts";
         }
-        // getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, FragmentPostDetail.instance(new Gson().toJson(post))).addToBackStack(backStackEntryName).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, FragmentPostDetail.instance(new Gson().toJson(post))).addToBackStack(backStackEntryName).commit();
 
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.hide(getSupportFragmentManager().findFragmentById(R.id.fragmentContainer));
-        ft.add(R.id.fragmentContainer, FragmentPostDetail.instance(new Gson().toJson(post))).addToBackStack(backStackEntryName).commit();
+//        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+//        ft.hide(getSupportFragmentManager().findFragmentById(R.id.fragmentContainer));
+//        ft.add(R.id.fragmentContainer, FragmentPostDetail.instance(new Gson().toJson(post))).addToBackStack(backStackEntryName).commit();
 
         clearDrawerSelection();
     }

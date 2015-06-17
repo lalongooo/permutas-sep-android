@@ -4,13 +4,14 @@
     android:versionCode="6"
     android:versionName="6.0.0">
 
-    <uses-sdk
-        android:minSdkVersion="14"
-        android:targetSdkVersion="21" />
-
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.CALL_PHONE"></uses-permission>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
 
     <application
         android:name="com.permutassep.PermutasSEPApplication"
@@ -28,6 +29,42 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name="com.permutassep.URLEvaluator"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="permuta-sep.herokuapp.com"
+                    android:scheme="http" />
+                <data
+                    android:host="permuta-sep.herokuapp.com"
+                    android:scheme="https" />
+
+                <data
+                    android:host="permuta-sep-dev.herokuapp.com"
+                    android:scheme="http" />
+                <data
+                    android:host="permuta-sep-dev.herokuapp.com"
+                    android:scheme="https" />
+
+            </intent-filter>
+        </activity>
+        >
+
+        <activity
+            android:name="com.permutassep.ui.ActivityNewPasswordEmailSent"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name="com.permutassep.ui.ActivityNewPasswordCaptureEmail"
+            android:label="@string/app_name"
+            android:parentActivityName="com.permutassep.ui.ActivityLogin"
+            android:screenOrientation="portrait"/>
         <activity
             android:name="com.permutassep.ui.ActivityWelcome"
             android:label="@string/app_name"
@@ -56,23 +93,7 @@
         <activity
             android:name="com.permutassep.ui.ActivityNewPassword"
             android:label="@string/app_name"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:host="permuta-sep.herokuapp.com"
-                    android:scheme="http" />
-                <data
-                    android:host="permuta-sep.herokuapp.com"
-                    android:scheme="https" />
-            </intent-filter>
-        </activity>
-
-
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
@@ -85,6 +106,9 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_api_key" />
     </application>
 
 </manifest>

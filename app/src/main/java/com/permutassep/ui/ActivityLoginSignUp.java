@@ -13,10 +13,6 @@ import com.permutassep.PermutasSEPApplication;
 
 public class ActivityLoginSignUp extends BaseActivity {
 
-    private TextView btnRegister;
-    private TextView btnLogin;
-    private TextView tvContinue;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +21,11 @@ public class ActivityLoginSignUp extends BaseActivity {
     }
 
     private void setUI() {
+
+        TextView btnRegister;
+        TextView btnLogin;
+        TextView tvContinue;
+
         btnRegister = (TextView) findViewById(R.id.btnRegister);
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override

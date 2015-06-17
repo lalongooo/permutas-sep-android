@@ -9,29 +9,27 @@
     <string name="validator_alnum">The value has not only alnum characters.</string>
     <string name="validator_hex">The value has not only hexadecimal digit characters.</string>
     <string name="validator_regexp">The value does not match against pattern.</string>
-
     <string name="validator_range">The value is not between the required range.</string>
     <string name="validator_date">The entered date is not valid.</string>
     <string name="validator_ip">The ip address is not valid.</string>
     <string name="validator_num">Inputed text contains something that isn\'t numeric.</string>
-
     <string name="app_name">Permutas SEP</string>
     <string name="facebook_app_id">143269149215368</string>
+    <string name="google_maps_api_key">AIzaSyDaQTcncp_5BLsF8W78ertQl9o-1DrLFdw</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_post">Publicar permuta</string>
     <string name="action_search">Buscar</string>
     <string name="action_logout">Cerrar sesión</string>
     <string name="action_about">Acerca de</string>
     <string name="tos_welcome_to_ps_app">¡Gracias por usar Permutas SEP!</string>
-    <string name="tos_welcome_text">Before we begin, here is some important legal information regarding your use of this app. This will only take a minute!</string>
+    <string name="tos_welcome_text">Antes de comenzar, considera leer esta importante información legal referente al uso de esta aplicación. ¡Solo te tomará un minuto!</string>
     <string name="about_activity_description">Este proyecto ha sido posible gracias a software de código abierto. Por favor, encuentre a continuación la información de este estupendo software.</string>
-    <string name="about_activity_title">Código abierto</string>
+    <string name="about_activity_title">Acerca de</string>
     <string name="wizard_contact_suggest_data_completion_dialog_msg">Si completas los datos en esta seccion, podrán contactarte con mayor facilidad. Presiona Siguiente si no quieres agregar mayor información</string>
     <string name="wizard_post_text_label">Información adicional</string>
     <string name="wizard_post_text_hint">p. ej. "Escuela bien ubicada"</string>
     <string name="wizard_post_dlg_title">Espera...</string>
     <string name="wizard_post_dlg_text">Estamos publicando tu permuta</string>
-
     <string name="app_overview_1st_item_text">Queremos que la información esté al alcance de todos</string>
     <string name="app_overview_2nd_item_text">Creemos que nuestra solución hará a mas personas felices</string>
     <string name="app_overview_3rd_item_text">Esperamos que encuentres pronto tu permuta&#8230;de verdad.</string>
@@ -63,24 +61,35 @@
     <string name="cancel">Cancelar</string>
     <string name="search_fragment_search_error_msg">Ocurrió un error en tu búsqueda</string>
     <string name="search_fragment_search_no_restlts">No se encontraron resultados</string>
+    <string name="new_password_forgot_password_message">Olvidé mi contraseña</string>
     <string name="new_password_toolbar_title">Cambiar contraseña</string>
     <string name="new_password_label">Restablece tu contraseña</string>
+    <string name="new_password_capure_email_label">Encuentra tu cuenta de Permutas SEP</string>
+    <string name="new_password_capure_email_msg">Ingresa tu correo electrónico</string>
+    <string name="new_password_capure_email_hint">Correo electrónico</string>
+    <string name="new_password_capure_email_wrong">No pudimos encontrar tu cuenta con esa información</string>
+    <string name="new_password_capure_email_loading">Estamos buscando tu correo electrónico</string>
+    <string name="new_password_capure_outdated_url">El enlace de restablecimiento en el que has hecho clic ha expirado. Por favor, solicita uno nuevo.</string>
+    <string name="new_password_email_sent_label">Revisa tu correo electrónico</string>
+    <string name="new_password_email_sent_msg_1">Hemos enviado un correo electrónico a %1$s.</string>
+    <string name="new_password_email_sent_msg_2">Haz clic en el enlace del correo electrónico para restablecer tu contraseña.</string>
+    <string name="new_password_email_sent_msg_3">Si no ves el correo electrónico en tu bandeja de entrada, revisa otras carpetas donde podría estar, como tus carpetas de correo electrónico no deseado, sociales </string>
     <string name="new_password_recommendation">Las contraseñas fuertes incluyen números, letras y signos de puntuación.</string>
     <string name="new_password_first_label">Contraseña nueva</string>
     <string name="new_password_second_label">Repite tu contraseña nueva</string>
     <string name="new_password_passwords_mismatch">Las contraseñas no coinciden</string>
+    <string name="new_password_resetting_password">Restableciendo tu contraseña</string>
     <string name="new_password_reset">Enviar</string>
+    <string name="new_password_request_new_token">Solicitar nuevo enlace</string>
     <string name="new_password_password_length_error">La longitud debe ser entre %1$s-%2$s caracteres</string>
-
+    <string name="new_password_malformed_url">Dirección inválida</string>
     <string name="my_posts_toolbar_text">Mis publicaciones</string>
-
     <string name="app_login_sign_up_already_have_account">Ya tengo cuenta</string>
     <string name="app_login_sign_up_log_in">Iniciar sesión</string>
     <string name="app_login_sign_up_want_to_register">No tengo cuenta</string>
     <string name="app_login_sign_up_want_to_register_cta">Registrarme</string>
     <string name="app_login_sign_up_user_exist">Ya te encuentras registrado, por favor, inicia sesión.</string>
     <string name="app_login_sign_up_continue"><u>Entrar como anónimo</u></string>
-
     <string name="app_login_username">Tu correo electrónico</string>
     <string name="app_login_password">Tu contraseña</string>
     <string name="app_login_fb_dlg_on_cancel">El inicio de sesión fue cancelado</string>
@@ -95,25 +104,19 @@
     <string name="app_login_dlg_login_logging_in">Iniciando sesión</string>
     <string name="app_login_login_with_fb">O iniciar sesión con</string>
     <string name="app_login_btn_login_with_fb">Iniciar sesión con Facebook</string>
-
     <string name="app_news_feed_dlg_title">Espera...</string>
     <string name="app_news_feed_dlg_text">Cargando publicaciones</string>
     <string name="app_news_feed_get_posts_err">Servicio no disponible. Intenta mas tarde</string>
-
     <string name="app_nav_drawer_1">Inicio</string>
     <string name="app_nav_drawer_2">Mis publicaciones</string>
     <string name="app_nav_drawer_3">Editar Perfil</string>
-
     <string name="app_post_detail_call">Llamar</string>
     <string name="app_post_detail_email">Email</string>
-
     <string name="tos_dialog_text">Al seleccionar \"Aceptar\" usted acepta los Términos y condiciones del uso de esta aplicación.</string>
     <string name="tos_dialog_cancel">Cancelar</string>
     <string name="tos_dialog_accept">Aceptar</string>
-
     <string name="act_splash_cont_descr">Application icon</string>
     <string name="act_splash_by_lalongooo">By @lalongooo</string>
-
     <string name="next">Siguiente</string>
     <string name="prev">Regresar</string>
     <string name="finish">Publicar permuta</string>
@@ -131,7 +134,6 @@
     <string name="hint_your_password">Tu contraseña</string>
     <string name="submit_confirm_message">Presiona Aceptar para publicar tu permuta</string>
     <string name="submit_confirm_button">Aceptar</string>
-
     <string name="app_main_toolbar_post_action">Publicar permuta</string>
     <string name="app_main_toolbar_search_action">Búsqueda</string>
     <string name="app_main_toolbar_search_results">Resultados</string>
@@ -140,7 +142,6 @@
     <string name="main_loading_cities">Cargando ciudades</string>
     <string name="main_loading_localities">Cargando localidades</string>
     <string name="please_wait">Por favor, espera...</string>
-
     <string name="time_ago_prefix"></string>
     <string name="time_ago_suffix"></string>
     <string name="time_ago_seconds">menos de un minuto</string>
@@ -243,8 +244,5 @@
         <item>YUC</item>
         <item>ZAC</item>
     </string-array>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
