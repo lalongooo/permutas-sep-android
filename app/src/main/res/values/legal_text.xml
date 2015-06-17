@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="tos_eula_legal_text">Darden Studio hereby grants this end user license (“License”) to you as Licensee, pursuant to which you have the non-transferable, limited, and non-exclusive right to directly install solely on the maximum number of computers or other electronic devices entered above (“CPUs”) and to use, reproduce, and display the font software identified above (“Font Software”), in the production of human-readable text. If a brand is identified above, the License is limited to uses associated with the brand. You are responsible to ensure that all persons who operate your licensed CPUs abide by this License. You are permitted to make and keep one back-up copy of the Font Software.
-Any number of CPUs up to the licensed maximum may be capable of accessing and operating the Font Software, so long as all such CPUs are owned by you and are being used by you and your direct employees. If the Font Software is hosted on a server, the number of CPUs entered above must be at least the total of server CPUs plus all CPUs that can access the Font Software. If your server is accessible by persons who are not permitted to use the Font Software, you must ensure that only authorized CPUs and users may access the Font Software from the server. If you give away or sell a CPU, you must remove the Font Software from it before doing so.
-The License permits you to use the Font Software to create digital displays for viewing purposes and printed documents for distribution to unlicensed parties if, and only if, the Font Software is expressed in a static document format that permits only the viewing and printing (and not the editing, altering, enhancing, or modifying) of text in the document, page, or image..</string>
+    <string name="tos_eula_legal_text">Permutas SEP fué desarrollado como un proyecto de aprendizaje por
+    los autores de la misma y con la intención de resolver una problemática existente. Al seleccionar la
+    opción ACEPTAR indicas que te sujetas a las siguientes condiciones de uso: Contenido aceptable.
+    Cualquier contenido (fotos, texto, imágenes, etc.) es generado por los usuarios de la aplicación y
+    no representan los intereses de los autores de la aplicación, mismo que no deberá ser en ningún
+    momento ofensivo, discriminatorio, pornográfico, difamatorio e ilegal. Así mismo, los usuarios se
+    obligan a usar de manera responsable el contenido compartido en la aplicación.Derechos de autor y
+    marcas registradas. Permutas SEP fué desarrollado con ayuda de software de código abierto. Por
+    favor, encuentre esta información en la sección ACERCA DE.</string>
 </resources>
