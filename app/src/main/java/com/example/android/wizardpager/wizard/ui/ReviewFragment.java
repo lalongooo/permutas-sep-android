@@ -19,6 +19,7 @@ package com.example.android.wizardpager.wizard.ui;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -72,7 +73,7 @@ public class ReviewFragment extends ListFragment implements ModelCallbacks {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
-        if (!(((ActivityMain) activity).getSupportFragmentManager().getFragments().get(1) instanceof Callbacks)) {
+        if (!(((AppCompatActivity) activity).getSupportFragmentManager().getFragments().get(1) instanceof Callbacks)) {
             throw new ClassCastException("Activity must implement fragment's callbacks");
         }
 

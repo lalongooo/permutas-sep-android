@@ -2,6 +2,7 @@ package com.permutassep;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
@@ -9,10 +10,7 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.permutassep.ui.ActivityWelcome;
 import com.permutassep.utils.PrefUtils;
 
-/**
- * Created by jorge.hernandez on 4/27/2015.
- */
-public class BaseActivity extends android.support.v7.app.AppCompatActivity{
+public class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

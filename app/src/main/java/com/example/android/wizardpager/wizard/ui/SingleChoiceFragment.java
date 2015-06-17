@@ -20,6 +20,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.ListFragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -104,7 +105,7 @@ public class SingleChoiceFragment extends ListFragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
-        if (!(((ActivityMain) activity).getSupportFragmentManager().getFragments().get(1) instanceof PageFragmentCallbacks)) {
+        if (!(((AppCompatActivity) activity).getSupportFragmentManager().getFragments().get(1) instanceof PageFragmentCallbacks)) {
             throw new ClassCastException("Activity must implement PageFragmentCallbacks");
         }
 
