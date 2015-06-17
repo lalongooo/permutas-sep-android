@@ -33,7 +33,6 @@ public class ActivityCompleteFbData extends BaseActivity {
     private EditText etName;
     private EditText etEmail;
     private EditText etPhone;
-    private TextView btnContinueRegistration;
     private ProgressDialog pDlg;
 
     @Override
@@ -41,11 +40,10 @@ public class ActivityCompleteFbData extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_complete_fb_data);
 
+        TextView btnContinueRegistration = (TextView) findViewById(R.id.btnContinueRegistration);
         etName = (EditText) findViewById(R.id.etName);
         etEmail = (EditText) findViewById(R.id.etEmail);
         etPhone = (EditText) findViewById(R.id.etPhone);
-        btnContinueRegistration = (TextView) findViewById(R.id.btnContinueRegistration);
-
 
         Bundle extras = getIntent().getExtras();
         String name = extras.getString("name");
@@ -84,6 +82,7 @@ public class ActivityCompleteFbData extends BaseActivity {
                         @Override
                         public void success(User user, retrofit.client.Response response) {
                             hideDialog();
+                            LoginManager.getInstance().logOut();
                             Utils.showSimpleDialog(R.string.app_login_sign_up_user_exist, R.string.accept, ActivityCompleteFbData.this, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
