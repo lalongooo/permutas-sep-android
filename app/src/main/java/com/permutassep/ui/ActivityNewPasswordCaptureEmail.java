@@ -97,6 +97,7 @@ public class ActivityNewPasswordCaptureEmail extends BaseActivity {
         switch (menuItem.getItemId()) {
             case android.R.id.home:
                 Intent intent = new Intent(ActivityNewPasswordCaptureEmail.this, Utils.getUser(this) == null ? ActivityLoginSignUp.class : ActivityMain.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 finish();
                 break;
