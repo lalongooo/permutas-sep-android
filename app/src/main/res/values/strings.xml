@@ -59,6 +59,7 @@
     <string name="search_fragment_filters_error_msg">Ocurrió un error en tu búsqueda</string>
     <string name="accept">Aceptar</string>
     <string name="cancel">Cancelar</string>
+    <string name="error">Error</string>
     <string name="search_fragment_search_error_msg">Ocurrió un error en tu búsqueda</string>
     <string name="search_fragment_search_no_restlts">No se encontraron resultados</string>
     <string name="new_password_forgot_password_message">Olvidé mi contraseña</string>
@@ -80,6 +81,7 @@
     <string name="new_password_passwords_mismatch">Las contraseñas no coinciden</string>
     <string name="new_password_resetting_password">Restableciendo tu contraseña</string>
     <string name="new_password_reset">Enviar</string>
+    <string name="new_password_login_error">Tu contraseña fué restablecida correctamente. Sin embargo, ocurrió un error al iniciar sesión. Por favor, intenta de nuevo.</string>
     <string name="new_password_request_new_token">Solicitar nuevo enlace</string>
     <string name="new_password_password_length_error">La longitud debe ser entre %1$s-%2$s caracteres</string>
     <string name="new_password_malformed_url">Dirección inválida</string>

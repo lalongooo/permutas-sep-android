@@ -1,9 +1,11 @@
 package com.permutassep.ui;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
@@ -13,13 +15,18 @@ import android.widget.Toast;
 import com.lalongooo.permutassep.R;
 import com.permutassep.BaseActivity;
 import com.permutassep.config.Config;
+import com.permutassep.model.AuthModel;
 import com.permutassep.model.ConfirmPasswordReset;
+import com.permutassep.model.User;
 import com.permutassep.rest.permutassep.PermutasSEPRestClient;
+import com.permutassep.utils.PrefUtils;
 import com.throrinstudio.android.common.libs.validator.Form;
 import com.throrinstudio.android.common.libs.validator.Validate;
 import com.throrinstudio.android.common.libs.validator.validator.LengthValidator;
 import com.throrinstudio.android.common.libs.validator.validator.NotEmptyValidator;
 
+import br.kots.mob.complex.preferences.ComplexPreferences;
+import retrofit.Callback;
 import retrofit.ResponseCallback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -80,11 +87,36 @@ public class ActivityNewPassword extends BaseActivity {
                                 , new ResponseCallback() {
                                     @Override
                                     public void success(Response response) {
-                                        hideDialog();
-                                        Intent i = new Intent().setClass(ActivityNewPassword.this, ActivityMain.class);
-                                        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                        startActivity(i);
-                                        finish();
+
+                                        new PermutasSEPRestClient().get().login(new AuthModel(getIntent().getStringExtra(Config.PWD_RESET_EMAIL_KEY), etPasswordOne.getText().toString()), new Callback<User>() {
+                                            @Override
+                                            public void success(User user, retrofit.client.Response response) {
+                                                hideDialog();
+                                                ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getBaseContext(), Config.APP_PREFERENCES_NAME, MODE_PRIVATE);
+                                                complexPreferences.putObject(PrefUtils.PREF_USER_KEY, user);
+                                                complexPreferences.commit();
+
+                                                Intent i = new Intent().setClass(ActivityNewPassword.this, ActivityMain.class);
+                                                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                startActivity(i);
+                                                finish();
+                                            }
+
+                                            @Override
+                                            public void failure(RetrofitError error) {
+                                                hideDialog();
+                                                new AlertDialog.Builder(ActivityNewPassword.this)
+                                                        .setTitle(R.string.error)
+                                                        .setMessage(R.string.new_password_login_error)
+                                                        .setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
+                                                            public void onClick(DialogInterface dialog, int which) {
+                                                                startActivity(new Intent(ActivityNewPassword.this, ActivityLogin.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+                                                                finish();
+                                                            }
+                                                        })
+                                                        .show();
+                                            }
+                                        });
                                     }
 
                                     @Override
