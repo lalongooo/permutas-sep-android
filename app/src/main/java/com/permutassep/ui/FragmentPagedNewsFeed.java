@@ -97,7 +97,7 @@ public class FragmentPagedNewsFeed extends BaseFragment
                 @Override
                 public void success(PostPage postPage, Response response) {
                     if (postPage.getNext() != null) {
-                        page = Integer.valueOf(Utils.splitQuery(postPage.getNext()).get("page").get(0));
+                        page = Integer.valueOf(Utils.splitQuery(postPage.getNext()).get(0).getValue());
                         firstLaunchCompleteListener.onFirstLaunchComplete();
                     } else {
                         loadMore = false;

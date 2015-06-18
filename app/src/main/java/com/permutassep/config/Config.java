@@ -58,4 +58,14 @@ public class Config {
 	 * Password max length
 	 */
 	public static final int PASSWORD_MAX_LENGTH = 32;
+
+	/**
+	 * Key of the token in the query string parameter for the password reset URL
+	 */
+	public static final String PWD_RESET_TOKEY_KEY = "token";
+
+	/**
+	 * Key of the email in the query string parameter for the password reset URL
+	 */
+	public static final String PWD_RESET_EMAIL_KEY = "email";
 }

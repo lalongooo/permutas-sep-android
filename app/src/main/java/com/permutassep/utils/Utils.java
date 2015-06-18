@@ -22,16 +22,14 @@ import com.permutassep.config.Config;
 import com.permutassep.model.State;
 import com.permutassep.model.User;
 
-import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLDecoder;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.utils.URLEncodedUtils;
+
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import br.kots.mob.complex.preferences.ComplexPreferences;
 
@@ -167,31 +165,21 @@ public class Utils {
     }
 
     /**
-     * Retrieves a Map: {param1=["value1"], param2=[null], param3=["value3", null]}
+     * Retrieves a List<NameValuePair>
      * By providing a URL like this: http://stackoverflow.com?param1=value1&param2=&param3=value3&param3
      * Taken from http://stackoverflow.com/questions/13592236/parse-the-uri-string-into-name-value-collection-in-java
      *
      * @param url The url to extract the query string parameters
      */
-    public static Map<String, List<String>> splitQuery(String url){
-        Map<String, List<String>> query_pairs = null;
+    public static List<NameValuePair> splitQuery(String url){
+
+        List<NameValuePair> params = null;
         try {
-            query_pairs = new LinkedHashMap<String, List<String>>();
-            final String[] pairs = new URL(url).getQuery().split("&");
-            for (String pair : pairs) {
-                final int idx = pair.indexOf("=");
-                final String key = idx > 0 ? URLDecoder.decode(pair.substring(0, idx), "UTF-8") : pair;
-                if (!query_pairs.containsKey(key)) {
-                    query_pairs.put(key, new LinkedList<String>());
-                }
-                final String value = idx > 0 && pair.length() > idx + 1 ? URLDecoder.decode(pair.substring(idx + 1), "UTF-8") : null;
-                query_pairs.get(key).add(value);
-            }
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (MalformedURLException e) {
+            params = URLEncodedUtils.parse(new URI(url), "UTF-8");
+        } catch (URISyntaxException e) {
             e.printStackTrace();
         }
-        return query_pairs;
+
+        return params;
     }
 }
