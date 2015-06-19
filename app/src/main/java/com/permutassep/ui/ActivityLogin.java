@@ -20,6 +20,7 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
+import com.lalongooo.permutassep.BuildConfig;
 import com.lalongooo.permutassep.R;
 import com.permutassep.BaseActivity;
 import com.permutassep.PermutasSEPApplication;
@@ -249,7 +250,7 @@ public class ActivityLogin extends BaseActivity {
     private void login(String email) {
 
         showDialog(getString(R.string.app_login_dlg_login_title), getString(R.string.app_login_dlg_login_logging_in));
-        new PermutasSEPRestClient().get().login(new AuthModel(email, Config.TEM_PWD), new Callback<User>() {
+        new PermutasSEPRestClient().get().login(new AuthModel(email, BuildConfig.com_permutassep_fb_login_dummy_password), new Callback<User>() {
             @Override
             public void success(User user, retrofit.client.Response response) {
                 ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getBaseContext(), Config.APP_PREFERENCES_NAME, MODE_PRIVATE);

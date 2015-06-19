@@ -1,17 +1,5 @@
 apply plugin: 'com.android.application'
 
-def com_permutassep_debug_api_rest_endpoint = '"' + com_permutassep_debug_api_rest_endpoint + '"';
-def com_permutassep_debug_api_rest_user = '"' + com_permutassep_debug_api_rest_user + '"';
-def com_permutassep_debug_api_rest_password = '"' + com_permutassep_debug_api_rest_password + '"';
-def com_permutassep_release_api_rest_endpoint = '"' + com_permutassep_release_api_rest_endpoint + '"';
-def com_permutassep_release_api_rest_user = '"' + com_permutassep_release_api_rest_user + '"';
-def com_permutassep_release_api_rest_password = '"' + com_permutassep_release_api_rest_password + '"';
-
-def com_permutassep_release_keystore_file = com_permutassep_release_keystore_file;
-def com_permutassep_release_keystore_password = com_permutassep_release_keystore_password;
-def com_permutassep_release_key_alias = com_permutassep_release_key_alias;
-def com_permutassep_release_key_password = com_permutassep_release_key_password;
-
 android {
     compileSdkVersion 21
     buildToolsVersion '21.1.2'
@@ -30,7 +18,6 @@ android {
             keyAlias(com_permutassep_release_key_alias);
             keyPassword(com_permutassep_release_key_password);
         }
-
     }
 
     buildTypes {
@@ -41,6 +28,10 @@ android {
             buildConfigField "String", "com_permutassep_api_rest_endpoint", com_permutassep_debug_api_rest_endpoint
             buildConfigField "String", "com_permutassep_api_rest_user", com_permutassep_debug_api_rest_user
             buildConfigField "String", "com_permutassep_api_rest_password", com_permutassep_debug_api_rest_password
+            buildConfigField "String", "com_permutassep_fb_login_dummy_password", com_permutassep_debug_fb_login_dummy_password
+            buildConfigField "String", "google_analytics_property_id", google_analytics_property_id
+            resValue "string", "google_maps_api_key", google_maps_api_key
+            resValue "string", "facebook_app_id", facebook_app_id
         }
 
         release {
@@ -50,6 +41,10 @@ android {
             buildConfigField "String", "com_permutassep_api_rest_endpoint", com_permutassep_release_api_rest_endpoint
             buildConfigField "String", "com_permutassep_api_rest_user", com_permutassep_release_api_rest_user
             buildConfigField "String", "com_permutassep_api_rest_password", com_permutassep_release_api_rest_password
+            buildConfigField "String", "com_permutassep_fb_login_dummy_password", com_permutassep_release_fb_login_dummy_password
+            buildConfigField "String", "google_analytics_property_id", google_analytics_property_id
+            resValue "string", "google_maps_api_key", google_maps_api_key
+            resValue "string", "facebook_app_id", facebook_app_id
         }
     }
 }

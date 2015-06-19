@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.widget.ImageView;
 
 import com.facebook.FacebookSdk;
@@ -15,8 +16,6 @@ import com.mikepenz.materialdrawer.util.DrawerImageLoader;
 import com.squareup.picasso.Picasso;
 
 public class PermutasSEPApplication extends Application {
-
-    private static final String PROPERTY_ID = "UA-62325816-2";
 
     public PermutasSEPApplication() {
         super();
@@ -53,7 +52,7 @@ public class PermutasSEPApplication extends Application {
         GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
         analytics.setDryRun(BuildConfig.DEBUG);
         analytics.getLogger().setLogLevel(Logger.LogLevel.VERBOSE);
-        Tracker t = analytics.newTracker(PROPERTY_ID);
+        Tracker t = analytics.newTracker(BuildConfig.google_analytics_property_id);
         t.enableAdvertisingIdCollection(true);
         return t;
     }

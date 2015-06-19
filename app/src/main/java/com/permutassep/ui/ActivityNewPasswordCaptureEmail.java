@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.lalongooo.permutassep.BuildConfig;
 import com.lalongooo.permutassep.R;
 import com.permutassep.BaseActivity;
 import com.permutassep.config.Config;
@@ -77,7 +78,7 @@ public class ActivityNewPasswordCaptureEmail extends BaseActivity {
                 if (f.validate()) {
 
                     showDialog(getString(R.string.please_wait), getString(R.string.new_password_capure_email_loading));
-                    new PermutasSEPRestClient().get().login(new AuthModel(etEmail.getText().toString(), Config.TEM_PWD), new Callback<User>() {
+                    new PermutasSEPRestClient().get().login(new AuthModel(etEmail.getText().toString(), BuildConfig.com_permutassep_fb_login_dummy_password), new Callback<User>() {
                         @Override
                         public void success(User user, retrofit.client.Response response) {
                             hideDialog();
