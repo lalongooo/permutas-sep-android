@@ -139,7 +139,6 @@ public class FragmentSearch extends BaseFragment {
             }
         });
 
-
         spnMunicipalityFrom.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -181,7 +180,6 @@ public class FragmentSearch extends BaseFragment {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-
 
         spnLocalityFrom.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -238,6 +236,7 @@ public class FragmentSearch extends BaseFragment {
                     }
                 } else {
                     if (selectedState.getId() == 0) {
+                        stateToSelectedPosition = 0;
                         cityToSelectedPosition = 0;
                         townToSelectedPosition = "";
                         resetSpinner(spnMunicipalityTo);
@@ -250,7 +249,6 @@ public class FragmentSearch extends BaseFragment {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-
 
         spnMunicipalityTo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
