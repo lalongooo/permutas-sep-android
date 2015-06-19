@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.facebook.login.LoginManager;
+import com.lalongooo.permutassep.BuildConfig;
 import com.lalongooo.permutassep.R;
 import com.permutassep.BaseActivity;
 import com.permutassep.config.Config;
@@ -78,7 +79,7 @@ public class ActivityCompleteFbData extends BaseActivity {
             public void onClick(View v) {
                 if(f.validate()){
                     showDialog(getString(R.string.app_sign_up_log_reg_dlg_title), getString(R.string.app_sign_up_log_reg_dlg_text));
-                    new PermutasSEPRestClient().get().login(new AuthModel(etEmail.getText().toString(), Config.TEM_PWD), new Callback<User>() {
+                    new PermutasSEPRestClient().get().login(new AuthModel(etEmail.getText().toString(), BuildConfig.com_permutassep_fb_login_dummy_password), new Callback<User>() {
                         @Override
                         public void success(User user, retrofit.client.Response response) {
                             hideDialog();
@@ -99,14 +100,14 @@ public class ActivityCompleteFbData extends BaseActivity {
                             u.setEmail(etEmail.getText().toString());
                             u.setPhone(etPhone.getText().toString());
                             u.setSocialUserId(getIntent().getExtras().getString("fbUserId"));
-                            u.setPassword(Config.TEM_PWD);
+                            u.setPassword(BuildConfig.com_permutassep_fb_login_dummy_password);
 
                             new PermutasSEPRestClient().get().newUser(u, new Callback<User>() {
 
                                 @Override
                                 public void success(User user, retrofit.client.Response response) {
                                     ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getBaseContext(), Config.APP_PREFERENCES_NAME, MODE_PRIVATE);
-                                    user.setPassword(Config.TEM_PWD);
+                                    user.setPassword(BuildConfig.com_permutassep_fb_login_dummy_password);
                                     complexPreferences.putObject(PrefUtils.PREF_USER_KEY, user);
                                     complexPreferences.putObject(PrefUtils.PREF_ORIGINAL_USER_KEY, user);
                                     complexPreferences.commit();
