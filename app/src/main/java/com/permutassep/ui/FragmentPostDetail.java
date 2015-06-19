@@ -245,7 +245,7 @@ public class FragmentPostDetail extends BaseFragment
     }
 
     public interface OnPostItemSelectedListener {
-        public void showPostDetail(Post post);
+        void showPostDetail(Post post);
     }
 
     private void showDialog(String title, String text) {
@@ -291,8 +291,8 @@ public class FragmentPostDetail extends BaseFragment
         PolylineOptions rectOptions = new PolylineOptions().add(origin).add(target);
         map.addPolyline(rectOptions);
 
-        map.addMarker(new MarkerOptions().position(origin).title("Xaltokan!"));
-        map.addMarker(new MarkerOptions().position(target).title("Monterrey!"));
+        map.addMarker(new MarkerOptions().position(origin).title(getString(R.string.search_fragment_origin_label)));
+        map.addMarker(new MarkerOptions().position(target).title(getString(R.string.search_fragment_target_label)));
 
         map.getUiSettings().setZoomControlsEnabled(true);
         map.getUiSettings().setAllGesturesEnabled(true);

@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.lalongooo.permutassep.R;
 import com.permutassep.utils.PrefUtils;
 
@@ -25,6 +27,8 @@ public class ActivityWelcome extends Activity {
                 finish();
             }
         });
+
+        ((TextView)findViewById(R.id.google_maps_legal)).setText(GooglePlayServicesUtil.getOpenSourceSoftwareLicenseInfo(this));
 
         findViewById(R.id.button_decline).setOnClickListener(new View.OnClickListener() {
             @Override
