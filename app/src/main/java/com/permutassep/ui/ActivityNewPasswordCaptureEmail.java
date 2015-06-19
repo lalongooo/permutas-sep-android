@@ -13,13 +13,17 @@ import android.widget.TextView;
 
 import com.lalongooo.permutassep.R;
 import com.permutassep.BaseActivity;
+import com.permutassep.config.Config;
+import com.permutassep.model.AuthModel;
 import com.permutassep.model.Email;
+import com.permutassep.model.User;
 import com.permutassep.rest.permutassep.PermutasSEPRestClient;
 import com.permutassep.utils.Utils;
 import com.throrinstudio.android.common.libs.validator.Form;
 import com.throrinstudio.android.common.libs.validator.Validate;
 import com.throrinstudio.android.common.libs.validator.validator.EmailValidator;
 
+import retrofit.Callback;
 import retrofit.ResponseCallback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -71,22 +75,37 @@ public class ActivityNewPasswordCaptureEmail extends BaseActivity {
             @Override
             public void onClick(View v) {
                 if (f.validate()) {
+
                     showDialog(getString(R.string.please_wait), getString(R.string.new_password_capure_email_loading));
-                    new PermutasSEPRestClient().get().resetPassword(new Email(etEmail.getText().toString()), new ResponseCallback() {
+                    new PermutasSEPRestClient().get().login(new AuthModel(etEmail.getText().toString(), Config.TEM_PWD), new Callback<User>() {
                         @Override
-                        public void success(Response response) {
+                        public void success(User user, retrofit.client.Response response) {
                             hideDialog();
-                            startActivity(new Intent().setClass(ActivityNewPasswordCaptureEmail.this, ActivityNewPasswordEmailSent.class).putExtra("email", etEmail.getText().toString()));
-                            finish();
+                            tvLabel.setTextColor(getResources().getColor(R.color.error_message));
+                            tvLabel.setText(R.string.new_password_capure_email_wrong);
                         }
 
                         @Override
                         public void failure(RetrofitError error) {
-                            tvLabel.setTextColor(getResources().getColor(R.color.error_message));
-                            tvLabel.setText(R.string.new_password_capure_email_wrong);
-                            hideDialog();
+                            new PermutasSEPRestClient().get().resetPassword(new Email(etEmail.getText().toString()), new ResponseCallback() {
+                                @Override
+                                public void success(Response response) {
+                                    hideDialog();
+                                    startActivity(new Intent().setClass(ActivityNewPasswordCaptureEmail.this, ActivityNewPasswordEmailSent.class).putExtra("email", etEmail.getText().toString()));
+                                    finish();
+                                }
+
+                                @Override
+                                public void failure(RetrofitError error) {
+                                    tvLabel.setTextColor(getResources().getColor(R.color.error_message));
+                                    tvLabel.setText(R.string.new_password_capure_email_wrong);
+                                    hideDialog();
+                                }
+                            });
+
                         }
                     });
+
                 }
             }
         });
