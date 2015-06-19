@@ -75,6 +75,15 @@
                             android:textColor="@color/body_text_2"
                             android:textSize="@dimen/text_size_medium" />
 
+                        <TextView
+                            android:id="@+id/google_maps_legal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:autoLink="web"
+                            android:textColor="@color/body_text_2"
+                            android:textSize="@dimen/text_size_medium" />
+
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
             </FrameLayout>
