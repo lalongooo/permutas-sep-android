@@ -16,16 +16,16 @@ public class PermutasSEPRestClient {
     public PermutasSEPRestClient() {
         RestAdapter.Builder builder = new RestAdapter.Builder();
         builder.setEndpoint(BuildConfig.com_permutassep_api_rest_endpoint);
+        builder.setRequestInterceptor(new RequestInterceptor() {
+            @Override
+            public void intercept(RequestFacade request) {
+                String credentials = BuildConfig.com_permutassep_api_rest_user + ":" + BuildConfig.com_permutassep_api_rest_password;
+                request.addHeader("Accept", "application/json");
+                request.addHeader("Authorization", "Basic " + Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP));
+            }
+        });
 
         if(BuildConfig.DEBUG){
-            builder.setRequestInterceptor(new RequestInterceptor() {
-                @Override
-                public void intercept(RequestFacade request) {
-                    String credentials = BuildConfig.com_permutassep_api_rest_user + ":" + BuildConfig.com_permutassep_api_rest_password;
-                    request.addHeader("Accept", "application/json");
-                    request.addHeader("Authorization", "Basic " + Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP));
-                }
-            });
             builder.setLogLevel(RestAdapter.LogLevel.FULL);
         }
 
@@ -36,16 +36,16 @@ public class PermutasSEPRestClient {
         RestAdapter.Builder builder = new RestAdapter.Builder();
         builder.setEndpoint(BuildConfig.com_permutassep_api_rest_endpoint);
         builder.setConverter(converter);
+        builder.setRequestInterceptor(new RequestInterceptor() {
+            @Override
+            public void intercept(RequestFacade request) {
+                String credentials = BuildConfig.com_permutassep_api_rest_user + ":" + BuildConfig.com_permutassep_api_rest_password;
+                request.addHeader("Accept", "application/json");
+                request.addHeader("Authorization", "Basic " + Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP));
+            }
+        });
 
         if(BuildConfig.DEBUG){
-            builder.setRequestInterceptor(new RequestInterceptor() {
-                @Override
-                public void intercept(RequestFacade request) {
-                    String credentials = BuildConfig.com_permutassep_api_rest_user + ":" + BuildConfig.com_permutassep_api_rest_password;
-                    request.addHeader("Accept", "application/json");
-                    request.addHeader("Authorization", "Basic " + Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP));
-                }
-            });
             builder.setLogLevel(RestAdapter.LogLevel.FULL);
         }
 
