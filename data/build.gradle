@@ -61,4 +61,5 @@ dependencies {
     compile project(':domain')
     compile dataDependencies.gson
     compile dataDependencies.dagger
+    compile dataDependencies.retrofit
 }
