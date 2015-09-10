@@ -22,14 +22,15 @@ import com.permutassep.config.Config;
 import com.permutassep.model.State;
 import com.permutassep.model.User;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.client.utils.URLEncodedUtils;
-
-import java.net.URI;
-import java.net.URISyntaxException;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import br.kots.mob.complex.preferences.ComplexPreferences;
 
@@ -171,15 +172,26 @@ public class Utils {
      *
      * @param url The url to extract the query string parameters
      */
-    public static List<NameValuePair> splitQuery(String url){
 
-        List<NameValuePair> params = null;
+
+    public static Map<String, String> splitQuery(String url){
+
+        URL u;
+        Map<String, String> query_pairs = new LinkedHashMap<>();
         try {
-            params = URLEncodedUtils.parse(new URI(url), "UTF-8");
-        } catch (URISyntaxException e) {
+            u = new URL(url);
+            String query = u.getQuery();
+            String[] pairs = query.split("&");
+            for (String pair : pairs) {
+                int idx = pair.indexOf("=");
+                query_pairs.put(URLDecoder.decode(pair.substring(0, idx), "UTF-8"), URLDecoder.decode(pair.substring(idx + 1), "UTF-8"));
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e){
             e.printStackTrace();
         }
 
-        return params;
+        return query_pairs;
     }
 }
