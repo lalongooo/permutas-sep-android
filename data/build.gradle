@@ -58,5 +58,7 @@ android {
 
 dependencies {
     def dataDependencies = rootProject.ext.dataDependencies
+    compile project(':domain')
     compile dataDependencies.gson
+    compile dataDependencies.dagger
 }

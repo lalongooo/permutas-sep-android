@@ -12,7 +12,7 @@ import java.util.Date;
 public class Post {
 
     private int id;
-    private User mUserEntity;
+    private User mUser;
     private String postText;
     private short stateFrom;
     private short cityFrom;
@@ -118,12 +118,12 @@ public class Post {
         this.mPostDate = mPostDate;
     }
 
-    public User getmUserEntity() {
-        return mUserEntity;
+    public User getUser() {
+        return mUser;
     }
 
-    public void setmUserEntity(User mUserEntity) {
-        this.mUserEntity = mUserEntity;
+    public void setUser(User mUser) {
+        this.mUser = mUser;
     }
 
     public String getmWorkdayType() {
@@ -179,7 +179,7 @@ public class Post {
         return "Post{" +
                 "cityFrom=" + cityFrom +
                 ", id=" + id +
-                ", mUserEntity=" + mUserEntity +
+                ", mUser=" + mUser +
                 ", postText='" + postText + '\'' +
                 ", stateFrom=" + stateFrom +
                 ", townFrom=" + townFrom +

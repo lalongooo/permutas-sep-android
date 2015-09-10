@@ -1,4 +1,4 @@
-package com.lalongooo.data.entity;
+package com.permutassep.data.entity;
 
 import com.google.gson.annotations.SerializedName;
 
