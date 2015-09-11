@@ -1,13 +1,13 @@
-package com.permutassep.domain;
+package com.permutassep.presentation.model;
 
 /**
  * By Jorge E. Hernandez (@lalongooo) 2015
  */
 
 /**
- * Class that represents a User in the domain layer
+ * Class that represents a User in the presentation layer
  */
-public class User {
+public class UserModel {
 
     private int id;
     private String name;
@@ -16,7 +16,7 @@ public class User {
     private String socialUserId;
     private String password;
 
-    public User(){
+    public UserModel(){
         // empty
     }
 

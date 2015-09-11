@@ -2,6 +2,8 @@ package com.permutassep.data.repository.datasource.rest.permutassep;
 
 import android.util.Base64;
 
+import javax.inject.Inject;
+
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 
@@ -13,6 +15,7 @@ public class PermutasSEPRestClient {
     private static PermutasSEPService restClient;
     private RestAdapter restAdapter;
 
+    @Inject
     public PermutasSEPRestClient() {
         RestAdapter.Builder builder = new RestAdapter
                 .Builder()

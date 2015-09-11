@@ -1,11 +1,10 @@
 package com.permutassep.data.entity;
 
 import com.google.gson.annotations.Expose;
-import com.permutassep.domain.Post;
 
 import java.util.List;
 
-public class PostPage {
+public class PostPageEntity {
 
     @Expose
     private long count;
@@ -14,8 +13,11 @@ public class PostPage {
     @Expose
     private String previous;
     @Expose
-    private List<Post> results;
+    private List<PostEntity> results;
 
+    public PostPageEntity() {
+        // empty
+    }
 
     public long getCount() {
         return count;
@@ -41,11 +43,11 @@ public class PostPage {
         this.previous = previous;
     }
 
-    public List<Post> getResults() {
+    public List<PostEntity> getResults() {
         return results;
     }
 
-    public void setResults(List<Post> results) {
+    public void setResults(List<PostEntity> results) {
         this.results = results;
     }
 }

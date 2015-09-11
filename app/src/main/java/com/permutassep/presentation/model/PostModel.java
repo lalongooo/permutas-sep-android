@@ -1,18 +1,19 @@
-package com.permutassep.domain;
+package com.permutassep.presentation.model;
 
 /**
  * By Jorge E. Hernandez (@lalongooo) 2015
  */
 
+
 import java.util.Date;
 
 /**
- * Class that represents a Post in the domain layer
+ * Class that represents a Post in the presentation layer
  */
-public class Post {
+public class PostModel {
 
     private int id;
-    private User user;
+    private UserModel user;
     private String postText;
     private short stateFrom;
     private short cityFrom;
@@ -30,7 +31,7 @@ public class Post {
     private boolean isTeachingCareer;
     private String academicLevel;
 
-    public Post(){
+    public PostModel(){
         // empty
     }
 
@@ -162,11 +163,11 @@ public class Post {
         this.townTo = townTo;
     }
 
-    public User getUser() {
+    public UserModel getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserModel user) {
         this.user = user;
     }
 

@@ -1,11 +1,15 @@
 package com.permutassep.data.entity;
 
+/**
+ * By Jorge E. Hernandez (@lalongooo) 2015
+ */
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 
 /**
- * Created by lalongooo on 01/03/15.
+ * Class that represents a Post in the data layer
  */
 public class PostEntity {
 
@@ -45,6 +49,10 @@ public class PostEntity {
     private boolean mIsTeachingCareer;
     @SerializedName("academic_level")
     private String mAcademicLevel;
+
+    public PostEntity(){
+        // empty
+    }
 
     public int getId() {
         return id;

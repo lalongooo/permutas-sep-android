@@ -2,15 +2,16 @@ package com.permutassep.data.repository.datasource.rest.permutassep;
 
 
 import com.permutassep.data.entity.PostEntity;
-import com.permutassep.data.entity.PostPage;
+import com.permutassep.data.entity.PostPageEntity;
 import com.permutassep.data.entity.UserEntity;
 
 import java.util.List;
+import java.util.Map;
 
-import retrofit.Callback;
 import retrofit.http.GET;
 import retrofit.http.Path;
 import retrofit.http.Query;
+import retrofit.http.QueryMap;
 import rx.Observable;
 
 public interface PermutasSEPService {
@@ -21,16 +22,20 @@ public interface PermutasSEPService {
     @GET("/users/{id}")
     Observable<UserEntity> getUser(@Path("id") int userId);
 
+
+    @GET("/posts/")
+    Observable<List<PostEntity>> getPosts();
+
+    @GET("/posts/{id}")
+    Observable<PostEntity> getPost(@Path("id") int postId);
+
     @GET("/users/{id}/posts")
     Observable<List<PostEntity>> userPosts(@Path("id") int userId);
 
     @GET("/posts/")
-    Observable<PostPage> getPostPage(@Query("page") int page, @Query("page_size") int pageSize);
-
-    @GET("/users/{id}/posts")
-    void userPosts(@Path("id") int id, Callback<List<PostEntity>> callback);
+    Observable<PostPageEntity> getPostPage(@Query("page") int page, @Query("page_size") int pageSize);
 
     @GET("/posts/")
-    void getPostPage(@Query("page") int page, @Query("page_size") int pageSize, Callback<PostPage> callback);
+    Observable<List<PostEntity>> searchPosts(@QueryMap Map<String, String> parameters);
 
 }

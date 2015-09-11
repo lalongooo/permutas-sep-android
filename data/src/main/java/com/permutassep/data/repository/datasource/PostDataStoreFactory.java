@@ -21,16 +21,16 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 /**
- * Factory that creates different implementations of {@link UserDataStore}.
+ * Factory that creates different implementations of {@link PostDataStore}.
  */
 
 @Singleton
-public class UserDataStoreFactory {
+public class PostDataStoreFactory {
 
     private final Context context;
 
     @Inject
-    public UserDataStoreFactory(Context context) {
+    public PostDataStoreFactory(Context context) {
         if (context == null) {
             throw new IllegalArgumentException("Constructor parameters cannot be null.");
         }
@@ -38,16 +38,9 @@ public class UserDataStoreFactory {
     }
 
     /**
-     * Create {@link UserDataStore} from a user id.
+     * Create {@link PostDataStore} to retrieve data from the Cloud.
      */
-    public UserDataStore create(int userId) {
-        return createCloudDataStore();
-    }
-
-    /**
-     * Create {@link UserDataStore} to retrieve data from the Cloud.
-     */
-    public UserDataStore createCloudDataStore() {
-        return new CloudUserDataStore();
+    public PostDataStore createCloudDataStore() {
+        return new CloudPostDataStore();
     }
 }

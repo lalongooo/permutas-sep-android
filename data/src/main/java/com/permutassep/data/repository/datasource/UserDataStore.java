@@ -29,12 +29,12 @@ public interface UserDataStore {
     /**
      * Get an {@link Observable} which will emit a List of {@link UserEntity}.
      */
-    Observable<List<UserEntity>> userEntityList();
+    Observable<List<UserEntity>> getUsersList();
 
     /**
      * Get an {@link Observable} which will emit a {@link UserEntity} by its id.
      *
      * @param userId The id to retrieve user data.
      */
-    Observable<UserEntity> userEntityDetails(final int userId);
+    Observable<UserEntity> getUserDetails(final int userId);
 }

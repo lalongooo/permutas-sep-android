@@ -12,8 +12,8 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 /**
- * Mapper class used to transform {@link PostEntity} (in the data layer) to {@link User} in the
- * domain layer.
+ * Mapper class used to transform a {@link PostEntity} of the
+ * data layer to a {@link User} in the domain layer.
  */
 @Singleton
 public class PostEntityDataMapper {
@@ -34,23 +34,25 @@ public class PostEntityDataMapper {
     public Post transform(PostEntity postEntity) {
         Post post = null;
         if (postEntity != null) {
+            post = new Post();
+            post.setAcademicLevel(postEntity.getAcademicLevel());
             post.setCityFrom(postEntity.getCityFrom());
             post.setCityTo(postEntity.getCityTo());
+            post.setId(postEntity.getId());
+            post.setIsTeachingCareer(postEntity.isTeachingCareer());
             post.setLatFrom(postEntity.getLatFrom());
             post.setLatTo(postEntity.getLatTo());
             post.setLonFrom(postEntity.getLonFrom());
             post.setLonTo(postEntity.getLonTo());
-            post.setmAcademicLevel(postEntity.getAcademicLevel());
-            post.setmIsTeachingCareer(postEntity.isTeachingCareer());
-            post.setmPositionType(postEntity.getPositionType());
-            post.setmPostDate(postEntity.getPostDate());
-            post.setUser(userEntityDataMapper.transform(postEntity.getUser()));
-            post.setmWorkdayType(postEntity.getWorkdayType());
+            post.setPositionType(postEntity.getPositionType());
+            post.setPostDate(postEntity.getPostDate());
             post.setPostText(postEntity.getPostText());
             post.setStateFrom(postEntity.getStateFrom());
             post.setStateTo(postEntity.getStateTo());
             post.setTownFrom(postEntity.getTownFrom());
             post.setTownTo(postEntity.getTownTo());
+            post.setUser(userEntityDataMapper.transform(postEntity.getUser()));
+            post.setWorkdayType(postEntity.getWorkdayType());
         }
 
         return post;
