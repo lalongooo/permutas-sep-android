@@ -1,12 +1,11 @@
 package com.permutassep.data.exception;
 
-import com.permutassep.domain.exception.*;
-import com.permutassep.domain.exception.Exception;
+import com.permutassep.domain.exception.ErrorBundle;
 
 /**
  * Wrapper around Exceptions used to manage errors in the repository.
  */
-public class RepositoryErrorBundle implements com.permutassep.domain.exception.Exception {
+public class RepositoryErrorBundle implements ErrorBundle {
 
     private final Exception exception;
 
@@ -23,7 +22,7 @@ public class RepositoryErrorBundle implements com.permutassep.domain.exception.E
     public String getErrorMessage() {
         String message = "";
         if (this.exception != null) {
-            this.exception.getErrorMessage();
+            this.exception.getMessage();
         }
         return message;
     }

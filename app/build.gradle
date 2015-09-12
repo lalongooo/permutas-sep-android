@@ -1,13 +1,16 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion '21.1.2'
+
+    def globalConfiguration = rootProject.extensions.getByName("ext")
+
+    compileSdkVersion globalConfiguration.getAt("androidCompileSdkVersion")
+    buildToolsVersion globalConfiguration.getAt("androidBuildToolsVersion")
 
     defaultConfig {
-        applicationId "com.permutassep"
-        minSdkVersion 14
-        targetSdkVersion 23
+        minSdkVersion globalConfiguration.getAt("androidMinSdkVersion")
+        targetSdkVersion globalConfiguration.getAt("androidTargetSdkVersion")
+        versionCode globalConfiguration.getAt("androidVersionCode")
     }
 
     signingConfigs{
@@ -50,6 +53,7 @@ android {
 }
 
 dependencies {
+    compile 'io.reactivex:rxandroid:0.24.0'
     compile 'com.viewpagerindicator:library:2.4.1@aar'
     compile 'com.android.support:support-v4:23.0.0'
     compile 'com.android.support:appcompat-v7:23.0.0'
@@ -74,4 +78,5 @@ dependencies {
         exclude group: 'org.apache.httpcomponents', module: 'httpclient'
     }
     compile project(':domain')
+    compile project(':data')
 }

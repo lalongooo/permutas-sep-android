@@ -1,6 +1,5 @@
 package com.permutassep.domain.repository;
 
-
 import com.permutassep.domain.User;
 
 import java.util.List;

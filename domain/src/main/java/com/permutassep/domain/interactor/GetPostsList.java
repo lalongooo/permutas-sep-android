@@ -12,20 +12,18 @@ import javax.inject.Inject;
 
 import rx.Observable;
 
-public class UserPostsUseCase extends UseCase {
+public class GetPostsList extends UseCase {
 
     private final PostRepository postRepository;
-    private final int userId;
 
     @Inject
-    public UserPostsUseCase(int userId, PostRepository postRepository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
+    public GetPostsList(PostRepository postRepository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         super(threadExecutor, postExecutionThread);
         this.postRepository = postRepository;
-        this.userId = userId;
     }
 
     @Override
     protected Observable buildUseCaseObservable() {
-        return null;
+        return this.postRepository.getPostsList();
     }
 }

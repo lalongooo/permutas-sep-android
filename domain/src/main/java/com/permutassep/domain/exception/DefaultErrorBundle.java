@@ -1,16 +1,15 @@
 package com.permutassep.domain.exception;
 
 /**
- *  Wrapper around Exceptions used to manage default errors.
+ * Wrapper around Exceptions used to manage default errors.
  */
-
-public class DefaultExceptionImpl implements Exception {
+public class DefaultErrorBundle implements ErrorBundle {
 
     private static final String DEFAULT_ERROR_MSG = "Unknown error";
 
     private final Exception exception;
 
-    public DefaultExceptionImpl(Exception exception) {
+    public DefaultErrorBundle(Exception exception) {
         this.exception = exception;
     }
 
@@ -21,6 +20,6 @@ public class DefaultExceptionImpl implements Exception {
 
     @Override
     public String getErrorMessage() {
-        return (exception != null) ? this.exception.getErrorMessage() : DEFAULT_ERROR_MSG;
+        return (exception != null) ? this.exception.getMessage() : DEFAULT_ERROR_MSG;
     }
 }

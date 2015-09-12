@@ -1,18 +1,20 @@
-package com.permutassep.domain;
+package com.permutassep.presentation.model;
+
+import com.permutassep.domain.Post;
 
 import java.util.List;
 
 /**
- * Class that represents a PostPage in the domain layer
+ * Class that represents a PostPage in the presentation layer
  */
-public class PostPage {
+public class PostPageModel {
 
     private long count;
     private String next;
     private String previous;
     private List<Post> results;
 
-    public PostPage() {
+    public PostPageModel() {
         // empty
     }
 
