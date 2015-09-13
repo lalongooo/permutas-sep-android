@@ -7,6 +7,7 @@ package com.permutassep.presentation;
 import android.app.Application;
 
 import com.permutassep.presentation.internal.di.components.ApplicationComponent;
+import com.permutassep.presentation.internal.di.components.DaggerApplicationComponent;
 import com.permutassep.presentation.internal.di.modules.ApplicationModule;
 
 /**
