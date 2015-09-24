@@ -26,5 +26,5 @@ public interface PostsListView extends LoadDataView {
      *
      * @param postModel The user that will be shown.
      */
-    void viewUser(PostModel postModel);
+    void viewPostDetail(PostModel postModel);
 }

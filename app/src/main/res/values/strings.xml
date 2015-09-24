@@ -156,6 +156,7 @@
     <string name="time_ago_year">Hace 1 año</string>
     <string name="time_ago_years">%d años</string>
     <string name="exception_message_generic">There was an application error</string>
+    <string name="btn_text_retry">Retry</string>
 
     <!--GA Events Categories-->
     <string name="ga_event_category_ux">UX</string>

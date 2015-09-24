@@ -20,7 +20,7 @@ ext {
     gsonVersion = '2.3'
     javaxAnnotationVersion = '10.0-b28'
     okHttpVersion = '2.3.0'
-    recyclerViewVersion = '21.0.3'
+    recyclerViewVersion = '23.0.1'
     retrofitVersion = '1.9.0'
     rxAndroidVersion = '0.24.0'
     rxJavaVersion = '1.0.14'

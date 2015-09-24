@@ -20,8 +20,8 @@ public class PostModule {
 
     @Provides
     @PerActivity
-    @Named("userList")
-    UseCase provideGetUserListUseCase(GetPostsList getPostsList) {
+    @Named("postList")
+    UseCase provideGetPostListUseCase(GetPostsList getPostsList) {
         return getPostsList;
     }
 }

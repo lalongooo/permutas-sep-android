@@ -20,14 +20,14 @@ import javax.inject.Named;
  * By Jorge E. Hernandez (@lalongooo) 2015
  */
 
-public class PostsListPresenter implements Presenter {
+public class PostListPresenter implements Presenter {
 
     private final UseCase getPostByUserUseCase;
     private final PostModelDataMapper postModelDataMapper;
     private PostsListView postsListView;
 
     @Inject
-    public PostsListPresenter(@Named("postByUser") UseCase getPostsList, PostModelDataMapper postModelDataMapper) {
+    public PostListPresenter(@Named("postList") UseCase getPostsList, PostModelDataMapper postModelDataMapper) {
         this.getPostByUserUseCase = getPostsList;
         this.postModelDataMapper = postModelDataMapper;
     }
@@ -81,19 +81,19 @@ public class PostsListPresenter implements Presenter {
 
         @Override
         public void onCompleted() {
-            PostsListPresenter.this.hideViewLoading();
+            PostListPresenter.this.hideViewLoading();
         }
 
         @Override
         public void onError(Throwable e) {
-            PostsListPresenter.this.hideViewLoading();
-            PostsListPresenter.this.showErrorMessage(new DefaultErrorBundle((Exception) e));
-            PostsListPresenter.this.showViewRetry();
+            PostListPresenter.this.hideViewLoading();
+            PostListPresenter.this.showErrorMessage(new DefaultErrorBundle((Exception) e));
+            PostListPresenter.this.showViewRetry();
         }
 
         @Override
         public void onNext(List<Post> users) {
-            PostsListPresenter.this.showUsersCollectionInView(users);
+            PostListPresenter.this.showUsersCollectionInView(users);
         }
     }
 
