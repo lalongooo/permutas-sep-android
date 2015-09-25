@@ -23,6 +23,7 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * By Jorge E. Hernandez (@lalongooo) 2015
@@ -84,8 +85,41 @@ public class PostListFragment extends BaseFragment implements PostsListView {
 
 
     @Override
-    public void renderPostList(Collection<PostModel> postModelCollection) {
+    public void onResume() {
+        super.onResume();
+        this.postListPresenter.resume();
+    }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        this.postListPresenter.pause();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        this.postListPresenter.destroy();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
+
+
+    @OnClick(R.id.bt_retry)
+    void onButtonRetryClick() {
+        PostListFragment.this.loadUserList();
+    }
+
+
+    @Override
+    public void renderPostList(Collection<PostModel> postModelCollection) {
+        if (postModelCollection != null) {
+            this.postsAdapter.setPostsCollection(postModelCollection);
+        }
     }
 
     @Override
@@ -95,26 +129,28 @@ public class PostListFragment extends BaseFragment implements PostsListView {
 
     @Override
     public void showLoading() {
-
+        this.rl_progress.setVisibility(View.VISIBLE);
+        this.getActivity().setProgressBarIndeterminateVisibility(true);
     }
 
     @Override
     public void hideLoading() {
-
+        this.rl_progress.setVisibility(View.GONE);
+        this.getActivity().setProgressBarIndeterminateVisibility(false);
     }
 
     @Override
     public void showRetry() {
-
+        this.rl_retry.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideRetry() {
-
+        this.rl_retry.setVisibility(View.GONE);
     }
 
     @Override
     public void showError(String message) {
-
+        this.showToastMessage(message);
     }
 }
