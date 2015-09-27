@@ -20,7 +20,7 @@ import javax.inject.Named;
  * By Jorge E. Hernandez (@lalongooo) 2015
  */
 
-public class PostListPresenter implements Presenter {
+public class PostListPresenter extends DefaultSubscriber<List<Post>> implements Presenter {
 
     private final UseCase getPostByUserUseCase;
     private final PostModelDataMapper postModelDataMapper;
@@ -62,7 +62,11 @@ public class PostListPresenter implements Presenter {
     private void loadPostList() {
         this.hideViewRetry();
         this.showViewLoading();
-        this.getUserList();
+        this.getPostList();
+    }
+
+    public void onPostClicked(PostModel postModel) {
+        this.postsListView.viewPostDetail(postModel);
     }
 
     private void hideViewRetry() {
@@ -73,28 +77,8 @@ public class PostListPresenter implements Presenter {
         this.postsListView.showLoading();
     }
 
-    private void getUserList() {
-        this.getPostByUserUseCase.execute(new UserListSubscriber());
-    }
-
-    private final class UserListSubscriber extends DefaultSubscriber<List<Post>> {
-
-        @Override
-        public void onCompleted() {
-            PostListPresenter.this.hideViewLoading();
-        }
-
-        @Override
-        public void onError(Throwable e) {
-            PostListPresenter.this.hideViewLoading();
-            PostListPresenter.this.showErrorMessage(new DefaultErrorBundle((Exception) e));
-            PostListPresenter.this.showViewRetry();
-        }
-
-        @Override
-        public void onNext(List<Post> users) {
-            PostListPresenter.this.showUsersCollectionInView(users);
-        }
+    private void getPostList() {
+        this.getPostByUserUseCase.execute(new PostListSubscriber());
     }
 
     private void hideViewLoading() {
@@ -115,4 +99,23 @@ public class PostListPresenter implements Presenter {
         this.postsListView.renderPostList(postModelCollection);
     }
 
+    private final class PostListSubscriber extends DefaultSubscriber<List<Post>> {
+
+        @Override
+        public void onCompleted() {
+            PostListPresenter.this.hideViewLoading();
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            PostListPresenter.this.hideViewLoading();
+            PostListPresenter.this.showErrorMessage(new DefaultErrorBundle((Exception) e));
+            PostListPresenter.this.showViewRetry();
+        }
+
+        @Override
+        public void onNext(List<Post> posts) {
+            PostListPresenter.this.showUsersCollectionInView(posts);
+        }
+    }
 }

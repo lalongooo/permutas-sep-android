@@ -22,7 +22,7 @@ import butterknife.ButterKnife;
 public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostViewHolder> {
 
     public interface OnItemClickListener {
-        void onUserItemClicked(PostModel postModel);
+        void onPostItemClicked(PostModel postModel);
     }
 
     private OnItemClickListener onItemClickListener;

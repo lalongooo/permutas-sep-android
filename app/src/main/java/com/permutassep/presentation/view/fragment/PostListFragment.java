@@ -1,5 +1,7 @@
 package com.permutassep.presentation.view.fragment;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -42,8 +44,27 @@ public class PostListFragment extends BaseFragment implements PostsListView {
     @Bind(R.id.bt_retry)
     Button bt_retry;
 
-    private PostsAdapter postsAdapter;
     private PostsLayoutManager postsLayoutManager;
+
+    private PostsAdapter postsAdapter;
+
+    private PostsAdapter.OnItemClickListener onItemClickListener = new PostsAdapter.OnItemClickListener() {
+        @Override
+        public void onPostItemClicked(PostModel postModel) {
+            if(PostListFragment.this.postListPresenter != null && postModel != null){
+                PostListFragment.this.postListPresenter.onPostClicked(postModel);
+            }
+        }
+    };
+
+    /**
+     * Interface for listening post list item click events.
+     * */
+    public interface PostListListener {
+        void onPostClicked(final PostModel postModel);
+    }
+
+    private PostListListener postListListener;
 
     public PostListFragment() {
         super();
@@ -58,13 +79,20 @@ public class PostListFragment extends BaseFragment implements PostsListView {
         return fragmentView;
     }
 
-
     private void setupUI() {
         this.postsLayoutManager = new PostsLayoutManager(getActivity());
         this.rv_users.setLayoutManager(postsLayoutManager);
 
         this.postsAdapter = new PostsAdapter(getActivity(), new ArrayList<PostModel>());
         this.rv_users.setAdapter(postsAdapter);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof PostListListener) {
+            this.postListListener = (PostListListener) activity;
+        }
     }
 
     @Override
@@ -82,7 +110,6 @@ public class PostListFragment extends BaseFragment implements PostsListView {
     private void loadUserList() {
         this.postListPresenter.initialize();
     }
-
 
     @Override
     public void onResume() {
@@ -108,6 +135,10 @@ public class PostListFragment extends BaseFragment implements PostsListView {
         ButterKnife.unbind(this);
     }
 
+    @Override
+    public Context getContext() {
+        return this.getActivity().getApplicationContext();
+    }
 
     @OnClick(R.id.bt_retry)
     void onButtonRetryClick() {
@@ -124,7 +155,9 @@ public class PostListFragment extends BaseFragment implements PostsListView {
 
     @Override
     public void viewPostDetail(PostModel postModel) {
-
+        if (this.postListListener != null) {
+            this.postListListener.onPostClicked(postModel);
+        }
     }
 
     @Override
