@@ -3,6 +3,7 @@ package com.permutassep.presentation.internal.di.components;
 import com.permutassep.presentation.internal.di.PerActivity;
 import com.permutassep.presentation.internal.di.modules.ActivityModule;
 import com.permutassep.presentation.internal.di.modules.PostModule;
+import com.permutassep.presentation.view.fragment.PostDetailsFragment;
 import com.permutassep.presentation.view.fragment.PostListFragment;
 
 import dagger.Component;
@@ -15,4 +16,6 @@ import dagger.Component;
 public interface PostComponent {
 
     void inject(PostListFragment postListFragment);
+
+    void inject(PostDetailsFragment postDetailsFragment);
 }

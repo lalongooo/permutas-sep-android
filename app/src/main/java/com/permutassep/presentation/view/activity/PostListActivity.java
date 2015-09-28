@@ -9,11 +9,14 @@ import com.lalongooo.permutassep.R;
 import com.permutassep.presentation.internal.di.HasComponent;
 import com.permutassep.presentation.internal.di.components.DaggerPostComponent;
 import com.permutassep.presentation.internal.di.components.PostComponent;
+import com.permutassep.presentation.model.PostModel;
+import com.permutassep.presentation.view.fragment.PostListFragment;
 
 /**
  * Created by lalongooo on 13/09/15.
  */
-public class PostListActivity extends BaseActivity implements HasComponent<PostComponent> {
+public class PostListActivity extends BaseActivity implements HasComponent<PostComponent>,
+        PostListFragment.PostListListener {
 
     private PostComponent userComponent;
 
@@ -40,5 +43,10 @@ public class PostListActivity extends BaseActivity implements HasComponent<PostC
     @Override
     public PostComponent getComponent() {
         return userComponent;
+    }
+
+    @Override
+    public void onPostClicked(PostModel postModel) {
+
     }
 }
