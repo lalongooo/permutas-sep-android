@@ -57,6 +57,10 @@
         >
 
         <activity
+            android:name="com.permutassep.presentation.view.activity.PostDetailsActivity">
+        </activity>
+
+        <activity
             android:name="com.permutassep.ui.ActivityNewPasswordEmailSent"
             android:label="@string/app_name"
             android:screenOrientation="portrait"/>

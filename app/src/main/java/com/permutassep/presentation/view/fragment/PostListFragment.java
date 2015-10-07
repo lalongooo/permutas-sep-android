@@ -36,7 +36,7 @@ public class PostListFragment extends BaseFragment implements PostsListView {
     PostListPresenter postListPresenter;
 
     @Bind(R.id.rv_users)
-    RecyclerView rv_users;
+    RecyclerView rv_posts;
     @Bind(R.id.rl_progress)
     RelativeLayout rl_progress;
     @Bind(R.id.rl_retry)
@@ -44,27 +44,19 @@ public class PostListFragment extends BaseFragment implements PostsListView {
     @Bind(R.id.bt_retry)
     Button bt_retry;
 
-    private PostsLayoutManager postsLayoutManager;
-
     private PostsAdapter postsAdapter;
+    private PostsLayoutManager postsLayoutManager;
+    private PostListListener postListListener;
 
     private PostsAdapter.OnItemClickListener onItemClickListener = new PostsAdapter.OnItemClickListener() {
         @Override
         public void onPostItemClicked(PostModel postModel) {
-            if(PostListFragment.this.postListPresenter != null && postModel != null){
+            if (PostListFragment.this.postListPresenter != null && postModel != null) {
                 PostListFragment.this.postListPresenter.onPostClicked(postModel);
             }
         }
     };
 
-    /**
-     * Interface for listening post list item click events.
-     * */
-    public interface PostListListener {
-        void onPostClicked(final PostModel postModel);
-    }
-
-    private PostListListener postListListener;
 
     public PostListFragment() {
         super();
@@ -81,10 +73,11 @@ public class PostListFragment extends BaseFragment implements PostsListView {
 
     private void setupUI() {
         this.postsLayoutManager = new PostsLayoutManager(getActivity());
-        this.rv_users.setLayoutManager(postsLayoutManager);
+        this.rv_posts.setLayoutManager(postsLayoutManager);
 
         this.postsAdapter = new PostsAdapter(getActivity(), new ArrayList<PostModel>());
-        this.rv_users.setAdapter(postsAdapter);
+        this.postsAdapter.setOnItemClickListener(onItemClickListener);
+        this.rv_posts.setAdapter(postsAdapter);
     }
 
     @Override
@@ -145,7 +138,6 @@ public class PostListFragment extends BaseFragment implements PostsListView {
         PostListFragment.this.loadUserList();
     }
 
-
     @Override
     public void renderPostList(Collection<PostModel> postModelCollection) {
         if (postModelCollection != null) {
@@ -185,5 +177,12 @@ public class PostListFragment extends BaseFragment implements PostsListView {
     @Override
     public void showError(String message) {
         this.showToastMessage(message);
+    }
+
+    /**
+     * Interface for listening post list item click events.
+     */
+    public interface PostListListener {
+        void onPostClicked(final PostModel postModel);
     }
 }

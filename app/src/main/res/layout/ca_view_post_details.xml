@@ -137,7 +137,7 @@
                     android:layout_marginTop="10dp">
 
                     <TextView
-                        android:id="@+id/textStateFromCode"
+                        android:id="@+id/tvStateFromCode"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
@@ -149,12 +149,12 @@
                         android:textSize="50sp" />
 
                     <TextView
-                        android:id="@+id/textStateToCode"
+                        android:id="@+id/tvStateToCode"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"
-                        android:layout_alignTop="@+id/textStateFromCode"
+                        android:layout_alignTop="@+id/tvStateFromCode"
                         android:layout_marginRight="20dp"
                         android:text="HGO"
                         android:textColor="@color/primary"

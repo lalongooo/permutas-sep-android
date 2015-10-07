@@ -18,6 +18,8 @@ package com.permutassep.presentation.navigation;
 import android.content.Context;
 import android.content.Intent;
 
+import com.permutassep.presentation.view.activity.PostDetailsActivity;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -32,19 +34,6 @@ public class Navigator {
         //empty
     }
 
-//  /**
-//   * Goes to the user list screen.
-//   *
-//   * @param context A Context needed to open the destiny activity.
-//   */
-//  public void navigateToUserList(Context context) {
-//    if (context != null) {
-//      Intent intentToLaunch = UserListActivity.getCallingIntent(context);
-//      context.startActivity(intentToLaunch);
-//    }
-//  }
-//
-
     /**
      * Goes to the post details screen.
      *
@@ -52,7 +41,7 @@ public class Navigator {
      */
     public void navigateToPostDetails(Context context, int postId) {
         if (context != null) {
-            Intent intentToLaunch = UserDetailsActivity.getCallingIntent(context, postId);
+            Intent intentToLaunch = PostDetailsActivity.getCallingIntent(context, postId);
             context.startActivity(intentToLaunch);
         }
     }

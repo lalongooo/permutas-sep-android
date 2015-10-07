@@ -58,6 +58,14 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostViewHold
     public void onBindViewHolder(PostViewHolder holder, int position) {
         final PostModel userModel = this.postModelList.get(position);
         holder.textViewTitle.setText(userModel.getPostText());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (PostsAdapter.this.onItemClickListener != null) {
+                    PostsAdapter.this.onItemClickListener.onPostItemClicked(userModel);
+                }
+            }
+        });
     }
 
     @Override

@@ -13,6 +13,7 @@ import com.permutassep.presentation.mapper.PostModelDataMapper;
 import com.permutassep.presentation.model.PostModel;
 import com.permutassep.presentation.view.PostDetailsView;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
@@ -27,12 +28,13 @@ public class PostDetailsPresenter extends DefaultSubscriber<Post> implements Pre
     private int postId;
     private PostDetailsView postDetailsView;
 
+    @Inject
     public PostDetailsPresenter(@Named("postDetails") UseCase getPostDetailsUseCase, PostModelDataMapper postModelDataMapper) {
         this.getPostDetailsUseCase = getPostDetailsUseCase;
         this.postModelDataMapper = postModelDataMapper;
     }
 
-    private void setView(@NonNull PostDetailsView postDetailsView) {
+    public void setView(@NonNull PostDetailsView postDetailsView) {
         this.postDetailsView = postDetailsView;
     }
 

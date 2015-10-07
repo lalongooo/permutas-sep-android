@@ -13,7 +13,7 @@ import dagger.Component;
  */
 @PerActivity
 @Component(dependencies = ApplicationComponent.class, modules = {ActivityModule.class, PostModule.class})
-public interface PostComponent {
+public interface PostComponent extends ActivityComponent {
 
     void inject(PostListFragment postListFragment);
 

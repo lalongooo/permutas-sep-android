@@ -1,7 +1,5 @@
 package com.permutassep.presentation.view.activity;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Window;
 
@@ -18,11 +16,7 @@ import com.permutassep.presentation.view.fragment.PostListFragment;
 public class PostListActivity extends BaseActivity implements HasComponent<PostComponent>,
         PostListFragment.PostListListener {
 
-    private PostComponent userComponent;
-
-    public static Intent getCallingIntent(Context context) {
-        return new Intent(context, PostListActivity.class);
-    }
+    private PostComponent postComponent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +28,7 @@ public class PostListActivity extends BaseActivity implements HasComponent<PostC
     }
 
     private void initializeInjector() {
-        this.userComponent = DaggerPostComponent.builder()
+        this.postComponent = DaggerPostComponent.builder()
                 .applicationComponent(getApplicationComponent())
                 .activityModule(getActivityModule())
                 .build();
@@ -42,11 +36,11 @@ public class PostListActivity extends BaseActivity implements HasComponent<PostC
 
     @Override
     public PostComponent getComponent() {
-        return userComponent;
+        return postComponent;
     }
 
     @Override
     public void onPostClicked(PostModel postModel) {
-
+        this.navigator.navigateToPostDetails(this, postModel.getId());
     }
 }
