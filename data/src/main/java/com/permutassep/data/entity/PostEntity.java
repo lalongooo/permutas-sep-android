@@ -11,6 +11,7 @@ import java.util.Date;
 /**
  * Class that represents a Post in the data layer
  */
+
 public class PostEntity {
 
     @SerializedName("id")
@@ -20,21 +21,21 @@ public class PostEntity {
     @SerializedName("post")
     private String postText;
     @SerializedName("place_from_state")
-    private short stateFrom;
+    private String stateFrom;
     @SerializedName("place_from_city")
-    private short cityFrom;
+    private String cityFrom;
     @SerializedName("place_from_town")
-    private short townFrom;
+    private String townFrom;
     @SerializedName("place_from_lat")
     private String latFrom;
     @SerializedName("place_from_lon")
     private String lonFrom;
     @SerializedName("place_to_state")
-    private short stateTo;
+    private String stateTo;
     @SerializedName("place_to_city")
-    private short cityTo;
+    private String cityTo;
     @SerializedName("place_to_town")
-    private short townTo;
+    private String townTo;
     @SerializedName("place_to_lat")
     private String latTo;
     @SerializedName("place_to_lon")
@@ -78,27 +79,27 @@ public class PostEntity {
         this.postText = postText;
     }
 
-    public short getStateFrom() {
+    public String getStateFrom() {
         return stateFrom;
     }
 
-    public void setStateFrom(short stateFrom) {
+    public void setStateFrom(String stateFrom) {
         this.stateFrom = stateFrom;
     }
 
-    public short getCityFrom() {
+    public String getCityFrom() {
         return cityFrom;
     }
 
-    public void setCityFrom(short cityFrom) {
+    public void setCityFrom(String cityFrom) {
         this.cityFrom = cityFrom;
     }
 
-    public short getTownFrom() {
+    public String getTownFrom() {
         return townFrom;
     }
 
-    public void setTownFrom(short townFrom) {
+    public void setTownFrom(String townFrom) {
         this.townFrom = townFrom;
     }
 
@@ -118,27 +119,27 @@ public class PostEntity {
         this.lonFrom = lonFrom;
     }
 
-    public short getStateTo() {
+    public String getStateTo() {
         return stateTo;
     }
 
-    public void setStateTo(short stateTo) {
+    public void setStateTo(String stateTo) {
         this.stateTo = stateTo;
     }
 
-    public short getCityTo() {
+    public String getCityTo() {
         return cityTo;
     }
 
-    public void setCityTo(short cityTo) {
+    public void setCityTo(String cityTo) {
         this.cityTo = cityTo;
     }
 
-    public short getTownTo() {
+    public String getTownTo() {
         return townTo;
     }
 
-    public void setTownTo(short townTo) {
+    public void setTownTo(String townTo) {
         this.townTo = townTo;
     }
 

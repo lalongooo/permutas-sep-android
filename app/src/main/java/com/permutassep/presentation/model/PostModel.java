@@ -15,14 +15,14 @@ public class PostModel {
     private int id;
     private UserModel user;
     private String postText;
-    private short stateFrom;
-    private short cityFrom;
-    private short townFrom;
+    private String stateFrom;
+    private String cityFrom;
+    private String townFrom;
     private String latFrom;
     private String lonFrom;
-    private short stateTo;
-    private short cityTo;
-    private short townTo;
+    private String stateTo;
+    private String cityTo;
+    private String townTo;
     private String latTo;
     private String lonTo;
     private String workdayType;
@@ -43,19 +43,19 @@ public class PostModel {
         this.academicLevel = academicLevel;
     }
 
-    public short getCityFrom() {
+    public String getCityFrom() {
         return cityFrom;
     }
 
-    public void setCityFrom(short cityFrom) {
+    public void setCityFrom(String cityFrom) {
         this.cityFrom = cityFrom;
     }
 
-    public short getCityTo() {
+    public String getCityTo() {
         return cityTo;
     }
 
-    public void setCityTo(short cityTo) {
+    public void setCityTo(String cityTo) {
         this.cityTo = cityTo;
     }
 
@@ -131,35 +131,35 @@ public class PostModel {
         this.postText = postText;
     }
 
-    public short getStateFrom() {
+    public String getStateFrom() {
         return stateFrom;
     }
 
-    public void setStateFrom(short stateFrom) {
+    public void setStateFrom(String stateFrom) {
         this.stateFrom = stateFrom;
     }
 
-    public short getStateTo() {
+    public String getStateTo() {
         return stateTo;
     }
 
-    public void setStateTo(short stateTo) {
+    public void setStateTo(String stateTo) {
         this.stateTo = stateTo;
     }
 
-    public short getTownFrom() {
+    public String getTownFrom() {
         return townFrom;
     }
 
-    public void setTownFrom(short townFrom) {
+    public void setTownFrom(String townFrom) {
         this.townFrom = townFrom;
     }
 
-    public short getTownTo() {
+    public String getTownTo() {
         return townTo;
     }
 
-    public void setTownTo(short townTo) {
+    public void setTownTo(String townTo) {
         this.townTo = townTo;
     }
 
