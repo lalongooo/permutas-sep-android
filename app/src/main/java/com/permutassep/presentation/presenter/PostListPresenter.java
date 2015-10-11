@@ -36,19 +36,6 @@ public class PostListPresenter implements Presenter {
         this.postsListView = postsListView;
     }
 
-    @Override
-    public void resume() {
-    }
-
-    @Override
-    public void pause() {
-    }
-
-    @Override
-    public void destroy() {
-        getPostByUserUseCase.unsubscribe();
-    }
-
     /**
      * Initializes the presenter by start retrieving the user list.
      */
@@ -117,5 +104,22 @@ public class PostListPresenter implements Presenter {
         public void onNext(List<Post> posts) {
             PostListPresenter.this.showUsersCollectionInView(posts);
         }
+    }
+
+    /**
+     * Methods from the {@link Presenter}
+     */
+
+    @Override
+    public void resume() {
+    }
+
+    @Override
+    public void pause() {
+    }
+
+    @Override
+    public void destroy() {
+        getPostByUserUseCase.unsubscribe();
     }
 }

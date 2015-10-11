@@ -106,6 +106,7 @@ public class PostDetailsPresenter implements Presenter {
         }
 
     }
+
     /**
      * Methods from the {@link Presenter}
      */
