@@ -5,12 +5,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lalongooo.permutassep.R;
+import com.permutassep.model.State;
 import com.permutassep.presentation.model.PostModel;
+import com.permutassep.utils.Utils;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.Bind;
@@ -21,19 +25,16 @@ import butterknife.ButterKnife;
  */
 public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostViewHolder> {
 
-    public interface OnItemClickListener {
-        void onPostItemClicked(PostModel postModel);
-    }
-
+    private final LayoutInflater layoutInflater;
     private OnItemClickListener onItemClickListener;
+    private HashMap<String, State> states;
 
     private List<PostModel> postModelList;
-    private final LayoutInflater layoutInflater;
-
     public PostsAdapter(Context context, Collection<PostModel> postModelCollection) {
         this.validatePostsCollection(postModelCollection);
         this.postModelList = (List<PostModel>) postModelCollection;
         this.layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        states = Utils.getStates(context);
     }
 
     private void validatePostsCollection(Collection<PostModel> usersCollection) {
@@ -56,13 +57,22 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostViewHold
 
     @Override
     public void onBindViewHolder(PostViewHolder holder, int position) {
-        final PostModel userModel = this.postModelList.get(position);
-        holder.textViewTitle.setText(userModel.getPostText());
+        final PostModel postModel = this.postModelList.get(position);
+
+        holder.tvUserName.setText(postModel.getUser().getName());
+        holder.tvPostDate.setText(postModel.getPostDate().toString());
+        holder.tvPostUserEmail.setText(postModel.getUser().getEmail());
+        holder.tvPostUserPhone.setText(postModel.getUser().getPhone());
+        holder.tvPostText.setText(postModel.getPostText());
+        holder.tvFrom.setText(states.get((String.valueOf(postModel.getStateFrom()))).getStateName());
+        holder.tvTo.setText(states.get(String.valueOf(postModel.getStateTo())).getStateName());
+        holder.tvAcademicLevelLabel.setText(postModel.getAcademicLevel());
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (PostsAdapter.this.onItemClickListener != null) {
-                    PostsAdapter.this.onItemClickListener.onPostItemClicked(userModel);
+                    PostsAdapter.this.onItemClickListener.onPostItemClicked(postModel);
                 }
             }
         });
@@ -83,9 +93,29 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostViewHold
         this.onItemClickListener = onItemClickListener;
     }
 
+    public interface OnItemClickListener {
+        void onPostItemClicked(PostModel postModel);
+    }
+
     static class PostViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.title)
-        TextView textViewTitle;
+        @Bind(R.id.imageView)
+        ImageView imageView;
+        @Bind(R.id.tvUserName)
+        TextView tvUserName;
+        @Bind(R.id.tvPostDate)
+        TextView tvPostDate;
+        @Bind(R.id.tvPostUserEmail)
+        TextView tvPostUserEmail;
+        @Bind(R.id.tvPostUserPhone)
+        TextView tvPostUserPhone;
+        @Bind(R.id.tvPostText)
+        TextView tvPostText;
+        @Bind(R.id.tvFrom)
+        TextView tvFrom;
+        @Bind(R.id.tvTo)
+        TextView tvTo;
+        @Bind(R.id.tvAcademicLevelLabel)
+        TextView tvAcademicLevelLabel;
 
         public PostViewHolder(View itemView) {
             super(itemView);
