@@ -66,6 +66,8 @@ public class PostModelDataMapper {
         postModel.setPostText(post.getPostText());
         postModel.setStateFrom(post.getStateFrom());
         postModel.setStateTo(post.getStateTo());
+        postModel.setStateFromCode(post.getStateFromCode());
+        postModel.setStateToCode(post.getStateToCode());
         postModel.setTownFrom(post.getTownFrom());
         postModel.setTownTo(post.getTownTo());
         postModel.setUser(userModelDataMapper.transform(post.getUser()));

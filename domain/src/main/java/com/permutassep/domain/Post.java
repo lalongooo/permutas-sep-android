@@ -14,11 +14,13 @@ public class Post {
     private int id;
     private User user;
     private String postText;
+    private String stateFromCode;
     private String stateFrom;
     private String cityFrom;
     private String townFrom;
     private String latFrom;
     private String lonFrom;
+    private String stateToCode;
     private String stateTo;
     private String cityTo;
     private String townTo;
@@ -138,12 +140,28 @@ public class Post {
         this.stateFrom = stateFrom;
     }
 
+    public String getStateFromCode() {
+        return stateFromCode;
+    }
+
+    public void setStateFromCode(String stateFromCode) {
+        this.stateFromCode = stateFromCode;
+    }
+
     public String getStateTo() {
         return stateTo;
     }
 
     public void setStateTo(String stateTo) {
         this.stateTo = stateTo;
+    }
+
+    public String getStateToCode() {
+        return stateToCode;
+    }
+
+    public void setStateToCode(String stateToCode) {
+        this.stateToCode = stateToCode;
     }
 
     public String getTownFrom() {

@@ -48,7 +48,9 @@ public class PostEntityDataMapper {
             post.setPostDate(postEntity.getPostDate());
             post.setPostText(postEntity.getPostText());
             post.setStateFrom(postEntity.getStateFrom());
+            post.setStateFromCode(postEntity.getStateFromCode());
             post.setStateTo(postEntity.getStateTo());
+            post.setStateToCode(postEntity.getStateToCode());
             post.setTownFrom(postEntity.getTownFrom());
             post.setTownTo(postEntity.getTownTo());
             post.setUser(userEntityDataMapper.transform(postEntity.getUser()));

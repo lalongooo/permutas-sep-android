@@ -51,6 +51,9 @@ public class PostEntity {
     @SerializedName("academic_level")
     private String mAcademicLevel;
 
+    private String stateFromCode;
+    private String stateToCode;
+
     public PostEntity(){
         // empty
     }
@@ -197,6 +200,22 @@ public class PostEntity {
 
     public void setAcademicLevel(String mAcademicLevel) {
         this.mAcademicLevel = mAcademicLevel;
+    }
+
+    public String getStateFromCode() {
+        return stateFromCode;
+    }
+
+    public void setStateFromCode(String stateFromCode) {
+        this.stateFromCode = stateFromCode;
+    }
+
+    public String getStateToCode() {
+        return stateToCode;
+    }
+
+    public void setStateToCode(String stateToCode) {
+        this.stateToCode = stateToCode;
     }
 
     @Override

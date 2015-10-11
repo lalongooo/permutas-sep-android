@@ -15,11 +15,13 @@ public class PostModel {
     private int id;
     private UserModel user;
     private String postText;
+    private String stateFromCode;
     private String stateFrom;
     private String cityFrom;
     private String townFrom;
     private String latFrom;
     private String lonFrom;
+    private String stateToCode;
     private String stateTo;
     private String cityTo;
     private String townTo;
@@ -177,5 +179,21 @@ public class PostModel {
 
     public void setWorkdayType(String workdayType) {
         this.workdayType = workdayType;
+    }
+
+    public String getStateFromCode() {
+        return stateFromCode;
+    }
+
+    public void setStateFromCode(String stateFromCode) {
+        this.stateFromCode = stateFromCode;
+    }
+
+    public String getStateToCode() {
+        return stateToCode;
+    }
+
+    public void setStateToCode(String stateToCode) {
+        this.stateToCode = stateToCode;
     }
 }
