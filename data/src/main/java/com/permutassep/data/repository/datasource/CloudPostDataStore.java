@@ -71,10 +71,13 @@ public class CloudPostDataStore implements PostDataStore {
                     mapTownTo.put(town.getClave(), town);
                 }
 
+                postEntity.setStateFrom(cityEntitiesFrom.get(0).getNombreEntidad());
                 postEntity.setCityFrom(mapCitiesFrom.get(Integer.valueOf(postEntity.getCityFrom())).getNombreMunicipio());
-                postEntity.setTownFrom(mapTownFrom.get(("0000".substring(0, "0000".length() - String.valueOf(postEntity.getTownFrom()).length())) + String.valueOf(postEntity.getTownFrom())).getNombre());
+                postEntity.setTownFrom(mapTownFrom.get(("0000".substring(0, "0000".length() - postEntity.getTownFrom().length())) + postEntity.getTownFrom()).getNombre());
+
+                postEntity.setStateFrom(cityEntitiesTo.get(0).getNombreEntidad());
                 postEntity.setCityTo(mapCitiesTo.get(Integer.valueOf(postEntity.getCityTo())).getNombreMunicipio());
-                postEntity.setTownTo(mapTownTo.get(("0000".substring(0, "0000".length() - String.valueOf(postEntity.getTownTo()).length())) + String.valueOf(postEntity.getTownTo())).getNombre());
+                postEntity.setTownTo(mapTownTo.get(("0000".substring(0, "0000".length() - postEntity.getTownTo().length())) + postEntity.getTownTo()).getNombre());
 
                 return postEntity;
             });
