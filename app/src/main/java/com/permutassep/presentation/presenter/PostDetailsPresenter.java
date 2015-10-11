@@ -21,7 +21,7 @@ import javax.inject.Named;
  **/
 
 @PerActivity
-public class PostDetailsPresenter extends DefaultSubscriber<Post> implements Presenter {
+public class PostDetailsPresenter implements Presenter {
 
     private final UseCase getPostDetailsUseCase;
     private final PostModelDataMapper postModelDataMapper;
@@ -63,7 +63,7 @@ public class PostDetailsPresenter extends DefaultSubscriber<Post> implements Pre
     }
 
     private void getPostDetails() {
-        this.getPostDetailsUseCase.execute(this);
+        this.getPostDetailsUseCase.execute(new PostDetailSubscriber());
     }
 
     private void hideViewLoading() {
@@ -87,24 +87,25 @@ public class PostDetailsPresenter extends DefaultSubscriber<Post> implements Pre
     /**
      * Methods from the DefaultSubscriber<Post>
      */
+    private final class PostDetailSubscriber extends DefaultSubscriber<Post> {
+        @Override
+        public void onCompleted() {
+            PostDetailsPresenter.this.hideViewLoading();
+        }
 
-    @Override
-    public void onCompleted() {
-        this.hideViewLoading();
+        @Override
+        public void onError(Throwable e) {
+            PostDetailsPresenter.this.hideViewLoading();
+            PostDetailsPresenter.this.showErrorMessage(new DefaultErrorBundle((Exception) e));
+            PostDetailsPresenter.this.showViewRetry();
+        }
+
+        @Override
+        public void onNext(Post post) {
+            PostDetailsPresenter.this.showUserDetailsInView(post);
+        }
+
     }
-
-    @Override
-    public void onError(Throwable e) {
-        this.hideViewLoading();
-        this.showErrorMessage(new DefaultErrorBundle((Exception) e));
-        this.showViewRetry();
-    }
-
-    @Override
-    public void onNext(Post post) {
-        this.showUserDetailsInView(post);
-    }
-
     /**
      * Methods from the {@link Presenter}
      */

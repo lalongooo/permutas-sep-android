@@ -20,7 +20,7 @@ import javax.inject.Named;
  * By Jorge E. Hernandez (@lalongooo) 2015
  */
 
-public class PostListPresenter extends DefaultSubscriber<List<Post>> implements Presenter {
+public class PostListPresenter implements Presenter {
 
     private final UseCase getPostByUserUseCase;
     private final PostModelDataMapper postModelDataMapper;
