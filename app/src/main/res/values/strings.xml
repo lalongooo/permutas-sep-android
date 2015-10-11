@@ -112,6 +112,8 @@
     <string name="app_nav_drawer_3">Editar Perfil</string>
     <string name="app_post_detail_call">Llamar</string>
     <string name="app_post_detail_email">Email</string>
+    <string name="app_post_detail_teaching_career">Carrera magisterial</string>
+    <string name="app_post_detail_no_teaching_career">Sin carrega magisterial</string>
     <string name="tos_dialog_text">Al seleccionar \"Aceptar\" usted acepta los Términos y condiciones del uso de esta aplicación.</string>
     <string name="tos_dialog_cancel">Cancelar</string>
     <string name="tos_dialog_accept">Aceptar</string>

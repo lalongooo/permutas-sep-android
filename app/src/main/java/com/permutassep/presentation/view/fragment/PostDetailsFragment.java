@@ -8,10 +8,16 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.lalongooo.permutassep.R;
+import com.permutassep.model.State;
 import com.permutassep.presentation.internal.di.components.PostComponent;
 import com.permutassep.presentation.model.PostModel;
 import com.permutassep.presentation.presenter.PostDetailsPresenter;
 import com.permutassep.presentation.view.PostDetailsView;
+import com.permutassep.utils.Utils;
+
+import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -125,24 +131,29 @@ public class PostDetailsFragment extends BaseFragment implements PostDetailsView
     public void renderPost(PostModel post) {
         if (post != null) {
 
+            HashMap<String, State> states = Utils.getStates(getActivity());
+            this.tvStateFromCode.setText(states.get((post.getStateFromCode())).getShortCode());
+            this.tvStateToCode.setText(states.get((post.getStateToCode())).getShortCode());
             this.tvUserName.setText(post.getUser().getName());
             this.tvPostUserEmail.setText(post.getUser().getEmail());
             this.tvPostUserPhone.setText(post.getUser().getPhone());
             this.tvPostText.setText(post.getPostText());
-//            this.tvStateFromCode.setText();
-//            this.tvStateToCode.setText();
-//            this.tvStateFrom.setText();
-//            this.tvCityFrom.setText();
-//            this.tvTownFrom.setText();
-//            this.tvStateTo.setText();
-//            this.tvCityTo.setText();
-//            this.tvTownTo.setText();
-//            this.tvAcademicLevel.setText();
-//            this.tvWorkdayType.setText();
-//            this.tvPositionType.setText();
-//            this.tvIsTeachingCareer.setText();
-//            this.tvPostDate.setText();
+            this.tvStateFrom.setText(post.getStateFrom());
+            this.tvCityFrom.setText(post.getCityFrom());
+            this.tvTownFrom.setText(post.getTownFrom());
+            this.tvStateTo.setText(post.getStateTo());
+            this.tvCityTo.setText(post.getCityTo());
+            this.tvTownTo.setText(post.getTownTo());
+            this.tvAcademicLevel.setText(post.getAcademicLevel());
+            this.tvWorkdayType.setText(post.getWorkdayType());
+            this.tvPositionType.setText(post.getPositionType());
+            this.tvPostDate.setText(new SimpleDateFormat("HH:mm' - 'dd MMM yy", Locale.getDefault()).format(post.getPostDate()));
 
+            if (post.isTeachingCareer()) {
+                tvIsTeachingCareer.setText(getString(R.string.app_post_detail_teaching_career));
+            } else {
+                tvIsTeachingCareer.setText(getString(R.string.app_post_detail_no_teaching_career));
+            }
         }
     }
 
