@@ -105,24 +105,6 @@ public class PostListFragment extends BaseFragment implements PostsListView {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        this.postListPresenter.resume();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        this.postListPresenter.pause();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        this.postListPresenter.destroy();
-    }
-
-    @Override
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
@@ -137,6 +119,17 @@ public class PostListFragment extends BaseFragment implements PostsListView {
     void onButtonRetryClick() {
         PostListFragment.this.loadUserList();
     }
+
+    /**
+     * Interface for listening post list item click events.
+     */
+    public interface PostListListener {
+        void onPostClicked(final PostModel postModel);
+    }
+
+    /**
+     * Methods from the implemented interface PostsListView
+     */
 
     @Override
     public void renderPostList(Collection<PostModel> postModelCollection) {
@@ -180,9 +173,25 @@ public class PostListFragment extends BaseFragment implements PostsListView {
     }
 
     /**
-     * Interface for listening post list item click events.
+     * Synchronize with the fragment lifecycle by calling
+     * the corresponding presenter methods
      */
-    public interface PostListListener {
-        void onPostClicked(final PostModel postModel);
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        this.postListPresenter.resume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        this.postListPresenter.pause();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        this.postListPresenter.destroy();
     }
 }

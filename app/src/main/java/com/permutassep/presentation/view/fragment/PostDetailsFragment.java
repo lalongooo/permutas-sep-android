@@ -183,4 +183,27 @@ public class PostDetailsFragment extends BaseFragment implements PostDetailsView
     public void showError(String message) {
         this.showToastMessage(message);
     }
+
+    /**
+     * Synchronize with the fragment lifecycle by calling
+     * the corresponding presenter methods
+     */
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        this.postDetailsPresenter.resume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        this.postDetailsPresenter.pause();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        this.postDetailsPresenter.destroy();
+    }
 }
