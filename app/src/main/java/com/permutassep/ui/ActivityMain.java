@@ -11,8 +11,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 
 import com.facebook.login.LoginManager;
 import com.google.gson.Gson;
@@ -21,11 +19,7 @@ import com.mikepenz.aboutlibraries.Libs;
 import com.mikepenz.aboutlibraries.LibsBuilder;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
-import com.mikepenz.materialdrawer.Drawer;
-import com.mikepenz.materialdrawer.accountswitcher.AccountHeader;
-import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
-import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.permutassep.BaseActivity;
 import com.permutassep.config.Config;
@@ -54,12 +48,12 @@ public class ActivityMain extends BaseActivity
         if (f instanceof FragmentPagedNewsFeed) {
             setTitle(R.string.app_name);
             if (Utils.getUser(this) != null) {
-                result.setSelectionByIdentifier(DrawerItems.HOME.id, false);
+//                result.setSelectionByIdentifier(DrawerItems.HOME.id, false);
             }
         } else if (f instanceof FragmentMyPosts) {
             setTitle(R.string.my_posts_toolbar_text);
             if (Utils.getUser(this) != null) {
-                result.setSelectionByIdentifier(DrawerItems.MY_POSTS.id, false);
+//                result.setSelectionByIdentifier(DrawerItems.MY_POSTS.id, false);
             }
         } else if (f instanceof FragmentSearch) {
             setTitle(R.string.app_main_toolbar_search_action);
@@ -67,8 +61,6 @@ public class ActivityMain extends BaseActivity
             setTitle(R.string.app_main_toolbar_search_results);
         } else if (f instanceof FragmentCreatePost) {
             setTitle(R.string.app_main_toolbar_post_action);
-        } else if (f instanceof FragmentSettings) {
-            setTitle(R.string.app_main_toolbar_edit_profile);
         }
 
         invalidateOptionsMenu();
@@ -87,8 +79,8 @@ public class ActivityMain extends BaseActivity
         }
     }
 
-    public Drawer.Result result;
-    private AccountHeader.Result headerResult = null;
+//    public Drawer.Result result;
+//    private AccountHeader.Result headerResult = null;
     private Toolbar toolbar;
 
     @Override
@@ -108,34 +100,34 @@ public class ActivityMain extends BaseActivity
                     .withIcon(Uri.parse("https://graph.facebook.com/" + Utils.getUser(this).getSocialUserId() + "/picture?width=460&height=460"));
 
             // Create the AccountHeader
-            headerResult = new AccountHeader()
-                    .withActivity(this)
-                    .withHeaderBackground(R.drawable.header)
-                    .addProfiles(profile)
-                    .withSavedInstance(savedInstanceState)
-                    .build();
+//            headerResult = new AccountHeader()
+//                    .withActivity(this)
+//                    .withHeaderBackground(R.drawable.header)
+//                    .addProfiles(profile)
+//                    .withSavedInstance(savedInstanceState)
+//                    .build();
 
-            result = new Drawer()
-                    .withActivity(this)
-                    .withAccountHeader(headerResult)
-                    .withToolbar(toolbar)
-                    .addDrawerItems(
-                            new PrimaryDrawerItem().withName(getString(R.string.app_nav_drawer_1)).withIdentifier(DrawerItems.HOME.id).withIcon(GoogleMaterial.Icon.gmd_home),
-                            new PrimaryDrawerItem().withName(getString(R.string.app_nav_drawer_2)).withIdentifier(DrawerItems.MY_POSTS.id).withIcon(GoogleMaterial.Icon.gmd_content_paste)
-//                            new DividerDrawerItem(),
-//                            new PrimaryDrawerItem().withName(getString(R.string.app_nav_drawer_3)).withIdentifier(DrawerItems.SETTINGS.id).withIcon(GoogleMaterial.Icon.gmd_settings)
-                    )
-                    .withSelectedItem(0)
-                    .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l, IDrawerItem drawerItem) {
-                            if (drawerItem != null) {
-                                replaceFragment(drawerItem.getIdentifier());
-                            }
-                        }
-                    })
-                    .build();
-            result.getListView().setVerticalScrollBarEnabled(false);
+//            result = new Drawer()
+//                    .withActivity(this)
+//                    .withAccountHeader(headerResult)
+//                    .withToolbar(toolbar)
+//                    .addDrawerItems(
+//                            new PrimaryDrawerItem().withName(getString(R.string.app_nav_drawer_1)).withIdentifier(DrawerItems.HOME.id).withIcon(GoogleMaterial.Icon.gmd_home),
+//                            new PrimaryDrawerItem().withName(getString(R.string.app_nav_drawer_2)).withIdentifier(DrawerItems.MY_POSTS.id).withIcon(GoogleMaterial.Icon.gmd_content_paste)
+////                            new DividerDrawerItem(),
+////                            new PrimaryDrawerItem().withName(getString(R.string.app_nav_drawer_3)).withIdentifier(DrawerItems.SETTINGS.id).withIcon(GoogleMaterial.Icon.gmd_settings)
+//                    )
+//                    .withSelectedItem(0)
+//                    .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+//                        @Override
+//                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l, IDrawerItem drawerItem) {
+//                            if (drawerItem != null) {
+//                                replaceFragment(drawerItem.getIdentifier());
+//                            }
+//                        }
+//                    })
+//                    .build();
+////            result.getListView().setVerticalScrollBarEnabled(false);
         }
 
         getSupportFragmentManager().addOnBackStackChangedListener(this);
@@ -226,17 +218,17 @@ public class ActivityMain extends BaseActivity
 
     @Override
     public void onBackPressed() {
-        if (result != null && result.isDrawerOpen()) {
-            result.closeDrawer();
-        } else {
-            super.onBackPressed();
-        }
+//        if (result != null && result.isDrawerOpen()) {
+//            result.closeDrawer();
+//        } else {
+//            super.onBackPressed();
+//        }
     }
 
     @Override
     public void onFirstLaunchComplete() {
         if (!PrefUtils.firstTimeDrawerOpened(this) && Utils.getUser(this) != null) {
-            result.openDrawer();
+//            result.openDrawer();
             PrefUtils.markFirstTimeDrawerOpened(this);
         }
     }
@@ -264,17 +256,11 @@ public class ActivityMain extends BaseActivity
             getSupportFragmentManager().popBackStackImmediate("news_feed", FragmentManager.POP_BACK_STACK_INCLUSIVE);
             getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentMyPosts()).addToBackStack("news_feed").commit();
         }
-
-        // Action My posts
-        if (id == DrawerItems.SETTINGS.id) {
-            getSupportFragmentManager().popBackStackImmediate("news_feed", FragmentManager.POP_BACK_STACK_INCLUSIVE);
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentSettings()).addToBackStack("news_feed").commit();
-        }
     }
 
     private void clearDrawerSelection() {
         if (Utils.getUser(this) != null) {
-            result.setSelection(-1);
+//            result.setSelection(-1);
         }
     }
 }

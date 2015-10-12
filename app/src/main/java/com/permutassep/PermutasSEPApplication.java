@@ -4,7 +4,6 @@ import android.app.Application;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Build;
 import android.widget.ImageView;
 
 import com.facebook.FacebookSdk;
@@ -12,6 +11,7 @@ import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Logger;
 import com.google.android.gms.analytics.Tracker;
 import com.lalongooo.permutassep.BuildConfig;
+import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader;
 import com.mikepenz.materialdrawer.util.DrawerImageLoader;
 import com.squareup.picasso.Picasso;
 
@@ -27,7 +27,7 @@ public class PermutasSEPApplication extends Application {
         FacebookSdk.sdkInitialize(getApplicationContext());
 
         //initialize and create the image loader logic
-        DrawerImageLoader.init(new DrawerImageLoader.IDrawerImageLoader() {
+        DrawerImageLoader.init(new AbstractDrawerImageLoader() {
             @Override
             public void set(ImageView imageView, Uri uri, Drawable placeholder) {
                 Picasso.with(imageView.getContext()).load(uri).placeholder(placeholder).into(imageView);

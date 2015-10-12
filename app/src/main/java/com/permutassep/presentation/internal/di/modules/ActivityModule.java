@@ -1,20 +1,20 @@
 package com.permutassep.presentation.internal.di.modules;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.lalongooo.permutassep.R;
-import com.mikepenz.google_material_typeface_library.GoogleMaterial;
+import com.mikepenz.materialdrawer.AccountHeader;
+import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
-import com.mikepenz.materialdrawer.accountswitcher.AccountHeader;
-import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.permutassep.model.User;
 import com.permutassep.presentation.internal.di.PerActivity;
-import com.permutassep.presentation.view.activity.MainActivity;
 
 import dagger.Module;
 import dagger.Provides;
@@ -41,54 +41,41 @@ public class ActivityModule {
 
     @Provides
     @PerActivity
-    Drawer.Result providesDrawerResult(Toolbar toolbar, AccountHeader.Result headerResult) {
-        Drawer.Result drawerResult = new Drawer()
+    Drawer providesDrawer(Toolbar toolbar, AccountHeader accountHeader) {
+
+        return new DrawerBuilder()
                 .withActivity(activity)
-                .withAccountHeader(headerResult)
+                .withActionBarDrawerToggle(true)
+                .withAccountHeader(accountHeader)
                 .withToolbar(toolbar)
-                .addDrawerItems(
-
-                        new PrimaryDrawerItem()
-                                .withName(activity.getString(R.string.app_nav_drawer_1))
-                                .withIdentifier(MainActivity.DRAWER_IDENTIFIER_HOME)
-                                .withIcon(GoogleMaterial.Icon.gmd_home),
-
-                        new PrimaryDrawerItem()
-                                .withName(activity.getString(R.string.app_nav_drawer_2))
-                                .withIdentifier(MainActivity.DRAWER_IDENTIFIER_MY_POSTS)
-                                .withIcon(GoogleMaterial.Icon.gmd_content_paste)
-                )
                 .withSelectedItem(0)
                 .build();
-        drawerResult.getListView().setVerticalScrollBarEnabled(false);
-
-        return drawerResult;
     }
 
     @Provides
     @PerActivity
     Toolbar providesToolbar() {
         AppCompatActivity appCompatActivity = (AppCompatActivity) activity;
-        return (Toolbar) appCompatActivity.findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) appCompatActivity.findViewById(R.id.toolbar);
+        toolbar.setTitleTextColor(Color.WHITE);
+        appCompatActivity.setSupportActionBar(toolbar);
+        return toolbar;
     }
 
     @Provides
     @PerActivity
-    AccountHeader.Result providesAccountHeaderResult(IProfile iProfile) {
+    AccountHeader providesAccountHeader(IProfile iProfile) {
 
-        AccountHeader.Result headerResult = new AccountHeader()
+        return new AccountHeaderBuilder()
                 .withActivity(activity)
                 .withHeaderBackground(R.drawable.header)
                 .addProfiles(iProfile)
                 .build();
-
-        return headerResult;
-
     }
 
     @Provides
     @PerActivity
-    IProfile proviesIProfile(User user) {
+    IProfile providesIProfile(User user) {
         IProfile profile = new ProfileDrawerItem()
                 .withName(user.getName())
                 .withEmail(user.getEmail())
