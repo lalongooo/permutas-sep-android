@@ -20,7 +20,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppThemeTemp">
         <activity
-            android:name="com.permutassep.presentation.view.activity.PostListActivity"
+            android:name="com.permutassep.presentation.view.activity.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
             <intent-filter>

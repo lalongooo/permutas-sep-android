@@ -2,6 +2,8 @@ package com.permutassep.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import javax.inject.Inject;
+
 /**
  * Created by lalongooo on 02/03/15.
  */
@@ -19,6 +21,7 @@ public class User {
     private String socialUserId;
     private String password;
 
+    @Inject
     public User(){}
 
     public User(int id, String name, String email, String phone, String password) {

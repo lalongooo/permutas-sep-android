@@ -121,13 +121,6 @@ public class PostListFragment extends BaseFragment implements PostsListView {
     }
 
     /**
-     * Interface for listening post list item click events.
-     */
-    public interface PostListListener {
-        void onPostClicked(final PostModel postModel);
-    }
-
-    /**
      * Methods from the implemented interface PostsListView
      */
 
@@ -193,5 +186,12 @@ public class PostListFragment extends BaseFragment implements PostsListView {
     public void onDestroy() {
         super.onDestroy();
         this.postListPresenter.destroy();
+    }
+
+    /**
+     * Interface for listening post list item click events.
+     */
+    public interface PostListListener {
+        void onPostClicked(final PostModel postModel);
     }
 }

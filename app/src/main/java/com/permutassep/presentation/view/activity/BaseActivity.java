@@ -1,9 +1,9 @@
 package com.permutassep.presentation.view.activity;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import com.permutassep.presentation.AndroidApplication;
 import com.permutassep.presentation.internal.di.components.ApplicationComponent;
@@ -15,7 +15,7 @@ import javax.inject.Inject;
 /**
  * Base {@link android.app.Activity} class for every Activity in this application.
  */
-public abstract class BaseActivity extends Activity {
+public abstract class BaseActivity extends AppCompatActivity {
 
     @Inject
     Navigator navigator;

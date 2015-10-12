@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import com.permutassep.presentation.internal.di.PerActivity;
 import com.permutassep.presentation.internal.di.modules.ActivityModule;
+import com.permutassep.presentation.view.activity.MainActivity;
 
 import dagger.Component;
 
@@ -16,7 +17,10 @@ import dagger.Component;
  */
 @PerActivity
 @Component(dependencies = ApplicationComponent.class, modules = ActivityModule.class)
-public interface ActivityComponent {
+public interface ActivityComponent extends ApplicationComponent {
+
+    void inject(MainActivity mainActivity);
+
     //Exposed to sub-graphs.
     Activity activity();
 }

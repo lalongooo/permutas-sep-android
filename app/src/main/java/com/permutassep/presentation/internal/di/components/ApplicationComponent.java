@@ -6,6 +6,7 @@ import com.permutassep.domain.executor.PostExecutionThread;
 import com.permutassep.domain.executor.ThreadExecutor;
 import com.permutassep.domain.repository.PostRepository;
 import com.permutassep.presentation.internal.di.modules.ApplicationModule;
+import com.permutassep.presentation.navigation.Navigator;
 import com.permutassep.presentation.view.activity.BaseActivity;
 
 import javax.inject.Singleton;
@@ -21,8 +22,11 @@ public interface ApplicationComponent {
 
     void inject(BaseActivity baseActivity);
 
+
     //Exposed to sub-graphs.
     Context context();
+
+    Navigator navigator();
 
     ThreadExecutor threadExecutor();
 
