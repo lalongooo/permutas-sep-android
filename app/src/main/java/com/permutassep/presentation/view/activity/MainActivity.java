@@ -4,15 +4,21 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.View;
 
 import com.lalongooo.permutassep.R;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import com.permutassep.presentation.internal.di.HasComponent;
 import com.permutassep.presentation.internal.di.components.ActivityComponent;
 import com.permutassep.presentation.internal.di.components.DaggerActivityComponent;
+import com.permutassep.presentation.model.PostModel;
+import com.permutassep.presentation.navigation.Navigator;
 import com.permutassep.presentation.view.HomeView;
+import com.permutassep.presentation.view.fragment.PostListFragment;
 import com.permutassep.utils.Utils;
 
 import javax.inject.Inject;
@@ -20,11 +26,15 @@ import javax.inject.Inject;
 /**
  * Main application screen. This is the app entry point.
  */
-public class MainActivity extends BaseActivity implements HomeView {
+public class MainActivity extends BaseActivity
+        implements HomeView, HasComponent<ActivityComponent>, PostListFragment.PostListListener {
 
 
     public static final int DRAWER_IDENTIFIER_HOME = 1;
     public static final int DRAWER_IDENTIFIER_MY_POSTS = 1;
+
+    @Inject
+    Navigator navigator;
 
     @Inject
     Drawer drawer;
@@ -38,9 +48,12 @@ public class MainActivity extends BaseActivity implements HomeView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         this.initializeInjector();
         activityComponent.inject(this);
+
         renderDrawerOptions();
+        navigator.navigateToPostList(this);
     }
 
     private void initializeInjector() {
@@ -86,5 +99,32 @@ public class MainActivity extends BaseActivity implements HomeView {
                         .withIdentifier(MainActivity.DRAWER_IDENTIFIER_MY_POSTS)
                         .withIcon(GoogleMaterial.Icon.gmd_content_paste)
         );
+
+        drawer.setOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+            @Override
+            public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                return false;
+            }
+        });
+    }
+
+    @Override
+    public void onDrawerItemSelected(int drawerItemId) {
+
+    }
+
+    @Override
+    public void onMenuOptionItemSelected(int menuItemId) {
+
+    }
+
+    @Override
+    public ActivityComponent getComponent() {
+        return activityComponent;
+    }
+
+    @Override
+    public void onPostClicked(PostModel postModel) {
+        navigator.navigateToPostDetails(this, postModel.getId());
     }
 }

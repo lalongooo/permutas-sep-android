@@ -5,7 +5,7 @@ package com.permutassep.presentation.view.fragment;
  */
 
 import android.os.Bundle;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.widget.Toast;
 
 import com.permutassep.presentation.internal.di.HasComponent;
@@ -14,6 +14,8 @@ import com.permutassep.presentation.internal.di.HasComponent;
  * Base {@link Fragment} class for every fragment in this application.
  */
 public class BaseFragment extends Fragment {
+
+    private String TAG = "defaultFragmentTag";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,5 +38,12 @@ public class BaseFragment extends Fragment {
     @SuppressWarnings("unchecked")
     protected <C> C getComponent(Class<C> componentType) {
         return componentType.cast(((HasComponent<C>) getActivity()).getComponent());
+    }
+
+    /**
+     * Retrieve an string used as a tag for the fragment back stack
+     */
+    public String getFragmentTag() {
+        return TAG;
     }
 }

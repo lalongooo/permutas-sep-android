@@ -9,10 +9,14 @@ import android.widget.TextView;
 
 import com.lalongooo.permutassep.R;
 import com.permutassep.model.State;
+import com.permutassep.presentation.internal.di.components.ApplicationComponent;
+import com.permutassep.presentation.internal.di.components.DaggerPostComponent;
 import com.permutassep.presentation.internal.di.components.PostComponent;
+import com.permutassep.presentation.internal.di.modules.PostModule;
 import com.permutassep.presentation.model.PostModel;
 import com.permutassep.presentation.presenter.PostDetailsPresenter;
 import com.permutassep.presentation.view.PostDetailsView;
+import com.permutassep.presentation.view.activity.BaseActivity;
 import com.permutassep.utils.Utils;
 
 import java.text.SimpleDateFormat;
@@ -31,6 +35,7 @@ import butterknife.ButterKnife;
 public class PostDetailsFragment extends BaseFragment implements PostDetailsView {
 
     private static final String ARGUMENT_POST_ID = "ARGUMENT_POST_ID";
+    private String TAG = "PostDetailsFragment";
 
     /**
      * UI elements
@@ -78,6 +83,7 @@ public class PostDetailsFragment extends BaseFragment implements PostDetailsView
     @Inject
     PostDetailsPresenter postDetailsPresenter;
     private int postId;
+    private PostComponent postComponent;
 
     /**
      * Empty constructor
@@ -117,7 +123,13 @@ public class PostDetailsFragment extends BaseFragment implements PostDetailsView
     }
 
     private void initialize() {
-        this.getComponent(PostComponent.class).inject(this);
+        this.postId = getArguments().getInt(ARGUMENT_POST_ID);
+        postComponent = DaggerPostComponent.builder()
+                .applicationComponent(getComponent(ApplicationComponent.class))
+                .activityModule(((BaseActivity)getActivity()).getActivityModule())
+                .postModule(new PostModule(postId))
+                .build();
+        postComponent.inject(this);
         this.postDetailsPresenter.setView(this);
         this.postId = getArguments().getInt(ARGUMENT_POST_ID);
         this.postDetailsPresenter.initialize(this.postId);
@@ -205,5 +217,10 @@ public class PostDetailsFragment extends BaseFragment implements PostDetailsView
     public void onDestroy() {
         super.onDestroy();
         this.postDetailsPresenter.destroy();
+    }
+
+    @Override
+    public String getFragmentTag() {
+        return TAG;
     }
 }

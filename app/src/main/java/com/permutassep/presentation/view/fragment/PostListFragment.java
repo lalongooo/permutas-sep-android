@@ -11,10 +11,13 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.lalongooo.permutassep.R;
+import com.permutassep.presentation.internal.di.components.ApplicationComponent;
+import com.permutassep.presentation.internal.di.components.DaggerPostComponent;
 import com.permutassep.presentation.internal.di.components.PostComponent;
 import com.permutassep.presentation.model.PostModel;
 import com.permutassep.presentation.presenter.PostListPresenter;
 import com.permutassep.presentation.view.PostsListView;
+import com.permutassep.presentation.view.activity.BaseActivity;
 import com.permutassep.presentation.view.adapter.PostsAdapter;
 import com.permutassep.presentation.view.adapter.PostsLayoutManager;
 
@@ -32,6 +35,8 @@ import butterknife.OnClick;
  */
 public class PostListFragment extends BaseFragment implements PostsListView {
 
+    public String TAG = "PostListFragment";
+
     @Inject
     PostListPresenter postListPresenter;
 
@@ -43,6 +48,8 @@ public class PostListFragment extends BaseFragment implements PostsListView {
     RelativeLayout rl_retry;
     @Bind(R.id.bt_retry)
     Button bt_retry;
+
+    private PostComponent postComponent;
 
     private PostsAdapter postsAdapter;
     private PostsLayoutManager postsLayoutManager;
@@ -62,9 +69,13 @@ public class PostListFragment extends BaseFragment implements PostsListView {
         super();
     }
 
+    public static PostListFragment newInstance() {
+        return new PostListFragment();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View fragmentView = inflater.inflate(R.layout.ca_fragment_post_list, container, true);
+        View fragmentView = inflater.inflate(R.layout.ca_fragment_post_list, container, false);
         ButterKnife.bind(this, fragmentView);
         setupUI();
 
@@ -96,7 +107,11 @@ public class PostListFragment extends BaseFragment implements PostsListView {
     }
 
     private void initialize() {
-        this.getComponent(PostComponent.class).inject(this);
+        postComponent = DaggerPostComponent.builder()
+                .applicationComponent(getComponent(ApplicationComponent.class))
+                .activityModule(((BaseActivity)getActivity()).getActivityModule())
+                .build();
+        postComponent.inject(this);
         this.postListPresenter.setView(this);
     }
 
@@ -193,5 +208,10 @@ public class PostListFragment extends BaseFragment implements PostsListView {
      */
     public interface PostListListener {
         void onPostClicked(final PostModel postModel);
+    }
+
+    @Override
+    public String getFragmentTag() {
+        return TAG;
     }
 }
