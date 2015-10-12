@@ -5,7 +5,6 @@ import android.content.Context;
 import com.permutassep.domain.executor.PostExecutionThread;
 import com.permutassep.domain.executor.ThreadExecutor;
 import com.permutassep.domain.repository.PostRepository;
-import com.permutassep.domain.repository.UserRepository;
 import com.permutassep.presentation.internal.di.modules.ApplicationModule;
 import com.permutassep.presentation.view.activity.BaseActivity;
 
