@@ -33,7 +33,7 @@ import butterknife.OnClick;
 /**
  * By Jorge E. Hernandez (@lalongooo) 2015
  */
-public class PostListFragment extends BaseFragment implements PostsListView {
+public class FragmentPostList extends BaseFragment implements PostsListView {
 
     @Inject
     PostListPresenter postListPresenter;
@@ -56,19 +56,19 @@ public class PostListFragment extends BaseFragment implements PostsListView {
     private PostsAdapter.OnItemClickListener onItemClickListener = new PostsAdapter.OnItemClickListener() {
         @Override
         public void onPostItemClicked(PostModel postModel) {
-            if (PostListFragment.this.postListPresenter != null && postModel != null) {
-                PostListFragment.this.postListPresenter.onPostClicked(postModel);
+            if (FragmentPostList.this.postListPresenter != null && postModel != null) {
+                FragmentPostList.this.postListPresenter.onPostClicked(postModel);
             }
         }
     };
 
 
-    public PostListFragment() {
+    public FragmentPostList() {
         super();
     }
 
-    public static PostListFragment newInstance() {
-        return new PostListFragment();
+    public static FragmentPostList newInstance() {
+        return new FragmentPostList();
     }
 
     @Override
@@ -130,7 +130,7 @@ public class PostListFragment extends BaseFragment implements PostsListView {
 
     @OnClick(R.id.bt_retry)
     void onButtonRetryClick() {
-        PostListFragment.this.loadUserList();
+        FragmentPostList.this.loadUserList();
     }
 
     /**

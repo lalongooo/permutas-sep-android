@@ -18,7 +18,7 @@ import com.permutassep.presentation.internal.di.components.DaggerActivityCompone
 import com.permutassep.presentation.model.PostModel;
 import com.permutassep.presentation.navigation.Navigator;
 import com.permutassep.presentation.view.HomeView;
-import com.permutassep.presentation.view.fragment.PostListFragment;
+import com.permutassep.presentation.view.fragment.FragmentPostList;
 import com.permutassep.utils.Utils;
 
 import javax.inject.Inject;
@@ -27,7 +27,7 @@ import javax.inject.Inject;
  * Main application screen. This is the app entry point.
  */
 public class MainActivity extends BaseActivity
-        implements HomeView, HasComponent<ActivityComponent>, PostListFragment.PostListListener {
+        implements HomeView, HasComponent<ActivityComponent>, FragmentPostList.PostListListener {
 
 
     public static final int DRAWER_IDENTIFIER_HOME = 1;

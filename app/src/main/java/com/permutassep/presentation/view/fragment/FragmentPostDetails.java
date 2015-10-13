@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -27,12 +28,13 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by lalongooo on 27/09/15.
  **/
 
-public class PostDetailsFragment extends BaseFragment implements PostDetailsView {
+public class FragmentPostDetails extends BaseFragment implements PostDetailsView {
 
     private static final String ARGUMENT_POST_ID = "ARGUMENT_POST_ID";
 
@@ -78,6 +80,8 @@ public class PostDetailsFragment extends BaseFragment implements PostDetailsView
     RelativeLayout rl_progress;
     @Bind(R.id.rl_retry)
     RelativeLayout rl_retry;
+    @Bind(R.id.layoutPostDetails)
+    LinearLayout layoutPostDetails;
 
     @Inject
     PostDetailsPresenter postDetailsPresenter;
@@ -87,24 +91,24 @@ public class PostDetailsFragment extends BaseFragment implements PostDetailsView
     /**
      * Empty constructor
      */
-    public PostDetailsFragment() {
+    public FragmentPostDetails() {
         super();
     }
 
     /**
-     * A static method to create a new instance of the {@link PostDetailsFragment} class
+     * A static method to create a new instance of the {@link FragmentPostDetails} class
      *
      * @param postId The id of the post to be displayed
-     * @return An instance of {@link PostDetailsFragment}
+     * @return An instance of {@link FragmentPostDetails}
      */
-    public static PostDetailsFragment newInstance(int postId) {
-        PostDetailsFragment postDetailsFragment = new PostDetailsFragment();
+    public static FragmentPostDetails newInstance(int postId) {
+        FragmentPostDetails fragmentPostDetails = new FragmentPostDetails();
 
         Bundle args = new Bundle();
         args.putInt(ARGUMENT_POST_ID, postId);
-        postDetailsFragment.setArguments(args);
+        fragmentPostDetails.setArguments(args);
 
-        return postDetailsFragment;
+        return fragmentPostDetails;
     }
 
     @Override
@@ -134,6 +138,11 @@ public class PostDetailsFragment extends BaseFragment implements PostDetailsView
         this.postDetailsPresenter.initialize(this.postId);
     }
 
+    @OnClick(R.id.bt_retry)
+    void onButtonRetryClick() {
+        this.postDetailsPresenter.initialize(this.postId);
+    }
+
     /**
      * Methods from the implemented interface PostDetailsView
      */
@@ -141,7 +150,6 @@ public class PostDetailsFragment extends BaseFragment implements PostDetailsView
     @Override
     public void renderPost(PostModel post) {
         if (post != null) {
-
             HashMap<String, State> states = Utils.getStates(getActivity());
             this.tvStateFromCode.setText(states.get((post.getStateFromCode())).getShortCode());
             this.tvStateToCode.setText(states.get((post.getStateToCode())).getShortCode());
@@ -159,6 +167,7 @@ public class PostDetailsFragment extends BaseFragment implements PostDetailsView
             this.tvWorkdayType.setText(post.getWorkdayType());
             this.tvPositionType.setText(post.getPositionType());
             this.tvPostDate.setText(new SimpleDateFormat("HH:mm' - 'dd MMM yy", Locale.getDefault()).format(post.getPostDate()));
+            this.layoutPostDetails.setVisibility(View.VISIBLE);
 
             if (post.isTeachingCareer()) {
                 tvIsTeachingCareer.setText(getString(R.string.app_post_detail_teaching_career));

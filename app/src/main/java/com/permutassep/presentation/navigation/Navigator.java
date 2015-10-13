@@ -19,8 +19,8 @@ import android.support.v4.app.FragmentTransaction;
 
 import com.lalongooo.permutassep.R;
 import com.permutassep.presentation.view.activity.BaseActivity;
-import com.permutassep.presentation.view.fragment.PostDetailsFragment;
-import com.permutassep.presentation.view.fragment.PostListFragment;
+import com.permutassep.presentation.view.fragment.FragmentPostDetails;
+import com.permutassep.presentation.view.fragment.FragmentPostList;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -48,7 +48,7 @@ public class Navigator {
         if (activity != null) {
 
             FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.add(R.id.fragmentContainer, PostListFragment.newInstance());
+            fragmentTransaction.add(R.id.fragmentContainer, FragmentPostList.newInstance());
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
             fragmentTransaction.commit();
@@ -64,7 +64,7 @@ public class Navigator {
         if (activity != null) {
             FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
             fragmentTransaction.hide(activity.getSupportFragmentManager().findFragmentById(R.id.fragmentContainer));
-            fragmentTransaction.add(R.id.fragmentContainer, PostDetailsFragment.newInstance(postId));
+            fragmentTransaction.add(R.id.fragmentContainer, FragmentPostDetails.newInstance(postId));
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
             fragmentTransaction.commit();
