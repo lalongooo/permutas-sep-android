@@ -15,8 +15,6 @@ import com.permutassep.presentation.internal.di.HasComponent;
  */
 public class BaseFragment extends Fragment {
 
-    private String TAG = "defaultFragmentTag";
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,12 +36,5 @@ public class BaseFragment extends Fragment {
     @SuppressWarnings("unchecked")
     protected <C> C getComponent(Class<C> componentType) {
         return componentType.cast(((HasComponent<C>) getActivity()).getComponent());
-    }
-
-    /**
-     * Retrieve an string used as a tag for the fragment back stack
-     */
-    public String getFragmentTag() {
-        return TAG;
     }
 }

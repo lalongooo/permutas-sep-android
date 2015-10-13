@@ -35,8 +35,6 @@ import butterknife.OnClick;
  */
 public class PostListFragment extends BaseFragment implements PostsListView {
 
-    public String TAG = "PostListFragment";
-
     @Inject
     PostListPresenter postListPresenter;
 
@@ -208,10 +206,5 @@ public class PostListFragment extends BaseFragment implements PostsListView {
      */
     public interface PostListListener {
         void onPostClicked(final PostModel postModel);
-    }
-
-    @Override
-    public String getFragmentTag() {
-        return TAG;
     }
 }

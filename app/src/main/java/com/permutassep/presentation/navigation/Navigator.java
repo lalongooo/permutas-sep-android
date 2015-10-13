@@ -15,14 +15,10 @@
  */
 package com.permutassep.presentation.navigation;
 
-import android.content.Context;
-import android.content.Intent;
 import android.support.v4.app.FragmentTransaction;
 
 import com.lalongooo.permutassep.R;
 import com.permutassep.presentation.view.activity.BaseActivity;
-import com.permutassep.presentation.view.activity.PostDetailsActivity;
-import com.permutassep.presentation.view.fragment.BaseFragment;
 import com.permutassep.presentation.view.fragment.PostDetailsFragment;
 import com.permutassep.presentation.view.fragment.PostListFragment;
 
@@ -42,18 +38,6 @@ public class Navigator {
     public void Navigator() {
     }
 
-    /**
-     * Goes to the post details screen.
-     *
-     * @param context A Context needed to open the destiny activity.
-     */
-    public void navigateToPostDetails(Context context, int postId) {
-        if (context != null) {
-            Intent intentToLaunch = PostDetailsActivity.getCallingIntent(context, postId);
-            context.startActivity(intentToLaunch);
-        }
-    }
-
 
     /**
      * Navigates to the post list fragment.
@@ -62,7 +46,12 @@ public class Navigator {
      */
     public void navigateToPostList(BaseActivity activity) {
         if (activity != null) {
-            replaceFragment(activity, R.id.fragmentContainer, PostListFragment.newInstance(), false);
+
+            FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.add(R.id.fragmentContainer, PostListFragment.newInstance());
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            fragmentTransaction.commit();
         }
     }
 
@@ -73,24 +62,12 @@ public class Navigator {
      */
     public void navigateToPostDetails(BaseActivity activity, int postId) {
         if (activity != null) {
-            replaceFragment(activity, R.id.fragmentContainer, PostDetailsFragment.newInstance(postId), true);
+            FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.hide(activity.getSupportFragmentManager().findFragmentById(R.id.fragmentContainer));
+            fragmentTransaction.add(R.id.fragmentContainer, PostDetailsFragment.newInstance(postId));
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            fragmentTransaction.commit();
         }
-    }
-
-    /**
-     * Helper method to replace fragments in the host activity.
-     *
-     * @param activity        The fragment host activity.
-     * @param containerViewId The container id of the fragment to be replaced.
-     * @param fragment        The new fragment.
-     * @param addToBackStack  Flag indicating if the replaced fragment will be added to the back stack.
-     */
-    protected void replaceFragment(BaseActivity activity, int containerViewId, BaseFragment fragment, boolean addToBackStack) {
-        FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(containerViewId, fragment, fragment.getClass().getName());
-        if (addToBackStack) {
-            fragmentTransaction.addToBackStack(fragment.getFragmentTag());
-        }
-        fragmentTransaction.commit();
     }
 }

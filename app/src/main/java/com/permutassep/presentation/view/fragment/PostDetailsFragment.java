@@ -35,7 +35,6 @@ import butterknife.ButterKnife;
 public class PostDetailsFragment extends BaseFragment implements PostDetailsView {
 
     private static final String ARGUMENT_POST_ID = "ARGUMENT_POST_ID";
-    private String TAG = "PostDetailsFragment";
 
     /**
      * UI elements
@@ -217,10 +216,5 @@ public class PostDetailsFragment extends BaseFragment implements PostDetailsView
     public void onDestroy() {
         super.onDestroy();
         this.postDetailsPresenter.destroy();
-    }
-
-    @Override
-    public String getFragmentTag() {
-        return TAG;
     }
 }
