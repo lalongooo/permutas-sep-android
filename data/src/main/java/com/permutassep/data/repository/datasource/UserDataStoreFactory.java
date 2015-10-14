@@ -38,13 +38,6 @@ public class UserDataStoreFactory {
     }
 
     /**
-     * Create {@link UserDataStore} from a user id.
-     */
-    public UserDataStore create(int userId) {
-        return createCloudDataStore();
-    }
-
-    /**
      * Create {@link UserDataStore} to retrieve data from the Cloud.
      */
     public UserDataStore createCloudDataStore() {

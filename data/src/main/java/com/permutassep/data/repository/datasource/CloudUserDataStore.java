@@ -14,7 +14,7 @@ import rx.Observable;
  */
 public class CloudUserDataStore implements UserDataStore {
 
-    private final PermutasSEPRestClient restClient;
+    private PermutasSEPRestClient restClient;
 
     @Inject
     public CloudUserDataStore() {

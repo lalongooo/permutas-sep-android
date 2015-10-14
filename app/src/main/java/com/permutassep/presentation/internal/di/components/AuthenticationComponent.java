@@ -1,0 +1,19 @@
+package com.permutassep.presentation.internal.di.components;
+
+/**
+ * By Jorge E. Hernandez (@lalongooo) 2015
+ */
+
+import com.permutassep.presentation.internal.di.PerActivity;
+import com.permutassep.presentation.internal.di.modules.ActivityModule;
+import com.permutassep.presentation.internal.di.modules.AuthenticationModule;
+import com.permutassep.presentation.view.fragment.FragmentLogin;
+
+import dagger.Component;
+
+@PerActivity
+@Component(dependencies = ApplicationComponent.class, modules = {ActivityModule.class, AuthenticationModule.class})
+public interface AuthenticationComponent extends ActivityComponent{
+
+     void inject(FragmentLogin fragmentLogin);
+}

@@ -3,10 +3,12 @@ package com.permutassep.presentation.internal.di.modules;
 import android.content.Context;
 
 import com.permutassep.data.executor.JobExecutor;
+import com.permutassep.data.repository.AuthenticationDataRepository;
 import com.permutassep.data.repository.PostDataRepository;
 import com.permutassep.data.repository.UserDataRepository;
 import com.permutassep.domain.executor.PostExecutionThread;
 import com.permutassep.domain.executor.ThreadExecutor;
+import com.permutassep.domain.repository.AuthenticationRepository;
 import com.permutassep.domain.repository.PostRepository;
 import com.permutassep.domain.repository.UserRepository;
 import com.permutassep.presentation.AndroidApplication;
@@ -64,4 +66,11 @@ public class ApplicationModule {
     PostRepository providePostRepository(PostDataRepository postDataRepository) {
         return postDataRepository;
     }
+
+    @Provides
+    @Singleton
+    AuthenticationRepository providesAuthenticationRepository(AuthenticationDataRepository authenticationDataRepository) {
+        return authenticationDataRepository;
+    }
+
 }

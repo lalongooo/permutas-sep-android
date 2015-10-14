@@ -19,6 +19,7 @@ import android.support.v4.app.FragmentTransaction;
 
 import com.lalongooo.permutassep.R;
 import com.permutassep.presentation.view.activity.BaseActivity;
+import com.permutassep.presentation.view.fragment.FragmentLogin;
 import com.permutassep.presentation.view.fragment.FragmentPostDetails;
 import com.permutassep.presentation.view.fragment.FragmentPostList;
 
@@ -35,9 +36,24 @@ public class Navigator {
      * Empty constructor used by Dagger 2
      */
     @Inject
-    public void Navigator() {
+    public Navigator() {
     }
 
+    /**
+     * Navigates to the login screen fragment
+     *
+     * @param activity An activity needed to load the destination fragment.
+     */
+    public void navigateToLogin(BaseActivity activity) {
+        if (activity != null) {
+
+            FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.add(R.id.fragmentContainer, FragmentLogin.newInstance());
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            fragmentTransaction.commit();
+        }
+    }
 
     /**
      * Navigates to the post list fragment.

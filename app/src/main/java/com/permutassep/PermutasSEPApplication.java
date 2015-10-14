@@ -47,7 +47,8 @@ public class PermutasSEPApplication extends Application {
 
     /**
      * Retrieves the Tracker object to send hits to of Google Analytics
-     * */
+     * @return A {@link Tracker} object
+     */
     public synchronized Tracker getTracker() {
         GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
         analytics.setDryRun(BuildConfig.DEBUG);

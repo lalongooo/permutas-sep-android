@@ -26,7 +26,7 @@ public class UserDataRepository implements UserRepository {
     /**
      * Constructs a {@link UserRepository}.
      *
-     * @param dataStoreFactory A factory to construct different data source implementations.
+     * @param dataStoreFactory     A factory to construct different data source implementations.
      * @param userEntityDataMapper {@link UserEntityDataMapper}.
      */
     @Inject
@@ -38,7 +38,6 @@ public class UserDataRepository implements UserRepository {
     @SuppressWarnings("Convert2MethodRef")
     @Override
     public Observable<List<User>> users() {
-        //we always get all users from the cloud
         final UserDataStore userDataStore = this.userDataStoreFactory.createCloudDataStore();
         return userDataStore.getUsersList()
                 .map(userEntities -> this.userEntityDataMapper.transform(userEntities));
@@ -47,7 +46,7 @@ public class UserDataRepository implements UserRepository {
     @SuppressWarnings("Convert2MethodRef")
     @Override
     public Observable<User> user(int userId) {
-        final UserDataStore userDataStore = this.userDataStoreFactory.create(userId);
+        final UserDataStore userDataStore = this.userDataStoreFactory.createCloudDataStore();
         return userDataStore.getUserDetails(userId)
                 .map(userEntity -> this.userEntityDataMapper.transform(userEntity));
     }

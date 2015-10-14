@@ -85,6 +85,25 @@ public class PostDetailsPresenter implements Presenter {
     }
 
     /**
+     * Methods from the {@link Presenter}
+     */
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void destroy() {
+        getPostDetailsUseCase.unsubscribe();
+    }
+
+    /**
      * Methods from the DefaultSubscriber<Post>
      */
     private final class PostDetailSubscriber extends DefaultSubscriber<Post> {
@@ -105,24 +124,5 @@ public class PostDetailsPresenter implements Presenter {
             PostDetailsPresenter.this.showUserDetailsInView(post);
         }
 
-    }
-
-    /**
-     * Methods from the {@link Presenter}
-     */
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void destroy() {
-        getPostDetailsUseCase.unsubscribe();
     }
 }

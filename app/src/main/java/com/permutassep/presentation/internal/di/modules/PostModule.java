@@ -43,4 +43,6 @@ public class PostModule {
             PostExecutionThread postExecutionThread) {
         return new GetPostDetails(postId, postRepository, threadExecutor, postExecutionThread);
     }
+
+
 }

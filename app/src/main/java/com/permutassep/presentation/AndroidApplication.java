@@ -6,6 +6,11 @@ package com.permutassep.presentation;
 
 import android.app.Application;
 
+import com.facebook.FacebookSdk;
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.Logger;
+import com.google.android.gms.analytics.Tracker;
+import com.lalongooo.permutassep.BuildConfig;
 import com.permutassep.presentation.internal.di.components.ApplicationComponent;
 import com.permutassep.presentation.internal.di.components.DaggerApplicationComponent;
 import com.permutassep.presentation.internal.di.modules.ApplicationModule;
@@ -21,6 +26,7 @@ public class AndroidApplication extends Application {
     public void onCreate() {
         super.onCreate();
         this.initializeInjector();
+        FacebookSdk.sdkInitialize(getApplicationContext());
     }
 
     private void initializeInjector() {
@@ -32,4 +38,19 @@ public class AndroidApplication extends Application {
     public ApplicationComponent getApplicationComponent() {
         return this.applicationComponent;
     }
+
+    /**
+     * Retrieves the Tracker object to send hits to of Google Analytics
+     *
+     * @return A {@link Tracker} object
+     */
+    public synchronized Tracker getTracker() {
+        GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
+        analytics.setDryRun(BuildConfig.DEBUG);
+        analytics.getLogger().setLogLevel(Logger.LogLevel.VERBOSE);
+        Tracker t = analytics.newTracker(BuildConfig.google_analytics_property_id);
+        t.enableAdvertisingIdCollection(true);
+        return t;
+    }
+
 }

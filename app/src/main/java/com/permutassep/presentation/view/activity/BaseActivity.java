@@ -1,5 +1,6 @@
 package com.permutassep.presentation.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -9,6 +10,7 @@ import com.permutassep.presentation.AndroidApplication;
 import com.permutassep.presentation.internal.di.components.ApplicationComponent;
 import com.permutassep.presentation.internal.di.modules.ActivityModule;
 import com.permutassep.presentation.navigation.Navigator;
+import com.permutassep.presentation.utils.PrefUtils;
 
 import javax.inject.Inject;
 
@@ -24,6 +26,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.getApplicationComponent().inject(this);
+        if (!PrefUtils.isTosAccepted(this)) {
+            Intent intent = new Intent(this, ActivityWelcome.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
     /**

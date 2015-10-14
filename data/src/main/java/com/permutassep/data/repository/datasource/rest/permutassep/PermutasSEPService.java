@@ -1,6 +1,7 @@
 package com.permutassep.data.repository.datasource.rest.permutassep;
 
 
+import com.permutassep.data.entity.LoginDataWrapperEntity;
 import com.permutassep.data.entity.PostEntity;
 import com.permutassep.data.entity.PostPageEntity;
 import com.permutassep.data.entity.UserEntity;
@@ -8,7 +9,9 @@ import com.permutassep.data.entity.UserEntity;
 import java.util.List;
 import java.util.Map;
 
+import retrofit.http.Body;
 import retrofit.http.GET;
+import retrofit.http.POST;
 import retrofit.http.Path;
 import retrofit.http.Query;
 import retrofit.http.QueryMap;
@@ -21,7 +24,6 @@ public interface PermutasSEPService {
 
     @GET("/users/{id}")
     Observable<UserEntity> getUser(@Path("id") int userId);
-
 
     @GET("/posts/")
     Observable<List<PostEntity>> getPosts();
@@ -37,5 +39,8 @@ public interface PermutasSEPService {
 
     @GET("/posts/")
     Observable<List<PostEntity>> searchPosts(@QueryMap Map<String, String> parameters);
+
+    @POST("/login/")
+    Observable<UserEntity> login(@Body LoginDataWrapperEntity loginDataWrapperEntity);
 
 }

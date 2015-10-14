@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.permutassep.presentation.AndroidApplication;
 import com.permutassep.ui.ActivityWelcome;
 import com.permutassep.utils.PrefUtils;
 
@@ -28,7 +29,7 @@ public class BaseActivity extends AppCompatActivity {
 
         if(GooglePlayServicesUtil.isGooglePlayServicesAvailable(getApplicationContext()) == 0) {
             // Get tracker.
-            Tracker t = ((PermutasSEPApplication) getApplication()).getTracker();
+            Tracker t = ((AndroidApplication) getApplication()).getTracker();
             // Set screen name.
             t.setScreenName(getClass().getName());
             // Send a screen view.
