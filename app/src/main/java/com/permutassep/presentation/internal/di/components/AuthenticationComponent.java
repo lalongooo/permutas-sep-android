@@ -8,6 +8,7 @@ import com.permutassep.presentation.internal.di.PerActivity;
 import com.permutassep.presentation.internal.di.modules.ActivityModule;
 import com.permutassep.presentation.internal.di.modules.AuthenticationModule;
 import com.permutassep.presentation.view.fragment.FragmentLogin;
+import com.permutassep.presentation.view.fragment.FragmentSignUp;
 
 import dagger.Component;
 
@@ -16,4 +17,6 @@ import dagger.Component;
 public interface AuthenticationComponent extends ActivityComponent{
 
      void inject(FragmentLogin fragmentLogin);
+
+     void inject(FragmentSignUp fragmentSignUp);
 }

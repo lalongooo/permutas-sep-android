@@ -12,4 +12,6 @@ import rx.Observable;
 public interface AuthenticationDataStore {
 
     Observable<UserEntity> login(LoginDataWrapperEntity loginDataWrapperEntity);
+
+    Observable<UserEntity> signUp(UserEntity userEntity);
 }

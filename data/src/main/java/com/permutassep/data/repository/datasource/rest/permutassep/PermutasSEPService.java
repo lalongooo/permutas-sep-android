@@ -43,4 +43,7 @@ public interface PermutasSEPService {
     @POST("/login/")
     Observable<UserEntity> login(@Body LoginDataWrapperEntity loginDataWrapperEntity);
 
+    @POST("/users/")
+    Observable<UserEntity> signUp(@Body UserEntity userEntity);
+
 }

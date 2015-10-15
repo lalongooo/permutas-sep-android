@@ -12,4 +12,6 @@ import rx.Observable;
 public interface AuthenticationRepository {
 
     Observable<User> login(LoginDataWrapper loginDataWrapper);
+
+    Observable<User> signUp(User user);
 }

@@ -4,6 +4,7 @@ package com.permutassep.data.repository;
  * By Jorge E. Hernandez (@lalongooo) 2015
  */
 
+import com.permutassep.data.entity.UserEntity;
 import com.permutassep.data.entity.mapper.LoginDataWrapperDataMapper;
 import com.permutassep.data.entity.mapper.UserEntityDataMapper;
 import com.permutassep.data.repository.datasource.AuthenticationDataStore;
@@ -34,6 +35,13 @@ public class AuthenticationDataRepository implements AuthenticationRepository {
     public Observable<User> login(LoginDataWrapper loginDataWrapper) {
         AuthenticationDataStore authenticationDataStore = authenticationDataStoreFactory.createCloudDataStore();
         return authenticationDataStore.login(loginDataWrapperDataMapper.transform(loginDataWrapper))
+                .map(this.userEntityDataMapper::transform);
+    }
+
+    @Override
+    public Observable<User> signUp(User user) {
+        AuthenticationDataStore authenticationDataStore = authenticationDataStoreFactory.createCloudDataStore();
+        return authenticationDataStore.signUp(new UserEntity(user.getId(), user.getEmail(), user.getName(), user.getPassword(), user.getPhone(), user.getSocialUserId()))
                 .map(this.userEntityDataMapper::transform);
     }
 }

@@ -26,4 +26,9 @@ public class CloudAuthenticationDataStore implements AuthenticationDataStore {
     public Observable<UserEntity> login(LoginDataWrapperEntity loginDataWrapperEntity) {
         return restClient.get().login(loginDataWrapperEntity);
     }
+
+    @Override
+    public Observable<UserEntity> signUp(UserEntity userEntity) {
+        return restClient.get().signUp(userEntity);
+    }
 }
