@@ -4,16 +4,26 @@ package com.permutassep.presentation.view.fragment;
  * By Jorge E. Hernandez (@lalongooo) 2015
  */
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.widget.Toast;
 
 import com.permutassep.presentation.internal.di.HasComponent;
+import com.permutassep.presentation.navigation.Navigator;
 
 /**
  * Base {@link Fragment} class for every fragment in this application.
  */
 public class BaseFragment extends Fragment {
+
+    protected Navigator.NavigationListener navigationListener;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.navigationListener = (Navigator.NavigationListener) getActivity();
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

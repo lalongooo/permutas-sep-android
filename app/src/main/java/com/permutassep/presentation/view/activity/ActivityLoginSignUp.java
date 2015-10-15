@@ -18,7 +18,7 @@ public class ActivityLoginSignUp extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login_signup);
+        setContentView(R.layout.ca_fragment_login_signup);
         setUI();
     }
 

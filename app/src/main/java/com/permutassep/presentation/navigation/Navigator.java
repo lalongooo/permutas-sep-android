@@ -20,8 +20,10 @@ import android.support.v4.app.FragmentTransaction;
 import com.lalongooo.permutassep.R;
 import com.permutassep.presentation.view.activity.BaseActivity;
 import com.permutassep.presentation.view.fragment.FragmentLogin;
+import com.permutassep.presentation.view.fragment.FragmentLoginSignUp;
 import com.permutassep.presentation.view.fragment.FragmentPostDetails;
 import com.permutassep.presentation.view.fragment.FragmentPostList;
+import com.permutassep.presentation.view.fragment.FragmentSignUp;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -32,11 +34,47 @@ import javax.inject.Singleton;
 @Singleton
 public class Navigator {
 
+    public interface NavigationListener {
+        void onNextFragment(Class c);
+    }
+
     /**
      * Empty constructor used by Dagger 2
      */
     @Inject
     public Navigator() {
+    }
+
+    /**
+     * Navigates to the log in/sign up screen fragment
+     *
+     * @param activity An activity needed to load the destination fragment.
+     */
+    public void navigateToLoginSignUp(BaseActivity activity) {
+        if (activity != null) {
+
+            FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.add(R.id.fragmentContainer, FragmentLoginSignUp.newInstance());
+            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            fragmentTransaction.commit();
+        }
+    }
+
+    /**
+     * Navigates to the sign up screen fragment
+     *
+     * @param activity An activity needed to load the destination fragment.
+     */
+    public void navigateToSignup(BaseActivity activity) {
+        if (activity != null) {
+
+            FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.hide(activity.getSupportFragmentManager().findFragmentById(R.id.fragmentContainer));
+            fragmentTransaction.add(R.id.fragmentContainer, FragmentSignUp.newInstance());
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            fragmentTransaction.commit();
+        }
     }
 
     /**
@@ -48,6 +86,7 @@ public class Navigator {
         if (activity != null) {
 
             FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.hide(activity.getSupportFragmentManager().findFragmentById(R.id.fragmentContainer));
             fragmentTransaction.add(R.id.fragmentContainer, FragmentLogin.newInstance());
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
@@ -64,6 +103,7 @@ public class Navigator {
         if (activity != null) {
 
             FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.hide(activity.getSupportFragmentManager().findFragmentById(R.id.fragmentContainer));
             fragmentTransaction.add(R.id.fragmentContainer, FragmentPostList.newInstance());
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);

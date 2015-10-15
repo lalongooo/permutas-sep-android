@@ -142,7 +142,7 @@ public class ActivitySignUp extends BaseActivity {
             @Override
             public void onClick(View v) {
 
-                if (f.validate()) {
+                if (f.isValid()) {
 
                     showDialog(getString(R.string.app_sign_up_log_reg_dlg_title), getString(R.string.app_sign_up_log_reg_dlg_text));
 

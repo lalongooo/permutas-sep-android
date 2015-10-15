@@ -1,8 +1,9 @@
 package com.permutassep.presentation.view.fragment;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -75,6 +76,12 @@ public class FragmentPostList extends BaseFragment implements PostsListView {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View fragmentView = inflater.inflate(R.layout.ca_fragment_post_list, container, false);
         ButterKnife.bind(this, fragmentView);
+
+        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.show();
+        }
+
         setupUI();
 
         return fragmentView;
@@ -90,10 +97,10 @@ public class FragmentPostList extends BaseFragment implements PostsListView {
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        if (activity instanceof PostListListener) {
-            this.postListListener = (PostListListener) activity;
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (getActivity() instanceof PostListListener) {
+            this.postListListener = (PostListListener) getActivity();
         }
     }
 

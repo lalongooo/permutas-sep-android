@@ -74,7 +74,7 @@ public class ActivityNewPassword extends BaseActivity {
         btnResetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (f.validate()) {
+                if (f.isValid()) {
                     if (etPasswordOne.getText().toString().equals(etPasswordTwo.getText().toString())) {
 
                         showDialog(getString(R.string.please_wait), getString(R.string.new_password_resetting_password));

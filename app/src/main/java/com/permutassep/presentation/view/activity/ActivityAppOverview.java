@@ -16,7 +16,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lalongooo.permutassep.R;
-import com.permutassep.model.User;
 import com.permutassep.utils.Utils;
 import com.viewpagerindicator.CirclePageIndicator;
 import com.viewpagerindicator.PageIndicator;
@@ -143,14 +142,7 @@ public class ActivityAppOverview extends BaseActivity {
         startMessagingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                User user = Utils.getUser(getApplicationContext());
-                Intent i = new Intent();
-                if (user != null) {
-                    i.setClass(ActivityAppOverview.this, ActivityMain.class);
-                } else {
-                    i.setClass(ActivityAppOverview.this, ActivityLoginSignUp.class);
-                }
-                startActivity(i);
+                startActivity(new Intent(ActivityAppOverview.this, ActivityMain.class));
                 finish();
             }
         });

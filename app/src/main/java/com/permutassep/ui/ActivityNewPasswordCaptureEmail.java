@@ -14,7 +14,6 @@ import android.widget.TextView;
 import com.lalongooo.permutassep.BuildConfig;
 import com.lalongooo.permutassep.R;
 import com.permutassep.BaseActivity;
-import com.permutassep.config.Config;
 import com.permutassep.model.AuthModel;
 import com.permutassep.model.Email;
 import com.permutassep.model.User;
@@ -75,7 +74,7 @@ public class ActivityNewPasswordCaptureEmail extends BaseActivity {
         btnResetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (f.validate()) {
+                if (f.isValid()) {
 
                     showDialog(getString(R.string.please_wait), getString(R.string.new_password_capure_email_loading));
                     new PermutasSEPRestClient().get().login(new AuthModel(etEmail.getText().toString(), BuildConfig.com_permutassep_fb_login_dummy_password), new Callback<User>() {

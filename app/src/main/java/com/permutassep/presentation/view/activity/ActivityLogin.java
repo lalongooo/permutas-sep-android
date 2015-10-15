@@ -22,10 +22,10 @@ import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.lalongooo.permutassep.BuildConfig;
 import com.lalongooo.permutassep.R;
-import com.permutassep.PermutasSEPApplication;
 import com.permutassep.config.Config;
 import com.permutassep.model.AuthModel;
 import com.permutassep.model.User;
+import com.permutassep.presentation.AndroidApplication;
 import com.permutassep.rest.permutassep.PermutasSEPRestClient;
 import com.permutassep.ui.ActivityMain;
 import com.permutassep.ui.ActivityNewPasswordCaptureEmail;
@@ -76,7 +76,7 @@ public class ActivityLogin extends BaseActivity {
                                 hideDialog();
 
                                 // Get tracker.
-                                ((PermutasSEPApplication) getApplication())
+                                ((AndroidApplication) getApplication())
                                         .getTracker()
                                         .send(new HitBuilders.EventBuilder()
                                                 .setCategory(getString(R.string.ga_event_category_ux))
@@ -90,7 +90,7 @@ public class ActivityLogin extends BaseActivity {
                                     email = object.getString("email");
                                 } catch (JSONException e) {
 
-                                    ((PermutasSEPApplication) getApplication())
+                                    ((AndroidApplication) getApplication())
                                             .getTracker()
                                             .send(new HitBuilders.EventBuilder()
                                                     .setCategory(getString(R.string.ga_event_category_ux))
@@ -98,7 +98,13 @@ public class ActivityLogin extends BaseActivity {
                                                     .setLabel(getString(R.string.ga_fb_login_action_label_unauthorized_email))
                                                     .build());
 
-                                    final EditText input = new EditText(ActivityLogin.this);
+                                    EditText input = new EditText(ActivityLogin.this);
+                                    int padding = 15;
+                                    float scale = getResources().getDisplayMetrics().density;
+                                    int dpAsPixels = (int) (padding * scale + 0.5f);
+                                    input.setPadding(dpAsPixels, dpAsPixels, dpAsPixels, dpAsPixels);
+
+
                                     AlertDialog.Builder alert = new AlertDialog.Builder(ActivityLogin.this);
                                     alert.setView(input);
                                     alert.setCancelable(false);
@@ -106,6 +112,8 @@ public class ActivityLogin extends BaseActivity {
                                     alert.setMessage(R.string.app_login_fb_dlg_missing_email_text);
                                     alert.setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int whichButton) {
+
+                                            EditText input = (EditText)((AlertDialog) dialog).getCurrentFocus();
                                             if (new EmailValidator(getApplicationContext()).isValid(input.getText().toString())) {
                                                 login(input.getText().toString());
                                             } else {
@@ -125,7 +133,7 @@ public class ActivityLogin extends BaseActivity {
                                 }
 
                                 if (email != null) {
-                                    ((PermutasSEPApplication) getApplication())
+                                    ((AndroidApplication) getApplication())
                                             .getTracker()
                                             .send(new HitBuilders.EventBuilder()
                                                     .setCategory(getString(R.string.ga_event_category_ux))
@@ -171,12 +179,12 @@ public class ActivityLogin extends BaseActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (f.validate()) {
+                if (f.isValid()) {
                     showDialog(getString(R.string.app_login_dlg_login_title), getString(R.string.app_login_dlg_login_logging_in));
                     new PermutasSEPRestClient().get().login(new AuthModel(etNameOrUsername.getText().toString(), etPassword.getText().toString()), new Callback<User>() {
                         @Override
                         public void success(User user, retrofit.client.Response response) {
-                            Tracker t = ((PermutasSEPApplication) getApplication()).getTracker();
+                            Tracker t = ((AndroidApplication) getApplication()).getTracker();
                             t.send(new HitBuilders.EventBuilder()
                                     .setCategory(getString(R.string.ga_event_category_ux))
                                     .setAction(getString(R.string.ga_event_action_click))
@@ -193,7 +201,7 @@ public class ActivityLogin extends BaseActivity {
                         public void failure(RetrofitError error) {
                             hideDialog();
                             // Get tracker.
-                            Tracker t = ((PermutasSEPApplication) getApplication()).getTracker();
+                            Tracker t = ((AndroidApplication) getApplication()).getTracker();
                             t.send(new HitBuilders.EventBuilder()
                                     .setCategory(getString(R.string.ga_event_category_ux))
                                     .setAction(getString(R.string.ga_event_action_click))

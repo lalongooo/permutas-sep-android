@@ -2,6 +2,9 @@ package com.permutassep.presentation.view.activity;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
@@ -12,12 +15,17 @@ import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import com.permutassep.model.User;
 import com.permutassep.presentation.internal.di.HasComponent;
 import com.permutassep.presentation.internal.di.components.ActivityComponent;
 import com.permutassep.presentation.internal.di.components.DaggerActivityComponent;
 import com.permutassep.presentation.model.PostModel;
+import com.permutassep.presentation.navigation.Navigator;
 import com.permutassep.presentation.view.HomeView;
+import com.permutassep.presentation.view.fragment.FragmentLogin;
+import com.permutassep.presentation.view.fragment.FragmentLoginSignUp;
 import com.permutassep.presentation.view.fragment.FragmentPostList;
+import com.permutassep.presentation.view.fragment.FragmentSignUp;
 import com.permutassep.utils.Utils;
 
 import javax.inject.Inject;
@@ -26,7 +34,11 @@ import javax.inject.Inject;
  * Main application screen. This is the app entry point.
  */
 public class ActivityMain extends BaseActivity
-        implements HomeView, HasComponent<ActivityComponent>, FragmentPostList.PostListListener {
+        implements HomeView,
+        HasComponent<ActivityComponent>,
+        FragmentPostList.PostListListener,
+        Navigator.NavigationListener,
+        FragmentManager.OnBackStackChangedListener {
 
 
     public static final int DRAWER_IDENTIFIER_HOME = 1;
@@ -44,12 +56,19 @@ public class ActivityMain extends BaseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getSupportFragmentManager().addOnBackStackChangedListener(this);
 
         this.initializeInjector();
         activityComponent.inject(this);
 
         renderDrawerOptions();
-        navigator.navigateToLogin(this);
+
+        User user = Utils.getUser(this);
+        if (user != null) {
+            navigator.navigateToPostList(this);
+        } else {
+            navigator.navigateToLoginSignUp(this);
+        }
     }
 
     private void initializeInjector() {
@@ -123,5 +142,31 @@ public class ActivityMain extends BaseActivity
     @Override
     public void onPostClicked(PostModel postModel) {
         navigator.navigateToPostDetails(this, postModel.getId());
+    }
+
+    @Override
+    public void onNextFragment(Class c) {
+        if (c == FragmentLogin.class) {
+            navigator.navigateToLogin(this);
+        }
+
+        if (c == FragmentSignUp.class) {
+            navigator.navigateToSignup(this);
+        }
+
+        if (c == FragmentPostList.class) {
+            navigator.navigateToPostList(this);
+        }
+    }
+
+    @Override
+    public void onBackStackChanged() {
+        Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
+        if (f instanceof FragmentLoginSignUp) {
+            ActionBar actionBar = getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.hide();
+            }
+        }
     }
 }

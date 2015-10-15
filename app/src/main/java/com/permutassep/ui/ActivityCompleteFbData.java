@@ -77,7 +77,7 @@ public class ActivityCompleteFbData extends BaseActivity {
         btnContinueRegistration.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(f.validate()){
+                if(f.isValid()){
                     showDialog(getString(R.string.app_sign_up_log_reg_dlg_title), getString(R.string.app_sign_up_log_reg_dlg_text));
                     new PermutasSEPRestClient().get().login(new AuthModel(etEmail.getText().toString(), BuildConfig.com_permutassep_fb_login_dummy_password), new Callback<User>() {
                         @Override
