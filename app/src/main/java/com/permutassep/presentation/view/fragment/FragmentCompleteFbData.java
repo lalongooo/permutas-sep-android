@@ -1,5 +1,9 @@
 package com.permutassep.presentation.view.fragment;
 
+/**
+ * By Jorge E. Hernandez (@lalongooo) 2015
+ */
+
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -35,9 +39,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-/**
- * Created by lalongooo on 14/10/15.
- */
 public class FragmentCompleteFbData extends BaseFragment implements SignUpView {
 
     /**
@@ -187,7 +188,7 @@ public class FragmentCompleteFbData extends BaseFragment implements SignUpView {
 
     @Override
     public void showDuplicateEmailErrorMessage() {
-
+        this.showToastMessage(getString(R.string.app_sign_up_compl_fb_data_duplicated_email));
     }
 
     @Override
