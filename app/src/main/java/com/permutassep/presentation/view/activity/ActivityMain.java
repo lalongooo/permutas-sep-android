@@ -38,7 +38,8 @@ public class ActivityMain extends BaseActivity
         HasComponent<ActivityComponent>,
         FragmentPostList.PostListListener,
         Navigator.NavigationListener,
-        FragmentManager.OnBackStackChangedListener {
+        FragmentManager.OnBackStackChangedListener,
+        FragmentSignUp.FacebookSignUpListener {
 
 
     public static final int DRAWER_IDENTIFIER_HOME = 1;
@@ -140,9 +141,25 @@ public class ActivityMain extends BaseActivity
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if(getSupportFragmentManager().getBackStackEntryCount() == 0){
+            finish();
+        }
+    }
+
+    /**
+     * Method from {@link FragmentPostList.PostListListener}
+     */
+
+    @Override
     public void onPostClicked(PostModel postModel) {
         navigator.navigateToPostDetails(this, postModel.getId());
     }
+
+    /**
+     * Method from {@link Navigator.NavigationListener}
+     */
 
     @Override
     public void onNextFragment(Class c) {
@@ -151,7 +168,7 @@ public class ActivityMain extends BaseActivity
         }
 
         if (c == FragmentSignUp.class) {
-            navigator.navigateToSignup(this);
+            navigator.navigateToSignUp(this);
         }
 
         if (c == FragmentPostList.class) {
@@ -159,8 +176,13 @@ public class ActivityMain extends BaseActivity
         }
     }
 
+    /**
+     * Method from {@link FragmentManager.OnBackStackChangedListener}
+     */
+
     @Override
     public void onBackStackChanged() {
+
         Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
         if (f instanceof FragmentLoginSignUp) {
             ActionBar actionBar = getSupportActionBar();
@@ -168,5 +190,14 @@ public class ActivityMain extends BaseActivity
                 actionBar.hide();
             }
         }
+    }
+
+    /**
+     * Method from {@link FragmentSignUp.FacebookSignUpListener}
+     */
+
+    @Override
+    public void onFacebookSignUp(Bundle bundle) {
+        navigator.navigateToCompleteFbData(this, bundle);
     }
 }

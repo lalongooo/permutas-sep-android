@@ -27,6 +27,15 @@ public class UserEntity {
         // empty
     }
 
+    public UserEntity(int id, String email, String name, String password, String phone, String socialUserId) {
+        this.email = email;
+        this.id = id;
+        this.name = name;
+        this.password = password;
+        this.phone = phone;
+        this.socialUserId = socialUserId;
+    }
+
     public String getEmail() {
         return email;
     }

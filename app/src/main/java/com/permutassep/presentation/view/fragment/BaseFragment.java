@@ -7,6 +7,8 @@ package com.permutassep.presentation.view.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.permutassep.presentation.internal.di.HasComponent;
@@ -38,6 +40,21 @@ public class BaseFragment extends Fragment {
      */
     protected void showToastMessage(String message) {
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * Helper method to hide the keyboard on fragment navigation
+     */
+    protected void hideKeyboard() {
+        InputMethodManager inputManager = (InputMethodManager) getActivity()
+                .getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        // check if no view has focus:
+        View v = getActivity().getCurrentFocus();
+        if (v == null)
+            return;
+
+        inputManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
     }
 
     /**

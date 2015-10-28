@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -186,11 +187,6 @@ public class FragmentLogin extends BaseFragment implements LoginView {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-    }
-
-    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
@@ -234,7 +230,9 @@ public class FragmentLogin extends BaseFragment implements LoginView {
 
     @Override
     public void authorizeUser(UserModel userModel) {
-        showError("Welcome " + userModel.getName());
+        this.hideKeyboard();
+        getActivity().getSupportFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        this.navigationListener.onNextFragment(FragmentPostList.class);
     }
 
     @Override

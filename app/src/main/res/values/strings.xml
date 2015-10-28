@@ -39,6 +39,7 @@
     <string name="app_sign_up_facebook_login_button">Registrarme con Facebook</string>
     <string name="app_sign_up_finish_fb_registration">Terminar registro</string>
     <string name="app_sign_up_finish_fb_text">Completa la información necesaria para tu registro:</string>
+    <string name="app_sign_up_error_duplicate_email">Revisa que el email no haya sido registrado previamente</string>
     <string name="app_sign_up_hint_name">Tu nombre</string>
     <string name="app_sign_up_hint_email">Tu correo</string>
     <string name="app_sign_up_hint_password">Tu contraseña</string>

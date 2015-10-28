@@ -15,10 +15,12 @@
  */
 package com.permutassep.presentation.navigation;
 
+import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 
 import com.lalongooo.permutassep.R;
 import com.permutassep.presentation.view.activity.BaseActivity;
+import com.permutassep.presentation.view.fragment.FragmentCompleteFbData;
 import com.permutassep.presentation.view.fragment.FragmentLogin;
 import com.permutassep.presentation.view.fragment.FragmentLoginSignUp;
 import com.permutassep.presentation.view.fragment.FragmentPostDetails;
@@ -55,6 +57,7 @@ public class Navigator {
 
             FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
             fragmentTransaction.add(R.id.fragmentContainer, FragmentLoginSignUp.newInstance());
+            fragmentTransaction.addToBackStack(null);
             fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
             fragmentTransaction.commit();
         }
@@ -65,12 +68,28 @@ public class Navigator {
      *
      * @param activity An activity needed to load the destination fragment.
      */
-    public void navigateToSignup(BaseActivity activity) {
+    public void navigateToSignUp(BaseActivity activity) {
         if (activity != null) {
 
             FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
             fragmentTransaction.hide(activity.getSupportFragmentManager().findFragmentById(R.id.fragmentContainer));
             fragmentTransaction.add(R.id.fragmentContainer, FragmentSignUp.newInstance());
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            fragmentTransaction.commit();
+        }
+    }
+
+    /**
+     * Navigates to the sign up screen fragment
+     *
+     * @param activity An activity needed to load the destination fragment.
+     */
+    public void navigateToCompleteFbData(BaseActivity activity, Bundle bundle) {
+        if (activity != null && bundle != null) {
+            FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.hide(activity.getSupportFragmentManager().findFragmentById(R.id.fragmentContainer));
+            fragmentTransaction.add(R.id.fragmentContainer, FragmentCompleteFbData.newInstance(bundle));
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
             fragmentTransaction.commit();

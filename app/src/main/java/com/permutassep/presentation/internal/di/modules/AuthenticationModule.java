@@ -13,6 +13,7 @@ import com.permutassep.domain.interactor.SignUpUser;
 import com.permutassep.domain.interactor.UseCase;
 import com.permutassep.domain.repository.AuthenticationRepository;
 import com.permutassep.presentation.internal.di.PerActivity;
+import com.permutassep.presentation.model.UserModel;
 
 import javax.inject.Named;
 
@@ -24,15 +25,15 @@ public class AuthenticationModule {
 
     private String email;
     private String password;
-    private User user;
+    private UserModel userModel;
 
     public AuthenticationModule(String email, String password) {
         this.email = email;
         this.password = password;
     }
 
-    public AuthenticationModule(String name, String email, String phone, String password) {
-        this.user = new User(name, email, phone, password);
+    public AuthenticationModule(UserModel userModel) {
+        this.userModel = userModel;
     }
 
     @Provides
@@ -42,6 +43,13 @@ public class AuthenticationModule {
             AuthenticationRepository authenticationRepository,
             ThreadExecutor threadExecutor,
             PostExecutionThread postExecutionThread) {
+        User user = new User();
+        user.setName(this.userModel.getName());
+        user.setEmail(this.userModel.getEmail());
+        user.setPhone(this.userModel.getPhone());
+        user.setPassword(this.userModel.getPassword());
+        user.setSocialUserId(this.userModel.getSocialUserId());
+        user.setId(this.userModel.getId());
         return new SignUpUser(user, authenticationRepository, threadExecutor, postExecutionThread);
     }
 
