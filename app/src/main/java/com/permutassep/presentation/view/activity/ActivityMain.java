@@ -170,9 +170,13 @@ public class ActivityMain extends BaseActivity
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
-            finish();
+        if (drawer != null && drawer.isDrawerOpen()) {
+            drawer.closeDrawer();
+        }else{
+            super.onBackPressed();
+            if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
+                finish();
+            }
         }
     }
 
