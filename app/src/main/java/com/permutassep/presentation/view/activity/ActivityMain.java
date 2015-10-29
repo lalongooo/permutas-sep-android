@@ -10,6 +10,8 @@ import android.view.View;
 
 import com.facebook.login.LoginManager;
 import com.lalongooo.permutassep.R;
+import com.mikepenz.aboutlibraries.Libs;
+import com.mikepenz.aboutlibraries.LibsBuilder;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
@@ -238,6 +240,15 @@ public class ActivityMain extends BaseActivity
             PrefUtils.clearApplicationPreferences(this);
             LoginManager.getInstance().logOut();
             navigator.navigateToLoginSignUp(this, false);
+        }else if (menuId == R.id.action_about) {
+
+            new LibsBuilder()
+                    .withFields(R.string.class.getFields())
+                    .withActivityTitle(getString(R.string.about_activity_title))
+                    .withAboutIconShown(true)
+                    .withAboutDescription(getString(R.string.about_activity_description))
+                    .withActivityStyle(Libs.ActivityStyle.LIGHT_DARK_TOOLBAR)
+                    .start(this);
         }
     }
 }
