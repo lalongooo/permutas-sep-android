@@ -21,6 +21,7 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
+import com.permutassep.presentation.interfaces.FirstLaunchCompleteListener;
 import com.permutassep.presentation.interfaces.LoginCompleteListener;
 import com.permutassep.presentation.internal.di.HasComponent;
 import com.permutassep.presentation.internal.di.components.ActivityComponent;
@@ -48,18 +49,16 @@ public class ActivityMain extends BaseActivity
         Navigator.NavigationListener,
         FragmentManager.OnBackStackChangedListener,
         FragmentSignUp.FacebookSignUpListener,
-        LoginCompleteListener {
+        LoginCompleteListener,
+        FirstLaunchCompleteListener {
 
 
     public static final int DRAWER_IDENTIFIER_HOME = 1;
     public static final int DRAWER_IDENTIFIER_MY_POSTS = 1;
-
-    private Drawer drawer;
-    private UserModel userModel;
-
     @Inject
     Toolbar toolbar;
-
+    private Drawer drawer;
+    private UserModel userModel;
     private ActivityComponent activityComponent;
 
     @Override
@@ -172,7 +171,7 @@ public class ActivityMain extends BaseActivity
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if(getSupportFragmentManager().getBackStackEntryCount() == 0){
+        if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
             finish();
         }
     }
@@ -239,5 +238,16 @@ public class ActivityMain extends BaseActivity
         this.userModel = userModel;
         PrefUtils.putUser(this, userModel);
         renderDrawerOptions();
+    }
+
+    /**
+     * Method from {@link FirstLaunchCompleteListener}
+     */
+    @Override
+    public void onFirstLaunchComplete() {
+        if (!PrefUtils.firstTimeDrawerOpened(this) && userModel != null) {
+            PrefUtils.markFirstTimeDrawerOpened(this);
+            drawer.openDrawer();
+        }
     }
 }

@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.lalongooo.permutassep.R;
+import com.permutassep.presentation.interfaces.FirstLaunchCompleteListener;
 import com.permutassep.presentation.internal.di.components.ApplicationComponent;
 import com.permutassep.presentation.internal.di.components.DaggerPostComponent;
 import com.permutassep.presentation.internal.di.components.PostComponent;
@@ -50,6 +51,7 @@ public class FragmentPostList extends BaseFragment implements PostsListView {
 
     private PostComponent postComponent;
 
+    private FirstLaunchCompleteListener firstLaunchCompleteListener;
     private PostsAdapter postsAdapter;
     private PostsLayoutManager postsLayoutManager;
     private PostListListener postListListener;
@@ -99,9 +101,8 @@ public class FragmentPostList extends BaseFragment implements PostsListView {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (getActivity() instanceof PostListListener) {
-            this.postListListener = (PostListListener) getActivity();
-        }
+        this.postListListener = (PostListListener) getActivity();
+        this.firstLaunchCompleteListener = (FirstLaunchCompleteListener) getActivity();
     }
 
     @Override
@@ -149,6 +150,7 @@ public class FragmentPostList extends BaseFragment implements PostsListView {
         if (postModelCollection != null) {
             this.postsAdapter.setPostsCollection(postModelCollection);
         }
+        firstLaunchCompleteListener.onFirstLaunchComplete();
     }
 
     @Override
