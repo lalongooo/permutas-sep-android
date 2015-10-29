@@ -1,18 +1,17 @@
 package com.permutassep.presentation.view.activity;
 
-import android.graphics.Color;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.View;
 
+import com.facebook.login.LoginManager;
 import com.lalongooo.permutassep.R;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
-import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -22,6 +21,7 @@ import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.permutassep.presentation.interfaces.FirstLaunchCompleteListener;
+import com.permutassep.presentation.interfaces.FragmentMenuItemSelectedListener;
 import com.permutassep.presentation.interfaces.LoginCompleteListener;
 import com.permutassep.presentation.internal.di.HasComponent;
 import com.permutassep.presentation.internal.di.components.ActivityComponent;
@@ -35,7 +35,6 @@ import com.permutassep.presentation.view.fragment.FragmentLogin;
 import com.permutassep.presentation.view.fragment.FragmentLoginSignUp;
 import com.permutassep.presentation.view.fragment.FragmentPostList;
 import com.permutassep.presentation.view.fragment.FragmentSignUp;
-import com.permutassep.utils.Utils;
 
 import javax.inject.Inject;
 
@@ -50,7 +49,8 @@ public class ActivityMain extends BaseActivity
         FragmentManager.OnBackStackChangedListener,
         FragmentSignUp.FacebookSignUpListener,
         LoginCompleteListener,
-        FirstLaunchCompleteListener {
+        FirstLaunchCompleteListener,
+        FragmentMenuItemSelectedListener {
 
 
     public static final int DRAWER_IDENTIFIER_HOME = 1;
@@ -86,29 +86,9 @@ public class ActivityMain extends BaseActivity
                 .build();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        renderToolbarOptions(menu);
-        return true;
-    }
-
     /**
      * Methods from the {@link HomeView} interface
      */
-
-    @SuppressWarnings("deprecation")
-    @Override
-    public void renderToolbarOptions(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-
-        if (Utils.getUser(this) != null) {
-            menu.findItem(R.id.action_post).setIcon(new IconicsDrawable(this, GoogleMaterial.Icon.gmd_add).color(Color.WHITE).actionBarSize()).setVisible(true);
-            menu.findItem(R.id.action_search).setIcon(new IconicsDrawable(this, GoogleMaterial.Icon.gmd_search).color(Color.WHITE).actionBarSize());
-            menu.findItem(R.id.action_logout).setVisible(true);
-        }
-
-        menu.findItem(R.id.action_search).setIcon(new IconicsDrawable(this, GoogleMaterial.Icon.gmd_search).color(Color.WHITE).actionBarSize());
-    }
 
     @Override
     public void renderDrawerOptions() {
@@ -159,11 +139,6 @@ public class ActivityMain extends BaseActivity
     }
 
     @Override
-    public void onMenuOptionItemSelected(int menuItemId) {
-
-    }
-
-    @Override
     public ActivityComponent getComponent() {
         return activityComponent;
     }
@@ -172,7 +147,7 @@ public class ActivityMain extends BaseActivity
     public void onBackPressed() {
         if (drawer != null && drawer.isDrawerOpen()) {
             drawer.closeDrawer();
-        }else{
+        } else {
             super.onBackPressed();
             if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
                 finish();
@@ -252,6 +227,18 @@ public class ActivityMain extends BaseActivity
         if (!PrefUtils.firstTimeDrawerOpened(this) && userModel != null) {
             PrefUtils.markFirstTimeDrawerOpened(this);
             drawer.openDrawer();
+        }
+    }
+
+    /**
+     * Method from {@link FragmentMenuItemSelectedListener}
+     */
+    @Override
+    public void onMenuItemSelected(int menuId) {
+        if (menuId == R.id.action_logout) {
+            PrefUtils.clearApplicationPreferences(this);
+            LoginManager.getInstance().logOut();
+            finish();
         }
     }
 }

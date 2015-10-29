@@ -61,17 +61,17 @@ public class PrefUtils {
     }
 
     public static void markTosAccepted(final Context context) {
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences sp = context.getSharedPreferences(Config.APP_PREFERENCES_NAME, Context.MODE_PRIVATE);
         sp.edit().putBoolean(PREF_TOS_ACCEPTED, true).apply();
     }
 
     public static boolean isTosAccepted(final Context context) {
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences sp = context.getSharedPreferences(Config.APP_PREFERENCES_NAME, Context.MODE_PRIVATE);
         return sp.getBoolean(PREF_TOS_ACCEPTED, false);
     }
 
     public static UserModel getUser(Context context) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences preferences = context.getSharedPreferences(Config.APP_PREFERENCES_NAME, Context.MODE_PRIVATE);
         String gson = preferences.getString(PREF_USER_KEY, null);
         if (gson == null) {
             return null;
@@ -84,7 +84,7 @@ public class PrefUtils {
         if (userModel == null) {
             throw new IllegalArgumentException("Parameter userModel is null");
         }
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences sp = context.getSharedPreferences(Config.APP_PREFERENCES_NAME, Context.MODE_PRIVATE);
         sp.edit().putString(PREF_USER_KEY, new Gson().toJson(userModel)).apply();
     }
 }

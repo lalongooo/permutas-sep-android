@@ -1,27 +1,36 @@
 package com.permutassep.presentation.view.fragment;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.lalongooo.permutassep.R;
+import com.mikepenz.google_material_typeface_library.GoogleMaterial;
+import com.mikepenz.iconics.IconicsDrawable;
 import com.permutassep.presentation.interfaces.FirstLaunchCompleteListener;
+import com.permutassep.presentation.interfaces.FragmentMenuItemSelectedListener;
 import com.permutassep.presentation.internal.di.components.ApplicationComponent;
 import com.permutassep.presentation.internal.di.components.DaggerPostComponent;
 import com.permutassep.presentation.internal.di.components.PostComponent;
 import com.permutassep.presentation.model.PostModel;
 import com.permutassep.presentation.presenter.PostListPresenter;
+import com.permutassep.presentation.utils.PrefUtils;
 import com.permutassep.presentation.view.PostsListView;
 import com.permutassep.presentation.view.activity.BaseActivity;
 import com.permutassep.presentation.view.adapter.PostsAdapter;
 import com.permutassep.presentation.view.adapter.PostsLayoutManager;
+import com.permutassep.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -52,6 +61,7 @@ public class FragmentPostList extends BaseFragment implements PostsListView {
     private PostComponent postComponent;
 
     private FirstLaunchCompleteListener firstLaunchCompleteListener;
+    private FragmentMenuItemSelectedListener fragmentMenuItemSelectedListener;
     private PostsAdapter postsAdapter;
     private PostsLayoutManager postsLayoutManager;
     private PostListListener postListListener;
@@ -85,7 +95,7 @@ public class FragmentPostList extends BaseFragment implements PostsListView {
         }
 
         setupUI();
-
+        setHasOptionsMenu(true);
         return fragmentView;
     }
 
@@ -103,6 +113,7 @@ public class FragmentPostList extends BaseFragment implements PostsListView {
         super.onAttach(context);
         this.postListListener = (PostListListener) getActivity();
         this.firstLaunchCompleteListener = (FirstLaunchCompleteListener) getActivity();
+        this.fragmentMenuItemSelectedListener = (FragmentMenuItemSelectedListener) getActivity();
     }
 
     @Override
@@ -110,6 +121,28 @@ public class FragmentPostList extends BaseFragment implements PostsListView {
         super.onActivityCreated(savedInstanceState);
         this.initialize();
         this.loadUserList();
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.main, menu);
+
+        if (PrefUtils.getUser(getActivity()) != null) {
+            menu.findItem(R.id.action_post).setIcon(new IconicsDrawable(getActivity(), GoogleMaterial.Icon.gmd_add).color(Color.WHITE).actionBarSize()).setVisible(true);
+            menu.findItem(R.id.action_search).setIcon(new IconicsDrawable(getActivity(), GoogleMaterial.Icon.gmd_search).color(Color.WHITE).actionBarSize());
+            menu.findItem(R.id.action_logout).setVisible(true);
+        }
+
+        menu.findItem(R.id.action_search).setIcon(new IconicsDrawable(getActivity(), GoogleMaterial.Icon.gmd_search).color(Color.WHITE).actionBarSize());
+
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        fragmentMenuItemSelectedListener.onMenuItemSelected(item.getItemId());
+        return super.onOptionsItemSelected(item);
     }
 
     private void initialize() {
