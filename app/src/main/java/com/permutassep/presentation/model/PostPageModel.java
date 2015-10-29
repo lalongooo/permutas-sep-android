@@ -1,8 +1,6 @@
 package com.permutassep.presentation.model;
 
-import com.permutassep.domain.Post;
-
-import java.util.List;
+import java.util.Collection;
 
 /**
  * Class that represents a PostPage in the presentation layer
@@ -12,7 +10,7 @@ public class PostPageModel {
     private long count;
     private String next;
     private String previous;
-    private List<Post> results;
+    private Collection<PostModel> results;
 
     public PostPageModel() {
         // empty
@@ -42,11 +40,11 @@ public class PostPageModel {
         this.previous = previous;
     }
 
-    public List<Post> getResults() {
+    public Collection<PostModel> getResults() {
         return results;
     }
 
-    public void setResults(List<Post> results) {
-        this.results = results;
+    public void setResults(Collection<PostModel> postModelCollection) {
+        this.results = postModelCollection;
     }
 }

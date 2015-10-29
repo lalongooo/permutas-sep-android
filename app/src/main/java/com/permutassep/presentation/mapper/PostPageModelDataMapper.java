@@ -32,44 +32,30 @@ import javax.inject.Inject;
 @PerActivity
 public class PostPageModelDataMapper {
 
+    private final PostModelDataMapper postModelDataMapper;
+
     @Inject
-    public PostPageModelDataMapper() {
+    public PostPageModelDataMapper(PostModelDataMapper postModelDataMapper) {
+        this.postModelDataMapper = postModelDataMapper;
     }
 
     /**
      * Transform a {@link PostPage} into an {@link PostPageModel}.
      *
-     * @param user Object to be transformed.
+     * @param postPage Object to be transformed.
      * @return {@link PostPageModel}.
      */
-    public PostPageModel transform(PostPage user) {
-        if (user == null) {
+    public PostPageModel transform(PostPage postPage) {
+        if (postPage == null) {
             throw new IllegalArgumentException("Cannot transform a null value");
         }
-        PostPageModel postPageModel = new PostPageModel();
 
+        PostPageModel postPageModel = new PostPageModel();
+        postPageModel.setCount(postPage.getCount());
+        postPageModel.setNext(postPage.getNext());
+        postPageModel.setPrevious(postPage.getPrevious());
+        postPageModel.setResults(postModelDataMapper.transform(postPage.getResults()));
 
         return postPageModel;
-    }
-
-    /**
-     * Transform a Collection of {@link PostPage} into a Collection of {@link PostPageModel}.
-     *
-     * @param postPageCollection Objects to be transformed.
-     * @return List of {@link PostPageModel}.
-     */
-    public Collection<PostPageModel> transform(Collection<PostPage> postPageCollection) {
-        Collection<PostPageModel> postPageModels;
-
-        if (postPageCollection != null && !postPageCollection.isEmpty()) {
-            postPageModels = new ArrayList<>();
-            for (PostPage postPage : postPageCollection) {
-                postPageModels.add(transform(postPage));
-            }
-        } else {
-            postPageModels = Collections.emptyList();
-        }
-
-        return postPageModels;
     }
 }
