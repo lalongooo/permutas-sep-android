@@ -15,12 +15,13 @@ import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
-import com.permutassep.model.User;
 import com.permutassep.presentation.internal.di.HasComponent;
 import com.permutassep.presentation.internal.di.components.ActivityComponent;
 import com.permutassep.presentation.internal.di.components.DaggerActivityComponent;
 import com.permutassep.presentation.model.PostModel;
+import com.permutassep.presentation.model.UserModel;
 import com.permutassep.presentation.navigation.Navigator;
+import com.permutassep.presentation.utils.PrefUtils;
 import com.permutassep.presentation.view.HomeView;
 import com.permutassep.presentation.view.fragment.FragmentLogin;
 import com.permutassep.presentation.view.fragment.FragmentLoginSignUp;
@@ -64,8 +65,8 @@ public class ActivityMain extends BaseActivity
 
         renderDrawerOptions();
 
-        User user = Utils.getUser(this);
-        if (user != null) {
+        UserModel userModel = PrefUtils.getUser(this);
+        if (userModel != null) {
             navigator.navigateToPostList(this);
         } else {
             navigator.navigateToLoginSignUp(this);

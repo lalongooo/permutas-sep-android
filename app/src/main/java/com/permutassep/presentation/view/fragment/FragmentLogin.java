@@ -34,6 +34,7 @@ import com.permutassep.presentation.internal.di.components.DaggerAuthenticationC
 import com.permutassep.presentation.internal.di.modules.AuthenticationModule;
 import com.permutassep.presentation.model.UserModel;
 import com.permutassep.presentation.presenter.LoginPresenter;
+import com.permutassep.presentation.utils.PrefUtils;
 import com.permutassep.presentation.view.LoginView;
 import com.permutassep.presentation.view.activity.BaseActivity;
 import com.throrinstudio.android.common.libs.validator.Form;
@@ -231,6 +232,7 @@ public class FragmentLogin extends BaseFragment implements LoginView {
     @Override
     public void authorizeUser(UserModel userModel) {
         this.hideKeyboard();
+        PrefUtils.putUser(getActivity(), userModel);
         getActivity().getSupportFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         this.navigationListener.onNextFragment(FragmentPostList.class);
     }

@@ -16,6 +16,7 @@
 package com.permutassep.presentation.navigation;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 
 import com.lalongooo.permutassep.R;
@@ -122,7 +123,12 @@ public class Navigator {
         if (activity != null) {
 
             FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.hide(activity.getSupportFragmentManager().findFragmentById(R.id.fragmentContainer));
+
+            Fragment fragment = activity.getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
+            if(fragment != null){
+                fragmentTransaction.hide(fragment);
+            }
+
             fragmentTransaction.add(R.id.fragmentContainer, FragmentPostList.newInstance());
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);

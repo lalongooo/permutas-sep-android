@@ -31,6 +31,7 @@ import com.permutassep.presentation.internal.di.components.DaggerAuthenticationC
 import com.permutassep.presentation.internal.di.modules.AuthenticationModule;
 import com.permutassep.presentation.model.UserModel;
 import com.permutassep.presentation.presenter.SignUpPresenter;
+import com.permutassep.presentation.utils.PrefUtils;
 import com.permutassep.presentation.view.SignUpView;
 import com.permutassep.presentation.view.activity.BaseActivity;
 import com.throrinstudio.android.common.libs.validator.Form;
@@ -117,7 +118,7 @@ public class FragmentSignUp extends BaseFragment implements SignUpView {
                             @Override
                             public void onCompleted(JSONObject object, GraphResponse response) {
                                 hideLoading();
-                                String email = null;
+                                String email;
 
                                 try {
                                     email = object.getString("email");
@@ -204,6 +205,7 @@ public class FragmentSignUp extends BaseFragment implements SignUpView {
     @Override
     public void signedUpUser(UserModel userModel) {
         this.hideKeyboard();
+        PrefUtils.putUser(getActivity(), userModel);
         getActivity().getSupportFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         this.navigationListener.onNextFragment(FragmentPostList.class);
     }

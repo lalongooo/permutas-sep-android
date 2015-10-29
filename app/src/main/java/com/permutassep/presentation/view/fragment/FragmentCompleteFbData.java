@@ -25,6 +25,7 @@ import com.permutassep.presentation.internal.di.components.DaggerAuthenticationC
 import com.permutassep.presentation.internal.di.modules.AuthenticationModule;
 import com.permutassep.presentation.model.UserModel;
 import com.permutassep.presentation.presenter.SignUpPresenter;
+import com.permutassep.presentation.utils.PrefUtils;
 import com.permutassep.presentation.view.SignUpView;
 import com.permutassep.presentation.view.activity.BaseActivity;
 import com.throrinstudio.android.common.libs.validator.Form;
@@ -183,6 +184,7 @@ public class FragmentCompleteFbData extends BaseFragment implements SignUpView {
 
     @Override
     public void signedUpUser(UserModel userModel) {
+        PrefUtils.putUser(getActivity(), userModel);
         this.navigationListener.onNextFragment(FragmentPostList.class);
     }
 

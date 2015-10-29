@@ -8,7 +8,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.google.gson.Gson;
 import com.permutassep.config.Config;
+import com.permutassep.presentation.model.UserModel;
 
 public class PrefUtils {
 
@@ -16,20 +18,7 @@ public class PrefUtils {
     * Preference to store the current user logged
     * in the application (the email and phone of this user can be modified on each post).
     * */
-    public static final String PREF_USER_KEY = "user";
-
-    /*
-    * Preference to store the current user logged
-    * in the application. This user data, cannot be modified
-    * */
-    public static final String PREF_ORIGINAL_USER_KEY = "user";
-
-    /*
-    * Boolean preference value to indicate that the current user
-    * was registered with email/password credentials. If it's false, it means
-    * that the user was logged/registered using a social network login.
-    * */
-    public static final String PREF_IS_NORMAL_USER = "pref_is_normal__user";
+    public static final String PREF_USER_KEY = "permutas_sep_user";
 
     /*
     * Boolean indicating whether we performed the (first-time) drawer opened.
@@ -41,7 +30,9 @@ public class PrefUtils {
     * */
     public static final String PREF_RELOAD_NEWS_FEED = "pref_reload_news_feed";
 
-    /** Boolean indicating whether ToS has been accepted */
+    /**
+     * Boolean indicating whether ToS has been accepted
+     */
     public static final String PREF_TOS_ACCEPTED = "pref_tos_accepted";
 
     public static boolean firstTimeDrawerOpened(final Context context) {
@@ -64,11 +55,6 @@ public class PrefUtils {
         sp.edit().putBoolean(PREF_RELOAD_NEWS_FEED, reloaded).commit();
     }
 
-    public static void setNormalUser(Context context, boolean isNormalUser) {
-        SharedPreferences sp = context.getSharedPreferences(Config.APP_PREFERENCES_NAME, Context.MODE_PRIVATE);
-        sp.edit().putBoolean(PREF_IS_NORMAL_USER, isNormalUser).commit();
-    }
-
     public static void clearApplicationPreferences(Context context) {
         SharedPreferences sp = context.getSharedPreferences(Config.APP_PREFERENCES_NAME, Context.MODE_PRIVATE);
         sp.edit().clear().commit();
@@ -82,5 +68,23 @@ public class PrefUtils {
     public static boolean isTosAccepted(final Context context) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         return sp.getBoolean(PREF_TOS_ACCEPTED, false);
+    }
+
+    public static UserModel getUser(Context context) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        String gson = preferences.getString(PREF_USER_KEY, null);
+        if (gson == null) {
+            return null;
+        } else {
+            return new Gson().fromJson(gson, UserModel.class);
+        }
+    }
+
+    public static void putUser(Context context, UserModel userModel) {
+        if (userModel == null) {
+            throw new IllegalArgumentException("Parameter userModel is null");
+        }
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        sp.edit().putString(PREF_USER_KEY, new Gson().toJson(userModel)).apply();
     }
 }
