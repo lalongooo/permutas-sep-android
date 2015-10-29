@@ -55,7 +55,7 @@ public class ActivityMain extends BaseActivity
 
 
     public static final int DRAWER_IDENTIFIER_HOME = 1;
-    public static final int DRAWER_IDENTIFIER_MY_POSTS = 1;
+    public static final int DRAWER_IDENTIFIER_MY_POSTS = 2;
     @Inject
     Toolbar toolbar;
     private Drawer drawer;
