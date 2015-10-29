@@ -1,6 +1,5 @@
 package com.permutassep.presentation.view.activity;
 
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -75,7 +74,7 @@ public class ActivityMain extends BaseActivity
             navigator.navigateToPostList(this);
             renderDrawerOptions();
         } else {
-            navigator.navigateToLoginSignUp(this);
+            navigator.navigateToLoginSignUp(this, true);
         }
     }
 
@@ -238,7 +237,7 @@ public class ActivityMain extends BaseActivity
         if (menuId == R.id.action_logout) {
             PrefUtils.clearApplicationPreferences(this);
             LoginManager.getInstance().logOut();
-            finish();
+            navigator.navigateToLoginSignUp(this, false);
         }
     }
 }

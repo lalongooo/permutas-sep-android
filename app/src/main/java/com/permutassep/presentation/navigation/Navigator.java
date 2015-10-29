@@ -53,12 +53,14 @@ public class Navigator {
      *
      * @param activity An activity needed to load the destination fragment.
      */
-    public void navigateToLoginSignUp(BaseActivity activity) {
+    public void navigateToLoginSignUp(BaseActivity activity, boolean addToBackStack) {
         if (activity != null) {
 
             FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.add(R.id.fragmentContainer, FragmentLoginSignUp.newInstance());
-            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.replace(R.id.fragmentContainer, FragmentLoginSignUp.newInstance());
+            if(addToBackStack){
+                fragmentTransaction.addToBackStack(null);
+            }
             fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
             fragmentTransaction.commit();
         }
