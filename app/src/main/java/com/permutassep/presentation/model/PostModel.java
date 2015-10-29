@@ -4,7 +4,6 @@ package com.permutassep.presentation.model;
  * By Jorge E. Hernandez (@lalongooo) 2015
  */
 
-
 import java.util.Date;
 
 /**

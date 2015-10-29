@@ -25,13 +25,13 @@ import com.facebook.Profile;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.lalongooo.permutassep.R;
+import com.permutassep.presentation.interfaces.LoginCompleteListener;
 import com.permutassep.presentation.internal.di.components.ApplicationComponent;
 import com.permutassep.presentation.internal.di.components.AuthenticationComponent;
 import com.permutassep.presentation.internal.di.components.DaggerAuthenticationComponent;
 import com.permutassep.presentation.internal.di.modules.AuthenticationModule;
 import com.permutassep.presentation.model.UserModel;
 import com.permutassep.presentation.presenter.SignUpPresenter;
-import com.permutassep.presentation.utils.PrefUtils;
 import com.permutassep.presentation.view.SignUpView;
 import com.permutassep.presentation.view.activity.BaseActivity;
 import com.throrinstudio.android.common.libs.validator.Form;
@@ -66,6 +66,8 @@ public class FragmentSignUp extends BaseFragment implements SignUpView {
     LoginButton loginButton;
     @Inject
     SignUpPresenter signUpPresenter;
+
+    private LoginCompleteListener loginCompleteListener;
     private ProgressDialog pDlg;
     private AuthenticationComponent authenticationComponent;
     private CallbackManager callbackManager;
@@ -97,6 +99,7 @@ public class FragmentSignUp extends BaseFragment implements SignUpView {
     public void onAttach(Context context) {
         super.onAttach(context);
         facebookSignUpListener = (FacebookSignUpListener) getActivity();
+        loginCompleteListener = (LoginCompleteListener) getActivity();
     }
 
     @Override
@@ -205,7 +208,7 @@ public class FragmentSignUp extends BaseFragment implements SignUpView {
     @Override
     public void signedUpUser(UserModel userModel) {
         this.hideKeyboard();
-        PrefUtils.putUser(getActivity(), userModel);
+        loginCompleteListener.onLoginComplete(userModel);
         getActivity().getSupportFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         this.navigationListener.onNextFragment(FragmentPostList.class);
     }

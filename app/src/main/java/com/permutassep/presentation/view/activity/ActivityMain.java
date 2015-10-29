@@ -1,6 +1,7 @@
 package com.permutassep.presentation.view.activity;
 
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,9 +13,15 @@ import android.view.View;
 import com.lalongooo.permutassep.R;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
+import com.mikepenz.materialdrawer.AccountHeader;
+import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IProfile;
+import com.permutassep.presentation.interfaces.LoginCompleteListener;
 import com.permutassep.presentation.internal.di.HasComponent;
 import com.permutassep.presentation.internal.di.components.ActivityComponent;
 import com.permutassep.presentation.internal.di.components.DaggerActivityComponent;
@@ -40,14 +47,15 @@ public class ActivityMain extends BaseActivity
         FragmentPostList.PostListListener,
         Navigator.NavigationListener,
         FragmentManager.OnBackStackChangedListener,
-        FragmentSignUp.FacebookSignUpListener {
+        FragmentSignUp.FacebookSignUpListener,
+        LoginCompleteListener {
 
 
     public static final int DRAWER_IDENTIFIER_HOME = 1;
     public static final int DRAWER_IDENTIFIER_MY_POSTS = 1;
 
-    @Inject
-    Drawer drawer;
+    private Drawer drawer;
+    private UserModel userModel;
 
     @Inject
     Toolbar toolbar;
@@ -63,11 +71,10 @@ public class ActivityMain extends BaseActivity
         this.initializeInjector();
         activityComponent.inject(this);
 
-        renderDrawerOptions();
-
-        UserModel userModel = PrefUtils.getUser(this);
+        userModel = PrefUtils.getUser(this);
         if (userModel != null) {
             navigator.navigateToPostList(this);
+            renderDrawerOptions();
         } else {
             navigator.navigateToLoginSignUp(this);
         }
@@ -106,6 +113,27 @@ public class ActivityMain extends BaseActivity
 
     @Override
     public void renderDrawerOptions() {
+
+        IProfile profile = new ProfileDrawerItem()
+                .withName(userModel.getName())
+                .withEmail(userModel.getEmail())
+                .withIcon(Uri.parse("https://graph.facebook.com/" + userModel.getSocialUserId() + "/picture?width=460&height=460"));
+
+        AccountHeader accountHeader = new AccountHeaderBuilder()
+                .withActivity(this)
+                .withHeaderBackground(R.drawable.header)
+                .addProfiles(profile)
+                .build();
+
+        drawer = new DrawerBuilder()
+                .withActivity(this)
+                .withActionBarDrawerToggle(true)
+                .withAccountHeader(accountHeader)
+                .withToolbar(toolbar)
+                .withSelectedItem(0)
+                .build();
+
+
         drawer.addItems(
                 new PrimaryDrawerItem()
                         .withName(getString(R.string.app_nav_drawer_1))
@@ -200,5 +228,16 @@ public class ActivityMain extends BaseActivity
     @Override
     public void onFacebookSignUp(Bundle bundle) {
         navigator.navigateToCompleteFbData(this, bundle);
+    }
+
+    /**
+     * Method from the {@link LoginCompleteListener}
+     */
+
+    @Override
+    public void onLoginComplete(UserModel userModel) {
+        this.userModel = userModel;
+        PrefUtils.putUser(this, userModel);
+        renderDrawerOptions();
     }
 }

@@ -6,6 +6,7 @@ package com.permutassep.presentation.view.fragment;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -28,13 +29,13 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.lalongooo.permutassep.BuildConfig;
 import com.lalongooo.permutassep.R;
+import com.permutassep.presentation.interfaces.LoginCompleteListener;
 import com.permutassep.presentation.internal.di.components.ApplicationComponent;
 import com.permutassep.presentation.internal.di.components.AuthenticationComponent;
 import com.permutassep.presentation.internal.di.components.DaggerAuthenticationComponent;
 import com.permutassep.presentation.internal.di.modules.AuthenticationModule;
 import com.permutassep.presentation.model.UserModel;
 import com.permutassep.presentation.presenter.LoginPresenter;
-import com.permutassep.presentation.utils.PrefUtils;
 import com.permutassep.presentation.view.LoginView;
 import com.permutassep.presentation.view.activity.BaseActivity;
 import com.throrinstudio.android.common.libs.validator.Form;
@@ -65,6 +66,8 @@ public class FragmentLogin extends BaseFragment implements LoginView {
 
     @Inject
     LoginPresenter loginPresenter;
+
+    private LoginCompleteListener loginCompleteListener;
     private ProgressDialog pDlg;
     private AuthenticationComponent authenticationComponent;
     private CallbackManager callbackManager;
@@ -193,6 +196,12 @@ public class FragmentLogin extends BaseFragment implements LoginView {
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        loginCompleteListener = (LoginCompleteListener) getActivity();
+    }
+
     @OnClick(R.id.btnLogin)
     void onBtnLoginClick() {
         /**
@@ -232,9 +241,9 @@ public class FragmentLogin extends BaseFragment implements LoginView {
     @Override
     public void authorizeUser(UserModel userModel) {
         this.hideKeyboard();
-        PrefUtils.putUser(getActivity(), userModel);
         getActivity().getSupportFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         this.navigationListener.onNextFragment(FragmentPostList.class);
+        loginCompleteListener.onLoginComplete(userModel);
     }
 
     @Override

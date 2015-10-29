@@ -5,6 +5,7 @@ package com.permutassep.presentation.view.fragment;
  */
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
@@ -19,13 +20,13 @@ import android.widget.EditText;
 import com.facebook.login.LoginManager;
 import com.lalongooo.permutassep.BuildConfig;
 import com.lalongooo.permutassep.R;
+import com.permutassep.presentation.interfaces.LoginCompleteListener;
 import com.permutassep.presentation.internal.di.components.ApplicationComponent;
 import com.permutassep.presentation.internal.di.components.AuthenticationComponent;
 import com.permutassep.presentation.internal.di.components.DaggerAuthenticationComponent;
 import com.permutassep.presentation.internal.di.modules.AuthenticationModule;
 import com.permutassep.presentation.model.UserModel;
 import com.permutassep.presentation.presenter.SignUpPresenter;
-import com.permutassep.presentation.utils.PrefUtils;
 import com.permutassep.presentation.view.SignUpView;
 import com.permutassep.presentation.view.activity.BaseActivity;
 import com.throrinstudio.android.common.libs.validator.Form;
@@ -55,6 +56,8 @@ public class FragmentCompleteFbData extends BaseFragment implements SignUpView {
 
     @Inject
     SignUpPresenter signUpPresenter;
+
+    private LoginCompleteListener loginCompleteListener;
     private ProgressDialog pDlg;
     private AuthenticationComponent authenticationComponent;
 
@@ -82,6 +85,12 @@ public class FragmentCompleteFbData extends BaseFragment implements SignUpView {
         }
 
         return fragmentView;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        loginCompleteListener = (LoginCompleteListener) getActivity();
     }
 
     @Override
@@ -184,7 +193,7 @@ public class FragmentCompleteFbData extends BaseFragment implements SignUpView {
 
     @Override
     public void signedUpUser(UserModel userModel) {
-        PrefUtils.putUser(getActivity(), userModel);
+        loginCompleteListener.onLoginComplete(userModel);
         this.navigationListener.onNextFragment(FragmentPostList.class);
     }
 
