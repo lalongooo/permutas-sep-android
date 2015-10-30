@@ -12,6 +12,7 @@ import com.lalongooo.permutassep.R;
 import com.permutassep.model.State;
 import com.permutassep.presentation.model.PostModel;
 import com.permutassep.utils.Utils;
+import com.squareup.picasso.Picasso;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -28,13 +29,15 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostViewHold
     private final LayoutInflater layoutInflater;
     private OnItemClickListener onItemClickListener;
     private HashMap<String, State> states;
+    private Context mContext;
 
     private List<PostModel> postModelList;
     public PostsAdapter(Context context, Collection<PostModel> postModelCollection) {
         this.validatePostsCollection(postModelCollection);
         this.postModelList = (List<PostModel>) postModelCollection;
         this.layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        states = Utils.getStates(context);
+        this.mContext = context;
+        this.states = Utils.getStates(context);
     }
 
     private void validatePostsCollection(Collection<PostModel> usersCollection) {
@@ -66,7 +69,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostViewHold
         holder.tvFrom.setText(states.get((String.valueOf(postModel.getStateFrom()))).getStateName());
         holder.tvTo.setText(states.get(String.valueOf(postModel.getStateTo())).getStateName());
         holder.tvAcademicLevelLabel.setText(postModel.getAcademicLevel());
-
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,6 +77,13 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostViewHold
                 }
             }
         });
+        Picasso.with(mContext)
+                .load(postModel.getUser().getProfilePictureUrl())
+                .placeholder(com.lalongooo.permutassep.R.drawable.default_profile_picture)
+                .error(com.lalongooo.permutassep.R.drawable.default_profile_picture)
+                .resizeDimen(com.lalongooo.permutassep.R.dimen.list_detail_image_size, com.lalongooo.permutassep.R.dimen.list_detail_image_size)
+                .centerInside()
+                .into(holder.imageView);
     }
 
     @Override

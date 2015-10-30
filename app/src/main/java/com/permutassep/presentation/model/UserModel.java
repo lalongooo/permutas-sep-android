@@ -68,6 +68,10 @@ public class UserModel {
         this.socialUserId = socialUserId;
     }
 
+    public String getProfilePictureUrl(){
+        return "https://graph.facebook.com/" + getSocialUserId() + "/picture?width=100&height=100";
+    }
+
     @Override
     public String toString() {
         return "User{" +
