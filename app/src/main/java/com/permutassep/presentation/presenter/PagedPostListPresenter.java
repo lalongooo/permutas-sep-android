@@ -1,22 +1,17 @@
 package com.permutassep.presentation.presenter;
 
-import com.permutassep.domain.Post;
 import com.permutassep.domain.PostPage;
 import com.permutassep.domain.exception.DefaultErrorBundle;
 import com.permutassep.domain.exception.ErrorBundle;
 import com.permutassep.domain.interactor.DefaultSubscriber;
-import com.permutassep.domain.interactor.UseCase;
+import com.permutassep.domain.interactor.GetPagedPostsList;
 import com.permutassep.presentation.exception.ErrorMessageFactory;
-import com.permutassep.presentation.mapper.PostModelDataMapper;
 import com.permutassep.presentation.mapper.PostPageModelDataMapper;
 import com.permutassep.presentation.model.PostModel;
 import com.permutassep.presentation.model.PostPageModel;
-import com.permutassep.presentation.view.PostsListView;
-
-import java.util.Collection;
+import com.permutassep.presentation.view.PagedPostsListView;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
 /**
  * By Jorge E. Hernandez (@lalongooo) 2015
@@ -24,36 +19,34 @@ import javax.inject.Named;
 
 public class PagedPostListPresenter implements Presenter {
 
-    private final UseCase getPagedPostsUseCase;
+    private final GetPagedPostsList getPagedPostsUseCase;
     private final PostPageModelDataMapper postPageModelDataMapper;
-    private final PostModelDataMapper postModelDataMapper;
-    private PostsListView postsListView;
+    private PagedPostsListView postsListView;
 
     @Inject
-    public PagedPostListPresenter(@Named("pagedPostList") UseCase getPostsList, PostPageModelDataMapper postPageModelDataMapper, PostModelDataMapper postModelDataMapper) {
-        this.getPagedPostsUseCase = getPostsList;
+    public PagedPostListPresenter(GetPagedPostsList getPagedPostsUseCase, PostPageModelDataMapper postPageModelDataMapper) {
+        this.getPagedPostsUseCase = getPagedPostsUseCase;
         this.postPageModelDataMapper = postPageModelDataMapper;
-        this.postModelDataMapper = postModelDataMapper;
     }
 
-    public void setView(PostsListView postsListView) {
+    public void setView(PagedPostsListView postsListView) {
         this.postsListView = postsListView;
     }
 
     /**
      * Initializes the presenter by start retrieving the user list.
      */
-    public void initialize() {
-        this.getPostPage();
+    public void initialize(int page, int pageSize) {
+        this.getPostPage(page, pageSize);
     }
 
     /**
-     * Loads all users.
+     * Load a posts page
      */
-    private void getPostPage() {
+    private void getPostPage(int page, int pageSize) {
         this.hideViewRetry();
         this.showViewLoading();
-        this.getPostList();
+        this.getPostList(page, pageSize);
     }
 
     public void onPostClicked(PostModel postModel) {
@@ -68,7 +61,9 @@ public class PagedPostListPresenter implements Presenter {
         this.postsListView.showLoading();
     }
 
-    private void getPostList() {
+    private void getPostList(int page, int pageSize) {
+        this.getPagedPostsUseCase.setPage(page);
+        this.getPagedPostsUseCase.setPageSize(pageSize);
         this.getPagedPostsUseCase.execute(new PagedPostListSubscriber());
     }
 
@@ -87,7 +82,7 @@ public class PagedPostListPresenter implements Presenter {
 
     private void showUsersCollectionInView(PostPage postPage) {
         final PostPageModel postPageModel = this.postPageModelDataMapper.transform(postPage);
-        this.postsListView.renderPostList(postPageModel.getResults());
+        this.postsListView.renderPostList(postPageModel.getResults(), (postPage.getNext() != null));
     }
 
     private final class PagedPostListSubscriber extends DefaultSubscriber<PostPage> {

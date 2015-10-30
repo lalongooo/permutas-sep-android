@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -22,11 +23,10 @@ import com.permutassep.presentation.interfaces.FragmentMenuItemSelectedListener;
 import com.permutassep.presentation.internal.di.components.ApplicationComponent;
 import com.permutassep.presentation.internal.di.components.DaggerPostComponent;
 import com.permutassep.presentation.internal.di.components.PostComponent;
-import com.permutassep.presentation.internal.di.modules.PostModule;
 import com.permutassep.presentation.model.PostModel;
 import com.permutassep.presentation.presenter.PagedPostListPresenter;
 import com.permutassep.presentation.utils.PrefUtils;
-import com.permutassep.presentation.view.PostsListView;
+import com.permutassep.presentation.view.PagedPostsListView;
 import com.permutassep.presentation.view.activity.BaseActivity;
 import com.permutassep.presentation.view.adapter.PostsAdapter;
 import com.permutassep.presentation.view.adapter.PostsLayoutManager;
@@ -43,7 +43,7 @@ import butterknife.OnClick;
 /**
  * By Jorge E. Hernandez (@lalongooo) 2015
  */
-public class FragmentPagedPostList extends BaseFragment implements PostsListView {
+public class FragmentPagedPostList extends BaseFragment implements PagedPostsListView {
 
     @Inject
     PagedPostListPresenter postListPresenter;
@@ -56,12 +56,12 @@ public class FragmentPagedPostList extends BaseFragment implements PostsListView
     RelativeLayout rl_retry;
 
     private PostComponent postComponent;
-
     private FirstLaunchCompleteListener firstLaunchCompleteListener;
     private FragmentMenuItemSelectedListener fragmentMenuItemSelectedListener;
     private PostsAdapter postsAdapter;
     private PostsLayoutManager postsLayoutManager;
     private FragmentPostList.PostListListener postListListener;
+    private boolean hasNextPage;
 
     private PostsAdapter.OnItemClickListener onItemClickListener = new PostsAdapter.OnItemClickListener() {
         @Override
@@ -102,6 +102,15 @@ public class FragmentPagedPostList extends BaseFragment implements PostsListView
         this.postsAdapter = new PostsAdapter(getActivity(), new ArrayList<PostModel>());
         this.postsAdapter.setOnItemClickListener(onItemClickListener);
         this.rv_posts.setAdapter(postsAdapter);
+        this.rv_posts.addOnScrollListener(new EndlessRecyclerOnScrollListener(postsLayoutManager) {
+
+            @Override
+            public void onLoadMore(int current_page) {
+                if(hasNextPage){
+                    FragmentPagedPostList.this.postListPresenter.initialize(current_page, 10);
+                }
+            }
+        });
     }
 
     @Override
@@ -144,15 +153,14 @@ public class FragmentPagedPostList extends BaseFragment implements PostsListView
     private void initialize() {
         postComponent = DaggerPostComponent.builder()
                 .applicationComponent(getComponent(ApplicationComponent.class))
-                .activityModule(((BaseActivity)getActivity()).getActivityModule())
-                .postModule(new PostModule(1, 10))
+                .activityModule(((BaseActivity) getActivity()).getActivityModule())
                 .build();
         postComponent.inject(this);
         this.postListPresenter.setView(this);
     }
 
     private void loadUserList() {
-        this.postListPresenter.initialize();
+        this.postListPresenter.initialize(1, 10);
     }
 
     @Override
@@ -176,11 +184,12 @@ public class FragmentPagedPostList extends BaseFragment implements PostsListView
      */
 
     @Override
-    public void renderPostList(Collection<PostModel> postModelCollection) {
+    public void renderPostList(Collection<PostModel> postModelCollection, boolean hasNextPage) {
+        firstLaunchCompleteListener.onFirstLaunchComplete();
+        this.hasNextPage = hasNextPage;
         if (postModelCollection != null) {
             this.postsAdapter.setPostsCollection(postModelCollection);
         }
-        firstLaunchCompleteListener.onFirstLaunchComplete();
     }
 
     @Override
@@ -238,5 +247,50 @@ public class FragmentPagedPostList extends BaseFragment implements PostsListView
     public void onDestroy() {
         super.onDestroy();
         this.postListPresenter.destroy();
+    }
+
+
+    public abstract class EndlessRecyclerOnScrollListener extends RecyclerView.OnScrollListener {
+        public String TAG = EndlessRecyclerOnScrollListener.class.getSimpleName();
+        int firstVisibleItem, visibleItemCount, totalItemCount;
+        private int previousTotal = 0; // The total number of items in the dataset after the last load
+        private boolean loading = true; // True if we are still waiting for the last set of data to load.
+        private int visibleThreshold = 2; // The minimum amount of items to have below your current scroll position before loading more.
+        private int current_page = 1;
+
+        private LinearLayoutManager mLinearLayoutManager;
+
+        public EndlessRecyclerOnScrollListener(LinearLayoutManager linearLayoutManager) {
+            this.mLinearLayoutManager = linearLayoutManager;
+        }
+
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+
+            visibleItemCount = recyclerView.getChildCount();
+            totalItemCount = mLinearLayoutManager.getItemCount();
+            firstVisibleItem = mLinearLayoutManager.findFirstVisibleItemPosition();
+
+            if (loading) {
+                if (totalItemCount > previousTotal) {
+                    loading = false;
+                    previousTotal = totalItemCount;
+                }
+            }
+            if (!loading && (totalItemCount - visibleItemCount)
+                    <= (firstVisibleItem + visibleThreshold)) {
+                // End has been reached
+
+                // Do something
+                current_page++;
+
+                onLoadMore(current_page);
+
+                loading = true;
+            }
+        }
+
+        public abstract void onLoadMore(int current_page);
     }
 }

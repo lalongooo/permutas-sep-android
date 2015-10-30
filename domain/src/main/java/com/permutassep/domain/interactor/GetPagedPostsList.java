@@ -15,19 +15,25 @@ import rx.Observable;
 public class GetPagedPostsList extends UseCase {
 
     private final PostRepository postRepository;
-    private final int mPage;
-    private final int mPageSize;
+    private int mPage;
+    private int mPageSize;
 
     @Inject
-    public GetPagedPostsList(int page, int pageSize, PostRepository postRepository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
+    public GetPagedPostsList(PostRepository postRepository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         super(threadExecutor, postExecutionThread);
         this.postRepository = postRepository;
-        this.mPage = page;
-        this.mPageSize = pageSize;
     }
 
     @Override
     protected Observable buildUseCaseObservable() {
         return this.postRepository.getPostPage(mPage, mPageSize);
+    }
+
+    public void setPage(int mPage) {
+        this.mPage = mPage;
+    }
+
+    public void setPageSize(int mPageSize) {
+        this.mPageSize = mPageSize;
     }
 }

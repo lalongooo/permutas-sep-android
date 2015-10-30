@@ -127,12 +127,12 @@ public class FragmentPostDetails extends BaseFragment implements PostDetailsView
 
     private void initialize() {
         this.postId = getArguments().getInt(ARGUMENT_POST_ID);
-        postComponent = DaggerPostComponent.builder()
+        this.postComponent = DaggerPostComponent.builder()
                 .applicationComponent(getComponent(ApplicationComponent.class))
                 .activityModule(((BaseActivity)getActivity()).getActivityModule())
                 .postModule(new PostModule(postId))
                 .build();
-        postComponent.inject(this);
+        this.postComponent.inject(this);
         this.postDetailsPresenter.setView(this);
         this.postId = getArguments().getInt(ARGUMENT_POST_ID);
         this.postDetailsPresenter.initialize(this.postId);

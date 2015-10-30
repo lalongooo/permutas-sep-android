@@ -51,8 +51,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostViewHold
     @Override
     public PostViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = this.layoutInflater.inflate(R.layout.ca_row_post, parent, false);
-        PostViewHolder postViewHolder = new PostViewHolder(view);
-        return postViewHolder;
+        return new PostViewHolder(view);
     }
 
     @Override
@@ -85,7 +84,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostViewHold
 
     public void setPostsCollection(Collection<PostModel> postsCollection) {
         this.validatePostsCollection(postsCollection);
-        this.postModelList = (List<PostModel>) postsCollection;
+        this.postModelList.addAll(postsCollection);
         this.notifyDataSetChanged();
     }
 

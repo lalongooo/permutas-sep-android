@@ -2,7 +2,6 @@ package com.permutassep.presentation.internal.di.modules;
 
 import com.permutassep.domain.executor.PostExecutionThread;
 import com.permutassep.domain.executor.ThreadExecutor;
-import com.permutassep.domain.interactor.GetPagedPostsList;
 import com.permutassep.domain.interactor.GetPostDetails;
 import com.permutassep.domain.interactor.GetPostsList;
 import com.permutassep.domain.interactor.UseCase;
@@ -21,8 +20,6 @@ import dagger.Provides;
 public class PostModule {
 
     private int postId = -1;
-    private int mPage = -1;
-    private int mPageSize = -1;
 
     public PostModule() {
     }
@@ -31,25 +28,11 @@ public class PostModule {
         this.postId = postId;
     }
 
-    public PostModule(int page, int pageSize) {
-        this.mPage = page;
-        this.mPageSize = pageSize;
-    }
-
     @Provides
     @PerActivity
     @Named("postList")
     UseCase provideGetPostListUseCase(GetPostsList getPostsList) {
         return getPostsList;
-    }
-
-    @Provides
-    @PerActivity
-    @Named("pagedPostList")
-    UseCase provideGetPagedPostListUseCase(
-            PostRepository postRepository, ThreadExecutor threadExecutor,
-            PostExecutionThread postExecutionThread) {
-        return new GetPagedPostsList(mPage, mPageSize, postRepository, threadExecutor, postExecutionThread);
     }
 
     @Provides

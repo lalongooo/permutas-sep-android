@@ -24,8 +24,8 @@ import com.permutassep.presentation.view.activity.BaseActivity;
 import com.permutassep.presentation.view.fragment.FragmentCompleteFbData;
 import com.permutassep.presentation.view.fragment.FragmentLogin;
 import com.permutassep.presentation.view.fragment.FragmentLoginSignUp;
+import com.permutassep.presentation.view.fragment.FragmentPagedPostList;
 import com.permutassep.presentation.view.fragment.FragmentPostDetails;
-import com.permutassep.presentation.view.fragment.FragmentPostList;
 import com.permutassep.presentation.view.fragment.FragmentSignUp;
 
 import javax.inject.Inject;
@@ -131,7 +131,7 @@ public class Navigator {
                 fragmentTransaction.hide(fragment);
             }
 
-            fragmentTransaction.add(R.id.fragmentContainer, FragmentPostList.newInstance());
+            fragmentTransaction.add(R.id.fragmentContainer, FragmentPagedPostList.newInstance());
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
             fragmentTransaction.commit();
