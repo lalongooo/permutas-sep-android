@@ -25,12 +25,13 @@ import com.permutassep.BaseActivity;
 import com.permutassep.config.Config;
 import com.permutassep.interfaces.FirstLaunchCompleteListener;
 import com.permutassep.model.Post;
+import com.permutassep.presentation.interfaces.OnPostItemSelectedListener;
 import com.permutassep.utils.PrefUtils;
 import com.permutassep.utils.Utils;
 
 public class ActivityMain extends BaseActivity
         implements
-        FragmentPostDetail.OnPostItemSelectedListener,
+        OnPostItemSelectedListener,
         FragmentManager.OnBackStackChangedListener,
         FirstLaunchCompleteListener {
 

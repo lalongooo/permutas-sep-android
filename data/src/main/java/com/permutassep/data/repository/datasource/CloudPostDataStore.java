@@ -89,7 +89,7 @@ public class CloudPostDataStore implements PostDataStore {
 
     @Override
     public Observable<List<PostEntity>> userPosts(int userId) {
-        return restClient.get().userPosts(userId);
+        return restClient.enablePostTypeAdapter().get().userPosts(userId);
     }
 
     @Override

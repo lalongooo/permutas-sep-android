@@ -13,9 +13,14 @@ public class Config {
     public static final String INEGI_FACIL_REST_BASE_URL = "http://inegifacil.com/";
 
     /**
-     * Date format used in the entire application
+     * Date format used in the API REST Service
      */
-    public static final String APP_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
+    public static final String API_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
+
+	/**
+	 * Date format used in the entire app
+	 */
+	public static final String APP_DATE_FORMAT = "HH:mm' - 'dd MMM yy";
 
 	/**
 	 * Number of publications per page in the news feed screen (fragment).

@@ -24,14 +24,15 @@ import com.permutassep.presentation.interfaces.PostListListener;
 import com.permutassep.presentation.internal.di.components.ApplicationComponent;
 import com.permutassep.presentation.internal.di.components.DaggerPostComponent;
 import com.permutassep.presentation.internal.di.components.PostComponent;
+import com.permutassep.presentation.internal.di.modules.PostModule;
 import com.permutassep.presentation.model.PostModel;
 import com.permutassep.presentation.presenter.PostListPresenter;
+import com.permutassep.presentation.presenter.UserPostListPresenter;
 import com.permutassep.presentation.utils.PrefUtils;
 import com.permutassep.presentation.view.PostsListView;
 import com.permutassep.presentation.view.activity.BaseActivity;
 import com.permutassep.presentation.view.adapter.PostsAdapter;
 import com.permutassep.presentation.view.adapter.PostsLayoutManager;
-import com.permutassep.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -45,11 +46,14 @@ import butterknife.OnClick;
 /**
  * By Jorge E. Hernandez (@lalongooo) 2015
  */
-public class FragmentPostList extends BaseFragment implements PostsListView {
+public class FragmentMyPostList extends BaseFragment implements PostsListView {
+
+    private static final String ARGUMENT_USER_ID = "ARGUMENT_USER_ID";
+
+    private int userId;
 
     @Inject
-    PostListPresenter postListPresenter;
-
+    UserPostListPresenter postListPresenter;
     @Bind(R.id.rv_users)
     RecyclerView rv_posts;
     @Bind(R.id.rl_progress)
@@ -60,7 +64,6 @@ public class FragmentPostList extends BaseFragment implements PostsListView {
     Button bt_retry;
 
     private PostComponent postComponent;
-
     private FirstLaunchCompleteListener firstLaunchCompleteListener;
     private FragmentMenuItemSelectedListener fragmentMenuItemSelectedListener;
     private PostsAdapter postsAdapter;
@@ -70,19 +73,25 @@ public class FragmentPostList extends BaseFragment implements PostsListView {
     private PostsAdapter.OnItemClickListener onItemClickListener = new PostsAdapter.OnItemClickListener() {
         @Override
         public void onPostItemClicked(PostModel postModel) {
-            if (FragmentPostList.this.postListPresenter != null && postModel != null) {
-                FragmentPostList.this.postListPresenter.onPostClicked(postModel);
+            if (FragmentMyPostList.this.postListPresenter != null && postModel != null) {
+                FragmentMyPostList.this.postListPresenter.onPostClicked(postModel);
             }
         }
     };
 
 
-    public FragmentPostList() {
+    public FragmentMyPostList() {
         super();
     }
 
-    public static FragmentPostList newInstance() {
-        return new FragmentPostList();
+    public static FragmentMyPostList newInstance(int userId) {
+        FragmentMyPostList fragmentMyPostList = new FragmentMyPostList();
+
+        Bundle args = new Bundle();
+        args.putInt(ARGUMENT_USER_ID, userId);
+        fragmentMyPostList.setArguments(args);
+
+        return fragmentMyPostList;
     }
 
     @Override
@@ -117,13 +126,6 @@ public class FragmentPostList extends BaseFragment implements PostsListView {
         this.fragmentMenuItemSelectedListener = (FragmentMenuItemSelectedListener) getActivity();
     }
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        this.initialize();
-        this.loadUserList();
-    }
-
     @SuppressWarnings("deprecation")
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -146,16 +148,25 @@ public class FragmentPostList extends BaseFragment implements PostsListView {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        this.initialize();
+        this.loadUserPostsList();
+    }
+
     private void initialize() {
+        this.userId = getArguments().getInt(ARGUMENT_USER_ID);
         postComponent = DaggerPostComponent.builder()
                 .applicationComponent(getComponent(ApplicationComponent.class))
                 .activityModule(((BaseActivity)getActivity()).getActivityModule())
+                .postModule(new PostModule(this.userId))
                 .build();
         postComponent.inject(this);
-        this.postListPresenter.setView(this);
+        this.postListPresenter.setView(this, PrefUtils.getUser(getActivity()));
     }
 
-    private void loadUserList() {
+    private void loadUserPostsList() {
         this.postListPresenter.initialize();
     }
 
@@ -172,7 +183,7 @@ public class FragmentPostList extends BaseFragment implements PostsListView {
 
     @OnClick(R.id.bt_retry)
     void onButtonRetryClick() {
-        FragmentPostList.this.loadUserList();
+        FragmentMyPostList.this.loadUserPostsList();
     }
 
     /**

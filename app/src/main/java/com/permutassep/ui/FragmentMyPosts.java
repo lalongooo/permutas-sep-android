@@ -18,6 +18,7 @@ import com.permutassep.adapter.PostAdapter;
 import com.permutassep.adapter.PostTypeAdapter;
 import com.permutassep.config.Config;
 import com.permutassep.model.Post;
+import com.permutassep.presentation.interfaces.OnPostItemSelectedListener;
 import com.permutassep.rest.permutassep.PermutasSEPRestClient;
 import com.permutassep.utils.Utils;
 
@@ -33,14 +34,14 @@ public class FragmentMyPosts extends BaseFragment {
     private Activity mActiviy;
     private ProgressDialog pDlg;
     private PostAdapter adapter;
-    private FragmentPostDetail.OnPostItemSelectedListener onPostItemSelectedListener;
+    private OnPostItemSelectedListener onPostItemSelectedListener;
 
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        if(!(getActivity() instanceof FragmentPostDetail.OnPostItemSelectedListener)) {
+        if(!(getActivity() instanceof OnPostItemSelectedListener)) {
             throw new ClassCastException("Activity must implement OnPostItemSelectedListener");
         } else {
-            onPostItemSelectedListener = (FragmentPostDetail.OnPostItemSelectedListener) getActivity();
+            onPostItemSelectedListener = (OnPostItemSelectedListener) getActivity();
             this.mActiviy = activity;
         }
     }

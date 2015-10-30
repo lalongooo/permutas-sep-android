@@ -12,6 +12,7 @@ import com.lalongooo.permutassep.R;
 import com.permutassep.BaseFragment;
 import com.permutassep.adapter.PostAdapter;
 import com.permutassep.model.Post;
+import com.permutassep.presentation.interfaces.OnPostItemSelectedListener;
 
 import java.util.List;
 
@@ -19,15 +20,15 @@ public class FragmentResult extends BaseFragment {
 
     private List<Post> posts;
     private PostAdapter adapter;
-    private FragmentPostDetail.OnPostItemSelectedListener onPostItemSelectedListener;
+    private OnPostItemSelectedListener onPostItemSelectedListener;
 
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
-        if(!(getActivity() instanceof FragmentPostDetail.OnPostItemSelectedListener)) {
+        if(!(getActivity() instanceof OnPostItemSelectedListener)) {
             throw new ClassCastException("Activity must implement OnPostItemSelectedListener");
         } else {
-            onPostItemSelectedListener = (FragmentPostDetail.OnPostItemSelectedListener) getActivity();
+            onPostItemSelectedListener = (OnPostItemSelectedListener) getActivity();
         }
     }
 

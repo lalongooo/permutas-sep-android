@@ -2,6 +2,7 @@ package com.permutassep.presentation.internal.di.modules;
 
 import com.permutassep.domain.executor.PostExecutionThread;
 import com.permutassep.domain.executor.ThreadExecutor;
+import com.permutassep.domain.interactor.GetMyPostsList;
 import com.permutassep.domain.interactor.GetPostDetails;
 import com.permutassep.domain.interactor.GetPostsList;
 import com.permutassep.domain.interactor.UseCase;
@@ -19,13 +20,16 @@ import dagger.Provides;
 @Module
 public class PostModule {
 
-    private int postId = -1;
+    /**
+     * This id is used to identify a unique post and a unique user
+     */
+    private int id = -1;
 
     public PostModule() {
     }
 
-    public PostModule(int postId) {
-        this.postId = postId;
+    public PostModule(int id) {
+        this.id = id;
     }
 
     @Provides
@@ -41,7 +45,16 @@ public class PostModule {
     UseCase provideGetPostDetailsUseCase(
             PostRepository postRepository, ThreadExecutor threadExecutor,
             PostExecutionThread postExecutionThread) {
-        return new GetPostDetails(postId, postRepository, threadExecutor, postExecutionThread);
+        return new GetPostDetails(id, postRepository, threadExecutor, postExecutionThread);
+    }
+
+    @Provides
+    @PerActivity
+    @Named("myPostsList")
+    UseCase provideGetMyPostsListUseCase(
+            PostRepository postRepository, ThreadExecutor threadExecutor,
+            PostExecutionThread postExecutionThread) {
+        return new GetMyPostsList(id, postRepository, threadExecutor, postExecutionThread);
     }
 
 

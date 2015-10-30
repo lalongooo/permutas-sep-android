@@ -24,6 +24,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.permutassep.presentation.interfaces.FirstLaunchCompleteListener;
 import com.permutassep.presentation.interfaces.FragmentMenuItemSelectedListener;
 import com.permutassep.presentation.interfaces.LoginCompleteListener;
+import com.permutassep.presentation.interfaces.PostListListener;
 import com.permutassep.presentation.internal.di.HasComponent;
 import com.permutassep.presentation.internal.di.components.ActivityComponent;
 import com.permutassep.presentation.internal.di.components.DaggerActivityComponent;
@@ -34,6 +35,8 @@ import com.permutassep.presentation.utils.PrefUtils;
 import com.permutassep.presentation.view.HomeView;
 import com.permutassep.presentation.view.fragment.FragmentLogin;
 import com.permutassep.presentation.view.fragment.FragmentLoginSignUp;
+import com.permutassep.presentation.view.fragment.FragmentMyPostList;
+import com.permutassep.presentation.view.fragment.FragmentPagedPostList;
 import com.permutassep.presentation.view.fragment.FragmentPostList;
 import com.permutassep.presentation.view.fragment.FragmentSignUp;
 
@@ -45,7 +48,7 @@ import javax.inject.Inject;
 public class ActivityMain extends BaseActivity
         implements HomeView,
         HasComponent<ActivityComponent>,
-        FragmentPostList.PostListListener,
+        PostListListener,
         Navigator.NavigationListener,
         FragmentManager.OnBackStackChangedListener,
         FragmentSignUp.FacebookSignUpListener,
@@ -73,7 +76,7 @@ public class ActivityMain extends BaseActivity
 
         userModel = PrefUtils.getUser(this);
         if (userModel != null) {
-            navigator.navigateToPostList(this);
+            navigator.navigateToPostList(this, true);
             renderDrawerOptions();
         } else {
             navigator.navigateToLoginSignUp(this, true);
@@ -110,25 +113,23 @@ public class ActivityMain extends BaseActivity
                 .withActionBarDrawerToggle(true)
                 .withAccountHeader(accountHeader)
                 .withToolbar(toolbar)
-                .withSelectedItem(0)
+                .addDrawerItems(
+                        new PrimaryDrawerItem()
+                                .withName(getString(R.string.app_nav_drawer_1))
+                                .withIdentifier(ActivityMain.DRAWER_IDENTIFIER_HOME)
+                                .withIcon(GoogleMaterial.Icon.gmd_home),
+
+                        new PrimaryDrawerItem()
+                                .withName(getString(R.string.app_nav_drawer_2))
+                                .withIdentifier(ActivityMain.DRAWER_IDENTIFIER_MY_POSTS)
+                                .withIcon(GoogleMaterial.Icon.gmd_content_paste))
+                .withSelectedItem(DRAWER_IDENTIFIER_HOME)
                 .build();
-
-
-        drawer.addItems(
-                new PrimaryDrawerItem()
-                        .withName(getString(R.string.app_nav_drawer_1))
-                        .withIdentifier(ActivityMain.DRAWER_IDENTIFIER_HOME)
-                        .withIcon(GoogleMaterial.Icon.gmd_home),
-
-                new PrimaryDrawerItem()
-                        .withName(getString(R.string.app_nav_drawer_2))
-                        .withIdentifier(ActivityMain.DRAWER_IDENTIFIER_MY_POSTS)
-                        .withIcon(GoogleMaterial.Icon.gmd_content_paste)
-        );
 
         drawer.setOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
             @Override
             public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                onDrawerItemSelected(drawerItem.getIdentifier());
                 return false;
             }
         });
@@ -136,7 +137,18 @@ public class ActivityMain extends BaseActivity
 
     @Override
     public void onDrawerItemSelected(int drawerItemId) {
-
+        switch (drawerItemId) {
+            case DRAWER_IDENTIFIER_HOME:
+                if (!(getCurrentDisplayedFragment() instanceof FragmentPagedPostList)) {
+                    getSupportFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                }
+                break;
+            case DRAWER_IDENTIFIER_MY_POSTS:
+                if (!(getCurrentDisplayedFragment() instanceof FragmentMyPostList)) {
+                    navigator.navigateToUserPostList(this, this.userModel.getId(), true);
+                }
+                break;
+        }
     }
 
     @Override
@@ -157,7 +169,7 @@ public class ActivityMain extends BaseActivity
     }
 
     /**
-     * Method from {@link FragmentPostList.PostListListener}
+     * Method from {@link PostListListener}
      */
 
     @Override
@@ -179,8 +191,8 @@ public class ActivityMain extends BaseActivity
             navigator.navigateToSignUp(this);
         }
 
-        if (c == FragmentPostList.class) {
-            navigator.navigateToPostList(this);
+        if (c == FragmentPagedPostList.class) {
+            navigator.navigateToPostList(this, false);
         }
     }
 
@@ -191,12 +203,14 @@ public class ActivityMain extends BaseActivity
     @Override
     public void onBackStackChanged() {
 
-        Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
-        if (f instanceof FragmentLoginSignUp) {
+        Fragment currentFragment = getCurrentDisplayedFragment();
+        if (currentFragment instanceof FragmentLoginSignUp) {
             ActionBar actionBar = getSupportActionBar();
             if (actionBar != null) {
                 actionBar.hide();
             }
+        } else if (currentFragment instanceof FragmentPagedPostList) {
+            drawer.setSelection(DRAWER_IDENTIFIER_HOME, false);
         }
     }
 
@@ -240,7 +254,7 @@ public class ActivityMain extends BaseActivity
             PrefUtils.clearApplicationPreferences(this);
             LoginManager.getInstance().logOut();
             navigator.navigateToLoginSignUp(this, false);
-        }else if (menuId == R.id.action_about) {
+        } else if (menuId == R.id.action_about) {
 
             new LibsBuilder()
                     .withFields(R.string.class.getFields())
@@ -250,5 +264,9 @@ public class ActivityMain extends BaseActivity
                     .withActivityStyle(Libs.ActivityStyle.LIGHT_DARK_TOOLBAR)
                     .start(this);
         }
+    }
+
+    private Fragment getCurrentDisplayedFragment() {
+        return getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
     }
 }

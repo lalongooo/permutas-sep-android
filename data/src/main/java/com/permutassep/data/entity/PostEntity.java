@@ -45,7 +45,7 @@ public class PostEntity {
     @SerializedName("position_type")
     private String mPositionType;
     @SerializedName("post_date")
-    private Date mPostDate;
+    private String mPostDate;
     @SerializedName("is_teaching_career")
     private boolean mIsTeachingCareer;
     @SerializedName("academic_level")
@@ -186,11 +186,11 @@ public class PostEntity {
         this.mIsTeachingCareer = isTeachingCareer;
     }
 
-    public Date getPostDate() {
+    public String getPostDate() {
         return mPostDate;
     }
 
-    public void setPostDate(Date postDate) {
+    public void setPostDate(String postDate) {
         this.mPostDate = postDate;
     }
 

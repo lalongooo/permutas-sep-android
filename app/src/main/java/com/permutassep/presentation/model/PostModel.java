@@ -28,7 +28,7 @@ public class PostModel {
     private String lonTo;
     private String workdayType;
     private String positionType;
-    private Date postDate;
+    private String postDate;
     private boolean isTeachingCareer;
     private String academicLevel;
 
@@ -116,11 +116,11 @@ public class PostModel {
         this.positionType = positionType;
     }
 
-    public Date getPostDate() {
+    public String getPostDate() {
         return postDate;
     }
 
-    public void setPostDate(Date postDate) {
+    public void setPostDate(String postDate) {
         this.postDate = postDate;
     }
 

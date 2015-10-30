@@ -20,6 +20,7 @@ import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.permutassep.presentation.interfaces.FirstLaunchCompleteListener;
 import com.permutassep.presentation.interfaces.FragmentMenuItemSelectedListener;
+import com.permutassep.presentation.interfaces.PostListListener;
 import com.permutassep.presentation.internal.di.components.ApplicationComponent;
 import com.permutassep.presentation.internal.di.components.DaggerPostComponent;
 import com.permutassep.presentation.internal.di.components.PostComponent;
@@ -45,6 +46,8 @@ import butterknife.OnClick;
  */
 public class FragmentPagedPostList extends BaseFragment implements PagedPostsListView {
 
+    public static final String TAG = "FragmentPagedPostList";
+
     @Inject
     PagedPostListPresenter postListPresenter;
 
@@ -60,7 +63,7 @@ public class FragmentPagedPostList extends BaseFragment implements PagedPostsLis
     private FragmentMenuItemSelectedListener fragmentMenuItemSelectedListener;
     private PostsAdapter postsAdapter;
     private PostsLayoutManager postsLayoutManager;
-    private FragmentPostList.PostListListener postListListener;
+    private PostListListener postListListener;
     private boolean hasNextPage;
 
     private PostsAdapter.OnItemClickListener onItemClickListener = new PostsAdapter.OnItemClickListener() {
@@ -106,7 +109,7 @@ public class FragmentPagedPostList extends BaseFragment implements PagedPostsLis
 
             @Override
             public void onLoadMore(int current_page) {
-                if(hasNextPage){
+                if (hasNextPage) {
                     FragmentPagedPostList.this.postListPresenter.initialize(current_page, 10);
                 }
             }
@@ -116,7 +119,7 @@ public class FragmentPagedPostList extends BaseFragment implements PagedPostsLis
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        this.postListListener = (FragmentPostList.PostListListener) getActivity();
+        this.postListListener = (PostListListener) getActivity();
         this.firstLaunchCompleteListener = (FirstLaunchCompleteListener) getActivity();
         this.fragmentMenuItemSelectedListener = (FragmentMenuItemSelectedListener) getActivity();
     }

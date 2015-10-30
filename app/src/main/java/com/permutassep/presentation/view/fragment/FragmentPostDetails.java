@@ -16,11 +16,13 @@ import com.permutassep.presentation.internal.di.components.PostComponent;
 import com.permutassep.presentation.internal.di.modules.PostModule;
 import com.permutassep.presentation.model.PostModel;
 import com.permutassep.presentation.presenter.PostDetailsPresenter;
+import com.permutassep.presentation.utils.Utils;
 import com.permutassep.presentation.view.PostDetailsView;
 import com.permutassep.presentation.view.activity.BaseActivity;
-import com.permutassep.utils.Utils;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 
@@ -166,7 +168,7 @@ public class FragmentPostDetails extends BaseFragment implements PostDetailsView
             this.tvAcademicLevel.setText(post.getAcademicLevel());
             this.tvWorkdayType.setText(post.getWorkdayType());
             this.tvPositionType.setText(post.getPositionType());
-            this.tvPostDate.setText(new SimpleDateFormat("HH:mm' - 'dd MMM yy", Locale.getDefault()).format(post.getPostDate()));
+            this.tvPostDate.setText(Utils.formatDate(post.getPostDate()));
             this.layoutPostDetails.setVisibility(View.VISIBLE);
 
             if (post.isTeachingCareer()) {

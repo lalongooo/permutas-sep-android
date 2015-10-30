@@ -24,6 +24,7 @@ import com.permutassep.presentation.view.activity.BaseActivity;
 import com.permutassep.presentation.view.fragment.FragmentCompleteFbData;
 import com.permutassep.presentation.view.fragment.FragmentLogin;
 import com.permutassep.presentation.view.fragment.FragmentLoginSignUp;
+import com.permutassep.presentation.view.fragment.FragmentMyPostList;
 import com.permutassep.presentation.view.fragment.FragmentPagedPostList;
 import com.permutassep.presentation.view.fragment.FragmentPostDetails;
 import com.permutassep.presentation.view.fragment.FragmentSignUp;
@@ -121,7 +122,7 @@ public class Navigator {
      *
      * @param activity An activity needed to load the destination fragment.
      */
-    public void navigateToPostList(BaseActivity activity) {
+    public void navigateToPostList(BaseActivity activity, boolean addToBackStack) {
         if (activity != null) {
 
             FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
@@ -130,9 +131,11 @@ public class Navigator {
             if(fragment != null){
                 fragmentTransaction.hide(fragment);
             }
+            if(addToBackStack){
+                fragmentTransaction.addToBackStack(null);
+            }
 
             fragmentTransaction.add(R.id.fragmentContainer, FragmentPagedPostList.newInstance());
-            fragmentTransaction.addToBackStack(null);
             fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
             fragmentTransaction.commit();
         }
@@ -149,6 +152,30 @@ public class Navigator {
             fragmentTransaction.hide(activity.getSupportFragmentManager().findFragmentById(R.id.fragmentContainer));
             fragmentTransaction.add(R.id.fragmentContainer, FragmentPostDetails.newInstance(postId));
             fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            fragmentTransaction.commit();
+        }
+    }
+
+    /**
+     * Navigates to the posts list owned by the logged user.
+     * @param activity An activity needed to load the destination fragment.
+     * @param userId The user id
+     */
+    public void navigateToUserPostList(BaseActivity activity, int userId, boolean addToBackStack) {
+        if (activity != null) {
+
+            FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
+
+            Fragment fragment = activity.getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
+            if(fragment != null){
+                fragmentTransaction.hide(fragment);
+            }
+            if(addToBackStack){
+                fragmentTransaction.addToBackStack(null);
+            }
+
+            fragmentTransaction.add(R.id.fragmentContainer, FragmentMyPostList.newInstance(userId));
             fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
             fragmentTransaction.commit();
         }

@@ -19,6 +19,7 @@ import com.permutassep.config.Config;
 import com.permutassep.interfaces.FirstLaunchCompleteListener;
 import com.permutassep.model.Post;
 import com.permutassep.model.PostPage;
+import com.permutassep.presentation.interfaces.OnPostItemSelectedListener;
 import com.permutassep.rest.permutassep.PermutasSEPRestClient;
 import com.permutassep.utils.Utils;
 
@@ -34,7 +35,7 @@ public class FragmentPagedNewsFeed extends BaseFragment
     private MyPagingAdapter adapter;
     private int page = 1;
     private boolean loadMore = true;
-    private FragmentPostDetail.OnPostItemSelectedListener onPostItemSelectedListener;
+    private OnPostItemSelectedListener onPostItemSelectedListener;
     private FirstLaunchCompleteListener firstLaunchCompleteListener;
 
     @Override
@@ -75,10 +76,10 @@ public class FragmentPagedNewsFeed extends BaseFragment
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
-        if (!(getActivity() instanceof FragmentPostDetail.OnPostItemSelectedListener)) {
+        if (!(getActivity() instanceof OnPostItemSelectedListener)) {
             throw new ClassCastException("Activity must implement FragmentPostDetail.OnPostItemSelectedListener");
         } else {
-            onPostItemSelectedListener = (FragmentPostDetail.OnPostItemSelectedListener) getActivity();
+            onPostItemSelectedListener = (OnPostItemSelectedListener) getActivity();
         }
 
         if (!(getActivity() instanceof FirstLaunchCompleteListener)) {

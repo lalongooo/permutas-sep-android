@@ -43,16 +43,16 @@ public class UserModelDataMapper {
      * @return {@link UserModel}.
      */
     public UserModel transform(User user) {
-        if (user == null) {
-            throw new IllegalArgumentException("Cannot transform a null value");
+        UserModel userModel = null;
+        if (user != null) {
+            userModel = new UserModel();
+            userModel.setId(user.getId());
+            userModel.setName(user.getName());
+            userModel.setEmail(user.getEmail());
+            userModel.setPassword(user.getPassword());
+            userModel.setPhone(user.getPhone());
+            userModel.setSocialUserId(user.getSocialUserId());
         }
-        UserModel userModel = new UserModel();
-        userModel.setId(user.getId());
-        userModel.setName(user.getName());
-        userModel.setEmail(user.getEmail());
-        userModel.setPassword(user.getPassword());
-        userModel.setPhone(user.getPhone());
-        userModel.setSocialUserId(user.getSocialUserId());
 
         return userModel;
     }
