@@ -37,7 +37,6 @@ import com.permutassep.presentation.view.fragment.FragmentLogin;
 import com.permutassep.presentation.view.fragment.FragmentLoginSignUp;
 import com.permutassep.presentation.view.fragment.FragmentMyPostList;
 import com.permutassep.presentation.view.fragment.FragmentPagedPostList;
-import com.permutassep.presentation.view.fragment.FragmentPostList;
 import com.permutassep.presentation.view.fragment.FragmentSignUp;
 
 import javax.inject.Inject;
@@ -141,6 +140,7 @@ public class ActivityMain extends BaseActivity
             case DRAWER_IDENTIFIER_HOME:
                 if (!(getCurrentDisplayedFragment() instanceof FragmentPagedPostList)) {
                     getSupportFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                    navigator.navigateToPostList(this, false);
                 }
                 break;
             case DRAWER_IDENTIFIER_MY_POSTS:
@@ -192,7 +192,7 @@ public class ActivityMain extends BaseActivity
         }
 
         if (c == FragmentPagedPostList.class) {
-            navigator.navigateToPostList(this, false);
+            navigator.navigateToPostList(this, true);
         }
     }
 
@@ -210,7 +210,9 @@ public class ActivityMain extends BaseActivity
                 actionBar.hide();
             }
         } else if (currentFragment instanceof FragmentPagedPostList) {
-            drawer.setSelection(DRAWER_IDENTIFIER_HOME, false);
+            if(drawer != null){
+                drawer.setSelection(DRAWER_IDENTIFIER_HOME, false);
+            }
         }
     }
 

@@ -242,8 +242,8 @@ public class FragmentLogin extends BaseFragment implements LoginView {
     public void authorizeUser(UserModel userModel) {
         this.hideKeyboard();
         getActivity().getSupportFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-        this.navigationListener.onNextFragment(FragmentPostList.class);
-        loginCompleteListener.onLoginComplete(userModel);
+        this.navigationListener.onNextFragment(FragmentPagedPostList.class);
+        this.loginCompleteListener.onLoginComplete(userModel);
     }
 
     @Override
