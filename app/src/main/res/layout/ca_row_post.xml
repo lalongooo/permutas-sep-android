@@ -55,7 +55,8 @@
                 android:layout_toRightOf="@+id/tvFromLabel"
                 android:text="San Luis Potosi"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="#303030"/>
 
             <TextView
                 android:id="@+id/tvToLabel"
@@ -65,7 +66,8 @@
                 android:layout_below="@+id/tvFromLabel"
                 android:text="A: "
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="@color/primary"/>
 
             <TextView
                 android:id="@+id/tvTo"
@@ -76,7 +78,8 @@
                 android:layout_toRightOf="@+id/tvToLabel"
                 android:text="San Luis Potosi"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="#303030"/>
 
 
             <TextView
@@ -100,7 +103,8 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
                 android:text="Hace 6 horas"
-                android:textSize="10sp" />
+                android:textSize="10sp"
+                android:textColor="#303030"/>
 
 
             <TextView
@@ -136,7 +140,9 @@
                 android:layout_marginTop="5dp"
                 android:text="Este es un texto largo de ejemplo, para ver la ubicacion del elemento en cada elemento de la lista de publicaciones"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:textColor="#303030"
+                />
 
 
             <TextView
@@ -149,7 +155,8 @@
                 android:layout_marginTop="10dp"
                 android:text="De: "
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="@color/primary"/>
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>

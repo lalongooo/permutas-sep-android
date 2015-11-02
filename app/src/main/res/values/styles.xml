@@ -1,6 +1,7 @@
 <resources>
 
-    <style name="AppThemeTemp" parent="Theme.AppCompat.Light.NoActionBar">
+    <!--<style name="AppThemeTemp" parent="Theme.AppCompat.Light.NoActionBar">-->
+    <style name="AppThemeTemp" parent="MaterialDrawerTheme">
         <item name="colorAccent">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>
     </style>
