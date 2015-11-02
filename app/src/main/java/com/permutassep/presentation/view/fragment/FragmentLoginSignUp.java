@@ -52,6 +52,6 @@ public class FragmentLoginSignUp extends BaseFragment {
 
     @OnClick(R.id.tvContinue)
     void onTvContinueClick() {
-        this.navigationListener.onNextFragment(FragmentPostList.class);
+        this.navigationListener.onNextFragment(FragmentPagedPostList.class);
     }
 }
