@@ -11,7 +11,8 @@ import android.widget.TextView;
 import com.lalongooo.permutassep.R;
 import com.permutassep.model.State;
 import com.permutassep.presentation.model.PostModel;
-import com.permutassep.utils.Utils;
+import com.permutassep.presentation.utils.TimeAgo;
+import com.permutassep.presentation.utils.Utils;
 import com.squareup.picasso.Picasso;
 
 import java.util.Collection;
@@ -30,14 +31,16 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostViewHold
     private OnItemClickListener onItemClickListener;
     private HashMap<String, State> states;
     private Context mContext;
-
     private List<PostModel> postModelList;
+    private TimeAgo mTimeAgo;
+
     public PostsAdapter(Context context, Collection<PostModel> postModelCollection) {
         this.validatePostsCollection(postModelCollection);
+        this.mContext = context;
         this.postModelList = (List<PostModel>) postModelCollection;
         this.layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        this.mContext = context;
         this.states = Utils.getStates(context);
+        this.mTimeAgo = new TimeAgo(context);
     }
 
     private void validatePostsCollection(Collection<PostModel> usersCollection) {
@@ -62,7 +65,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostViewHold
         final PostModel postModel = this.postModelList.get(position);
 
         holder.tvUserName.setText(postModel.getUser().getName());
-        holder.tvPostDate.setText(postModel.getPostDate().toString());
+        holder.tvPostDate.setText(mTimeAgo.timeAgo(Utils.toDate(postModel.getPostDate())));
         holder.tvPostUserEmail.setText(postModel.getUser().getEmail());
         holder.tvPostUserPhone.setText(postModel.getUser().getPhone());
         holder.tvPostText.setText(postModel.getPostText());

@@ -14,19 +14,28 @@ import java.util.Locale;
 
 public class Utils {
 
-    public static String formatDate(String dateString) {
+    private static final SimpleDateFormat apiDateFormat = new SimpleDateFormat(Config.API_DATE_FORMAT, Locale.getDefault());
+    private static final SimpleDateFormat appTimeFormat = new SimpleDateFormat(Config.APP_DATE_FORMAT, Locale.getDefault());
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat(Config.API_DATE_FORMAT, Locale.getDefault());
+    /**
+     * Parses a string value into a Date object
+     * @param string The string to be parsed
+     * @return A date object based in the @{link String} parameter
+     */
+    public static Date toDate(String string){
         Date myDate = null;
         try {
-            myDate = dateFormat.parse(dateString);
+            myDate = apiDateFormat.parse(string);
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        SimpleDateFormat timeFormat = new SimpleDateFormat(Config.APP_DATE_FORMAT, Locale.getDefault());
+        return myDate;
+    }
 
-        return timeFormat.format(myDate);
+    public static String formatDate(String dateString) {
+
+        return appTimeFormat.format(toDate(dateString));
     }
 
     public static HashMap<String, State> getStates(Context c) {
