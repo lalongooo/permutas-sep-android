@@ -9,10 +9,10 @@ import java.util.Date;
 
 public class TimeAgo {
 
-    protected Context context;
+    private Resources mResources;
 
     public TimeAgo(Context context) {
-        this.context = context;
+        mResources = context.getResources();
     }
 
     public String timeAgo(Date date) {
@@ -22,10 +22,8 @@ public class TimeAgo {
     public String timeAgo(long millis) {
         long diff = new Date().getTime() - millis;
 
-        Resources r = context.getResources();
-
-        String prefix = r.getString(R.string.time_ago_prefix);
-        String suffix = r.getString(R.string.time_ago_suffix);
+        String prefix = mResources.getString(R.string.time_ago_prefix);
+        String suffix = mResources.getString(R.string.time_ago_suffix);
 
         double seconds = Math.abs(diff) / 1000;
         double minutes = seconds / 60;
@@ -36,38 +34,38 @@ public class TimeAgo {
         String words;
 
         if (seconds < 45) {
-            words = r.getString(R.string.time_ago_seconds, Math.round(seconds));
+            words = mResources.getString(R.string.time_ago_seconds, Math.round(seconds));
         } else if (seconds < 90) {
-            words = r.getString(R.string.time_ago_minute, 1);
+            words = mResources.getString(R.string.time_ago_minute, 1);
         } else if (minutes < 45) {
-            words = r.getString(R.string.time_ago_minutes, Math.round(minutes));
+            words = mResources.getString(R.string.time_ago_minutes, Math.round(minutes));
         } else if (minutes < 90) {
-            words = r.getString(R.string.time_ago_hour, 1);
+            words = mResources.getString(R.string.time_ago_hour, 1);
         } else if (hours < 24) {
-            words = r.getString(R.string.time_ago_hours, Math.round(hours));
+            words = mResources.getString(R.string.time_ago_hours, Math.round(hours));
         } else if (hours < 42) {
-            words = r.getString(R.string.time_ago_day, 1);
+            words = mResources.getString(R.string.time_ago_day, 1);
         } else if (days < 30) {
-            words = r.getString(R.string.time_ago_days, Math.round(days));
+            words = mResources.getString(R.string.time_ago_days, Math.round(days));
         } else if (days < 45) {
-            words = r.getString(R.string.time_ago_month, 1);
+            words = mResources.getString(R.string.time_ago_month, 1);
         } else if (days < 365) {
-            words = r.getString(R.string.time_ago_months, Math.round(days / 30));
+            words = mResources.getString(R.string.time_ago_months, Math.round(days / 30));
         } else if (years < 1.5) {
-            words = r.getString(R.string.time_ago_year, 1);
+            words = mResources.getString(R.string.time_ago_year, 1);
         } else {
-            words = r.getString(R.string.time_ago_years, Math.round(years));
+            words = mResources.getString(R.string.time_ago_years, Math.round(years));
         }
 
         StringBuilder sb = new StringBuilder();
 
-        if (prefix != null && prefix.length() > 0) {
+        if (prefix.length() > 0) {
             sb.append(prefix).append(" ");
         }
 
         sb.append(words);
 
-        if (suffix != null && suffix.length() > 0) {
+        if (suffix.length() > 0) {
             sb.append(" ").append(suffix);
         }
 
