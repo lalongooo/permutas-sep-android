@@ -1,15 +1,16 @@
-package com.example.android.wizardpager.wizard.model;
+package com.permutassep.presentation.view.wizard.model;
+
+/**
+ * By Jorge E. Hernandez (@lalongooo) 2015
+ */
 
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 
-import com.example.android.wizardpager.wizard.ui.PostTextFragment;
+import com.permutassep.presentation.view.wizard.ui.PostTextFragment;
 
 import java.util.ArrayList;
 
-/**
- * Created by lalongooo on 08/04/15.
- */
 public class PostTextPage extends Page {
 
     public static final String TEXT_DATA_KEY = "text";
@@ -25,7 +26,7 @@ public class PostTextPage extends Page {
 
     @Override
     public void getReviewItems(ArrayList<ReviewItem> dest) {
-        dest.add(new ReviewItem("Información adicional", mData.getString(TEXT_DATA_KEY), TEXT_DATA_KEY, -1));
+        dest.add(new ReviewItem("Información adicional", mData.getString(TEXT_DATA_KEY), getKey(), -1));
     }
 
     @Override

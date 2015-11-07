@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package com.example.android.wizardpager.wizard.model;
+package com.permutassep.presentation.view.wizard.model;
 
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 
-import com.example.android.wizardpager.wizard.ui.SingleChoiceFragment;
+import com.permutassep.presentation.view.wizard.ui.SingleChoiceFragment;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,7 +28,7 @@ import java.util.Arrays;
  * A page offering the user a number of mutually exclusive choices.
  */
 public class SingleFixedChoicePage extends Page {
-    protected ArrayList<String> mChoices = new ArrayList<String>();
+    protected ArrayList<String> mChoices = new ArrayList<>();
 
     public SingleFixedChoicePage(ModelCallbacks callbacks, String title) {
         super(callbacks, title);

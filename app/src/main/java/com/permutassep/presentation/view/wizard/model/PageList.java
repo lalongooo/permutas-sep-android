@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.android.wizardpager.wizard.model;
+package com.permutassep.presentation.view.wizard.model;
 
 import java.util.ArrayList;
 

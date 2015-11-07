@@ -1,9 +1,9 @@
-package com.example.android.wizardpager.wizard.model;
+package com.permutassep.presentation.view.wizard.model;
 
 
 import android.support.v4.app.Fragment;
 
-import com.example.android.wizardpager.wizard.ui.ProfessorCityToFragment;
+import com.permutassep.presentation.view.wizard.ui.ProfessorCityToFragment;
 import com.permutassep.model.City;
 import com.permutassep.model.State;
 import com.permutassep.model.Town;
@@ -29,14 +29,17 @@ public class ProfessorCityToPage extends Page {
 
 	@Override
 	public void getReviewItems(ArrayList<ReviewItem> dest) {
-        State state = (State) mData.getParcelable(STATE_TO_DATA_KEY);
-		dest.add(new ReviewItem("ESTADO DESEADO", state.getStateName(), STATE_TO_DATA_KEY, -1));
+        State state = mData.getParcelable(STATE_TO_DATA_KEY);
+        City city = mData.getParcelable(MUNICIPALITY_TO_DATA_KEY);
+        Town town = mData.getParcelable(LOCALITY_TO_DATA_KEY);
 
-        City city = (City) mData.getParcelable(MUNICIPALITY_TO_DATA_KEY);
-        dest.add(new ReviewItem("MUNICIPIO DESEADO", city.getNombreMunicipio(), MUNICIPALITY_TO_DATA_KEY, -1));
+        assert state != null;
+		assert city != null;
+		assert town != null;
 
-        Town town = (Town) mData.getParcelable(LOCALITY_TO_DATA_KEY);
-		dest.add(new ReviewItem("LOCALIDAD DESEADO", town.getNombre(), LOCALITY_TO_DATA_KEY, -1));
+        dest.add(new ReviewItem("ESTADO DESEADO", state.getStateName(), getKey(), -1));
+        dest.add(new ReviewItem("MUNICIPIO DESEADO", city.getNombreMunicipio(), getKey(), -1));
+        dest.add(new ReviewItem("LOCALIDAD DESEADO", town.getNombre(), getKey(), -1));
 	}
 
 	@Override

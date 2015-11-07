@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package com.example.android.wizardpager.wizard.model;
+package com.permutassep.presentation.view.wizard.model;
 
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 
-import com.example.android.wizardpager.wizard.ui.ProfessorContactInfoFragment;
+import com.permutassep.presentation.view.wizard.ui.ProfessorContactInfoFragment;
 
 import java.util.ArrayList;
 
@@ -42,9 +42,9 @@ public class ProfessorContactInfoPage extends Page {
 
     @Override
     public void getReviewItems(ArrayList<ReviewItem> dest) {
-        dest.add(new ReviewItem("Tu nombre", mData.getString(NAME_DATA_KEY), NAME_DATA_KEY, -1));
-        dest.add(new ReviewItem("Tu correo", mData.getString(EMAIL_DATA_KEY), EMAIL_DATA_KEY, -1));
-        dest.add(new ReviewItem("Tu telefono", mData.getString(PHONE_DATA_KEY), PHONE_DATA_KEY, -1));
+        dest.add(new ReviewItem("Tu nombre", mData.getString(NAME_DATA_KEY), getKey(), -1));
+        dest.add(new ReviewItem("Tu correo", mData.getString(EMAIL_DATA_KEY), getKey(), -1));
+        dest.add(new ReviewItem("Tu telefono", mData.getString(PHONE_DATA_KEY), getKey(), -1));
     }
 
     @Override

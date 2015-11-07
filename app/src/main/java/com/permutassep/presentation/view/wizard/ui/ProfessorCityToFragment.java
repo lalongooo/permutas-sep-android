@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.android.wizardpager.wizard.ui;
+package com.permutassep.presentation.view.wizard.ui;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -30,8 +30,8 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.android.wizardpager.wizard.model.Page;
-import com.example.android.wizardpager.wizard.model.ProfessorCityToPage;
+import com.permutassep.presentation.view.wizard.model.Page;
+import com.permutassep.presentation.view.wizard.model.ProfessorCityToPage;
 import com.lalongooo.permutassep.R;
 import com.permutassep.adapter.CitySpinnerBaseAdapter;
 import com.permutassep.adapter.StateSpinnerBaseAdapter;
@@ -96,7 +96,7 @@ public class ProfessorCityToFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_page_professor_city_to, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_page_professor_place_selector, container, false);
         ((TextView) rootView.findViewById(android.R.id.title)).setText(mPage.getTitle());
         
 		spnState = ((Spinner) rootView.findViewById(R.id.spnState));

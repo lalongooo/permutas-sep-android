@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package com.example.android.wizardpager.wizard.model;
+package com.permutassep.presentation.view.wizard.model;
 
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 
-import com.example.android.wizardpager.wizard.ui.SingleChoiceFragment;
+import com.permutassep.presentation.view.wizard.ui.SingleChoiceFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +29,7 @@ import java.util.List;
  * next set of steps in the wizard may change.
  */
 public class BranchPage extends SingleFixedChoicePage {
-    private List<Branch> mBranches = new ArrayList<Branch>();
+    private List<Branch> mBranches = new ArrayList<>();
 
     public BranchPage(ModelCallbacks callbacks, String title) {
         super(callbacks, title);

@@ -55,6 +55,7 @@
 
         <activity
             android:name="com.permutassep.presentation.view.activity.ActivityWritePost"
+            android:parentActivityName="com.permutassep.presentation.view.activity.ActivityMain"
             android:label="@string/app_name"/>
         <activity
             android:name="com.permutassep.presentation.view.activity.ActivityWelcome"

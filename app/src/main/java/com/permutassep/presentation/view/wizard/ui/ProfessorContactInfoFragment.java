@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.android.wizardpager.wizard.ui;
+package com.permutassep.presentation.view.wizard.ui;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -29,7 +29,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.android.wizardpager.wizard.model.ProfessorContactInfoPage;
+import com.permutassep.presentation.view.wizard.model.ProfessorContactInfoPage;
 import com.lalongooo.permutassep.R;
 import com.permutassep.model.User;
 import com.permutassep.utils.Utils;

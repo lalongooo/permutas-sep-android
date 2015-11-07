@@ -19,7 +19,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.example.android.wizardpager.wizard.ui.StepPagerStrip
+    <include layout="@layout/toolbar"/>
+
+    <com.permutassep.presentation.view.wizard.ui.StepPagerStrip
         android:id="@+id/strip"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

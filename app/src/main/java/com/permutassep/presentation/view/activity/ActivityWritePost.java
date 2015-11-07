@@ -13,19 +13,21 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.example.android.wizardpager.wizard.model.AbstractWizardModel;
-import com.example.android.wizardpager.wizard.model.ModelCallbacks;
-import com.example.android.wizardpager.wizard.model.Page;
-import com.example.android.wizardpager.wizard.model.PostTextPage;
-import com.example.android.wizardpager.wizard.model.ProfessorCityFromPage;
-import com.example.android.wizardpager.wizard.model.ProfessorCityToPage;
-import com.example.android.wizardpager.wizard.ui.PageFragmentCallbacks;
-import com.example.android.wizardpager.wizard.ui.ReviewFragment;
-import com.example.android.wizardpager.wizard.ui.StepPagerStrip;
+import com.permutassep.presentation.view.wizard.model.AbstractWizardModel;
+import com.permutassep.presentation.view.wizard.model.ModelCallbacks;
+import com.permutassep.presentation.view.wizard.model.Page;
+import com.permutassep.presentation.view.wizard.model.PostTextPage;
+import com.permutassep.presentation.view.wizard.model.ProfessorCityFromPage;
+import com.permutassep.presentation.view.wizard.model.ProfessorCityToPage;
+import com.permutassep.presentation.view.wizard.ui.PageFragmentCallbacks;
+import com.permutassep.presentation.view.wizard.ui.ReviewFragment;
+import com.permutassep.presentation.view.wizard.ui.StepPagerStrip;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.lalongooo.permutassep.R;
@@ -36,11 +38,16 @@ import com.permutassep.model.PermutaSepWizardModel;
 import com.permutassep.model.Post;
 import com.permutassep.model.State;
 import com.permutassep.model.Town;
+import com.permutassep.presentation.internal.di.HasComponent;
+import com.permutassep.presentation.internal.di.components.ActivityComponent;
+import com.permutassep.presentation.internal.di.components.DaggerActivityComponent;
 import com.permutassep.rest.permutassep.PermutasSEPRestClient;
 import com.permutassep.utils.Utils;
 
 import java.util.Date;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -54,12 +61,15 @@ import retrofit.converter.GsonConverter;
 public class ActivityWritePost extends BaseActivity implements
         PageFragmentCallbacks,
         ReviewFragment.Callbacks,
-        ModelCallbacks {
+        ModelCallbacks,
+        HasComponent<ActivityComponent> {
 
     private boolean suggestDataCompletion = false;
     private boolean mEditingAfterReview;
     private boolean mConsumePageSelectedEvent;
 
+    @Inject
+    Toolbar toolbar;
     private ViewPager mPager;
     private MyPagerAdapter mPagerAdapter;
     private Button mNextButton;
@@ -69,6 +79,7 @@ public class ActivityWritePost extends BaseActivity implements
 
     private List<Page> mCurrentPageSequence;
     private AbstractWizardModel mWizardModel = new PermutaSepWizardModel(this);
+    private ActivityComponent activityComponent;
 
     public static Intent getCallingIntent(Context context) {
         return new Intent(context, ActivityWritePost.class);
@@ -78,6 +89,14 @@ public class ActivityWritePost extends BaseActivity implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.fragment_createpost);
+        this.initializeInjector();
+        this.setSupportActionBar(toolbar);
+
+        ActionBar actionBar = this.getSupportActionBar();
+        if(actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle(R.string.action_post);
+        }
 
         if (savedInstanceState != null) {
             mWizardModel.load(savedInstanceState.getBundle("model"));
@@ -166,6 +185,10 @@ public class ActivityWritePost extends BaseActivity implements
                                                         City cf = p.getData().getParcelable(ProfessorCityFromPage.MUNICIPALITY_DATA_KEY);
                                                         Town tf = p.getData().getParcelable(ProfessorCityFromPage.LOCALITY_DATA_KEY);
 
+                                                        assert sf != null;
+                                                        assert cf != null;
+                                                        assert tf != null;
+
                                                         post.setStateFrom(sf.getId());
                                                         post.setCityFrom(Short.valueOf(String.valueOf(cf.getClaveMunicipio())));
                                                         post.setTownFrom(Short.valueOf(tf.getClave()));
@@ -176,6 +199,10 @@ public class ActivityWritePost extends BaseActivity implements
                                                         State st = p.getData().getParcelable(ProfessorCityToPage.STATE_TO_DATA_KEY);
                                                         City ct = p.getData().getParcelable(ProfessorCityToPage.MUNICIPALITY_TO_DATA_KEY);
                                                         Town tt = p.getData().getParcelable(ProfessorCityToPage.LOCALITY_TO_DATA_KEY);
+
+                                                        assert st != null;
+                                                        assert ct != null;
+                                                        assert tt != null;
 
                                                         post.setStateTo(st.getId());
                                                         post.setCityTo(Short.valueOf(String.valueOf(ct.getClaveMunicipio())));
@@ -248,6 +275,14 @@ public class ActivityWritePost extends BaseActivity implements
 
         onPageTreeChanged();
         updateBottomBar();
+    }
+
+    private void initializeInjector() {
+        this.activityComponent = DaggerActivityComponent.builder()
+                .applicationComponent(getApplicationComponent())
+                .activityModule(getActivityModule())
+                .build();
+        this.activityComponent.inject(this);
     }
 
     @Override
@@ -353,7 +388,6 @@ public class ActivityWritePost extends BaseActivity implements
 
     public class MyPagerAdapter extends FragmentStatePagerAdapter {
         private int mCutOffPage;
-        private Fragment mPrimaryItem;
 
         public MyPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -371,7 +405,6 @@ public class ActivityWritePost extends BaseActivity implements
         @Override
         public void setPrimaryItem(ViewGroup container, int position, Object object) {
             super.setPrimaryItem(container, position, object);
-            mPrimaryItem = (Fragment) object;
         }
 
         @Override
@@ -392,5 +425,10 @@ public class ActivityWritePost extends BaseActivity implements
             }
             mCutOffPage = cutOffPage;
         }
+    }
+
+    @Override
+    public ActivityComponent getComponent() {
+        return activityComponent;
     }
 }

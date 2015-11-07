@@ -14,13 +14,10 @@
  * limitations under the License.
  */
 
-package com.example.android.wizardpager.wizard.model;
+package com.permutassep.presentation.view.wizard.ui;
 
-/**
- * Callback interface connecting {@link Page}, {@link com.example.android.wizardpager.wizard.model.AbstractWizardModel}, and model container
- * objects (e.g. {@link com.example.android.wizardpager.MainActivity}.
- */
-public interface ModelCallbacks {
-    void onPageDataChanged(Page page);
-    void onPageTreeChanged();
+import com.permutassep.presentation.view.wizard.model.Page;
+
+public interface PageFragmentCallbacks {
+    Page onGetPage(String key);
 }

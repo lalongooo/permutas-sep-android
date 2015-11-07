@@ -1,4 +1,4 @@
-package com.example.android.wizardpager.wizard.ui;
+package com.permutassep.presentation.view.wizard.ui;
 
 /**
  * By Jorge E. Hernandez (@lalongooo) 2015
@@ -16,7 +16,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.android.wizardpager.wizard.model.PostTextPage;
+import com.permutassep.presentation.view.wizard.model.PostTextPage;
 import com.lalongooo.permutassep.R;
 
 public class PostTextFragment extends Fragment {

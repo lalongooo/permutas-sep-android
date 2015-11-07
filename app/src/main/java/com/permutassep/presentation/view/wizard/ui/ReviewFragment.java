@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.android.wizardpager.wizard.ui;
+package com.permutassep.presentation.view.wizard.ui;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -27,10 +27,10 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.android.wizardpager.wizard.model.AbstractWizardModel;
-import com.example.android.wizardpager.wizard.model.ModelCallbacks;
-import com.example.android.wizardpager.wizard.model.Page;
-import com.example.android.wizardpager.wizard.model.ReviewItem;
+import com.permutassep.presentation.view.wizard.model.AbstractWizardModel;
+import com.permutassep.presentation.view.wizard.model.ModelCallbacks;
+import com.permutassep.presentation.view.wizard.model.Page;
+import com.permutassep.presentation.view.wizard.model.ReviewItem;
 import com.lalongooo.permutassep.R;
 
 import java.util.ArrayList;
