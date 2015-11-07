@@ -16,10 +16,9 @@
 
 package com.example.android.wizardpager.wizard.ui;
 
-import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,7 +32,6 @@ import com.example.android.wizardpager.wizard.model.ModelCallbacks;
 import com.example.android.wizardpager.wizard.model.Page;
 import com.example.android.wizardpager.wizard.model.ReviewItem;
 import com.lalongooo.permutassep.R;
-import com.permutassep.ui.ActivityMain;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,14 +68,14 @@ public class ReviewFragment extends ListFragment implements ModelCallbacks {
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public void onAttach(Context context) {
+        super.onAttach(context);
 
-        if (!(((AppCompatActivity) activity).getSupportFragmentManager().getFragments().get(1) instanceof Callbacks)) {
+        if (!(getActivity() instanceof Callbacks)) {
             throw new ClassCastException("Activity must implement fragment's callbacks");
         }
 
-        mCallbacks = (Callbacks) ((ActivityMain) activity).getSupportFragmentManager().getFragments().get(1);;
+        mCallbacks = (Callbacks) getActivity();
 
         mWizardModel = mCallbacks.onGetModel();
         mWizardModel.registerListener(this);
@@ -99,7 +97,7 @@ public class ReviewFragment extends ListFragment implements ModelCallbacks {
 
     @Override
     public void onPageDataChanged(Page changedPage) {
-        ArrayList<ReviewItem> reviewItems = new ArrayList<ReviewItem>();
+        ArrayList<ReviewItem> reviewItems = new ArrayList<>();
         for (Page page : mWizardModel.getCurrentPageSequence()) {
             page.getReviewItems(reviewItems);
         }

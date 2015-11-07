@@ -252,19 +252,32 @@ public class ActivityMain extends BaseActivity
      */
     @Override
     public void onMenuItemSelected(int menuId) {
-        if (menuId == R.id.action_logout) {
-            PrefUtils.clearApplicationPreferences(this);
-            LoginManager.getInstance().logOut();
-            navigator.navigateToLoginSignUp(this, false);
-        } else if (menuId == R.id.action_about) {
 
-            new LibsBuilder()
-                    .withFields(R.string.class.getFields())
-                    .withActivityTitle(getString(R.string.about_activity_title))
-                    .withAboutIconShown(true)
-                    .withAboutDescription(getString(R.string.about_activity_description))
-                    .withActivityStyle(Libs.ActivityStyle.LIGHT_DARK_TOOLBAR)
-                    .start(this);
+        switch(menuId){
+
+            case R.id.action_post:
+                this.navigator.navigateToWritePost(this);
+                break;
+
+            case R.id.action_logout:
+
+                PrefUtils.clearApplicationPreferences(this);
+                LoginManager.getInstance().logOut();
+                navigator.navigateToLoginSignUp(this, false);
+
+                break;
+
+            case R.id.action_about:
+
+                new LibsBuilder()
+                        .withFields(R.string.class.getFields())
+                        .withActivityTitle(getString(R.string.about_activity_title))
+                        .withAboutIconShown(true)
+                        .withAboutDescription(getString(R.string.about_activity_description))
+                        .withActivityStyle(Libs.ActivityStyle.LIGHT_DARK_TOOLBAR)
+                        .start(this);
+
+                break;
         }
     }
 

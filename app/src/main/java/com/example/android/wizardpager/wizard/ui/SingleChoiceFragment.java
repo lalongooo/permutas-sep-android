@@ -16,11 +16,10 @@
 
 package com.example.android.wizardpager.wizard.ui;
 
-import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.ListFragment;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +30,6 @@ import android.widget.TextView;
 import com.example.android.wizardpager.wizard.model.Page;
 import com.example.android.wizardpager.wizard.model.SingleFixedChoicePage;
 import com.lalongooo.permutassep.R;
-import com.permutassep.ui.ActivityMain;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,7 +63,7 @@ public class SingleChoiceFragment extends ListFragment {
         mPage = mCallbacks.onGetPage(mKey);
 
         SingleFixedChoicePage fixedChoicePage = (SingleFixedChoicePage) mPage;
-        mChoices = new ArrayList<String>();
+        mChoices = new ArrayList<>();
         for (int i = 0; i < fixedChoicePage.getOptionCount(); i++) {
             mChoices.add(fixedChoicePage.getOptionAt(i));
         }
@@ -78,7 +76,7 @@ public class SingleChoiceFragment extends ListFragment {
         ((TextView) rootView.findViewById(android.R.id.title)).setText(mPage.getTitle());
 
         final ListView listView = (ListView) rootView.findViewById(android.R.id.list);
-        setListAdapter(new ArrayAdapter<String>(getActivity(),
+        setListAdapter(new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_list_item_single_choice,
                 android.R.id.text1,
                 mChoices));
@@ -102,14 +100,14 @@ public class SingleChoiceFragment extends ListFragment {
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public void onAttach(Context context) {
+        super.onAttach(context);
 
-        if (!(((AppCompatActivity) activity).getSupportFragmentManager().getFragments().get(1) instanceof PageFragmentCallbacks)) {
+        if (!(getActivity() instanceof PageFragmentCallbacks)) {
             throw new ClassCastException("Activity must implement PageFragmentCallbacks");
         }
 
-        mCallbacks = (PageFragmentCallbacks) ((ActivityMain) activity).getSupportFragmentManager().getFragments().get(1);
+        mCallbacks = (PageFragmentCallbacks) getActivity();
     }
 
     @Override

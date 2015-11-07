@@ -16,11 +16,9 @@
 
 package com.example.android.wizardpager.wizard.ui;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -33,13 +31,8 @@ import android.widget.TextView;
 
 import com.example.android.wizardpager.wizard.model.ProfessorContactInfoPage;
 import com.lalongooo.permutassep.R;
-import com.permutassep.config.Config;
 import com.permutassep.model.User;
-import com.permutassep.ui.ActivityMain;
-import com.permutassep.utils.PrefUtils;
 import com.permutassep.utils.Utils;
-
-import br.kots.mob.complex.preferences.ComplexPreferences;
 
 public class ProfessorContactInfoFragment extends Fragment {
     private static final String ARG_KEY = "key";
@@ -89,14 +82,14 @@ public class ProfessorContactInfoFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public void onAttach(Context context) {
+        super.onAttach(context);
 
-        if (!(((AppCompatActivity) activity).getSupportFragmentManager().getFragments().get(1) instanceof PageFragmentCallbacks)) {
+        if (!(getActivity() instanceof PageFragmentCallbacks)) {
             throw new ClassCastException("Activity must implement PageFragmentCallbacks");
         }
 
-        mCallbacks = (PageFragmentCallbacks) ((ActivityMain) activity).getSupportFragmentManager().getFragments().get(1);
+        mCallbacks = (PageFragmentCallbacks) getActivity();
     }
 
     @Override
@@ -134,14 +127,6 @@ public class ProfessorContactInfoFragment extends Fragment {
             public void afterTextChanged(Editable editable) {
                 mPage.getData().putString(ProfessorContactInfoPage.EMAIL_DATA_KEY, (editable != null) ? editable.toString() : null);
                 mPage.notifyDataChanged();
-
-                ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), Config.APP_PREFERENCES_NAME, Context.MODE_PRIVATE);
-
-                User user = complexPreferences.getObject(PrefUtils.PREF_USER_KEY, User.class);
-                user.setEmail((editable != null) ? editable.toString() : null);
-
-                complexPreferences.putObject(PrefUtils.PREF_USER_KEY, user);
-                complexPreferences.commit();
             }
         });
         
@@ -157,16 +142,6 @@ public class ProfessorContactInfoFragment extends Fragment {
             public void afterTextChanged(Editable editable) {
                 mPage.getData().putString(ProfessorContactInfoPage.PHONE_DATA_KEY, (editable != null) ? editable.toString() : null);
                 mPage.notifyDataChanged();
-
-                ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(getActivity(), Config.APP_PREFERENCES_NAME, Context.MODE_PRIVATE);
-
-                User user = complexPreferences.getObject(PrefUtils.PREF_USER_KEY, User.class);
-                user.setPhone((editable != null) ? editable.toString() : null);
-
-                complexPreferences.putObject(PrefUtils.PREF_USER_KEY, user);
-                complexPreferences.commit();
-
-
             }
         });
 
@@ -174,13 +149,13 @@ public class ProfessorContactInfoFragment extends Fragment {
 
         if(user != null){
             mNameView.setText(!TextUtils.isEmpty(user.getName()) ? user.getName() : "");
-            mNameView.setFocusable(user.getName() != null && user.getName() != "" ? false : true);
+            mNameView.setFocusable(!TextUtils.isEmpty(user.getName()));
 
             mEmailView.setText(!TextUtils.isEmpty(user.getEmail()) ? user.getEmail() : "");
-            mEmailView.setFocusable(user.getEmail() != null && user.getEmail() != "" ? false : true);
+            mEmailView.setFocusable(!TextUtils.isEmpty(user.getEmail()));
 
             mPhoneView.setText(!TextUtils.isEmpty(user.getPhone()) ? user.getPhone() : "");
-            mPhoneView.setFocusable(user.getPhone() != null && user.getPhone() != "" ? false : true);
+            mPhoneView.setFocusable(!TextUtils.isEmpty(user.getPhone()));
         }
     }
 

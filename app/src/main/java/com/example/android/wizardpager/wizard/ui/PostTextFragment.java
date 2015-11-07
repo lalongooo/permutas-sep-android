@@ -1,10 +1,12 @@
 package com.example.android.wizardpager.wizard.ui;
 
-import android.app.Activity;
+/**
+ * By Jorge E. Hernandez (@lalongooo) 2015
+ */
+
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -16,11 +18,7 @@ import android.widget.TextView;
 
 import com.example.android.wizardpager.wizard.model.PostTextPage;
 import com.lalongooo.permutassep.R;
-import com.permutassep.ui.ActivityMain;
 
-/**
- * Created by lalongooo on 08/04/15.
- */
 public class PostTextFragment extends Fragment {
 
     private static final String ARG_KEY = "key";
@@ -63,14 +61,14 @@ public class PostTextFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public void onAttach(Context context) {
+        super.onAttach(context);
 
-        if (!(((AppCompatActivity) activity).getSupportFragmentManager().getFragments().get(1) instanceof PageFragmentCallbacks)) {
+        if (!(getActivity() instanceof PageFragmentCallbacks)) {
             throw new ClassCastException("Activity must implement PageFragmentCallbacks");
         }
 
-        mCallbacks = (PageFragmentCallbacks) ((ActivityMain) activity).getSupportFragmentManager().getFragments().get(1);
+        mCallbacks = (PageFragmentCallbacks) getActivity();
     }
 
     @Override

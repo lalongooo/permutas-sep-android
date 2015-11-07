@@ -15,11 +15,14 @@
  */
 package com.permutassep.presentation.navigation;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 
 import com.lalongooo.permutassep.R;
+import com.permutassep.presentation.view.activity.ActivityWritePost;
 import com.permutassep.presentation.view.activity.BaseActivity;
 import com.permutassep.presentation.view.fragment.FragmentCompleteFbData;
 import com.permutassep.presentation.view.fragment.FragmentLogin;
@@ -179,5 +182,19 @@ public class Navigator {
             fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
             fragmentTransaction.commit();
         }
+    }
+
+
+    /**
+     * Goes to the user list screen.
+     * @param context A Context needed to open the destiny activity.
+    */
+    public void navigateToWritePost(Context context) {
+        if (context != null) {
+            Intent intentToLaunch = ActivityWritePost.getCallingIntent(context);
+            context.startActivity(intentToLaunch);
+        }
+
+
     }
 }

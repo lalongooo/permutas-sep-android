@@ -16,12 +16,10 @@
 
 package com.example.android.wizardpager.wizard.ui;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,7 +40,6 @@ import com.permutassep.model.City;
 import com.permutassep.model.State;
 import com.permutassep.model.Town;
 import com.permutassep.rest.inegifacil.InegiFacilRestClient;
-import com.permutassep.ui.ActivityMain;
 
 import java.util.ArrayList;
 
@@ -94,7 +91,7 @@ public class ProfessorCityToFragment extends Fragment {
 
         Bundle args = getArguments();
         mKey = args.getString(ARG_KEY);
-        mPage = (ProfessorCityToPage) mCallbacks.onGetPage(mKey);
+        mPage = mCallbacks.onGetPage(mKey);
     }
 
     @Override
@@ -137,14 +134,14 @@ public class ProfessorCityToFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public void onAttach(Context context) {
+        super.onAttach(context);
 
-        if (!(((AppCompatActivity) activity).getSupportFragmentManager().getFragments().get(1) instanceof PageFragmentCallbacks)) {
+        if (!(getActivity() instanceof PageFragmentCallbacks)) {
             throw new ClassCastException("Activity must implement PageFragmentCallbacks");
         }
 
-        mCallbacks = (PageFragmentCallbacks) ((ActivityMain) activity).getSupportFragmentManager().getFragments().get(1);
+        mCallbacks = (PageFragmentCallbacks) getActivity();
     }
 
     @Override
