@@ -71,7 +71,6 @@ public class ActivityMain extends BaseActivity
         getSupportFragmentManager().addOnBackStackChangedListener(this);
 
         this.initializeInjector();
-        activityComponent.inject(this);
 
         userModel = PrefUtils.getUser(this);
         if (userModel != null) {
@@ -87,6 +86,7 @@ public class ActivityMain extends BaseActivity
                 .applicationComponent(getApplicationComponent())
                 .activityModule(getActivityModule())
                 .build();
+        this.activityComponent.inject(this);
     }
 
     /**
@@ -99,7 +99,7 @@ public class ActivityMain extends BaseActivity
         IProfile profile = new ProfileDrawerItem()
                 .withName(userModel.getName())
                 .withEmail(userModel.getEmail())
-                .withIcon(Uri.parse("https://graph.facebook.com/" + userModel.getSocialUserId() + "/picture?width=460&height=460"));
+                .withIcon(Uri.parse(userModel.getProfilePictureUrl()));
 
         AccountHeader accountHeader = new AccountHeaderBuilder()
                 .withActivity(this)
