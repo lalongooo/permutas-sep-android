@@ -26,10 +26,10 @@ public class PostEntityDataMapper {
     }
 
     /**
-     * Transform a {@link PostEntity} into an {@link User}.
+     * Transform a {@link PostEntity} into an {@link Post}.
      *
      * @param postEntity Object to be transformed.
-     * @return {@link User} if valid {@link PostEntity} otherwise null.
+     * @return {@link Post} if valid {@link PostEntity} otherwise null.
      */
     public Post transform(PostEntity postEntity) {
         Post post = null;
@@ -76,5 +76,41 @@ public class PostEntityDataMapper {
             }
         }
         return postList;
+    }
+
+
+    /**
+     * Transform a {@link Post} into an {@link PostEntity}.
+     *
+     * @param post Object to be transformed.
+     * @return {@link PostEntity} if valid {@link Post} otherwise null.
+     */
+    public PostEntity transform(Post post) {
+        PostEntity postEntity = null;
+        if (post != null) {
+            postEntity = new PostEntity();
+            postEntity.setId(post.getId());
+            postEntity.setUser(userEntityDataMapper.transform(post.getUser()));
+            postEntity.setPostText(post.getPostText());
+            postEntity.setStateFrom(post.getStateFrom());
+            postEntity.setCityFrom(post.getCityFrom());
+            postEntity.setTownFrom(post.getTownFrom());
+            postEntity.setLatFrom(post.getLatFrom());
+            postEntity.setLonFrom(post.getLonFrom());
+            postEntity.setStateTo(post.getStateTo());
+            postEntity.setCityTo(post.getCityTo());
+            postEntity.setTownTo(post.getTownTo());
+            postEntity.setLatTo(post.getLatTo());
+            postEntity.setLonTo(post.getLonTo());
+            postEntity.setPositionType(post.getPositionType());
+            postEntity.setWorkdayType(post.getWorkdayType());
+            postEntity.setIsTeachingCareer(post.isTeachingCareer());
+            postEntity.setPostDate(post.getPostDate());
+            postEntity.setAcademicLevel(post.getAcademicLevel());
+            postEntity.setStateFromCode(post.getStateFromCode());
+            postEntity.setStateToCode(post.getStateToCode());
+        }
+
+        return postEntity;
     }
 }

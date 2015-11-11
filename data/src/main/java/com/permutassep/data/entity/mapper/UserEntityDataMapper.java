@@ -60,4 +60,24 @@ public class UserEntityDataMapper {
 
         return userList;
     }
+
+    /**
+     * Transform a {@link User} into an {@link UserEntity}.
+     *
+     * @param user Object to be transformed.
+     * @return {@link UserEntity} if valid {@link User} otherwise null.
+     */
+    public UserEntity transform(User user){
+        UserEntity userEntity = null;
+        if(user != null){
+            userEntity = new UserEntity();
+            userEntity.setId(user.getId());
+            userEntity.setName(user.getName());
+            userEntity.setEmail(user.getEmail());
+            userEntity.setPhone(user.getPhone());
+            userEntity.setPassword(user.getPassword());
+            userEntity.setSocialUserId(user.getSocialUserId());
+        }
+        return userEntity;
+    }
 }

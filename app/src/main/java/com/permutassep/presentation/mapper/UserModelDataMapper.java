@@ -77,4 +77,26 @@ public class UserModelDataMapper {
 
         return userModelsCollection;
     }
+
+
+    /**
+     * Transform a {@link UserModel} into an {@link User}.
+     *
+     * @param userModel Object to be transformed.
+     * @return {@link User}.
+     */
+    public User transform(UserModel userModel) {
+        User user = null;
+        if (userModel != null) {
+            user = new User();
+            user.setId(user.getId());
+            user.setName(user.getName());
+            user.setEmail(user.getEmail());
+            user.setPassword(user.getPassword());
+            user.setPhone(user.getPhone());
+            user.setSocialUserId(user.getSocialUserId());
+        }
+
+        return user;
+    }
 }

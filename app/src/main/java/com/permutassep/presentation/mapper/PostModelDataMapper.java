@@ -34,7 +34,7 @@ import javax.inject.Inject;
 @PerActivity
 public class PostModelDataMapper {
 
-    UserModelDataMapper userModelDataMapper;
+    private UserModelDataMapper userModelDataMapper;
 
     @Inject
     public PostModelDataMapper(UserModelDataMapper userModelDataMapper) {
@@ -96,4 +96,41 @@ public class PostModelDataMapper {
 
         return postModelCollection;
     }
+
+
+    /**
+     * Transform a {@link PostModel} into an {@link Post}.
+     *
+     * @param postModel Object to be transformed.
+     * @return {@link Post}.
+     */
+    public Post transform(PostModel postModel) {
+        if (postModel == null) {
+            throw new IllegalArgumentException("Cannot transform a null value");
+        }
+        Post post = new Post();
+        post.setAcademicLevel(postModel.getAcademicLevel());
+        post.setCityFrom(postModel.getCityFrom());
+        post.setCityTo(postModel.getCityTo());
+        post.setId(postModel.getId());
+        post.setIsTeachingCareer(postModel.isTeachingCareer());
+        post.setLatFrom(postModel.getLatFrom());
+        post.setLatTo(postModel.getLatTo());
+        post.setLonFrom(postModel.getLonFrom());
+        post.setLonTo(postModel.getLonTo());
+        post.setPositionType(postModel.getPositionType());
+        post.setPostDate(postModel.getPostDate());
+        post.setPostText(postModel.getPostText());
+        post.setStateFrom(postModel.getStateFrom());
+        post.setStateTo(postModel.getStateTo());
+        post.setStateFromCode(postModel.getStateFromCode());
+        post.setStateToCode(postModel.getStateToCode());
+        post.setTownFrom(postModel.getTownFrom());
+        post.setTownTo(postModel.getTownTo());
+        post.setUser(userModelDataMapper.transform(postModel.getUser()));
+        post.setWorkdayType(postModel.getWorkdayType());
+
+        return post;
+    }
+
 }
