@@ -65,4 +65,11 @@ public class PostDataRepository implements PostRepository {
         return postDataStore.getPostPage(page, pageSize)
                 .map(this.postPageEntityDataMapper::transform);
     }
+
+    @Override
+    public Observable<Post> newPost(Post post) {
+        final PostDataStore postDataStore = postDataStoreFactory.createCloudDataStore();
+        return postDataStore.newPost(postEntityDataMapper.transform(post))
+                .map(postEntityDataMapper::transform);
+    }
 }
