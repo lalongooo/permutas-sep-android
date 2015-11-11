@@ -37,4 +37,9 @@ public interface PostDataStore {
      * Get an {@link Observable} which will emit a {@link PostPageEntity}.
      */
     Observable<PostPageEntity> getPostPage(final int page, final int pageSize);
+
+    /**
+     * Get an {@link Observable} which will emit a {@link PostEntity} after creating a Post in the REST API.
+     */
+    Observable<PostEntity> newPost(final PostEntity postEntity);
 }

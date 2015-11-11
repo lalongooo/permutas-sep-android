@@ -101,4 +101,9 @@ public class CloudPostDataStore implements PostDataStore {
     public Observable<PostPageEntity> getPostPage(int page, int pageSize) {
         return restClient.get().getPostPage(page, pageSize);
     }
+
+    @Override
+    public Observable<PostEntity> newPost(PostEntity postEntity) {
+        return restClient.get().newPost(postEntity);
+    }
 }

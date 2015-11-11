@@ -39,4 +39,9 @@ public interface PostRepository {
      * Get an {@link Observable} which will emit a {@link PostPage}.
      */
     Observable<PostPage> getPostPage(final int page, final int pageSize);
+
+    /**
+     * Get an {@link Observable} which will emit a {@link Post} after creating a Post in the REST API.
+     */
+    Observable<Post> newPost(final Post post);
 }
