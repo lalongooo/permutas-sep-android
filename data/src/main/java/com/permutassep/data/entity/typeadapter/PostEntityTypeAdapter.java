@@ -10,7 +10,7 @@ import java.io.IOException;
 public class PostEntityTypeAdapter extends TypeAdapter<PostEntity> {
 
     @Override
-    public PostEntity read(final JsonReader in) throws IOException {
+    public PostEntity read(final JsonReader in) {
 
         PostEntity p = new PostEntity();
 
@@ -21,7 +21,7 @@ public class PostEntityTypeAdapter extends TypeAdapter<PostEntity> {
             while (in.hasNext()) {
 
                 String name = in.nextName();
-                switch (name){
+                switch (name) {
                     case "id":
                         p.setId(in.nextInt());
                         break;
@@ -87,27 +87,34 @@ public class PostEntityTypeAdapter extends TypeAdapter<PostEntity> {
     }
 
     @Override
-    public void write(JsonWriter out, PostEntity post) throws IOException {
+    public void write(JsonWriter out, PostEntity post) {
 
-        out.beginObject();
-        out.name("workday_type").value(post.getWorkdayType());
-        out.name("position_type").value(post.getPositionType());
-        out.name("post_date").value(post.getPostDate());
-        out.name("is_teaching_career").value(post.isTeachingCareer());
-        out.name("post").value(post.getPostText());
-        out.name("place_from_lon").value(post.getLonFrom());
-        out.name("place_from_lat").value(post.getLatFrom());
-        out.name("place_from_state").value(post.getStateFrom());
-        out.name("place_from_city").value(post.getCityFrom());
-        out.name("place_from_town").value(post.getTownFrom());
-        out.name("place_to_lon").value(post.getLonTo());
-        out.name("place_to_lat").value(post.getLatTo());
-        out.name("place_to_state").value(post.getStateTo());
-        out.name("place_to_city").value(post.getCityTo());
-        out.name("place_to_town").value(post.getTownTo());
-        out.name("academic_level").value(post.getAcademicLevel());
-        out.name("user").value("");
+        try {
 
-        out.endObject();
+            out.beginObject();
+
+            out.name("workday_type").value(post.getWorkdayType());
+            out.name("position_type").value(post.getPositionType());
+            out.name("post_date").value(post.getPostDate());
+            out.name("is_teaching_career").value(post.isTeachingCareer());
+            out.name("post").value(post.getPostText());
+            out.name("place_from_lon").value(post.getLonFrom());
+            out.name("place_from_lat").value(post.getLatFrom());
+            out.name("place_from_state").value(post.getStateFrom());
+            out.name("place_from_city").value(post.getCityFrom());
+            out.name("place_from_town").value(post.getTownFrom());
+            out.name("place_to_lon").value(post.getLonTo());
+            out.name("place_to_lat").value(post.getLatTo());
+            out.name("place_to_state").value(post.getStateTo());
+            out.name("place_to_city").value(post.getCityTo());
+            out.name("place_to_town").value(post.getTownTo());
+            out.name("academic_level").value(post.getAcademicLevel());
+            out.name("user").value("");
+
+            out.endObject();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

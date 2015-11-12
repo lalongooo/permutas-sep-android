@@ -224,30 +224,7 @@ public class ActivityWritePost extends BaseActivity implements
                                                         break;
                                                 }
                                             }
-
-
-//                                            showDialog(getString(R.string.wizard_post_dlg_title), getString(R.string.wizard_post_dlg_text));
-//
-//                                            GsonBuilder gsonBuilder = new GsonBuilder()
-//                                                    // .registerTypeHierarchyAdapter(User.class, new UserTypeAdapter(getActivity()))
-//                                                    .registerTypeHierarchyAdapter(Post.class, new PostTypeAdapter(getActivity()))
-//                                                    .setDateFormat(Config.APP_DATE_FORMAT);
-//                                            Gson gson = gsonBuilder.create();
-//
-//                                            new PermutasSEPRestClient(new GsonConverter(gson)).get().newPost(post, new Callback<Post>() {
-//                                                @Override
-//                                                public void success(Post post, retrofit.client.Response response) {
-//                                                    hideDialog();
-//                                                }
-//
-//                                                @Override
-//                                                public void failure(RetrofitError error) {
-//                                                    hideDialog();
-//                                                }
-//                                            });
-
                                             writePostPresenter.writePost(post);
-
                                         }
                                     })
                                     .setNegativeButton(android.R.string.cancel, null)

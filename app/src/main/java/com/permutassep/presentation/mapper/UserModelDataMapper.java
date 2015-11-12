@@ -89,12 +89,12 @@ public class UserModelDataMapper {
         User user = null;
         if (userModel != null) {
             user = new User();
-            user.setId(user.getId());
-            user.setName(user.getName());
-            user.setEmail(user.getEmail());
-            user.setPassword(user.getPassword());
-            user.setPhone(user.getPhone());
-            user.setSocialUserId(user.getSocialUserId());
+            user.setId(userModel.getId());
+            user.setName(userModel.getName());
+            user.setEmail(userModel.getEmail());
+            user.setPassword(userModel.getPassword());
+            user.setPhone(userModel.getPhone());
+            user.setSocialUserId(userModel.getSocialUserId());
         }
 
         return user;
