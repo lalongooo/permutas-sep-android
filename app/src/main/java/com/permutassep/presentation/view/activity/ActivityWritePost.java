@@ -72,7 +72,6 @@ public class ActivityWritePost extends BaseActivity implements
     private MyPagerAdapter mPagerAdapter;
     private Button mNextButton;
     private Button mPrevButton;
-    private ProgressDialog pDlg;
     private StepPagerStrip mStepPagerStrip;
 
     private List<Page> mCurrentPageSequence;
@@ -354,15 +353,6 @@ public class ActivityWritePost extends BaseActivity implements
         }
 
         return false;
-    }
-
-    private void showDialog(String title, String text) {
-        pDlg = ProgressDialog.show(this, title, text, true);
-    }
-
-    private void hideDialog() {
-        if (pDlg != null)
-            pDlg.dismiss();
     }
 
     /**
