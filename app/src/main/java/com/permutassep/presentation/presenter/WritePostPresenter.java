@@ -10,31 +10,31 @@ import com.permutassep.domain.Post;
 import com.permutassep.domain.exception.DefaultErrorBundle;
 import com.permutassep.domain.exception.ErrorBundle;
 import com.permutassep.domain.interactor.DefaultSubscriber;
-import com.permutassep.domain.interactor.UseCase;
+import com.permutassep.domain.interactor.WritePost;
 import com.permutassep.presentation.internal.di.PerActivity;
 import com.permutassep.presentation.mapper.PostModelDataMapper;
+import com.permutassep.presentation.model.PostModel;
 import com.permutassep.presentation.view.WritePostView;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
 @PerActivity
 public class WritePostPresenter implements Presenter {
 
-    private final UseCase writePostUseCase;
+    private final WritePost writePostUseCase;
     private final PostModelDataMapper postModelDataMapper;
     private WritePostView writePostView;
 
     @Inject
-    public WritePostPresenter(@Named("writePost") UseCase writePostUseCase, PostModelDataMapper postModelDataMapper) {
+    public WritePostPresenter(WritePost writePostUseCase, PostModelDataMapper postModelDataMapper) {
         this.writePostUseCase = writePostUseCase;
         this.postModelDataMapper = postModelDataMapper;
     }
 
-    public void writePost() {
+    public void writePost(PostModel postModel) {
         this.hideViewRetry();
         this.showViewLoading();
-        this.signUpUser();
+        this.sendPost(postModel);
     }
 
     private void hideViewRetry() {
@@ -45,7 +45,8 @@ public class WritePostPresenter implements Presenter {
         this.writePostView.showLoading();
     }
 
-    private void signUpUser() {
+    private void sendPost(PostModel postModel) {
+        this.writePostUseCase.setPost(postModelDataMapper.transform(postModel));
         this.writePostUseCase.execute(new SignUpSubscriber());
     }
 

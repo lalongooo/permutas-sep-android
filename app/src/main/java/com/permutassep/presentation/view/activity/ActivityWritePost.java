@@ -25,8 +25,6 @@ import com.permutassep.model.PermutaSepWizardModel;
 import com.permutassep.model.State;
 import com.permutassep.model.Town;
 import com.permutassep.presentation.internal.di.HasComponent;
-import com.permutassep.presentation.internal.di.components.ActivityComponent;
-import com.permutassep.presentation.internal.di.components.DaggerActivityComponent;
 import com.permutassep.presentation.internal.di.components.DaggerPostComponent;
 import com.permutassep.presentation.internal.di.components.PostComponent;
 import com.permutassep.presentation.internal.di.modules.PostModule;
@@ -69,7 +67,6 @@ public class ActivityWritePost extends BaseActivity implements
     @Inject
     WritePostPresenter writePostPresenter;
 
-    private ActivityComponent activityComponent;
     private PostComponent postComponent;
     private ViewPager mPager;
     private MyPagerAdapter mPagerAdapter;
@@ -88,7 +85,7 @@ public class ActivityWritePost extends BaseActivity implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.fragment_createpost);
+        this.setContentView(R.layout.ca_activity_createpost);
         this.initializeInjector();
         this.setSupportActionBar(toolbar);
 
@@ -248,11 +245,8 @@ public class ActivityWritePost extends BaseActivity implements
 //                                                    hideDialog();
 //                                                }
 //                                            });
-                                            ActivityWritePost.this.postComponent = DaggerPostComponent.builder()
-                                                    .applicationComponent(getApplicationComponent())
-                                                    .activityModule(getActivityModule())
-                                                    .postModule(new PostModule(post))
-                                                    .build();
+
+                                            writePostPresenter.writePost(post);
 
                                         }
                                     })
@@ -283,11 +277,6 @@ public class ActivityWritePost extends BaseActivity implements
     }
 
     private void initializeInjector() {
-//        this.activityComponent = DaggerActivityComponent.builder()
-//                .applicationComponent(getApplicationComponent())
-//                .activityModule(getActivityModule())
-//                .build();
-//        this.activityComponent.inject(this);
 
         this.postComponent = DaggerPostComponent.builder()
                 .applicationComponent(getApplicationComponent())
@@ -295,6 +284,7 @@ public class ActivityWritePost extends BaseActivity implements
                 .postModule(new PostModule())
                 .build();
         this.postComponent.inject(this);
+        this.writePostPresenter.setView(this);
     }
 
     @Override

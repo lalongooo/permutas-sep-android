@@ -85,7 +85,7 @@ public class FragmentCreatePost extends BaseFragment implements
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_createpost, container, false);
+        View rootView = inflater.inflate(R.layout.ca_activity_createpost, container, false);
         if (savedInstanceState != null) {
             mWizardModel.load(savedInstanceState.getBundle("model"));
         }

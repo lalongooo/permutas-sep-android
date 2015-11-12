@@ -5,6 +5,8 @@ import com.permutassep.domain.executor.PostExecutionThread;
 import com.permutassep.domain.executor.ThreadExecutor;
 import com.permutassep.domain.repository.PostRepository;
 
+import javax.inject.Inject;
+
 import rx.Observable;
 
 /**
@@ -15,15 +17,18 @@ public class WritePost extends UseCase {
     private Post post;
     private PostRepository postRepository;
 
-
-    public WritePost(Post post, PostRepository postRepository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
+    @Inject
+    public WritePost(PostRepository postRepository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         super(threadExecutor, postExecutionThread);
-        this.post = post;
         this.postRepository = postRepository;
     }
 
     @Override
     protected Observable buildUseCaseObservable() {
         return postRepository.newPost(post);
+    }
+
+    public void setPost(Post post) {
+        this.post = post;
     }
 }

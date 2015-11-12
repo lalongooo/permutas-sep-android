@@ -6,10 +6,8 @@ import com.permutassep.domain.interactor.GetMyPostsList;
 import com.permutassep.domain.interactor.GetPostDetails;
 import com.permutassep.domain.interactor.GetPostsList;
 import com.permutassep.domain.interactor.UseCase;
-import com.permutassep.domain.interactor.WritePost;
 import com.permutassep.domain.repository.PostRepository;
 import com.permutassep.presentation.internal.di.PerActivity;
-import com.permutassep.presentation.mapper.PostModelDataMapper;
 import com.permutassep.presentation.model.PostModel;
 
 import javax.inject.Named;
@@ -62,15 +60,5 @@ public class PostModule {
             PostRepository postRepository, ThreadExecutor threadExecutor,
             PostExecutionThread postExecutionThread) {
         return new GetMyPostsList(id, postRepository, threadExecutor, postExecutionThread);
-    }
-
-    @Provides
-    @PerActivity
-    @Named("writePost")
-    UseCase provideWritePostUseCase(
-            PostModelDataMapper postModelDataMapper,
-            PostRepository postRepository, ThreadExecutor threadExecutor,
-            PostExecutionThread postExecutionThread) {
-        return new WritePost(postModelDataMapper.transform(postModel), postRepository, threadExecutor, postExecutionThread);
     }
 }
