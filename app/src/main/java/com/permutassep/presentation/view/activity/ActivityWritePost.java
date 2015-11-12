@@ -19,6 +19,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.lalongooo.permutassep.R;
+import com.permutassep.model.City;
+import com.permutassep.model.PermutaSepWizardModel;
+import com.permutassep.model.State;
+import com.permutassep.model.Town;
+import com.permutassep.presentation.internal.di.HasComponent;
+import com.permutassep.presentation.internal.di.components.ActivityComponent;
+import com.permutassep.presentation.internal.di.components.DaggerActivityComponent;
+import com.permutassep.presentation.internal.di.components.DaggerPostComponent;
+import com.permutassep.presentation.internal.di.components.PostComponent;
+import com.permutassep.presentation.internal.di.modules.PostModule;
+import com.permutassep.presentation.model.PostModel;
+import com.permutassep.presentation.presenter.WritePostPresenter;
+import com.permutassep.presentation.utils.PrefUtils;
+import com.permutassep.presentation.view.WritePostView;
 import com.permutassep.presentation.view.wizard.model.AbstractWizardModel;
 import com.permutassep.presentation.view.wizard.model.ModelCallbacks;
 import com.permutassep.presentation.view.wizard.model.Page;
@@ -28,30 +43,10 @@ import com.permutassep.presentation.view.wizard.model.ProfessorCityToPage;
 import com.permutassep.presentation.view.wizard.ui.PageFragmentCallbacks;
 import com.permutassep.presentation.view.wizard.ui.ReviewFragment;
 import com.permutassep.presentation.view.wizard.ui.StepPagerStrip;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.lalongooo.permutassep.R;
-import com.permutassep.adapter.PostTypeAdapter;
-import com.permutassep.config.Config;
-import com.permutassep.model.City;
-import com.permutassep.model.PermutaSepWizardModel;
-import com.permutassep.model.Post;
-import com.permutassep.model.State;
-import com.permutassep.model.Town;
-import com.permutassep.presentation.internal.di.HasComponent;
-import com.permutassep.presentation.internal.di.components.ActivityComponent;
-import com.permutassep.presentation.internal.di.components.DaggerActivityComponent;
-import com.permutassep.rest.permutassep.PermutasSEPRestClient;
-import com.permutassep.utils.Utils;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
-
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.converter.GsonConverter;
 
 /**
  * By Jorge E. Hernandez (@lalongooo) 2015
@@ -62,7 +57,8 @@ public class ActivityWritePost extends BaseActivity implements
         PageFragmentCallbacks,
         ReviewFragment.Callbacks,
         ModelCallbacks,
-        HasComponent<ActivityComponent> {
+        HasComponent<PostComponent>,
+        WritePostView {
 
     private boolean suggestDataCompletion = false;
     private boolean mEditingAfterReview;
@@ -70,6 +66,11 @@ public class ActivityWritePost extends BaseActivity implements
 
     @Inject
     Toolbar toolbar;
+    @Inject
+    WritePostPresenter writePostPresenter;
+
+    private ActivityComponent activityComponent;
+    private PostComponent postComponent;
     private ViewPager mPager;
     private MyPagerAdapter mPagerAdapter;
     private Button mNextButton;
@@ -79,7 +80,6 @@ public class ActivityWritePost extends BaseActivity implements
 
     private List<Page> mCurrentPageSequence;
     private AbstractWizardModel mWizardModel = new PermutaSepWizardModel(this);
-    private ActivityComponent activityComponent;
 
     public static Intent getCallingIntent(Context context) {
         return new Intent(context, ActivityWritePost.class);
@@ -93,7 +93,7 @@ public class ActivityWritePost extends BaseActivity implements
         this.setSupportActionBar(toolbar);
 
         ActionBar actionBar = this.getSupportActionBar();
-        if(actionBar != null) {
+        if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setTitle(R.string.action_post);
         }
@@ -172,13 +172,12 @@ public class ActivityWritePost extends BaseActivity implements
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
 
-                                            Post post = new Post();
-                                            post.setPostDate(new Date());
+                                            PostModel post = new PostModel();
 
                                             for (Page p : mWizardModel.getCurrentPageSequence()) {
                                                 switch (p.getKey()) {
                                                     case PermutaSepWizardModel.CONTACT_INFO_KEY:
-                                                        post.setUser(Utils.getUser(getActivity()));
+                                                        post.setUser(PrefUtils.getUser(ActivityWritePost.this));
                                                         break;
                                                     case PermutaSepWizardModel.CITY_FROM_KEY:
                                                         State sf = p.getData().getParcelable(ProfessorCityFromPage.STATE_DATA_KEY);
@@ -189,9 +188,9 @@ public class ActivityWritePost extends BaseActivity implements
                                                         assert cf != null;
                                                         assert tf != null;
 
-                                                        post.setStateFrom(sf.getId());
-                                                        post.setCityFrom(Short.valueOf(String.valueOf(cf.getClaveMunicipio())));
-                                                        post.setTownFrom(Short.valueOf(tf.getClave()));
+                                                        post.setStateFrom(String.valueOf(sf.getId()));
+                                                        post.setCityFrom(String.valueOf(cf.getClaveMunicipio()));
+                                                        post.setTownFrom(tf.getClave());
                                                         post.setLatFrom(tf.getLatitud());
                                                         post.setLonFrom(tf.getLongitud());
                                                         break;
@@ -204,9 +203,9 @@ public class ActivityWritePost extends BaseActivity implements
                                                         assert ct != null;
                                                         assert tt != null;
 
-                                                        post.setStateTo(st.getId());
-                                                        post.setCityTo(Short.valueOf(String.valueOf(ct.getClaveMunicipio())));
-                                                        post.setTownTo(Short.valueOf(tt.getClave()));
+                                                        post.setStateTo(String.valueOf(st.getId()));
+                                                        post.setCityTo(String.valueOf(ct.getClaveMunicipio()));
+                                                        post.setTownTo(tt.getClave());
                                                         post.setLatTo(tt.getLatitud());
                                                         post.setLonTo(tt.getLongitud());
 
@@ -229,25 +228,31 @@ public class ActivityWritePost extends BaseActivity implements
                                                 }
                                             }
 
-                                            showDialog(getString(R.string.wizard_post_dlg_title), getString(R.string.wizard_post_dlg_text));
 
-                                            GsonBuilder gsonBuilder = new GsonBuilder()
-                                                    // .registerTypeHierarchyAdapter(User.class, new UserTypeAdapter(getActivity()))
-                                                    .registerTypeHierarchyAdapter(Post.class, new PostTypeAdapter(getActivity()))
-                                                    .setDateFormat(Config.APP_DATE_FORMAT);
-                                            Gson gson = gsonBuilder.create();
-
-                                            new PermutasSEPRestClient(new GsonConverter(gson)).get().newPost(post, new Callback<Post>() {
-                                                @Override
-                                                public void success(Post post, retrofit.client.Response response) {
-                                                    hideDialog();
-                                                }
-
-                                                @Override
-                                                public void failure(RetrofitError error) {
-                                                    hideDialog();
-                                                }
-                                            });
+//                                            showDialog(getString(R.string.wizard_post_dlg_title), getString(R.string.wizard_post_dlg_text));
+//
+//                                            GsonBuilder gsonBuilder = new GsonBuilder()
+//                                                    // .registerTypeHierarchyAdapter(User.class, new UserTypeAdapter(getActivity()))
+//                                                    .registerTypeHierarchyAdapter(Post.class, new PostTypeAdapter(getActivity()))
+//                                                    .setDateFormat(Config.APP_DATE_FORMAT);
+//                                            Gson gson = gsonBuilder.create();
+//
+//                                            new PermutasSEPRestClient(new GsonConverter(gson)).get().newPost(post, new Callback<Post>() {
+//                                                @Override
+//                                                public void success(Post post, retrofit.client.Response response) {
+//                                                    hideDialog();
+//                                                }
+//
+//                                                @Override
+//                                                public void failure(RetrofitError error) {
+//                                                    hideDialog();
+//                                                }
+//                                            });
+                                            ActivityWritePost.this.postComponent = DaggerPostComponent.builder()
+                                                    .applicationComponent(getApplicationComponent())
+                                                    .activityModule(getActivityModule())
+                                                    .postModule(new PostModule(post))
+                                                    .build();
 
                                         }
                                     })
@@ -278,11 +283,18 @@ public class ActivityWritePost extends BaseActivity implements
     }
 
     private void initializeInjector() {
-        this.activityComponent = DaggerActivityComponent.builder()
+//        this.activityComponent = DaggerActivityComponent.builder()
+//                .applicationComponent(getApplicationComponent())
+//                .activityModule(getActivityModule())
+//                .build();
+//        this.activityComponent.inject(this);
+
+        this.postComponent = DaggerPostComponent.builder()
                 .applicationComponent(getApplicationComponent())
                 .activityModule(getActivityModule())
+                .postModule(new PostModule())
                 .build();
-        this.activityComponent.inject(this);
+        this.postComponent.inject(this);
     }
 
     @Override
@@ -386,6 +398,48 @@ public class ActivityWritePost extends BaseActivity implements
             pDlg.dismiss();
     }
 
+    /**
+     * Methods from the {@link WritePostView} interface
+     */
+
+    @Override
+    public void writtenPost(PostModel postModel) {
+
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
+
+    @Override
+    public void showRetry() {
+
+    }
+
+    @Override
+    public void hideRetry() {
+
+    }
+
+    @Override
+    public void showError(String message) {
+
+    }
+
+    @Override
+    public Context getContext() {
+        return null;
+    }
+
+    /**
+     * The wizard adapter
+     */
     public class MyPagerAdapter extends FragmentStatePagerAdapter {
         private int mCutOffPage;
 
@@ -427,8 +481,12 @@ public class ActivityWritePost extends BaseActivity implements
         }
     }
 
+    /**
+     * Method from the {@link HasComponent interface}
+     */
+
     @Override
-    public ActivityComponent getComponent() {
-        return activityComponent;
+    public PostComponent getComponent() {
+        return postComponent;
     }
 }
