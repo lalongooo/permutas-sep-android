@@ -109,7 +109,7 @@ public class PostEntityTypeAdapter extends TypeAdapter<PostEntity> {
             out.name("place_to_city").value(post.getCityTo());
             out.name("place_to_town").value(post.getTownTo());
             out.name("academic_level").value(post.getAcademicLevel());
-            out.name("user").value("");
+            out.name("user").value(post.getUser().getId());
 
             out.endObject();
 

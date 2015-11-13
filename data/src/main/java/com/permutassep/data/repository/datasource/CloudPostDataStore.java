@@ -104,6 +104,6 @@ public class CloudPostDataStore implements PostDataStore {
 
     @Override
     public Observable<PostEntity> newPost(PostEntity postEntity) {
-        return restClient.enableUserTypeAdapter().get().newPost(postEntity);
+        return restClient.enablePostTypeAdapter().get().newPost(postEntity);
     }
 }

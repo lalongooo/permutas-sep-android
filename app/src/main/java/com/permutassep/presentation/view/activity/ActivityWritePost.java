@@ -18,6 +18,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.lalongooo.permutassep.R;
 import com.permutassep.model.City;
@@ -46,6 +48,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 /**
  * By Jorge E. Hernandez (@lalongooo) 2015
  */
@@ -62,20 +68,35 @@ public class ActivityWritePost extends BaseActivity implements
     private boolean mEditingAfterReview;
     private boolean mConsumePageSelectedEvent;
 
+    private PostComponent postComponent;
+    private MyPagerAdapter mPagerAdapter;
+
+    private PostModel post;
+    private List<Page> mCurrentPageSequence;
+    private AbstractWizardModel mWizardModel = new PermutaSepWizardModel(this);
+
+    @Bind(R.id.rl_progress)
+    RelativeLayout rl_progress;
+
+    @Bind(R.id.rl_retry)
+    RelativeLayout rl_retry;
+
+    @Bind(R.id.next_button)
+    Button mNextButton;
+
+    @Bind(R.id.prev_button)
+    Button mPrevButton;
+
+    @Bind(R.id.pager)
+    ViewPager mPager;
+
+    @Bind(R.id.strip)
+    StepPagerStrip mStepPagerStrip;
+
     @Inject
     Toolbar toolbar;
     @Inject
     WritePostPresenter writePostPresenter;
-
-    private PostComponent postComponent;
-    private ViewPager mPager;
-    private MyPagerAdapter mPagerAdapter;
-    private Button mNextButton;
-    private Button mPrevButton;
-    private StepPagerStrip mStepPagerStrip;
-
-    private List<Page> mCurrentPageSequence;
-    private AbstractWizardModel mWizardModel = new PermutaSepWizardModel(this);
 
     public static Intent getCallingIntent(Context context) {
         return new Intent(context, ActivityWritePost.class);
@@ -85,6 +106,7 @@ public class ActivityWritePost extends BaseActivity implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.ca_activity_createpost);
+        ButterKnife.bind(this);
         this.initializeInjector();
         this.setSupportActionBar(toolbar);
 
@@ -99,11 +121,8 @@ public class ActivityWritePost extends BaseActivity implements
         }
 
         mWizardModel.registerListener(this);
-
         mPagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
-        mPager = (ViewPager) findViewById(R.id.pager);
         mPager.setAdapter(mPagerAdapter);
-        mStepPagerStrip = (StepPagerStrip) findViewById(R.id.strip);
         mStepPagerStrip.setOnPageSelectedListener(new StepPagerStrip.OnPageSelectedListener() {
             @Override
             public void onPageStripSelected(int position) {
@@ -113,9 +132,6 @@ public class ActivityWritePost extends BaseActivity implements
                 }
             }
         });
-
-        mNextButton = (Button) findViewById(R.id.next_button);
-        mPrevButton = (Button) findViewById(R.id.prev_button);
 
         mPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
@@ -167,63 +183,7 @@ public class ActivityWritePost extends BaseActivity implements
                                     .setPositiveButton(R.string.submit_confirm_button, new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
-
-                                            PostModel post = new PostModel();
-
-                                            for (Page p : mWizardModel.getCurrentPageSequence()) {
-                                                switch (p.getKey()) {
-                                                    case PermutaSepWizardModel.CONTACT_INFO_KEY:
-                                                        post.setUser(PrefUtils.getUser(ActivityWritePost.this));
-                                                        break;
-                                                    case PermutaSepWizardModel.CITY_FROM_KEY:
-                                                        State sf = p.getData().getParcelable(ProfessorCityFromPage.STATE_DATA_KEY);
-                                                        City cf = p.getData().getParcelable(ProfessorCityFromPage.MUNICIPALITY_DATA_KEY);
-                                                        Town tf = p.getData().getParcelable(ProfessorCityFromPage.LOCALITY_DATA_KEY);
-
-                                                        assert sf != null;
-                                                        assert cf != null;
-                                                        assert tf != null;
-
-                                                        post.setStateFrom(String.valueOf(sf.getId()));
-                                                        post.setCityFrom(String.valueOf(cf.getClaveMunicipio()));
-                                                        post.setTownFrom(tf.getClave());
-                                                        post.setLatFrom(tf.getLatitud());
-                                                        post.setLonFrom(tf.getLongitud());
-                                                        break;
-                                                    case PermutaSepWizardModel.CITY_TO_KEY:
-                                                        State st = p.getData().getParcelable(ProfessorCityToPage.STATE_TO_DATA_KEY);
-                                                        City ct = p.getData().getParcelable(ProfessorCityToPage.MUNICIPALITY_TO_DATA_KEY);
-                                                        Town tt = p.getData().getParcelable(ProfessorCityToPage.LOCALITY_TO_DATA_KEY);
-
-                                                        assert st != null;
-                                                        assert ct != null;
-                                                        assert tt != null;
-
-                                                        post.setStateTo(String.valueOf(st.getId()));
-                                                        post.setCityTo(String.valueOf(ct.getClaveMunicipio()));
-                                                        post.setTownTo(tt.getClave());
-                                                        post.setLatTo(tt.getLatitud());
-                                                        post.setLonTo(tt.getLongitud());
-
-                                                        break;
-                                                    case PermutaSepWizardModel.ACADEMIC_LEVEL_KEY:
-                                                        post.setAcademicLevel(p.getData().getString(Page.SIMPLE_DATA_KEY));
-                                                        break;
-                                                    case PermutaSepWizardModel.POSITION_TYPE_KEY:
-                                                        post.setPositionType(p.getData().getString(Page.SIMPLE_DATA_KEY));
-                                                        break;
-                                                    case PermutaSepWizardModel.WORKDAY_TYPE_KEY:
-                                                        post.setWorkdayType(p.getData().getString(Page.SIMPLE_DATA_KEY));
-                                                        break;
-                                                    case PermutaSepWizardModel.TEACHING_CAREER_KEY:
-                                                        post.setIsTeachingCareer(p.getData().getString(Page.SIMPLE_DATA_KEY).equals("Si"));
-                                                        break;
-                                                    case PermutaSepWizardModel.POST_TEXT_KEY:
-                                                        post.setPostText(p.getData().getString(PostTextPage.TEXT_DATA_KEY));
-                                                        break;
-                                                }
-                                            }
-                                            writePostPresenter.writePost(post);
+                                            writePostPresenter.writePost(getPostModelFromWizard());
                                         }
                                     })
                                     .setNegativeButton(android.R.string.cancel, null)
@@ -355,6 +315,70 @@ public class ActivityWritePost extends BaseActivity implements
         return false;
     }
 
+    private PostModel getPostModelFromWizard() {
+
+        if (post == null) {
+
+            post = new PostModel();
+
+            for (Page p : mWizardModel.getCurrentPageSequence()) {
+                switch (p.getKey()) {
+                    case PermutaSepWizardModel.CONTACT_INFO_KEY:
+                        post.setUser(PrefUtils.getUser(ActivityWritePost.this));
+                        break;
+                    case PermutaSepWizardModel.CITY_FROM_KEY:
+                        State sf = p.getData().getParcelable(ProfessorCityFromPage.STATE_DATA_KEY);
+                        City cf = p.getData().getParcelable(ProfessorCityFromPage.MUNICIPALITY_DATA_KEY);
+                        Town tf = p.getData().getParcelable(ProfessorCityFromPage.LOCALITY_DATA_KEY);
+
+                        assert sf != null;
+                        assert cf != null;
+                        assert tf != null;
+
+                        post.setStateFrom(String.valueOf(sf.getId()));
+                        post.setCityFrom(String.valueOf(cf.getClaveMunicipio()));
+                        post.setTownFrom(tf.getClave());
+                        post.setLatFrom(tf.getLatitud());
+                        post.setLonFrom(tf.getLongitud());
+                        break;
+                    case PermutaSepWizardModel.CITY_TO_KEY:
+                        State st = p.getData().getParcelable(ProfessorCityToPage.STATE_TO_DATA_KEY);
+                        City ct = p.getData().getParcelable(ProfessorCityToPage.MUNICIPALITY_TO_DATA_KEY);
+                        Town tt = p.getData().getParcelable(ProfessorCityToPage.LOCALITY_TO_DATA_KEY);
+
+                        assert st != null;
+                        assert ct != null;
+                        assert tt != null;
+
+                        post.setStateTo(String.valueOf(st.getId()));
+                        post.setCityTo(String.valueOf(ct.getClaveMunicipio()));
+                        post.setTownTo(tt.getClave());
+                        post.setLatTo(tt.getLatitud());
+                        post.setLonTo(tt.getLongitud());
+
+                        break;
+                    case PermutaSepWizardModel.ACADEMIC_LEVEL_KEY:
+                        post.setAcademicLevel(p.getData().getString(Page.SIMPLE_DATA_KEY));
+                        break;
+                    case PermutaSepWizardModel.POSITION_TYPE_KEY:
+                        post.setPositionType(p.getData().getString(Page.SIMPLE_DATA_KEY));
+                        break;
+                    case PermutaSepWizardModel.WORKDAY_TYPE_KEY:
+                        post.setWorkdayType(p.getData().getString(Page.SIMPLE_DATA_KEY));
+                        break;
+                    case PermutaSepWizardModel.TEACHING_CAREER_KEY:
+                        post.setIsTeachingCareer(p.getData().getString(Page.SIMPLE_DATA_KEY).equals("Si"));
+                        break;
+                    case PermutaSepWizardModel.POST_TEXT_KEY:
+                        post.setPostText(p.getData().getString(PostTextPage.TEXT_DATA_KEY));
+                        break;
+                }
+            }
+        }
+
+        return post;
+    }
+
     /**
      * Methods from the {@link WritePostView} interface
      */
@@ -366,27 +390,34 @@ public class ActivityWritePost extends BaseActivity implements
 
     @Override
     public void showLoading() {
-
+        this.rl_progress.setVisibility(View.VISIBLE);
+        this.setProgressBarIndeterminateVisibility(true);
     }
 
     @Override
     public void hideLoading() {
-
+        this.rl_progress.setVisibility(View.GONE);
+        this.setProgressBarIndeterminateVisibility(false);
     }
 
     @Override
     public void showRetry() {
-
+        this.rl_retry.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideRetry() {
-
+        this.rl_retry.setVisibility(View.GONE);
     }
 
     @Override
     public void showError(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
 
+    @OnClick(R.id.bt_retry)
+    void onButtonRetryClick() {
+        this.writePostPresenter.writePost(this.getPostModelFromWizard());
     }
 
     @Override

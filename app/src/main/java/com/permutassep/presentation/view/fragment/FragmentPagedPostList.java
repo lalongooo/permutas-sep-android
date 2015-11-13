@@ -178,7 +178,7 @@ public class FragmentPagedPostList extends BaseFragment implements PagedPostsLis
     }
 
     @OnClick(R.id.bt_retry)
-    void onButtonRetryClick() {
+         void onButtonRetryClick() {
         FragmentPagedPostList.this.loadUserList();
     }
 
