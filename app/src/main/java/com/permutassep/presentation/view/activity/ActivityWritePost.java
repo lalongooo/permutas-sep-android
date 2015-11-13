@@ -2,7 +2,6 @@ package com.permutassep.presentation.view.activity;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -18,7 +17,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -66,34 +64,27 @@ public class ActivityWritePost extends BaseActivity implements
         HasComponent<PostComponent>,
         WritePostView {
 
-    private boolean suggestDataCompletion = false;
-    private boolean mEditingAfterReview;
-    private boolean mConsumePageSelectedEvent;
-
-    private PostComponent postComponent;
-    private MyPagerAdapter mPagerAdapter;
-
-    private PostModel post;
-    private List<Page> mCurrentPageSequence;
-    private AbstractWizardModel mWizardModel = new PermutaSepWizardModel(this);
-    private ProgressDialog pDlg;
-
     @Bind(R.id.next_button)
     Button mNextButton;
-
     @Bind(R.id.prev_button)
     Button mPrevButton;
-
     @Bind(R.id.pager)
     ViewPager mPager;
-
     @Bind(R.id.strip)
     StepPagerStrip mStepPagerStrip;
-
     @Inject
     Toolbar toolbar;
     @Inject
     WritePostPresenter writePostPresenter;
+    private boolean suggestDataCompletion = false;
+    private boolean mEditingAfterReview;
+    private boolean mConsumePageSelectedEvent;
+    private PostComponent postComponent;
+    private MyPagerAdapter mPagerAdapter;
+    private PostModel post;
+    private List<Page> mCurrentPageSequence;
+    private AbstractWizardModel mWizardModel = new PermutaSepWizardModel(this);
+    private MaterialDialog progressDialog;
 
     public static Intent getCallingIntent(Context context) {
         return new Intent(context, ActivityWritePost.class);
@@ -170,24 +161,19 @@ public class ActivityWritePost extends BaseActivity implements
                     dg.show(getSupportFragmentManager(), "contact_data_dialog");
 
                 } else if (mPager.getCurrentItem() == mCurrentPageSequence.size()) {
-                    DialogFragment dg = new DialogFragment() {
 
-                        @NonNull
-                        @Override
-                        public Dialog onCreateDialog(Bundle savedInstanceState) {
-                            return new AlertDialog.Builder(getActivity())
-                                    .setMessage(R.string.submit_confirm_message)
-                                    .setPositiveButton(R.string.submit_confirm_button, new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            writePostPresenter.writePost(getPostModelFromWizard());
-                                        }
-                                    })
-                                    .setNegativeButton(android.R.string.cancel, null)
-                                    .create();
-                        }
-                    };
-                    dg.show(getSupportFragmentManager(), "place_order_dialog");
+
+                    new MaterialDialog.Builder(ActivityWritePost.this)
+                            .content(R.string.submit_confirm_message)
+                            .positiveText(R.string.submit_confirm_button)
+                            .negativeText(android.R.string.cancel)
+                            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(@NonNull MaterialDialog materialDialog, @NonNull DialogAction dialogAction) {
+                                    writePostPresenter.writePost(getPostModelFromWizard());
+                                }
+                            })
+                            .show();
                 } else {
                     if (mEditingAfterReview) {
                         mPager.setCurrentItem(mPagerAdapter.getCount() - 1);
@@ -382,18 +368,24 @@ public class ActivityWritePost extends BaseActivity implements
 
     @Override
     public void writtenPost(PostModel postModel) {
-
+        finish();
     }
 
     @Override
     public void showLoading() {
-        pDlg = ProgressDialog.show(this, getString(R.string.wizard_post_dlg_title), getString(R.string.wizard_post_dlg_text), true);
+
+        progressDialog = new MaterialDialog.Builder(this)
+                .title(R.string.wizard_post_dlg_title)
+                .content(R.string.wizard_post_dlg_text)
+                .progress(true, 0)
+                .progressIndeterminateStyle(false)
+                .show();
     }
 
     @Override
     public void hideLoading() {
-        if (pDlg != null)
-            pDlg.dismiss();
+        if (progressDialog != null)
+            progressDialog.dismiss();
     }
 
     @Override
@@ -405,7 +397,7 @@ public class ActivityWritePost extends BaseActivity implements
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog materialDialog, @NonNull DialogAction dialogAction) {
-                        ActivityWritePost.this.writePostPresenter.writePost(ActivityWritePost.this.getPostModelFromWizard());
+                        writePostPresenter.writePost(getPostModelFromWizard());
                     }
                 })
                 .show();
@@ -428,6 +420,15 @@ public class ActivityWritePost extends BaseActivity implements
     @Override
     public Context getContext() {
         return null;
+    }
+
+    /**
+     * Method from the {@link HasComponent interface}
+     */
+
+    @Override
+    public PostComponent getComponent() {
+        return postComponent;
     }
 
     /**
@@ -472,14 +473,5 @@ public class ActivityWritePost extends BaseActivity implements
             }
             mCutOffPage = cutOffPage;
         }
-    }
-
-    /**
-     * Method from the {@link HasComponent interface}
-     */
-
-    @Override
-    public PostComponent getComponent() {
-        return postComponent;
     }
 }
