@@ -28,6 +28,9 @@
     <string name="wizard_post_text_hint">p. ej. "Escuela bien ubicada"</string>
     <string name="wizard_post_dlg_title">Espera...</string>
     <string name="wizard_post_dlg_text">Estamos publicando tu permuta</string>
+    <string name="wizard_post_retry_dlg_title">Ups...</string>
+    <string name="wizard_post_retry_dlg_message">Tuvimos un problema al intentar publicar. ¿Quieres volver a intentarlo?</string>
+    <string name="wizard_post_retry_dlg_positive_text">Reintentar</string>
     <string name="app_overview_1st_item_text">Queremos que la información esté al alcance de todos</string>
     <string name="app_overview_2nd_item_text">Creemos que nuestra solución hará a mas personas felices</string>
     <string name="app_overview_3rd_item_text">Esperamos que encuentres pronto tu permuta&#8230;de verdad.</string>

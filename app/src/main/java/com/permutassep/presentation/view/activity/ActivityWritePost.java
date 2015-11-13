@@ -391,9 +391,9 @@ public class ActivityWritePost extends BaseActivity implements
     @Override
     public void showRetry() {
         new MaterialDialog.Builder(this)
-                .title("Ups...")
-                .content("Tuvimos un problema al intentar publicar. ¿Queires volver a intentarlo?")
-                .positiveText("Reintentar")
+                .title(R.string.wizard_post_retry_dlg_title)
+                .content(R.string.wizard_post_retry_dlg_message)
+                .positiveText(R.string.wizard_post_retry_dlg_positive_text)
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog materialDialog, @NonNull DialogAction dialogAction) {
