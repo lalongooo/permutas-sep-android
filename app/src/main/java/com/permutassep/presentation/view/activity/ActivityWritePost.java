@@ -1,5 +1,6 @@
 package com.permutassep.presentation.view.activity;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.google.gson.Gson;
 import com.lalongooo.permutassep.R;
 import com.permutassep.model.City;
 import com.permutassep.model.PermutaSepWizardModel;
@@ -367,8 +369,7 @@ public class ActivityWritePost extends BaseActivity implements
      */
 
     @Override
-    public void writtenPost(PostModel postModel) {
-
+    public void writtenPost(final PostModel postModel) {
         new MaterialDialog.Builder(this)
                 .title(R.string.wizard_post_retry_dlg_success_post_title)
                 .content(R.string.wizard_post_retry_dlg_success_post_message)
@@ -377,6 +378,13 @@ public class ActivityWritePost extends BaseActivity implements
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog materialDialog, @NonNull DialogAction dialogAction) {
+                        Intent data = new Intent();
+                        data.putExtra("newPost", new Gson().toJson(postModel));
+                        if (getParent() == null) {
+                            setResult(Activity.RESULT_OK, data);
+                        } else {
+                            getParent().setResult(Activity.RESULT_OK, data);
+                        }
                         finish();
                     }
                 })

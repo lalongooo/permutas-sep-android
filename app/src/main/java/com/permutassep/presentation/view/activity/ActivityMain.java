@@ -1,5 +1,6 @@
 package com.permutassep.presentation.view.activity;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -87,6 +88,11 @@ public class ActivityMain extends BaseActivity
                 .activityModule(getActivityModule())
                 .build();
         this.activityComponent.inject(this);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     /**

@@ -15,7 +15,6 @@
  */
 package com.permutassep.presentation.navigation;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -187,12 +186,12 @@ public class Navigator {
 
     /**
      * Goes to the user list screen.
-     * @param context A Context needed to open the destiny activity.
+     * @param baseActivity A Context needed to open the destiny activity.
     */
-    public void navigateToWritePost(Context context) {
-        if (context != null) {
-            Intent intentToLaunch = ActivityWritePost.getCallingIntent(context);
-            context.startActivity(intentToLaunch);
+    public void navigateToWritePost(BaseActivity baseActivity) {
+        if (baseActivity != null) {
+            Intent intentToLaunch = ActivityWritePost.getCallingIntent(baseActivity);
+            baseActivity.startActivityForResult(intentToLaunch, 8999);
         }
 
 
