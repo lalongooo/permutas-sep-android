@@ -74,9 +74,7 @@ public class ActivityWritePost extends BaseActivity implements
     private PostModel post;
     private List<Page> mCurrentPageSequence;
     private AbstractWizardModel mWizardModel = new PermutaSepWizardModel(this);
-
-    @Bind(R.id.rl_progress)
-    RelativeLayout rl_progress;
+    private ProgressDialog pDlg;
 
     @Bind(R.id.rl_retry)
     RelativeLayout rl_retry;
@@ -390,14 +388,13 @@ public class ActivityWritePost extends BaseActivity implements
 
     @Override
     public void showLoading() {
-        this.rl_progress.setVisibility(View.VISIBLE);
-        this.setProgressBarIndeterminateVisibility(true);
+        pDlg = ProgressDialog.show(this, getString(R.string.wizard_post_dlg_title), getString(R.string.wizard_post_dlg_text), true);
     }
 
     @Override
     public void hideLoading() {
-        this.rl_progress.setVisibility(View.GONE);
-        this.setProgressBarIndeterminateVisibility(false);
+        if (pDlg != null)
+            pDlg.dismiss();
     }
 
     @Override

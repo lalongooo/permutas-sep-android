@@ -21,8 +21,6 @@
 
     <include layout="@layout/toolbar"/>
 
-    <include layout="@layout/ca_view_progress" />
-
     <include layout="@layout/ca_view_retry" />
 
     <com.permutassep.presentation.view.wizard.ui.StepPagerStrip
