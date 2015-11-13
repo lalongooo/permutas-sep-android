@@ -368,7 +368,19 @@ public class ActivityWritePost extends BaseActivity implements
 
     @Override
     public void writtenPost(PostModel postModel) {
-        finish();
+
+        new MaterialDialog.Builder(this)
+                .title(R.string.wizard_post_retry_dlg_success_post_title)
+                .content(R.string.wizard_post_retry_dlg_success_post_message)
+                .positiveText(android.R.string.ok)
+                .cancelable(false)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog materialDialog, @NonNull DialogAction dialogAction) {
+                        finish();
+                    }
+                })
+                .show();
     }
 
     @Override
