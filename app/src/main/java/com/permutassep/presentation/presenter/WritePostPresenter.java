@@ -58,10 +58,6 @@ public class WritePostPresenter implements Presenter {
         this.writePostView.showRetry();
     }
 
-    private void showErrorMessage(ErrorBundle errorBundle) {
-        this.writePostView.showError(errorBundle.getErrorMessage());
-    }
-
     public void setView(@NonNull WritePostView writePostView) {
         this.writePostView = writePostView;
     }
@@ -94,7 +90,6 @@ public class WritePostPresenter implements Presenter {
         @Override
         public void onError(Throwable e) {
             WritePostPresenter.this.hideViewLoading();
-            WritePostPresenter.this.showErrorMessage(new DefaultErrorBundle((Exception) e));
             WritePostPresenter.this.showViewRetry();
         }
 

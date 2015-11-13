@@ -74,11 +74,6 @@ dependencies {
     compile presentationDependencies.butterKnife
     provided presentationDependencies.javaxAnnotation
 
-
-
-
-
-
     compile 'com.viewpagerindicator:library:2.4.1@aar'
     compile 'com.android.support:support-v4:23.0.1'
     compile 'com.android.support:appcompat-v7:23.0.1'
@@ -99,6 +94,9 @@ dependencies {
         transitive = true
     }
     compile('com.mikepenz:aboutlibraries:5.0.2@aar') {
+        transitive = true
+    }
+    compile('com.github.afollestad.material-dialogs:core:0.8.5.0@aar') {
         transitive = true
     }
     testCompile 'junit:junit:4.12'

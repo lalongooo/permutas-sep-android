@@ -21,6 +21,8 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.lalongooo.permutassep.R;
 import com.permutassep.model.City;
 import com.permutassep.model.PermutaSepWizardModel;
@@ -75,9 +77,6 @@ public class ActivityWritePost extends BaseActivity implements
     private List<Page> mCurrentPageSequence;
     private AbstractWizardModel mWizardModel = new PermutaSepWizardModel(this);
     private ProgressDialog pDlg;
-
-    @Bind(R.id.rl_retry)
-    RelativeLayout rl_retry;
 
     @Bind(R.id.next_button)
     Button mNextButton;
@@ -399,12 +398,21 @@ public class ActivityWritePost extends BaseActivity implements
 
     @Override
     public void showRetry() {
-        this.rl_retry.setVisibility(View.VISIBLE);
+        new MaterialDialog.Builder(this)
+                .title("Ups...")
+                .content("Tuvimos un problema al intentar publicar. ¿Queires volver a intentarlo?")
+                .positiveText("Reintentar")
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog materialDialog, @NonNull DialogAction dialogAction) {
+                        ActivityWritePost.this.writePostPresenter.writePost(ActivityWritePost.this.getPostModelFromWizard());
+                    }
+                })
+                .show();
     }
 
     @Override
     public void hideRetry() {
-        this.rl_retry.setVisibility(View.GONE);
     }
 
     @Override
