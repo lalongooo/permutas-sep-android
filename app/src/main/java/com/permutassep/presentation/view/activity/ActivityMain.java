@@ -38,7 +38,10 @@ import com.permutassep.presentation.view.fragment.FragmentLogin;
 import com.permutassep.presentation.view.fragment.FragmentLoginSignUp;
 import com.permutassep.presentation.view.fragment.FragmentMyPostList;
 import com.permutassep.presentation.view.fragment.FragmentPagedPostList;
+import com.permutassep.presentation.view.fragment.FragmentSearch;
 import com.permutassep.presentation.view.fragment.FragmentSignUp;
+
+import java.util.HashMap;
 
 import javax.inject.Inject;
 
@@ -54,7 +57,8 @@ public class ActivityMain extends BaseActivity
         FragmentSignUp.FacebookSignUpListener,
         LoginCompleteListener,
         FirstLaunchCompleteListener,
-        FragmentMenuItemSelectedListener {
+        FragmentMenuItemSelectedListener,
+        FragmentSearch.SearchPerformer {
 
 
     public static final int DRAWER_IDENTIFIER_HOME = 1;
@@ -98,7 +102,6 @@ public class ActivityMain extends BaseActivity
     /**
      * Methods from the {@link HomeView} interface
      */
-
     @Override
     public void renderDrawerOptions() {
 
@@ -177,7 +180,6 @@ public class ActivityMain extends BaseActivity
     /**
      * Method from {@link PostListListener}
      */
-
     @Override
     public void onPostClicked(PostModel postModel) {
         navigator.navigateToPostDetails(this, postModel.getId());
@@ -186,7 +188,6 @@ public class ActivityMain extends BaseActivity
     /**
      * Method from {@link Navigator.NavigationListener}
      */
-
     @Override
     public void onNextFragment(Class c) {
         if (c == FragmentLogin.class) {
@@ -205,7 +206,6 @@ public class ActivityMain extends BaseActivity
     /**
      * Method from {@link FragmentManager.OnBackStackChangedListener}
      */
-
     @Override
     public void onBackStackChanged() {
 
@@ -216,7 +216,7 @@ public class ActivityMain extends BaseActivity
                 actionBar.hide();
             }
         } else if (currentFragment instanceof FragmentPagedPostList) {
-            if(drawer != null){
+            if (drawer != null) {
                 drawer.setSelection(DRAWER_IDENTIFIER_HOME, false);
             }
         }
@@ -225,7 +225,6 @@ public class ActivityMain extends BaseActivity
     /**
      * Method from {@link FragmentSignUp.FacebookSignUpListener}
      */
-
     @Override
     public void onFacebookSignUp(Bundle bundle) {
         navigator.navigateToCompleteFbData(this, bundle);
@@ -234,7 +233,6 @@ public class ActivityMain extends BaseActivity
     /**
      * Method from the {@link LoginCompleteListener}
      */
-
     @Override
     public void onLoginComplete(UserModel userModel) {
         this.userModel = userModel;
@@ -259,10 +257,14 @@ public class ActivityMain extends BaseActivity
     @Override
     public void onMenuItemSelected(int menuId) {
 
-        switch(menuId){
+        switch (menuId) {
 
             case R.id.action_post:
                 this.navigator.navigateToWritePost(this);
+                break;
+
+            case R.id.action_search:
+                this.navigator.navigateToSearchPosts(this, true);
                 break;
 
             case R.id.action_logout:
@@ -285,6 +287,14 @@ public class ActivityMain extends BaseActivity
 
                 break;
         }
+    }
+
+    /**
+     * Method from {@link FragmentSearch.SearchPerformer}
+     */
+    @Override
+    public void onPerformSearch(HashMap<String, String> searchParams) {
+        navigator.navigateToSearchPostsResults(this, true, searchParams);
     }
 
     private Fragment getCurrentDisplayedFragment() {

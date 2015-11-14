@@ -29,7 +29,11 @@ import com.permutassep.presentation.view.fragment.FragmentLoginSignUp;
 import com.permutassep.presentation.view.fragment.FragmentMyPostList;
 import com.permutassep.presentation.view.fragment.FragmentPagedPostList;
 import com.permutassep.presentation.view.fragment.FragmentPostDetails;
+import com.permutassep.presentation.view.fragment.FragmentSearch;
+import com.permutassep.presentation.view.fragment.FragmentSearchResults;
 import com.permutassep.presentation.view.fragment.FragmentSignUp;
+
+import java.util.HashMap;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -39,10 +43,6 @@ import javax.inject.Singleton;
  */
 @Singleton
 public class Navigator {
-
-    public interface NavigationListener {
-        void onNextFragment(Class c);
-    }
 
     /**
      * Empty constructor used by Dagger 2
@@ -61,7 +61,7 @@ public class Navigator {
 
             FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragmentContainer, FragmentLoginSignUp.newInstance());
-            if(addToBackStack){
+            if (addToBackStack) {
                 fragmentTransaction.addToBackStack(null);
             }
             fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
@@ -130,10 +130,10 @@ public class Navigator {
             FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
 
             Fragment fragment = activity.getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
-            if(fragment != null){
+            if (fragment != null) {
                 fragmentTransaction.hide(fragment);
             }
-            if(addToBackStack){
+            if (addToBackStack) {
                 fragmentTransaction.addToBackStack(null);
             }
 
@@ -161,8 +161,9 @@ public class Navigator {
 
     /**
      * Navigates to the posts list owned by the logged user.
+     *
      * @param activity An activity needed to load the destination fragment.
-     * @param userId The user id
+     * @param userId   The user id
      */
     public void navigateToUserPostList(BaseActivity activity, int userId, boolean addToBackStack) {
         if (activity != null) {
@@ -170,10 +171,10 @@ public class Navigator {
             FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
 
             Fragment fragment = activity.getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
-            if(fragment != null){
+            if (fragment != null) {
                 fragmentTransaction.hide(fragment);
             }
-            if(addToBackStack){
+            if (addToBackStack) {
                 fragmentTransaction.addToBackStack(null);
             }
 
@@ -186,14 +187,65 @@ public class Navigator {
 
     /**
      * Goes to the user list screen.
+     *
      * @param baseActivity A Context needed to open the destiny activity.
-    */
+     */
     public void navigateToWritePost(BaseActivity baseActivity) {
         if (baseActivity != null) {
             Intent intentToLaunch = ActivityWritePost.getCallingIntent(baseActivity);
             baseActivity.startActivityForResult(intentToLaunch, 8999);
         }
+    }
 
+    /**
+     * Navigates to the fragment where the posts search filter are selected.
+     *
+     * @param activity An activity needed to load the destination fragment.
+     */
+    public void navigateToSearchPosts(BaseActivity activity, boolean addToBackStack) {
+        if (activity != null) {
 
+            FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
+
+            Fragment fragment = activity.getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
+            if (fragment != null) {
+                fragmentTransaction.hide(fragment);
+            }
+            if (addToBackStack) {
+                fragmentTransaction.addToBackStack(null);
+            }
+
+            fragmentTransaction.add(R.id.fragmentContainer, FragmentSearch.newInstance());
+            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            fragmentTransaction.commit();
+        }
+    }
+
+    /**
+     * Navigates to the fragment where the search posts results are displayed.
+     *
+     * @param activity An activity needed to load the destination fragment.
+     */
+    public void navigateToSearchPostsResults(BaseActivity activity, boolean addToBackStack, HashMap<String, String> searchParams) {
+        if (activity != null) {
+
+            FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
+
+            Fragment fragment = activity.getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
+            if (fragment != null) {
+                fragmentTransaction.hide(fragment);
+            }
+            if (addToBackStack) {
+                fragmentTransaction.addToBackStack(null);
+            }
+
+            fragmentTransaction.add(R.id.fragmentContainer, FragmentSearchResults.newInstance(searchParams));
+            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            fragmentTransaction.commit();
+        }
+    }
+
+    public interface NavigationListener {
+        void onNextFragment(Class c);
     }
 }

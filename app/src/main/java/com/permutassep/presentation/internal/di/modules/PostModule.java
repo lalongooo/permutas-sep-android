@@ -5,10 +5,12 @@ import com.permutassep.domain.executor.ThreadExecutor;
 import com.permutassep.domain.interactor.GetMyPostsList;
 import com.permutassep.domain.interactor.GetPostDetails;
 import com.permutassep.domain.interactor.GetPostsList;
+import com.permutassep.domain.interactor.SearchPosts;
 import com.permutassep.domain.interactor.UseCase;
 import com.permutassep.domain.repository.PostRepository;
 import com.permutassep.presentation.internal.di.PerActivity;
-import com.permutassep.presentation.model.PostModel;
+
+import java.util.HashMap;
 
 import javax.inject.Named;
 
@@ -21,20 +23,20 @@ import dagger.Provides;
 @Module
 public class PostModule {
 
-    public PostModule() {
-    }
-
     /**
      * This id is used to identify a unique post and a unique user
      */
     private int id = -1;
+    private HashMap<String, String> searchParams;
+    public PostModule() {
+    }
+
     public PostModule(int id) {
         this.id = id;
     }
 
-    private PostModel postModel;
-    public PostModule(PostModel postModel){
-        this.postModel = postModel;
+    public PostModule(HashMap<String, String> searchParams) {
+        this.searchParams = searchParams;
     }
 
     @Provides
@@ -60,5 +62,14 @@ public class PostModule {
             PostRepository postRepository, ThreadExecutor threadExecutor,
             PostExecutionThread postExecutionThread) {
         return new GetMyPostsList(id, postRepository, threadExecutor, postExecutionThread);
+    }
+
+    @Provides
+    @PerActivity
+    @Named("searchPosts")
+    UseCase provideSearchPostsUseCase(
+            PostRepository postRepository, ThreadExecutor threadExecutor,
+            PostExecutionThread postExecutionThread) {
+        return new SearchPosts(searchParams, postRepository, threadExecutor, postExecutionThread);
     }
 }
