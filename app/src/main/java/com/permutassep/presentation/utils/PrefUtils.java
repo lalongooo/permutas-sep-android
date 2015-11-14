@@ -42,7 +42,7 @@ public class PrefUtils {
 
     public static void markFirstTimeDrawerOpened(final Context context) {
         SharedPreferences sp = context.getSharedPreferences(Config.APP_PREFERENCES_NAME, Context.MODE_PRIVATE);
-        sp.edit().putBoolean(PREF_DRAWER_OPENED, true).commit();
+        sp.edit().putBoolean(PREF_DRAWER_OPENED, true).apply();
     }
 
     public static boolean shouldReloadNewsFeed(final Context context) {
@@ -50,14 +50,14 @@ public class PrefUtils {
         return sp.getBoolean(PREF_RELOAD_NEWS_FEED, false);
     }
 
-    public static void markNewsFeedToReload(final Context context, boolean reloaded) {
+    public static void markNewsFeedToReload(final Context context, boolean reload) {
         SharedPreferences sp = context.getSharedPreferences(Config.APP_PREFERENCES_NAME, Context.MODE_PRIVATE);
-        sp.edit().putBoolean(PREF_RELOAD_NEWS_FEED, reloaded).commit();
+        sp.edit().putBoolean(PREF_RELOAD_NEWS_FEED, reload).apply();
     }
 
     public static void clearApplicationPreferences(Context context) {
         SharedPreferences sp = context.getSharedPreferences(Config.APP_PREFERENCES_NAME, Context.MODE_PRIVATE);
-        sp.edit().clear().commit();
+        sp.edit().clear().apply();
     }
 
     public static void markTosAccepted(final Context context) {

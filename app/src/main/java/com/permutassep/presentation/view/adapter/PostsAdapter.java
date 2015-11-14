@@ -108,6 +108,10 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostViewHold
         void onPostItemClicked(PostModel postModel);
     }
 
+    public void clearPosts() {
+        this.postModelList.clear();
+    }
+
     static class PostViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.imageView)
         ImageView imageView;

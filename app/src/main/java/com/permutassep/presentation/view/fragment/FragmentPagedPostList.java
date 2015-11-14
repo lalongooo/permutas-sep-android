@@ -238,6 +238,12 @@ public class FragmentPagedPostList extends BaseFragment implements PagedPostsLis
     public void onResume() {
         super.onResume();
         this.postListPresenter.resume();
+        if(PrefUtils.shouldReloadNewsFeed(getActivity())){
+            PrefUtils.markNewsFeedToReload(getActivity(), false);
+            this.postsAdapter.clearPosts();
+            this.postsAdapter.notifyDataSetChanged();
+            this.loadUserList();
+        }
     }
 
     @Override

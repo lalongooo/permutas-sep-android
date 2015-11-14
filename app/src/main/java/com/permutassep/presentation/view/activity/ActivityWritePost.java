@@ -370,6 +370,7 @@ public class ActivityWritePost extends BaseActivity implements
 
     @Override
     public void writtenPost(final PostModel postModel) {
+        PrefUtils.markNewsFeedToReload(this, true);
         new MaterialDialog.Builder(this)
                 .title(R.string.wizard_post_retry_dlg_success_post_title)
                 .content(R.string.wizard_post_retry_dlg_success_post_message)

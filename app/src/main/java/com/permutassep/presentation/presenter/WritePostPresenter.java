@@ -7,8 +7,6 @@ package com.permutassep.presentation.presenter;
 import android.support.annotation.NonNull;
 
 import com.permutassep.domain.Post;
-import com.permutassep.domain.exception.DefaultErrorBundle;
-import com.permutassep.domain.exception.ErrorBundle;
 import com.permutassep.domain.interactor.DefaultSubscriber;
 import com.permutassep.domain.interactor.WritePost;
 import com.permutassep.presentation.internal.di.PerActivity;
