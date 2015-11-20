@@ -52,12 +52,12 @@ public class ActivityMain extends BaseActivity
 //                result.setSelectionByIdentifier(DrawerItems.HOME.id, false);
             }
         } else if (f instanceof FragmentMyPosts) {
-            setTitle(R.string.my_posts_toolbar_text);
+            setTitle(R.string.app_main_toolbar_title_my_posts);
             if (Utils.getUser(this) != null) {
 //                result.setSelectionByIdentifier(DrawerItems.MY_POSTS.id, false);
             }
         } else if (f instanceof FragmentSearch) {
-            setTitle(R.string.app_main_toolbar_search_action);
+            setTitle(R.string.app_main_toolbar_title_search);
         } else if (f instanceof FragmentResult) {
             setTitle(R.string.app_main_toolbar_search_results);
         } else if (f instanceof FragmentCreatePost) {

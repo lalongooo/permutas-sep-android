@@ -149,12 +149,14 @@ public class ActivityMain extends BaseActivity
             case DRAWER_IDENTIFIER_HOME:
                 if (!(getCurrentDisplayedFragment() instanceof FragmentPagedPostList)) {
                     getSupportFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                    navigator.navigateToPostList(this, false);
+                    navigator.navigateToPostList(this, true);
+                    setActionBarTitle(R.string.app_name);
                 }
                 break;
             case DRAWER_IDENTIFIER_MY_POSTS:
                 if (!(getCurrentDisplayedFragment() instanceof FragmentMyPostList)) {
                     navigator.navigateToUserPostList(this, this.userModel.getId(), true);
+                    setActionBarTitle(R.string.app_main_toolbar_title_my_posts);
                 }
                 break;
         }
@@ -200,6 +202,7 @@ public class ActivityMain extends BaseActivity
 
         if (c == FragmentPagedPostList.class) {
             navigator.navigateToPostList(this, true);
+            setActionBarTitle(R.string.app_name);
         }
     }
 
@@ -218,6 +221,7 @@ public class ActivityMain extends BaseActivity
         } else if (currentFragment instanceof FragmentPagedPostList) {
             if (drawer != null) {
                 drawer.setSelection(DRAWER_IDENTIFIER_HOME, false);
+                setActionBarTitle(R.string.app_name);
             }
         }
     }
@@ -265,6 +269,7 @@ public class ActivityMain extends BaseActivity
 
             case R.id.action_search:
                 this.navigator.navigateToSearchPosts(this, true);
+                setActionBarTitle(R.string.app_main_toolbar_title_search);
                 break;
 
             case R.id.action_logout:
@@ -299,5 +304,12 @@ public class ActivityMain extends BaseActivity
 
     private Fragment getCurrentDisplayedFragment() {
         return getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
+    }
+
+    private void setActionBarTitle(int resId) {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle(resId);
+        }
     }
 }

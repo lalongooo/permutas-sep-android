@@ -92,7 +92,6 @@
     <string name="new_password_request_new_token">Solicitar nuevo enlace</string>
     <string name="new_password_password_length_error">La longitud debe ser entre %1$s-%2$s caracteres</string>
     <string name="new_password_malformed_url">Dirección inválida</string>
-    <string name="my_posts_toolbar_text">Mis publicaciones</string>
     <string name="app_login_sign_up_already_have_account">Ya tengo cuenta</string>
     <string name="app_login_sign_up_log_in">Iniciar sesión</string>
     <string name="app_login_sign_up_want_to_register">No tengo cuenta</string>
@@ -145,8 +144,9 @@
     <string name="hint_your_password">Tu contraseña</string>
     <string name="submit_confirm_message">Presiona Aceptar para publicar tu permuta</string>
     <string name="submit_confirm_button">Aceptar</string>
+    <string name="app_main_toolbar_title_my_posts">Mis publicaciones</string>
     <string name="app_main_toolbar_post_action">Publicar permuta</string>
-    <string name="app_main_toolbar_search_action">Búsqueda</string>
+    <string name="app_main_toolbar_title_search">Búsqueda</string>
     <string name="app_main_toolbar_search_results">Resultados</string>
     <string name="app_main_toolbar_edit_profile">Editar perfil</string>
     <string name="main_select_state">Selecciona Estado</string>
