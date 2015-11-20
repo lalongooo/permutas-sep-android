@@ -59,7 +59,7 @@ public class ActivityMain extends BaseActivity
         } else if (f instanceof FragmentSearch) {
             setTitle(R.string.app_main_toolbar_title_search);
         } else if (f instanceof FragmentResult) {
-            setTitle(R.string.app_main_toolbar_search_results);
+            setTitle(R.string.app_main_toolbar_title_search_results);
         } else if (f instanceof FragmentCreatePost) {
             setTitle(R.string.app_main_toolbar_post_action);
         }

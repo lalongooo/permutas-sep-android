@@ -223,6 +223,10 @@ public class ActivityMain extends BaseActivity
                 drawer.setSelection(DRAWER_IDENTIFIER_HOME, false);
                 setActionBarTitle(R.string.app_name);
             }
+        }else if (currentFragment instanceof FragmentSearch) {
+            if (drawer != null) {
+                setActionBarTitle(R.string.app_main_toolbar_title_search);
+            }
         }
     }
 
@@ -300,6 +304,7 @@ public class ActivityMain extends BaseActivity
     @Override
     public void onPerformSearch(HashMap<String, String> searchParams) {
         navigator.navigateToSearchPostsResults(this, true, searchParams);
+        setActionBarTitle(R.string.app_main_toolbar_title_search_results);
     }
 
     private Fragment getCurrentDisplayedFragment() {

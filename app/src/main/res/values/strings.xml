@@ -147,7 +147,7 @@
     <string name="app_main_toolbar_title_my_posts">Mis publicaciones</string>
     <string name="app_main_toolbar_post_action">Publicar permuta</string>
     <string name="app_main_toolbar_title_search">Búsqueda</string>
-    <string name="app_main_toolbar_search_results">Resultados</string>
+    <string name="app_main_toolbar_title_search_results">Resultados</string>
     <string name="app_main_toolbar_edit_profile">Editar perfil</string>
     <string name="main_select_state">Selecciona Estado</string>
     <string name="main_loading_cities">Cargando ciudades</string>
