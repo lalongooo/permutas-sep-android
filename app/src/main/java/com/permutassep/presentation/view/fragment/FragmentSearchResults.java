@@ -3,6 +3,7 @@ package com.permutassep.presentation.view.fragment;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -14,10 +15,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.lalongooo.permutassep.R;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
-import com.permutassep.presentation.interfaces.FirstLaunchCompleteListener;
 import com.permutassep.presentation.interfaces.FragmentMenuItemSelectedListener;
 import com.permutassep.presentation.interfaces.PostListListener;
 import com.permutassep.presentation.internal.di.components.ApplicationComponent;
@@ -61,7 +63,6 @@ public class FragmentSearchResults extends BaseFragment implements SearchPostsRe
 
     private HashMap<String, String> searchParams;
     private PostComponent postComponent;
-    private FirstLaunchCompleteListener firstLaunchCompleteListener;
     private FragmentMenuItemSelectedListener fragmentMenuItemSelectedListener;
     private PostsAdapter postsAdapter;
     private PostsLayoutManager postsLayoutManager;
@@ -115,7 +116,6 @@ public class FragmentSearchResults extends BaseFragment implements SearchPostsRe
     public void onAttach(Context context) {
         super.onAttach(context);
         this.postListListener = (PostListListener) getActivity();
-        this.firstLaunchCompleteListener = (FirstLaunchCompleteListener) getActivity();
         this.fragmentMenuItemSelectedListener = (FragmentMenuItemSelectedListener) getActivity();
     }
 
@@ -190,7 +190,6 @@ public class FragmentSearchResults extends BaseFragment implements SearchPostsRe
         if (postModelCollection != null) {
             this.postsAdapter.setPostsCollection(postModelCollection);
         }
-        firstLaunchCompleteListener.onFirstLaunchComplete();
     }
 
     @Override
@@ -202,7 +201,17 @@ public class FragmentSearchResults extends BaseFragment implements SearchPostsRe
 
     @Override
     public void showEmptyResultsMessage(){
-
+        new MaterialDialog.Builder(getActivity())
+                .title(R.string.search_fragment_results_empty_dlg_title)
+                .content(R.string.search_fragment_results_empty_dlg_msg)
+                .positiveText(android.R.string.ok)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog materialDialog, @NonNull DialogAction dialogAction) {
+                        getActivity().getSupportFragmentManager().popBackStack();
+                    }
+                })
+                .show();
     }
 
     @Override

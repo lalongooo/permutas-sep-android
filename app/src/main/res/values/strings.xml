@@ -62,6 +62,8 @@
     <string name="search_fragment_dlg_title">Espera</string>
     <string name="search_fragment_dlg_text">Buscando...</string>
     <string name="search_fragment_filters_error_msg">Ocurrió un error en tu búsqueda</string>
+    <string name="search_fragment_results_empty_dlg_title">"Búsqueda"</string>
+    <string name="search_fragment_results_empty_dlg_msg">"No encontramos ningún resultado"</string>
     <string name="accept">Aceptar</string>
     <string name="cancel">Cancelar</string>
     <string name="error">Error</string>
