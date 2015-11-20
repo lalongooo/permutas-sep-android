@@ -228,6 +228,7 @@ public class FragmentPostDetails extends BaseFragment
     public void onResume() {
         super.onResume();
         this.postDetailsPresenter.resume();
+        mapView.onResume();
     }
 
     @Override
@@ -285,7 +286,7 @@ public class FragmentPostDetails extends BaseFragment
         LatLngBounds bounds = b.build();
         //Change the padding as per needed
 
-        CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, mapView.getWidth(), mapView.getHeight(), 10);
+        CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, mapView.getWidth(), mapView.getHeight(), 100);
         map.animateCamera(cu);
     }
 
