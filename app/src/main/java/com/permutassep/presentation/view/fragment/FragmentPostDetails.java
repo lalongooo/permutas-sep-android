@@ -8,6 +8,15 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.lalongooo.permutassep.R;
 import com.permutassep.model.State;
 import com.permutassep.presentation.internal.di.components.ApplicationComponent;
@@ -20,11 +29,7 @@ import com.permutassep.presentation.utils.Utils;
 import com.permutassep.presentation.view.PostDetailsView;
 import com.permutassep.presentation.view.activity.BaseActivity;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -36,7 +41,8 @@ import butterknife.OnClick;
  * Created by lalongooo on 27/09/15.
  **/
 
-public class FragmentPostDetails extends BaseFragment implements PostDetailsView {
+public class FragmentPostDetails extends BaseFragment
+        implements PostDetailsView, OnMapReadyCallback {
 
     private static final String ARGUMENT_POST_ID = "ARGUMENT_POST_ID";
 
@@ -84,10 +90,13 @@ public class FragmentPostDetails extends BaseFragment implements PostDetailsView
     RelativeLayout rl_retry;
     @Bind(R.id.layoutPostDetails)
     LinearLayout layoutPostDetails;
+    @Bind(R.id.mapView)
+    MapView mapView;
 
     @Inject
     PostDetailsPresenter postDetailsPresenter;
     private int postId;
+    private PostModel postModel;
     private PostComponent postComponent;
 
     /**
@@ -117,6 +126,7 @@ public class FragmentPostDetails extends BaseFragment implements PostDetailsView
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View fragmentView = inflater.inflate(R.layout.ca_fragment_post_details, container, false);
         ButterKnife.bind(this, fragmentView);
+        mapView.onCreate(savedInstanceState);
 
         return fragmentView;
     }
@@ -131,12 +141,11 @@ public class FragmentPostDetails extends BaseFragment implements PostDetailsView
         this.postId = getArguments().getInt(ARGUMENT_POST_ID);
         this.postComponent = DaggerPostComponent.builder()
                 .applicationComponent(getComponent(ApplicationComponent.class))
-                .activityModule(((BaseActivity)getActivity()).getActivityModule())
+                .activityModule(((BaseActivity) getActivity()).getActivityModule())
                 .postModule(new PostModule(postId))
                 .build();
         this.postComponent.inject(this);
         this.postDetailsPresenter.setView(this);
-        this.postId = getArguments().getInt(ARGUMENT_POST_ID);
         this.postDetailsPresenter.initialize(this.postId);
     }
 
@@ -153,6 +162,10 @@ public class FragmentPostDetails extends BaseFragment implements PostDetailsView
     public void renderPost(PostModel post) {
         if (post != null) {
             HashMap<String, State> states = Utils.getStates(getActivity());
+
+            this.postModel = post;
+            this.mapView.getMapAsync(this);
+
             this.tvStateFromCode.setText(states.get((post.getStateFromCode())).getShortCode());
             this.tvStateToCode.setText(states.get((post.getStateToCode())).getShortCode());
             this.tvUserName.setText(post.getUser().getName());
@@ -221,11 +234,79 @@ public class FragmentPostDetails extends BaseFragment implements PostDetailsView
     public void onPause() {
         super.onPause();
         this.postDetailsPresenter.pause();
+        mapView.onPause();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         this.postDetailsPresenter.destroy();
+        mapView.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mapView.onLowMemory();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mapView.onSaveInstanceState(outState);
+    }
+
+    /**
+     * Methods from the implemented interface OnMapReadyCallback
+     */
+
+    @Override
+    public void onMapReady(GoogleMap map) {
+
+        LatLng origin = getLatLng(postModel.getLatFrom(), postModel.getLonFrom());
+        LatLng target = getLatLng(postModel.getLatTo(), postModel.getLonTo());
+
+        PolylineOptions rectOptions = new PolylineOptions().add(origin).add(target);
+        map.addPolyline(rectOptions);
+
+        map.addMarker(new MarkerOptions().position(origin).title(getString(R.string.search_fragment_origin_label)));
+        map.addMarker(new MarkerOptions().position(target).title(getString(R.string.search_fragment_target_label)));
+
+        map.getUiSettings().setZoomControlsEnabled(true);
+        map.getUiSettings().setAllGesturesEnabled(true);
+        map.getUiSettings().setZoomGesturesEnabled(true);
+
+
+        //Calculate the markers to get their position
+        LatLngBounds.Builder b = new LatLngBounds.Builder();
+        b.include(origin);
+        b.include(target);
+
+        LatLngBounds bounds = b.build();
+        //Change the padding as per needed
+
+        CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, mapView.getWidth(), mapView.getHeight(), 10);
+        map.animateCamera(cu);
+    }
+
+    private LatLng getLatLng(String lat, String lng) {
+        LatLng ll = null;
+
+        if (lat.length() == 6 && lng.length() == 7) {
+            double hoursLat = Double.valueOf(lat.substring(0, 2));
+            double minLat = Double.valueOf(lat.substring(2, 4));
+            double secLat = Double.valueOf(lat.substring(4, 6));
+
+            double hoursLng = Double.valueOf(lng.substring(0, 3));
+            double minLng = Double.valueOf(lng.substring(3, 5));
+            double secLng = Double.valueOf(lng.substring(5, 7));
+
+            double decimalLat = Math.signum(hoursLat) * (Math.abs(hoursLat) + (minLat / 60.0) + (secLat / 3600.0));
+            double decimalLng = Math.signum(hoursLng) * (Math.abs(hoursLng) + (minLng / 60.0) + (secLng / 3600.0));
+
+            ll = new LatLng(decimalLat, -decimalLng);
+        }
+
+        return ll;
     }
 }
