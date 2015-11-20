@@ -219,14 +219,12 @@ public class ActivityMain extends BaseActivity
                 actionBar.hide();
             }
         } else if (currentFragment instanceof FragmentPagedPostList) {
-            if (drawer != null) {
-                drawer.setSelection(DRAWER_IDENTIFIER_HOME, false);
-                setActionBarTitle(R.string.app_name);
-            }
-        }else if (currentFragment instanceof FragmentSearch) {
-            if (drawer != null) {
-                setActionBarTitle(R.string.app_main_toolbar_title_search);
-            }
+            drawer.setSelection(DRAWER_IDENTIFIER_HOME, false);
+            setActionBarTitle(R.string.app_name);
+        } else if (currentFragment instanceof FragmentSearch) {
+            setActionBarTitle(R.string.app_main_toolbar_title_search);
+        } else if (currentFragment instanceof FragmentMyPostList) {
+            setActionBarTitle(R.string.app_main_toolbar_title_my_posts);
         }
     }
 
