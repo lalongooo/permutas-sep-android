@@ -4,7 +4,6 @@ package com.permutassep.presentation.view.fragment;
  * By Jorge E. Hernandez (@lalongooo) 2015
  */
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -68,7 +68,7 @@ public class FragmentSignUp extends BaseFragment implements SignUpView {
     SignUpPresenter signUpPresenter;
 
     private LoginCompleteListener loginCompleteListener;
-    private ProgressDialog pDlg;
+    private MaterialDialog progressDialog;
     private AuthenticationComponent authenticationComponent;
     private CallbackManager callbackManager;
     private FacebookSignUpListener facebookSignUpListener;
@@ -208,9 +208,9 @@ public class FragmentSignUp extends BaseFragment implements SignUpView {
     @Override
     public void signedUpUser(UserModel userModel) {
         this.hideKeyboard();
-        loginCompleteListener.onLoginComplete(userModel);
+        this.loginCompleteListener.onLoginComplete(userModel);
         getActivity().getSupportFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-        this.navigationListener.onNextFragment(FragmentPostList.class);
+        this.navigationListener.onNextFragment(FragmentPagedPostList.class);
     }
 
     @Override
@@ -220,13 +220,18 @@ public class FragmentSignUp extends BaseFragment implements SignUpView {
 
     @Override
     public void showLoading() {
-        pDlg = ProgressDialog.show(getActivity(), getString(R.string.app_login_dlg_login_title), getString(R.string.app_login_dlg_login_logging_in), true);
+        progressDialog = new MaterialDialog.Builder(getActivity())
+                .title(R.string.wizard_post_dlg_title)
+                .content(R.string.wizard_post_dlg_text)
+                .progress(true, 0)
+                .progressIndeterminateStyle(false)
+                .show();
     }
 
     @Override
     public void hideLoading() {
-        if (pDlg != null)
-            pDlg.dismiss();
+        if (progressDialog != null)
+            progressDialog.dismiss();
     }
 
     @Override

@@ -8,6 +8,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.facebook.login.LoginManager;
 import com.lalongooo.permutassep.BuildConfig;
 import com.lalongooo.permutassep.R;
@@ -57,6 +59,7 @@ public class FragmentCompleteFbData extends BaseFragment implements SignUpView {
     @Inject
     SignUpPresenter signUpPresenter;
 
+    private MaterialDialog progressDialog;
     private LoginCompleteListener loginCompleteListener;
     private ProgressDialog pDlg;
     private AuthenticationComponent authenticationComponent;
@@ -160,7 +163,7 @@ public class FragmentCompleteFbData extends BaseFragment implements SignUpView {
     public void onPause() {
         super.onPause();
         LoginManager.getInstance().logOut();
-        Log.i("onPause","onPause");
+        Log.i("onPause", "onPause");
     }
 
     @Override
@@ -193,8 +196,9 @@ public class FragmentCompleteFbData extends BaseFragment implements SignUpView {
 
     @Override
     public void signedUpUser(UserModel userModel) {
-        loginCompleteListener.onLoginComplete(userModel);
-        this.navigationListener.onNextFragment(FragmentPostList.class);
+        this.loginCompleteListener.onLoginComplete(userModel);
+        getActivity().getSupportFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        this.navigationListener.onNextFragment(FragmentPagedPostList.class);
     }
 
     @Override
@@ -204,12 +208,20 @@ public class FragmentCompleteFbData extends BaseFragment implements SignUpView {
 
     @Override
     public void showLoading() {
+        progressDialog = new MaterialDialog.Builder(getActivity())
+                .title(R.string.wizard_post_dlg_title)
+                .content(R.string.wizard_post_dlg_text)
+                .progress(true, 0)
+                .progressIndeterminateStyle(false)
+                .show();
 
     }
 
     @Override
     public void hideLoading() {
-
+        if (progressDialog != null) {
+            progressDialog.dismiss();
+        }
     }
 
     @Override
