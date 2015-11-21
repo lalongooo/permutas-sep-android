@@ -1,10 +1,8 @@
 package com.permutassep.presentation.view.fragment;
 
 import android.content.Intent;
-import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -306,10 +304,13 @@ public class FragmentPostDetails extends BaseFragment
         b.include(target);
 
         LatLngBounds bounds = b.build();
-        //Change the padding as per needed
 
-        CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, mapView.getWidth(), mapView.getHeight(), 100);
-        map.animateCamera(cu);
+        try {
+            CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, mapView.getWidth(), mapView.getHeight(), 100);
+            map.animateCamera(cu);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private LatLng getLatLng(String lat, String lng) {
