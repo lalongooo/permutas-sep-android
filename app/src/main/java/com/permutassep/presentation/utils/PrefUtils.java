@@ -6,7 +6,6 @@ package com.permutassep.presentation.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 
 import com.google.gson.Gson;
 import com.permutassep.config.Config;
@@ -73,11 +72,7 @@ public class PrefUtils {
     public static UserModel getUser(Context context) {
         SharedPreferences preferences = context.getSharedPreferences(Config.APP_PREFERENCES_NAME, Context.MODE_PRIVATE);
         String gson = preferences.getString(PREF_USER_KEY, null);
-        if (gson == null) {
-            return null;
-        } else {
-            return new Gson().fromJson(gson, UserModel.class);
-        }
+        return new Gson().fromJson(gson, UserModel.class);
     }
 
     public static void putUser(Context context, UserModel userModel) {

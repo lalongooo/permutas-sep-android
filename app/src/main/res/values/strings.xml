@@ -123,6 +123,7 @@
     <string name="app_post_detail_teaching_career">Carrera magisterial</string>
     <string name="app_post_detail_no_teaching_career">Sin carrega magisterial</string>
     <string name="app_post_detail_mail_intent_subject">Permutas SEP</string>
+    <string name="app_post_detail_mail_intent_content">Hola %1$s, puedo ver que eres usuario de la aplicación Permutas SEP.\n\nMe interesa ponerme en contacto contigo para hablar de la posibilidad de permutar nuestros centros de trabajo.\n\nEstos son mis datos de contacto:\nTeléfono:\n%2$s\nEmail:\n%3$s\n\nAtentamente %4$s.</string>
     <string name="app_post_detail_mail_intent_chooser_title">Enviar email</string>
     <string name="tos_dialog_text">Al seleccionar \"Aceptar\" usted acepta los Términos y condiciones del uso de esta aplicación.</string>
     <string name="tos_dialog_cancel">Cancelar</string>

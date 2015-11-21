@@ -30,7 +30,9 @@ import com.permutassep.presentation.internal.di.components.DaggerPostComponent;
 import com.permutassep.presentation.internal.di.components.PostComponent;
 import com.permutassep.presentation.internal.di.modules.PostModule;
 import com.permutassep.presentation.model.PostModel;
+import com.permutassep.presentation.model.UserModel;
 import com.permutassep.presentation.presenter.PostDetailsPresenter;
+import com.permutassep.presentation.utils.PrefUtils;
 import com.permutassep.presentation.utils.Utils;
 import com.permutassep.presentation.view.PostDetailsView;
 import com.permutassep.presentation.view.activity.BaseActivity;
@@ -178,9 +180,12 @@ public class FragmentPostDetails extends BaseFragment
     void onButtonEmailClick() {
 
 
+        UserModel user = PrefUtils.getUser(getActivity());
+        String emailContent = String.format(getString(R.string.app_post_detail_mail_intent_content), postModel.getUser().getName(), user.getPhone(), user.getEmail(), user.getName());
+
         Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(MAILTO_SCHEMA, postModel.getUser().getEmail(), null));
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_post_detail_mail_intent_subject));
-        emailIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.app_post_detail_mail_intent_subject));
+        emailIntent.putExtra(Intent.EXTRA_TEXT, emailContent);
         startActivity(Intent.createChooser(emailIntent, getString(R.string.app_post_detail_mail_intent_chooser_title)));
     }
 
