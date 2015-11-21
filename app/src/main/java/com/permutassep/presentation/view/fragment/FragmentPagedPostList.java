@@ -69,9 +69,7 @@ public class FragmentPagedPostList extends BaseFragment implements PagedPostsLis
     private PostsAdapter.OnItemClickListener onItemClickListener = new PostsAdapter.OnItemClickListener() {
         @Override
         public void onPostItemClicked(PostModel postModel) {
-            if (FragmentPagedPostList.this.postListPresenter != null && postModel != null) {
-                FragmentPagedPostList.this.postListPresenter.onPostClicked(postModel);
-            }
+            postListPresenter.onPostClicked(postModel);
         }
     };
 
@@ -197,9 +195,7 @@ public class FragmentPagedPostList extends BaseFragment implements PagedPostsLis
 
     @Override
     public void viewPostDetail(PostModel postModel) {
-        if (this.postListListener != null) {
-            this.postListListener.onPostClicked(postModel);
-        }
+        this.postListListener.onPostClicked(postModel);
     }
 
     @Override
