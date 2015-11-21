@@ -1,6 +1,10 @@
 package com.permutassep.presentation.view.fragment;
 
+import android.content.Intent;
+import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +49,7 @@ public class FragmentPostDetails extends BaseFragment
         implements PostDetailsView, OnMapReadyCallback {
 
     private static final String ARGUMENT_POST_ID = "ARGUMENT_POST_ID";
+    private static final String MAILTO_SCHEMA = "mailto";
 
     /**
      * UI elements
@@ -152,6 +157,23 @@ public class FragmentPostDetails extends BaseFragment
     @OnClick(R.id.bt_retry)
     void onButtonRetryClick() {
         this.postDetailsPresenter.initialize(this.postId);
+    }
+
+    @OnClick(R.id.btnCall)
+    void onButtonCallClick() {
+        Intent callIntent = new Intent(Intent.ACTION_CALL);
+        callIntent.setData(Uri.parse("tel:".concat(postModel.getUser().getPhone())));
+        startActivity(callIntent);
+    }
+
+    @OnClick(R.id.btnEmail)
+    void onButtonEmailClick() {
+
+
+        Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(MAILTO_SCHEMA, postModel.getUser().getEmail(), null));
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_post_detail_mail_intent_subject));
+        emailIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.app_post_detail_mail_intent_subject));
+        startActivity(Intent.createChooser(emailIntent, getString(R.string.app_post_detail_mail_intent_chooser_title)));
     }
 
     /**
