@@ -13,7 +13,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -42,7 +41,6 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * By Jorge E. Hernandez (@lalongooo) 2015
@@ -56,10 +54,7 @@ public class FragmentSearchResults extends BaseFragment implements SearchPostsRe
 
     @Bind(R.id.rv_users)
     RecyclerView rv_posts;
-    @Bind(R.id.rl_progress)
-    RelativeLayout rl_progress;
-    @Bind(R.id.rl_retry)
-    RelativeLayout rl_retry;
+    private MaterialDialog progressDialog;
 
     private HashMap<String, String> searchParams;
     private PostComponent postComponent;
@@ -176,11 +171,6 @@ public class FragmentSearchResults extends BaseFragment implements SearchPostsRe
         return this.getActivity().getApplicationContext();
     }
 
-    @OnClick(R.id.bt_retry)
-    void onButtonRetryClick() {
-        FragmentSearchResults.this.loadUserList();
-    }
-
     /**
      * Methods from the implemented interface PostsListView
      */
@@ -216,24 +206,39 @@ public class FragmentSearchResults extends BaseFragment implements SearchPostsRe
 
     @Override
     public void showLoading() {
-        this.rl_progress.setVisibility(View.VISIBLE);
-        this.getActivity().setProgressBarIndeterminateVisibility(true);
+
+        progressDialog = new MaterialDialog.Builder(getActivity())
+                .title(R.string.please_wait)
+                .content(R.string.app_post_list_loading_dlg_msg)
+                .progress(true, 0)
+                .progressIndeterminateStyle(false)
+                .show();
     }
 
     @Override
     public void hideLoading() {
-        this.rl_progress.setVisibility(View.GONE);
-        this.getActivity().setProgressBarIndeterminateVisibility(false);
+        if (progressDialog != null)
+            progressDialog.dismiss();
     }
 
     @Override
     public void showRetry() {
-        this.rl_retry.setVisibility(View.VISIBLE);
+        new MaterialDialog.Builder(getActivity())
+                .cancelable(false)
+                .title(R.string.ups)
+                .content(R.string.app_post_list_retry_dlg_message)
+                .positiveText(R.string.retry)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog materialDialog, @NonNull DialogAction dialogAction) {
+                        loadUserList();
+                    }
+                })
+                .show();
     }
-
     @Override
     public void hideRetry() {
-        this.rl_retry.setVisibility(View.GONE);
+        
     }
 
     @Override
