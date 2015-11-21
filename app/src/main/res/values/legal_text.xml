@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="tos_eula_legal_text">Permutas SEP fué desarrollado como un proyecto de aprendizaje por
-    los autores de la misma y con la intención de resolver una problemática existente. Al seleccionar la
-    opción ACEPTAR indicas que te sujetas a las siguientes condiciones de uso: Contenido aceptable.
-    Cualquier contenido (fotos, texto, imágenes, etc.) es generado por los usuarios de la aplicación y
-    no representan los intereses de los autores de la aplicación, mismo que no deberá ser en ningún
-    momento ofensivo, discriminatorio, pornográfico, difamatorio e ilegal. Así mismo, los usuarios se
-    obligan a usar de manera responsable el contenido compartido en la aplicación.Derechos de autor y
-    marcas registradas. Permutas SEP fué desarrollado con ayuda de software de código abierto. Por
-    favor, encuentre esta información en la sección ACERCA DE.</string>
+    <string name="tos_eula_legal_text">Permutas SEP es un proyecto desarrollado con el único objetivo
+        de solventar una necesidad existente y demandada por los profesores. Al seleccionar la
+        opción ACEPTAR indicas que te sujetas a las siguientes condiciones de uso: Contenido aceptable:
+        Cualquier contenido (fotos, texto, imágenes, etc.) es generado por los usuarios de la aplicación y
+        no representan los intereses de los autores de la aplicación, mismo que no deberá ser en ningún
+        momento ofensivo, discriminatorio, pornográfico, difamatorio e ilegal. Así mismo, los usuarios se
+        obligan a usar de manera responsable el contenido compartido en la aplicación. Derechos de autor y
+        marcas registradas. Permutas SEP fué desarrollado con ayuda de software de código abierto, en la sección
+        ACERCA DE puedes encontrar información mas detallada. Usamos también software propietario de Google,
+        cuyo uso está regido por los términos que puede encontrar en esta dirección. https://developers.google.com/maps/terms
+    </string>
 </resources>

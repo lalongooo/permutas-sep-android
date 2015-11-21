@@ -52,7 +52,8 @@
                             android:text="@string/tos_welcome_to_ps_app"
                             android:textColor="@color/colorPrimary"
                             android:textSize="@dimen/text_size_xlarge"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            android:layout_gravity="center"/>
 
                         <TextView
                             android:layout_width="match_parent"
@@ -61,7 +62,8 @@
                             android:autoLink="web"
                             android:text="@string/tos_welcome_text"
                             android:textColor="@color/body_text_2"
-                            android:textSize="@dimen/text_size_medium" />
+                            android:textSize="@dimen/text_size_medium"
+                            />
 
                         <TextView
                             android:layout_width="match_parent"
