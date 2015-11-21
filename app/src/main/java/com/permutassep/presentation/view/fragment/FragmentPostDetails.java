@@ -36,6 +36,7 @@ import com.permutassep.presentation.utils.PrefUtils;
 import com.permutassep.presentation.utils.Utils;
 import com.permutassep.presentation.view.PostDetailsView;
 import com.permutassep.presentation.view.activity.BaseActivity;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 
@@ -101,6 +102,8 @@ public class FragmentPostDetails extends BaseFragment
     LinearLayout layoutPostDetails;
     @Bind(R.id.mapView)
     MapView mapView;
+    @Bind(R.id.imageView)
+    ImageView imageView;
     @Bind(R.id.ivArrow)
     ImageView ivArrow;
 
@@ -218,6 +221,14 @@ public class FragmentPostDetails extends BaseFragment
             this.tvPositionType.setText(post.getPositionType());
             this.tvPostDate.setText(Utils.formatDate(post.getPostDate()));
             this.layoutPostDetails.setVisibility(View.VISIBLE);
+            Picasso.with(getActivity())
+                    .load(post.getUser().getProfilePictureUrl())
+                    .placeholder(R.drawable.default_profile_picture)
+                    .error(R.drawable.default_profile_picture)
+                    .resizeDimen(R.dimen.list_detail_image_size, R.dimen.list_detail_image_size)
+                    .centerInside()
+                    .tag(getActivity())
+                    .into(this.imageView);
 
             if (post.isTeachingCareer()) {
                 tvIsTeachingCareer.setText(getString(R.string.app_post_detail_teaching_career));
