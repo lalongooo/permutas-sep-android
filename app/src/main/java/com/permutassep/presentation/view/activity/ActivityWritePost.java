@@ -25,7 +25,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.Gson;
 import com.lalongooo.permutassep.R;
 import com.permutassep.model.City;
-import com.permutassep.model.PermutaSepWizardModel;
+import com.permutassep.presentation.view.wizard.model.PermutaSepWizardModel;
 import com.permutassep.model.State;
 import com.permutassep.model.Town;
 import com.permutassep.presentation.internal.di.HasComponent;
@@ -305,12 +305,10 @@ public class ActivityWritePost extends BaseActivity implements
         if (post == null) {
 
             post = new PostModel();
+            post.setUser(PrefUtils.getUser(ActivityWritePost.this));
 
             for (Page p : mWizardModel.getCurrentPageSequence()) {
                 switch (p.getKey()) {
-                    case PermutaSepWizardModel.CONTACT_INFO_KEY:
-                        post.setUser(PrefUtils.getUser(ActivityWritePost.this));
-                        break;
                     case PermutaSepWizardModel.CITY_FROM_KEY:
                         State sf = p.getData().getParcelable(ProfessorCityFromPage.STATE_DATA_KEY);
                         City cf = p.getData().getParcelable(ProfessorCityFromPage.MUNICIPALITY_DATA_KEY);

@@ -1,14 +1,6 @@
-package com.permutassep.model;
+package com.permutassep.presentation.view.wizard.model;
 
 import android.content.Context;
-
-import com.permutassep.presentation.view.wizard.model.AbstractWizardModel;
-import com.permutassep.presentation.view.wizard.model.PageList;
-import com.permutassep.presentation.view.wizard.model.PostTextPage;
-import com.permutassep.presentation.view.wizard.model.ProfessorCityFromPage;
-import com.permutassep.presentation.view.wizard.model.ProfessorCityToPage;
-import com.permutassep.presentation.view.wizard.model.ProfessorContactInfoPage;
-import com.permutassep.presentation.view.wizard.model.SingleFixedChoicePage;
 
 public class PermutaSepWizardModel extends AbstractWizardModel {
 
@@ -28,7 +20,7 @@ public class PermutaSepWizardModel extends AbstractWizardModel {
 	@Override
 	protected PageList onNewRootPageList() {
 		return new PageList(
-                new ProfessorContactInfoPage(this, "Tu información").setRequired(true).setKey(CONTACT_INFO_KEY),
+//                new ProfessorContactInfoPage(this, "Tu información").setRequired(true).setKey(CONTACT_INFO_KEY),
                 new ProfessorCityFromPage(this, "Tu ciudad de origen").setRequired(true).setKey(CITY_FROM_KEY),
                 new ProfessorCityToPage(this, "Tu lugar deseado").setRequired(true).setKey(CITY_TO_KEY),
                 new SingleFixedChoicePage(this, "Nivel académico").setChoices("Educación Especial", "Pre-escolar", "Primaria", "Secundaria", "Tele-secundaria", "Medio superior","Administrativo", "Intendencia").setRequired(true).setKey(ACADEMIC_LEVEL_KEY),

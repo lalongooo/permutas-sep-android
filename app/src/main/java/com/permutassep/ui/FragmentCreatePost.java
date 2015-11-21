@@ -47,7 +47,7 @@ import com.permutassep.BaseFragment;
 import com.permutassep.adapter.PostTypeAdapter;
 import com.permutassep.config.Config;
 import com.permutassep.model.City;
-import com.permutassep.model.PermutaSepWizardModel;
+import com.permutassep.presentation.view.wizard.model.PermutaSepWizardModel;
 import com.permutassep.model.Post;
 import com.permutassep.model.State;
 import com.permutassep.model.Town;
