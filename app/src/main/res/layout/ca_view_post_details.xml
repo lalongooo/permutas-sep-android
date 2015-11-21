@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
     android:id="@+id/layoutPostDetails"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:visibility="gone"
-    android:orientation="vertical">
+    android:padding="5dp">
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="#e5e5e5">
+        android:layout_weight="1">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -27,7 +28,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
-                    android:src="@drawable/default_profile_picture" />
+                    android:src="@drawable/default_profile_picture"/>
 
                 <TextView
                     android:id="@+id/tvUserName"
@@ -41,7 +42,7 @@
                     android:text="Jorge E. Hernández"
                     android:textColor="@color/primary"
                     android:textSize="15sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/tvPostUserEmail"
@@ -52,7 +53,7 @@
                     android:layout_below="@+id/tvUserName"
                     android:text="hdez.jeduardo@gmail.com"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"/>
 
                 <TextView
                     android:id="@+id/tvPostUserPhone"
@@ -64,7 +65,7 @@
                     android:text="8116916048"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@color/primary"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"/>
 
                 <TextView
                     android:id="@+id/tvPostText"
@@ -76,7 +77,7 @@
                     android:layout_marginTop="10dp"
                     android:text="Este es un texto largo de ejemplo, para ver la ubicacion del elemento en cada elemento de la lista de publicaciones"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"/>
 
                 <TextView
                     android:id="@+id/tvAcademicLevel"
@@ -89,7 +90,7 @@
                     android:text="Secundaria "
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/primary"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/tvWorkdayType"
@@ -101,7 +102,7 @@
                     android:text="Jornada Regular"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/primary"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/tvPositionType"
@@ -114,7 +115,7 @@
                     android:text="Plaza Federal"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/primary"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/tvIsTeachingCareer"
@@ -126,7 +127,7 @@
                     android:text="Sin carrera mgisterial"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/primary"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"/>
 
 
                 <RelativeLayout
@@ -148,7 +149,7 @@
                         android:layout_marginLeft="20dp"
                         android:text="NLE"
                         android:textColor="@color/primary"
-                        android:textSize="50sp" />
+                        android:textSize="50sp"/>
 
                     <TextView
                         android:id="@+id/tvStateToCode"
@@ -160,14 +161,14 @@
                         android:layout_marginRight="20dp"
                         android:text="HGO"
                         android:textColor="@color/primary"
-                        android:textSize="50sp" />
+                        android:textSize="50sp"/>
 
                     <ImageView
                         android:id="@+id/ivArrow"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true" />
+                        android:layout_centerVertical="true"/>
 
                 </RelativeLayout>
 
@@ -194,7 +195,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="left"
                             android:text="San Luis Potosí"
-                            android:textAppearance="?android:attr/textAppearanceSmall" />
+                            android:textAppearance="?android:attr/textAppearanceSmall"/>
 
                         <TextView
                             android:id="@+id/tvCityFrom"
@@ -203,7 +204,7 @@
                             android:layout_alignBaseline="@+id/tvCityFromLabel"
                             android:layout_toRightOf="@+id/tvCityFromLabel"
                             android:text="Rio Verde"
-                            android:textAppearance="?android:attr/textAppearanceSmall" />
+                            android:textAppearance="?android:attr/textAppearanceSmall"/>
 
                         <TextView
                             android:id="@+id/tvTownFrom"
@@ -212,7 +213,7 @@
                             android:layout_alignBaseline="@+id/tvTownFromLabel"
                             android:layout_toRightOf="@+id/tvTownFromLabel"
                             android:text="Rio Verde"
-                            android:textAppearance="?android:attr/textAppearanceSmall" />
+                            android:textAppearance="?android:attr/textAppearanceSmall"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -228,7 +229,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="right"
                             android:text="Nuevo León"
-                            android:textAppearance="?android:attr/textAppearanceSmall" />
+                            android:textAppearance="?android:attr/textAppearanceSmall"/>
 
                         <TextView
                             android:id="@+id/tvCityTo"
@@ -236,7 +237,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="right"
                             android:text="Monterrey"
-                            android:textAppearance="?android:attr/textAppearanceSmall" />
+                            android:textAppearance="?android:attr/textAppearanceSmall"/>
 
                         <TextView
                             android:id="@+id/tvTownTo"
@@ -244,7 +245,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="right"
                             android:text="Monterrey"
-                            android:textAppearance="?android:attr/textAppearanceSmall" />
+                            android:textAppearance="?android:attr/textAppearanceSmall"/>
                     </LinearLayout>
                 </LinearLayout>
 
@@ -257,7 +258,7 @@
                     android:layout_below="@+id/tvPositionType"
                     android:layout_marginTop="10dp"
                     android:text="Hace 6 horas"
-                    android:textSize="10sp" />
+                    android:textSize="10sp"/>
 
                 <com.google.android.gms.maps.MapView
                     android:id="@+id/mapView"
@@ -267,7 +268,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_below="@+id/tvPostDate"
                     android:layout_marginBottom="10dp"
-                    android:layout_marginTop="10dp" />
+                    android:layout_marginTop="10dp"/>
 
             </RelativeLayout>
 
@@ -291,7 +292,7 @@
             android:background="@drawable/finish_background"
             android:text="@string/app_post_detail_call"
             android:textColor="@android:color/white"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
 
         <Button
             android:id="@+id/btnEmail"
@@ -302,7 +303,7 @@
             android:background="@drawable/finish_background"
             android:text="@string/app_post_detail_email"
             android:textColor="@android:color/white"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
 
     </LinearLayout>
 

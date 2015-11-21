@@ -3,9 +3,11 @@ package com.permutassep.presentation.view.fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -20,6 +22,8 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.lalongooo.permutassep.R;
+import com.mikepenz.fontawesome_typeface_library.FontAwesome;
+import com.mikepenz.iconics.IconicsDrawable;
 import com.permutassep.model.State;
 import com.permutassep.presentation.internal.di.components.ApplicationComponent;
 import com.permutassep.presentation.internal.di.components.DaggerPostComponent;
@@ -95,6 +99,8 @@ public class FragmentPostDetails extends BaseFragment
     LinearLayout layoutPostDetails;
     @Bind(R.id.mapView)
     MapView mapView;
+    @Bind(R.id.ivArrow)
+    ImageView ivArrow;
 
     @Inject
     PostDetailsPresenter postDetailsPresenter;
@@ -130,6 +136,10 @@ public class FragmentPostDetails extends BaseFragment
         View fragmentView = inflater.inflate(R.layout.ca_fragment_post_details, container, false);
         ButterKnife.bind(this, fragmentView);
         mapView.onCreate(savedInstanceState);
+        ivArrow.setImageDrawable(
+                new IconicsDrawable(getActivity(), FontAwesome.Icon.faw_angle_right)
+                        .color(ContextCompat.getColor(getActivity(), R.color.colorPrimary))
+                        .sizeDp(30));
 
         return fragmentView;
     }
