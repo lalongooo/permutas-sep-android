@@ -30,7 +30,7 @@
     <string name="wizard_post_dlg_text">Estamos publicando tu permuta</string>
     <string name="ups">Ups...</string>
     <string name="wizard_post_retry_dlg_message">Tuvimos un problema al intentar publicar. ¿Quieres volver a intentarlo?</string>
-    <string name="wizard_post_retry_dlg_positive_text">Reintentar</string>
+    <string name="retry">Reintentar</string>
     <string name="wizard_post_retry_dlg_success_post_title">Felicidades!</string>
     <string name="wizard_post_retry_dlg_success_post_message">Acabas de publicar tu cambio de adscripción deseado. Te deseamos mucha suerte para que lo consigas.</string>
     <string name="app_overview_1st_item_text">Queremos que la información esté al alcance de todos</string>
@@ -118,6 +118,8 @@
     <string name="app_nav_drawer_1">Inicio</string>
     <string name="app_nav_drawer_2">Mis publicaciones</string>
     <string name="app_nav_drawer_3">Editar Perfil</string>
+    <string name="app_post_list_loading_dlg_msg">Cargando publicaciones&#8230;</string>
+    <string name="app_post_list_retry_dlg_message">Hubo un problema al cargar las publicaciones. Revisa tu conexión a Internet.</string>
     <string name="app_post_detail_call">Llamar</string>
     <string name="app_post_detail_email">Email</string>
     <string name="app_post_detail_teaching_career">Carrera magisterial</string>
@@ -170,7 +172,6 @@
     <string name="time_ago_year">Hace 1 año</string>
     <string name="time_ago_years">%d años</string>
     <string name="exception_message_generic">There was an application error</string>
-    <string name="btn_text_retry">Retry</string>
 
     <!--GA Events Categories-->
     <string name="ga_event_category_ux">UX</string>

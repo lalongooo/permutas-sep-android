@@ -11,6 +11,6 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_gravity="center"
-        android:text="@string/btn_text_retry" />
+        android:text="@string/retry" />
 
 </RelativeLayout>

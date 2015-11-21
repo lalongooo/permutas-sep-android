@@ -412,7 +412,7 @@ public class ActivityWritePost extends BaseActivity implements
         new MaterialDialog.Builder(this)
                 .title(R.string.ups)
                 .content(R.string.wizard_post_retry_dlg_message)
-                .positiveText(R.string.wizard_post_retry_dlg_positive_text)
+                .positiveText(R.string.retry)
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog materialDialog, @NonNull DialogAction dialogAction) {

@@ -3,6 +3,7 @@ package com.permutassep.presentation.view.fragment;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,8 +14,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.lalongooo.permutassep.R;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
@@ -39,7 +41,6 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * By Jorge E. Hernandez (@lalongooo) 2015
@@ -53,10 +54,7 @@ public class FragmentPagedPostList extends BaseFragment implements PagedPostsLis
 
     @Bind(R.id.rv_users)
     RecyclerView rv_posts;
-    @Bind(R.id.rl_progress)
-    RelativeLayout rl_progress;
-    @Bind(R.id.rl_retry)
-    RelativeLayout rl_retry;
+    private MaterialDialog progressDialog;
 
     private PostComponent postComponent;
     private FirstLaunchCompleteListener firstLaunchCompleteListener;
@@ -175,11 +173,6 @@ public class FragmentPagedPostList extends BaseFragment implements PagedPostsLis
         return this.getActivity().getApplicationContext();
     }
 
-    @OnClick(R.id.bt_retry)
-         void onButtonRetryClick() {
-        FragmentPagedPostList.this.loadUserList();
-    }
-
     /**
      * Methods from the implemented interface PostsListView
      */
@@ -200,24 +193,40 @@ public class FragmentPagedPostList extends BaseFragment implements PagedPostsLis
 
     @Override
     public void showLoading() {
-        this.rl_progress.setVisibility(View.VISIBLE);
-        this.getActivity().setProgressBarIndeterminateVisibility(true);
+
+        progressDialog = new MaterialDialog.Builder(getActivity())
+                .title(R.string.please_wait)
+                .content(R.string.app_post_list_loading_dlg_msg)
+                .progress(true, 0)
+                .progressIndeterminateStyle(false)
+                .show();
     }
 
     @Override
     public void hideLoading() {
-        this.rl_progress.setVisibility(View.GONE);
-        this.getActivity().setProgressBarIndeterminateVisibility(false);
+        if (progressDialog != null)
+            progressDialog.dismiss();
     }
 
     @Override
     public void showRetry() {
-        this.rl_retry.setVisibility(View.VISIBLE);
+        new MaterialDialog.Builder(getActivity())
+                .cancelable(false)
+                .title(R.string.ups)
+                .content(R.string.app_post_list_retry_dlg_message)
+                .positiveText(R.string.retry)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog materialDialog, @NonNull DialogAction dialogAction) {
+                        loadUserList();
+                    }
+                })
+                .show();
     }
 
     @Override
     public void hideRetry() {
-        this.rl_retry.setVisibility(View.GONE);
+
     }
 
     @Override
@@ -234,7 +243,7 @@ public class FragmentPagedPostList extends BaseFragment implements PagedPostsLis
     public void onResume() {
         super.onResume();
         this.postListPresenter.resume();
-        if(PrefUtils.shouldReloadNewsFeed(getActivity())){
+        if (PrefUtils.shouldReloadNewsFeed(getActivity())) {
             PrefUtils.markNewsFeedToReload(getActivity(), false);
             this.postsAdapter.clearPosts();
             this.postsAdapter.notifyDataSetChanged();
