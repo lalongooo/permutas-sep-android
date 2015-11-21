@@ -149,14 +149,13 @@ public class Navigator {
      * @param activity An activity needed to open the destination fragment.
      */
     public void navigateToPostDetails(BaseActivity activity, int postId) {
-        if (activity != null) {
-            FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.hide(activity.getSupportFragmentManager().findFragmentById(R.id.fragmentContainer));
-            fragmentTransaction.add(R.id.fragmentContainer, FragmentPostDetails.newInstance(postId));
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-            fragmentTransaction.commit();
-        }
+        activity.getSupportFragmentManager()
+                .beginTransaction()
+                .hide(activity.getSupportFragmentManager().findFragmentById(R.id.fragmentContainer))
+                .add(R.id.fragmentContainer, FragmentPostDetails.newInstance(postId))
+                .addToBackStack(null)
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .commitAllowingStateLoss();
     }
 
     /**
