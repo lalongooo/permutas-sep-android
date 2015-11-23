@@ -356,7 +356,7 @@ public class FragmentSearch extends BaseFragment {
                     hideDialog();
                     if (response.getReason().equals("OK")) {
                         if (posts.isEmpty()) {
-                            Utils.showSimpleDialog(R.string.search_fragment_search_no_restlts, R.string.accept, getActivity(), new DialogInterface.OnClickListener() {
+                            Utils.showSimpleDialog(R.string.search_fragment_search_no_results, R.string.accept, getActivity(), new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                 }

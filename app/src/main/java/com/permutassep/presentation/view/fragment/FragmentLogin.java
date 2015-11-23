@@ -5,7 +5,6 @@ package com.permutassep.presentation.view.fragment;
  */
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,11 +13,14 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -63,12 +65,14 @@ public class FragmentLogin extends BaseFragment implements LoginView {
     EditText etPassword;
     @Bind(R.id.btnFbLogin)
     LoginButton loginButton;
+    @Bind(R.id.tvForgotPassword)
+    TextView tvForgotPassword;
 
     @Inject
     LoginPresenter loginPresenter;
 
     private LoginCompleteListener loginCompleteListener;
-    private ProgressDialog pDlg;
+    private MaterialDialog progressDialog;
     private AuthenticationComponent authenticationComponent;
     private CallbackManager callbackManager;
 
@@ -115,7 +119,7 @@ public class FragmentLogin extends BaseFragment implements LoginView {
                         loginResult.getAccessToken(),
                         new GraphRequest.GraphJSONObjectCallback() {
                             @Override
-                            public void onCompleted(JSONObject object, GraphResponse response) {
+                            public void onCompleted(JSONObject jsonObject, GraphResponse response) {
                                 hideLoading();
                                 String email = null;
 
@@ -125,7 +129,7 @@ public class FragmentLogin extends BaseFragment implements LoginView {
                                      * If an error occurs while retrieving the users email,
                                      * then we'll show a dialog for the user to capture it.
                                      */
-                                    email = object.getString("email");
+                                    email = jsonObject.getString("email");
 
                                 } catch (JSONException e) {
                                     /**
@@ -224,6 +228,22 @@ public class FragmentLogin extends BaseFragment implements LoginView {
         }
     }
 
+    @OnClick(R.id.tvForgotPassword)
+    void onForgotPasswordClick() {
+        new MaterialDialog.Builder(getActivity())
+                .title(R.string.password_reset_dlg_title)
+                .content(R.string.password_reset_dlg_msg)
+                .inputRangeRes(6, 200, R.color.md_red_100)
+                .inputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS)
+                .input(R.string.password_reset_dlg_input_hint, 0, false, new MaterialDialog.InputCallback() {
+                    @Override
+                    public void onInput(MaterialDialog dialog, CharSequence input) {
+                        initializeInjector(input.toString(), BuildConfig.com_permutassep_fb_login_dummy_password);
+                        loginPresenter.validateEmail();
+                    }
+                }).show();
+    }
+
     private void initializeInjector(String user, String password) {
         this.authenticationComponent = DaggerAuthenticationComponent.builder()
                 .applicationComponent(getComponent(ApplicationComponent.class))
@@ -248,13 +268,42 @@ public class FragmentLogin extends BaseFragment implements LoginView {
 
     @Override
     public void showLoading() {
-        pDlg = ProgressDialog.show(getActivity(), getString(R.string.app_login_dlg_login_title), getString(R.string.app_login_dlg_login_logging_in), true);
+        progressDialog = new MaterialDialog.Builder(getActivity())
+                .title(R.string.app_login_dlg_login_title)
+                .content(R.string.app_login_dlg_login_logging_in)
+                .progress(true, 0)
+                .progressIndeterminateStyle(false)
+                .show();
+    }
+
+    @Override
+    public void notRegisteredUser() {
+        new MaterialDialog.Builder(getActivity())
+                .title(R.string.password_reset_dlg_title)
+                .content(R.string.new_password_capture_email_wrong)
+                .positiveText(R.string.accept)
+                .show();
+    }
+
+    @Override
+    public void showLoadingValidateUser() {
+        progressDialog = new MaterialDialog.Builder(getActivity())
+                .title(R.string.please_wait)
+                .content(R.string.new_password_capture_email_loading)
+                .progress(true, 0)
+                .progressIndeterminateStyle(false)
+                .show();
+    }
+
+    @Override
+    public void performPasswordReset() {
+
     }
 
     @Override
     public void hideLoading() {
-        if (pDlg != null)
-            pDlg.dismiss();
+        if (progressDialog != null)
+            progressDialog.dismiss();
     }
 
     @Override

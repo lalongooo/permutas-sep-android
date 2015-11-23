@@ -50,7 +50,7 @@ public class ActivityNewPasswordCaptureEmail extends BaseActivity {
 
                 case MALFORMED_URL:
                     tvLabel.setTextColor(getResources().getColor(R.color.error_message));
-                    tvLabel.setText(R.string.new_password_capure_outdated_url);
+                    tvLabel.setText(R.string.new_password_capture_outdated_url);
                     break;
             }
 
@@ -76,13 +76,13 @@ public class ActivityNewPasswordCaptureEmail extends BaseActivity {
             public void onClick(View v) {
                 if (f.isValid()) {
 
-                    showDialog(getString(R.string.please_wait), getString(R.string.new_password_capure_email_loading));
+                    showDialog(getString(R.string.please_wait), getString(R.string.new_password_capture_email_loading));
                     new PermutasSEPRestClient().get().login(new AuthModel(etEmail.getText().toString(), BuildConfig.com_permutassep_fb_login_dummy_password), new Callback<User>() {
                         @Override
                         public void success(User user, retrofit.client.Response response) {
                             hideDialog();
                             tvLabel.setTextColor(getResources().getColor(R.color.error_message));
-                            tvLabel.setText(R.string.new_password_capure_email_wrong);
+                            tvLabel.setText(R.string.new_password_capture_email_wrong);
                         }
 
                         @Override
@@ -98,7 +98,7 @@ public class ActivityNewPasswordCaptureEmail extends BaseActivity {
                                 @Override
                                 public void failure(RetrofitError error) {
                                     tvLabel.setTextColor(getResources().getColor(R.color.error_message));
-                                    tvLabel.setText(R.string.new_password_capure_email_wrong);
+                                    tvLabel.setText(R.string.new_password_capture_email_wrong);
                                     hideDialog();
                                 }
                             });

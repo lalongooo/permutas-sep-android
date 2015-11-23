@@ -40,17 +40,8 @@
             android:text="@string/app_login_btn_login"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@android:color/white"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tvForgotPassword"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_margin="10dp"
-            android:text="@string/new_password_forgot_password_message"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-
+            android:textStyle="bold"
+            android:layout_marginBottom="30dp"/>
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
@@ -96,6 +87,17 @@
             android:paddingRight="20dp"
             android:paddingTop="10dp"
             fb:com_facebook_login_text="@string/app_login_btn_login_with_fb" />
+
+        <TextView
+            android:id="@+id/tvForgotPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="20dp"
+            android:textSize="20sp"
+            android:text="@string/new_password_forgot_password_message"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            />
 
     </LinearLayout>
 </RelativeLayout>

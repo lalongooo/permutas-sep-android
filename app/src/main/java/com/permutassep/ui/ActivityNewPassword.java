@@ -125,7 +125,7 @@ public class ActivityNewPassword extends BaseActivity {
                                         etPasswordOne.setText("");
                                         etPasswordTwo.setText("");
                                         tvLabel.setTextColor(getResources().getColor(R.color.error_message));
-                                        tvLabel.setText(R.string.new_password_capure_outdated_url);
+                                        tvLabel.setText(R.string.new_password_capture_outdated_url);
                                         btnResetPassword.setText(R.string.new_password_request_new_token);
                                         btnResetPassword.setOnClickListener(new View.OnClickListener() {
                                             @Override

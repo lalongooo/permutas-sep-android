@@ -36,7 +36,13 @@ public class LoginPresenter implements Presenter {
     public void login() {
         this.hideViewRetry();
         this.showViewLoading();
-        this.getPostDetails();
+        this.executeLogin();
+    }
+
+    public void validateEmail() {
+        this.hideViewRetry();
+        this.showViewLoadingValidateUser();
+        this.executeValidateEmail();
     }
 
     private void hideViewRetry() {
@@ -47,8 +53,16 @@ public class LoginPresenter implements Presenter {
         this.loginView.showLoading();
     }
 
-    private void getPostDetails() {
+    private void executeLogin() {
         this.authenticateUserUseCase.execute(new LoginSubscriber());
+    }
+
+    private void showViewLoadingValidateUser() {
+        this.loginView.showLoadingValidateUser();
+    }
+
+    private void executeValidateEmail() {
+        this.authenticateUserUseCase.execute(new ValidateEmailSubscriber());
     }
 
     private void hideViewLoading() {
@@ -92,9 +106,6 @@ public class LoginPresenter implements Presenter {
         authenticateUserUseCase.unsubscribe();
     }
 
-    /**
-     * Methods from the DefaultSubscriber<Post>
-     */
     private final class LoginSubscriber extends DefaultSubscriber<User> {
         @Override
         public void onCompleted() {
@@ -103,9 +114,9 @@ public class LoginPresenter implements Presenter {
 
         @Override
         public void onError(Throwable e) {
-            LoginPresenter.this.hideViewLoading();
-            LoginPresenter.this.showErrorMessage(new DefaultErrorBundle((Exception) e));
-            LoginPresenter.this.showViewRetry();
+            hideViewLoading();
+            showErrorMessage(new DefaultErrorBundle((Exception) e));
+            showViewRetry();
         }
 
         @Override
@@ -114,4 +125,24 @@ public class LoginPresenter implements Presenter {
         }
 
     }
+
+    private final class ValidateEmailSubscriber extends DefaultSubscriber<User> {
+        @Override
+        public void onCompleted() {
+            hideViewLoading();
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            hideViewLoading();
+            loginView.notRegisteredUser();
+        }
+
+        @Override
+        public void onNext(User user) {
+            loginView.notRegisteredUser();
+        }
+
+    }
+
 }

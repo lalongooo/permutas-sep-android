@@ -68,7 +68,11 @@
     <string name="cancel">Cancelar</string>
     <string name="error">Error</string>
     <string name="search_fragment_search_error_msg">Ocurrió un error en tu búsqueda</string>
-    <string name="search_fragment_search_no_restlts">No se encontraron resultados</string>
+    <string name="search_fragment_search_no_results">No se encontraron resultados</string>
+    <string name="password_reset_dlg_title">Recuperar contraseña</string>
+    <string name="password_reset_dlg_msg">Para recuperar tu contraseña, captura el correo que usaste en tu registro:</string>
+    <string name="password_reset_dlg_input_hint">Tu correo electrónico</string>
+    <string name="password_reset_dlg_not_found_email">No pudimos encontrar tu cuenta con esa información</string>
     <string name="new_password_forgot_password_message">Olvidé mi contraseña</string>
     <string name="new_password_toolbar_title">Cambiar contraseña</string>
     <string name="new_password_label">Restablece tu contraseña</string>
