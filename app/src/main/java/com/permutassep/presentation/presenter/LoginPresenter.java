@@ -48,6 +48,13 @@ public class LoginPresenter implements Presenter {
         this.executeValidateEmail(email);
     }
 
+    public void resetPassword(String email) {
+        this.hideViewRetry();
+        this.showViewLoadingValidateUser();
+        this.resetPasswordUseCase.setEmail(email);
+        this.resetPasswordUseCase.execute(new ResetPasswordSubscriber(email));
+    }
+
     private void hideViewRetry() {
         this.loginView.hideRetry();
     }
@@ -66,12 +73,6 @@ public class LoginPresenter implements Presenter {
 
     private void executeValidateEmail(String email) {
         this.authenticateUserUseCase.execute(new ValidateEmailSubscriber(email));
-    }
-
-    private void resetPassword(String email) {
-        this.resetPasswordUseCase.setEmail(email);
-        this.resetPasswordUseCase.execute();
-
     }
 
     private void hideViewLoading() {
@@ -162,6 +163,12 @@ public class LoginPresenter implements Presenter {
 
     private final class ResetPasswordSubscriber extends DefaultSubscriber<String> {
 
+        private String email;
+
+        public ResetPasswordSubscriber(String email) {
+            this.email = email;
+        }
+
         @Override
         public void onCompleted() {
             hideViewLoading();
@@ -170,11 +177,12 @@ public class LoginPresenter implements Presenter {
         @Override
         public void onError(Throwable e) {
             hideViewLoading();
+            loginView.notRegisteredUser();
         }
 
         @Override
         public void onNext(String string) {
-            loginView.notRegisteredUser();
+            loginView.passwordRecovered(email);
         }
 
     }

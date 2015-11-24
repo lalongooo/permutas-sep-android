@@ -9,6 +9,8 @@ import com.permutassep.domain.executor.PostExecutionThread;
 import com.permutassep.domain.executor.ThreadExecutor;
 import com.permutassep.domain.repository.AuthenticationRepository;
 
+import javax.inject.Inject;
+
 import rx.Observable;
 
 public class ResetPassword extends UseCase {
@@ -16,6 +18,7 @@ public class ResetPassword extends UseCase {
     private Email email;
     private AuthenticationRepository authenticationRepository;
 
+    @Inject
     public ResetPassword(AuthenticationRepository authenticationRepository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         super(threadExecutor, postExecutionThread);
         this.authenticationRepository = authenticationRepository;

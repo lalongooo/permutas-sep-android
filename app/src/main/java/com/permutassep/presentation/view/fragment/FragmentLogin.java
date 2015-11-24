@@ -9,12 +9,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +30,6 @@ import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-import com.google.gson.Gson;
 import com.lalongooo.permutassep.BuildConfig;
 import com.lalongooo.permutassep.R;
 import com.permutassep.presentation.interfaces.LoginCompleteListener;
@@ -230,19 +229,6 @@ public class FragmentLogin extends BaseFragment implements LoginView {
         }
     }
 
-
-    class Email {
-        String email;
-
-        public String getEmail() {
-            return email;
-        }
-
-        public void setEmail(String email) {
-            this.email = email;
-        }
-    }
-
     @OnClick(R.id.tvForgotPassword)
     void onForgotPasswordClick() {
         new MaterialDialog.Builder(getActivity())
@@ -252,9 +238,9 @@ public class FragmentLogin extends BaseFragment implements LoginView {
                 .inputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS)
                 .input(R.string.password_reset_dlg_input_hint, 0, false, new MaterialDialog.InputCallback() {
                     @Override
-                    public void onInput(MaterialDialog dialog, CharSequence input) {
+                    public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
                         initializeInjector(input.toString(), BuildConfig.com_permutassep_fb_login_dummy_password);
-                        loginPresenter.validateEmail();
+                        loginPresenter.validateEmail(input.toString());
                     }
                 }).show();
     }
@@ -312,7 +298,16 @@ public class FragmentLogin extends BaseFragment implements LoginView {
 
     @Override
     public void performPasswordReset(String email) {
-        this.loginPresenter.validateEmail(email);
+        this.loginPresenter.resetPassword(email);
+    }
+
+    @Override
+    public void passwordRecovered(String email) {
+        new MaterialDialog.Builder(getActivity())
+                .title(R.string.password_reset_dlg_title)
+                .content(String.format(getString(R.string.password_reset_email_sent_msg), email))
+                .positiveText(R.string.accept)
+                .show();
     }
 
     @Override
@@ -335,4 +330,5 @@ public class FragmentLogin extends BaseFragment implements LoginView {
     public void showError(String message) {
         this.showToastMessage(message);
     }
+
 }

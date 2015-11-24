@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
+import android.text.style.StyleSpan;
 import android.widget.TextView;
 
 import com.lalongooo.permutassep.R;
@@ -31,7 +32,7 @@ public class ActivityNewPasswordEmailSent extends BaseActivity {
 
         String msg = String.format(getString(R.string.new_password_email_sent_msg_1), getIntent().getExtras().getString("email"));
         SpannableStringBuilder str = new SpannableStringBuilder(msg);
-        str.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), (msg.length() - (getIntent().getExtras().getString("email").length()) - 1), msg.length() - 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        str.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), (msg.length() - (getIntent().getExtras().getString("email").length()) - 1), msg.length() - 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         // tvMsg1.setText(String.format(getString(R.string.new_password_email_sent_msg_1), getIntent().getExtras().getString("email")));
         tvMsg1.setText(Html.fromHtml(String.format(getString(R.string.new_password_email_sent_msg_1), getIntent().getExtras().getString("email"))));
