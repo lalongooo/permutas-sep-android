@@ -1,6 +1,7 @@
 package com.permutassep.data.repository.datasource.rest.permutassep;
 
 
+import com.permutassep.data.entity.EmailEntity;
 import com.permutassep.data.entity.LoginDataWrapperEntity;
 import com.permutassep.data.entity.PostEntity;
 import com.permutassep.data.entity.PostPageEntity;
@@ -9,6 +10,8 @@ import com.permutassep.data.entity.UserEntity;
 import java.util.List;
 import java.util.Map;
 
+import retrofit.ResponseCallback;
+import retrofit.client.Response;
 import retrofit.http.Body;
 import retrofit.http.GET;
 import retrofit.http.POST;
@@ -49,4 +52,6 @@ public interface PermutasSEPService {
     @POST("/posts/")
     Observable<PostEntity> newPost(@Body PostEntity post);
 
+    @POST("/reset-password/")
+    Observable<Response> resetPassword(@Body EmailEntity email);
 }

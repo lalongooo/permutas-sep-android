@@ -4,6 +4,7 @@ package com.permutassep.data.repository.datasource;
  * By Jorge E. Hernandez (@lalongooo) 2015
  */
 
+import com.permutassep.data.entity.EmailEntity;
 import com.permutassep.data.entity.LoginDataWrapperEntity;
 import com.permutassep.data.entity.UserEntity;
 import com.permutassep.data.repository.datasource.rest.permutassep.PermutasSEPRestClient;
@@ -30,5 +31,12 @@ public class CloudAuthenticationDataStore implements AuthenticationDataStore {
     @Override
     public Observable<UserEntity> signUp(UserEntity userEntity) {
         return restClient.get().signUp(userEntity);
+    }
+
+    @Override
+    public Observable<String> resetPassword(EmailEntity emailEntity) {
+        return restClient.get()
+                .resetPassword(emailEntity)
+                .flatMap(response -> Observable.just(String.valueOf(response.getStatus())));
     }
 }

@@ -29,6 +29,5 @@ public interface LoginView extends LoadDataView {
     /**
      * After email validation, perform the password rest request.
      */
-    void performPasswordReset();
-
+    void performPasswordReset(String email);
 }

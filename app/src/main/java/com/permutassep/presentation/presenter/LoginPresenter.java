@@ -10,6 +10,7 @@ import com.permutassep.domain.User;
 import com.permutassep.domain.exception.DefaultErrorBundle;
 import com.permutassep.domain.exception.ErrorBundle;
 import com.permutassep.domain.interactor.DefaultSubscriber;
+import com.permutassep.domain.interactor.ResetPassword;
 import com.permutassep.domain.interactor.UseCase;
 import com.permutassep.presentation.exception.ErrorMessageFactory;
 import com.permutassep.presentation.internal.di.PerActivity;
@@ -24,12 +25,14 @@ import javax.inject.Named;
 public class LoginPresenter implements Presenter {
 
     private final UseCase authenticateUserUseCase;
+    private final ResetPassword resetPasswordUseCase;
     private UserModelDataMapper userModelDataMapper;
     private LoginView loginView;
 
     @Inject
-    public LoginPresenter(@Named("authenticateUser") UseCase authenticateUserUseCase, UserModelDataMapper userModelDataMapper) {
+    public LoginPresenter(@Named("authenticateUser") UseCase authenticateUserUseCase, ResetPassword resetPasswordUseCase, UserModelDataMapper userModelDataMapper) {
         this.authenticateUserUseCase = authenticateUserUseCase;
+        this.resetPasswordUseCase = resetPasswordUseCase;
         this.userModelDataMapper = userModelDataMapper;
     }
 
@@ -39,10 +42,10 @@ public class LoginPresenter implements Presenter {
         this.executeLogin();
     }
 
-    public void validateEmail() {
+    public void validateEmail(String email) {
         this.hideViewRetry();
         this.showViewLoadingValidateUser();
-        this.executeValidateEmail();
+        this.executeValidateEmail(email);
     }
 
     private void hideViewRetry() {
@@ -61,8 +64,14 @@ public class LoginPresenter implements Presenter {
         this.loginView.showLoadingValidateUser();
     }
 
-    private void executeValidateEmail() {
-        this.authenticateUserUseCase.execute(new ValidateEmailSubscriber());
+    private void executeValidateEmail(String email) {
+        this.authenticateUserUseCase.execute(new ValidateEmailSubscriber(email));
+    }
+
+    private void resetPassword(String email) {
+        this.resetPasswordUseCase.setEmail(email);
+        this.resetPasswordUseCase.execute();
+
     }
 
     private void hideViewLoading() {
@@ -104,6 +113,7 @@ public class LoginPresenter implements Presenter {
     @Override
     public void destroy() {
         authenticateUserUseCase.unsubscribe();
+        resetPasswordUseCase.unsubscribe();
     }
 
     private final class LoginSubscriber extends DefaultSubscriber<User> {
@@ -123,10 +133,16 @@ public class LoginPresenter implements Presenter {
         public void onNext(User user) {
             LoginPresenter.this.authorizeUser(user);
         }
-
     }
 
     private final class ValidateEmailSubscriber extends DefaultSubscriber<User> {
+
+        private String email;
+
+        public ValidateEmailSubscriber(String email) {
+            this.email = email;
+        }
+
         @Override
         public void onCompleted() {
             hideViewLoading();
@@ -135,14 +151,31 @@ public class LoginPresenter implements Presenter {
         @Override
         public void onError(Throwable e) {
             hideViewLoading();
-            loginView.notRegisteredUser();
+            loginView.performPasswordReset(email);
         }
 
         @Override
         public void onNext(User user) {
             loginView.notRegisteredUser();
         }
-
     }
 
+    private final class ResetPasswordSubscriber extends DefaultSubscriber<String> {
+
+        @Override
+        public void onCompleted() {
+            hideViewLoading();
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            hideViewLoading();
+        }
+
+        @Override
+        public void onNext(String string) {
+            loginView.notRegisteredUser();
+        }
+
+    }
 }

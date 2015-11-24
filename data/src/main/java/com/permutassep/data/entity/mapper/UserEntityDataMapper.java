@@ -49,7 +49,7 @@ public class UserEntityDataMapper {
      * @return {@link User} if valid {@link UserEntity} otherwise null.
      */
     public List<User> transform(Collection<UserEntity> userEntityCollection) {
-        List<User> userList = new ArrayList<>(20);
+        List<User> userList = new ArrayList<>();
         User user;
         for (UserEntity userEntity : userEntityCollection) {
             user = transform(userEntity);
@@ -67,9 +67,9 @@ public class UserEntityDataMapper {
      * @param user Object to be transformed.
      * @return {@link UserEntity} if valid {@link User} otherwise null.
      */
-    public UserEntity transform(User user){
+    public UserEntity transform(User user) {
         UserEntity userEntity = null;
-        if(user != null){
+        if (user != null) {
             userEntity = new UserEntity();
             userEntity.setId(user.getId());
             userEntity.setName(user.getName());

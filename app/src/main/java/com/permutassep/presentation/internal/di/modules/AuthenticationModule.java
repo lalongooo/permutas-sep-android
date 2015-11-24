@@ -9,6 +9,7 @@ import com.permutassep.domain.User;
 import com.permutassep.domain.executor.PostExecutionThread;
 import com.permutassep.domain.executor.ThreadExecutor;
 import com.permutassep.domain.interactor.AuthenticateUser;
+import com.permutassep.domain.interactor.ResetPassword;
 import com.permutassep.domain.interactor.SignUpUser;
 import com.permutassep.domain.interactor.UseCase;
 import com.permutassep.domain.repository.AuthenticationRepository;
@@ -61,5 +62,15 @@ public class AuthenticationModule {
             ThreadExecutor threadExecutor,
             PostExecutionThread postExecutionThread) {
         return new AuthenticateUser(new LoginDataWrapper(email, password), authenticationRepository, threadExecutor, postExecutionThread);
+    }
+
+    @Provides
+    @PerActivity
+    @Named("resetPassword")
+    ResetPassword providesResetPasswordUseCase(
+            AuthenticationRepository authenticationRepository,
+            ThreadExecutor threadExecutor,
+            PostExecutionThread postExecutionThread) {
+        return new ResetPassword(authenticationRepository, threadExecutor, postExecutionThread);
     }
 }
