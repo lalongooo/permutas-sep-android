@@ -1,5 +1,9 @@
 package com.permutassep.adapter;
 
+/**
+ * By Jorge E. Hernandez (@lalongooo) 2015
+ */
+
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -15,9 +19,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-/**
- * Created by lalongooo on 23/02/15.
- */
 public class TownSpinnerBaseAdapter extends BaseAdapter {
 
     private Context context;
