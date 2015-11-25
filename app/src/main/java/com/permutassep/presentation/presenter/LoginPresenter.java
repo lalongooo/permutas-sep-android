@@ -156,7 +156,13 @@ public class LoginPresenter implements Presenter {
         @Override
         public void onError(Throwable e) {
             hideViewLoading();
-            loginView.performPasswordReset(email);
+
+            String errorMessage = ErrorMessageFactory.create(loginView.getContext(), new DefaultErrorBundle((Exception) e).getException());
+            if (errorMessage.equals(loginView.getContext().getString(R.string.exception_no_internet_connectivity_message))) {
+                showErrorMessage(new DefaultErrorBundle((Exception) e));
+            } else {
+                loginView.performPasswordReset(email);
+            }
         }
 
         @Override
