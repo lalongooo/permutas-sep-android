@@ -13,11 +13,6 @@ public class Config {
     public static final String APP_PREFERENCES_NAME = "PERMUTAS_SEP_PREFERENCES";
 
     /**
-     * Endpoint of the InegiFacil REST service
-     */
-    public static final String INEGI_FACIL_REST_BASE_URL = "http://inegifacil.com/";
-
-    /**
      * Date format used in the entire application
      */
     public static final String APP_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
@@ -46,4 +41,14 @@ public class Config {
      * Key of the email in the query string parameter for the password reset URL
      */
     public static final String PWD_RESET_EMAIL_KEY = "email";
+
+    /**
+     * URL suffix for the password reset request
+     */
+    public static final String REST_PASSWORD = "reset-password";
+
+    /**
+     * URL suffix for the password reset confirmation request
+     */
+    public static final String CONFIRM_RESET_PASSWORD = "confirm-reset-password";
 }

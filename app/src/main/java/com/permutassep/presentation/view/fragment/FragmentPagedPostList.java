@@ -20,6 +20,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.lalongooo.permutassep.R;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
+import com.permutassep.presentation.config.Config;
 import com.permutassep.presentation.interfaces.FirstLaunchCompleteListener;
 import com.permutassep.presentation.interfaces.FragmentMenuItemSelectedListener;
 import com.permutassep.presentation.interfaces.PostListListener;
@@ -159,7 +160,7 @@ public class FragmentPagedPostList extends BaseFragment implements PagedPostsLis
     }
 
     private void loadUserList() {
-        this.postListPresenter.initialize(1, 10);
+        this.postListPresenter.initialize(1, Config.NEWS_FEED_ITEMS_PER_PAGE);
     }
 
     @Override

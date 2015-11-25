@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import com.permutassep.presentation.config.Config;
 import com.permutassep.presentation.view.activity.ActivityMain;
 import com.permutassep.presentation.view.fragment.FragmentNewPassword;
-import com.permutassep.rest.permutassep.RestPaths;
 
 public class IntentEvaluator extends AppCompatActivity {
 
@@ -25,7 +24,7 @@ public class IntentEvaluator extends AppCompatActivity {
                 String token = getIntent().getData().getQueryParameter(Config.PWD_RESET_TOKEY_KEY);
                 String email = getIntent().getData().getQueryParameter(Config.PWD_RESET_EMAIL_KEY);
 
-                if (path.equals(RestPaths.REST_PASSWORD) && token != null && email != null) {
+                if (path.equals(Config.REST_PASSWORD) && token != null && email != null) {
                     intent = new Intent(IntentEvaluator.this, ActivityMain.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra(Config.PWD_RESET_TOKEY_KEY, token);
@@ -33,7 +32,7 @@ public class IntentEvaluator extends AppCompatActivity {
                     intent.putExtra(FragmentNewPassword.EXTRA_RESET_PASSWORD, true);
                 }
             } else {
-                if (getIntent().getData().getPathSegments().size() > 0 && getIntent().getData().getPathSegments().get(0).equals(RestPaths.REST_PASSWORD)) {
+                if (getIntent().getData().getPathSegments().size() > 0 && getIntent().getData().getPathSegments().get(0).equals(Config.REST_PASSWORD)) {
                     intent = new Intent(IntentEvaluator.this, ActivityMain.class);
                 }
             }
