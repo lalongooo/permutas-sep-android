@@ -25,7 +25,6 @@ import com.lalongooo.permutassep.R;
 public class ErrorMessageFactory {
 
     private ErrorMessageFactory() {
-        //empty
     }
 
     /**
@@ -37,6 +36,10 @@ public class ErrorMessageFactory {
      */
     public static String create(Context context, Exception exception) {
         String message = context.getString(R.string.exception_message_generic);
+
+        if (exception.getMessage().startsWith(context.getString(R.string.exception_no_internet_connectivity_cause))) {
+            message = context.getString(R.string.exception_no_internet_connectivity_message);
+        }
         return message;
     }
 }

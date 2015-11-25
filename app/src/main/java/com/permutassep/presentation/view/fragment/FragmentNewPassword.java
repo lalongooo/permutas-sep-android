@@ -38,7 +38,9 @@ import butterknife.OnClick;
 
 public class FragmentNewPassword extends BaseFragment implements NewPasswordView {
 
-
+    /**
+     * UI elements
+     */
     @Bind(R.id.etPasswordOne)
     EditText etPasswordOne;
     @Bind(R.id.etPasswordTwo)
@@ -46,15 +48,15 @@ public class FragmentNewPassword extends BaseFragment implements NewPasswordView
     @Bind(R.id.btnResetPassword)
     TextView btnResetPassword;
 
-    /**
-     * UI elements
-     */
-
     @Inject
     NewPasswordPresenter newPasswordPresenter;
 
     private Form form;
     private MaterialDialog progressDialog;
+    private String token;
+    private String password;
+    private String passwordConfirm;
+    private String email;
 
     /**
      * Empty constructor
@@ -89,6 +91,13 @@ public class FragmentNewPassword extends BaseFragment implements NewPasswordView
         return fragmentView;
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        token = getActivity().getIntent().getStringExtra(Config.PWD_RESET_TOKEY_KEY);
+        email = getActivity().getIntent().getStringExtra(Config.PWD_RESET_EMAIL_KEY);
+    }
+
     private void setUI() {
 
         Validate vPasswordOne = new Validate(etPasswordOne);
@@ -119,9 +128,8 @@ public class FragmentNewPassword extends BaseFragment implements NewPasswordView
     void onBtnResetPasswordClick() {
         if (form.isValid()) {
 
-            String token = getActivity().getIntent().getStringExtra(Config.PWD_RESET_TOKEY_KEY);
-            String password = etPasswordOne.getText().toString();
-            String passwordConfirm = etPasswordTwo.getText().toString();
+            password = etPasswordOne.getText().toString();
+            passwordConfirm = etPasswordTwo.getText().toString();
 
             ConfirmPasswordResetDataWrapperModel confirmPasswordResetDataWrapperModel =
                     new ConfirmPasswordResetDataWrapperModel(token, password, passwordConfirm);
@@ -135,19 +143,22 @@ public class FragmentNewPassword extends BaseFragment implements NewPasswordView
 
     @Override
     public void passwordCorrectlyReset() {
-
+        new MaterialDialog.Builder(getActivity())
+                .title(R.string.password_reset_dlg_title)
+                .content(R.string.password_reset_dlg_password_reset_successful)
+                .positiveText(R.string.accept)
+                .show();
     }
 
     @Override
     public void showLoading() {
         progressDialog = new MaterialDialog.Builder(getActivity())
-                .title(R.string.app_login_dlg_login_title)
-                .content(R.string.app_login_dlg_login_logging_in)
+                .title(R.string.password_reset_dlg_title)
+                .content(R.string.password_reset_dlg_resetting_password)
                 .progress(true, 0)
                 .progressIndeterminateStyle(false)
                 .show();
     }
-
 
     @Override
     public void hideLoading() {
@@ -167,7 +178,10 @@ public class FragmentNewPassword extends BaseFragment implements NewPasswordView
 
     @Override
     public void showError(String message) {
-        this.showToastMessage(message);
+        new MaterialDialog.Builder(getActivity())
+                .title(R.string.password_reset_dlg_title)
+                .content(message)
+                .positiveText(R.string.accept)
+                .show();
     }
-
 }

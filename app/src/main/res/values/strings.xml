@@ -70,10 +70,13 @@
     <string name="search_fragment_search_error_msg">Ocurrió un error en tu búsqueda</string>
     <string name="search_fragment_search_no_results">No se encontraron resultados</string>
     <string name="password_reset_dlg_title">Recuperar contraseña</string>
+    <string name="password_reset_dlg_resetting_password">Estamos restableciendo tu contraseña</string>
     <string name="password_reset_dlg_msg">Para recuperar tu contraseña, captura el correo que usaste en tu registro:</string>
     <string name="password_reset_dlg_input_hint">Tu correo electrónico</string>
+    <string name="password_reset_dlg_password_reset_successful">Tu contraseña fué cambiada</string>
     <string name="password_reset_dlg_not_found_email">No pudimos encontrar tu cuenta con esa información</string>
     <string name="password_reset_email_sent_msg">Hemos enviado un correo electrónico a <b>%1$s</b>.\nHaz clic en el enlace que verás para restablecer tu contraseña.\nSi no ves el correo electrónico en tu bandeja de entrada, revisa otras carpetas, como Correo electrónico no deseado o Sociales.</string>
+    <string name="password_reset_obsolete_token_error">El enlace de restablecimiento en el que has hecho clic ha expirado. Por favor, solicita uno nuevo.</string>
     <string name="new_password_forgot_password_message">Olvidé mi contraseña</string>
     <string name="new_password_toolbar_title">Cambiar contraseña</string>
     <string name="new_password_label">Restablece tu contraseña</string>
@@ -177,6 +180,8 @@
     <string name="time_ago_year">Hace 1 año</string>
     <string name="time_ago_years">%d años</string>
     <string name="exception_message_generic">There was an application error</string>
+    <string name="exception_no_internet_connectivity_cause">Unable to resolve host</string>
+    <string name="exception_no_internet_connectivity_message">Asegúrate de tener una conexión a Internet</string>
 
     <!--GA Events Categories-->
     <string name="ga_event_category_ux">UX</string>

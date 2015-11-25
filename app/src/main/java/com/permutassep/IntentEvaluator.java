@@ -3,7 +3,6 @@ package com.permutassep;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import com.permutassep.config.Config;
 import com.permutassep.presentation.view.activity.ActivityMain;
@@ -19,12 +18,8 @@ public class IntentEvaluator extends AppCompatActivity {
         Intent intent = null;
 
         if (getIntent() != null && getIntent().getData() != null) {
-            Log.i("getIntent()", "NOT NULL");
-            Log.i("getIntent().getData()", "NOT NULL");
 
             if (getIntent().getData().getPathSegments().size() == 1) {
-
-                Log.i("getPathSegments().size", "Equals to 1");
 
                 String path = getIntent().getData().getPathSegments().get(0);
                 String token = getIntent().getData().getQueryParameter(Config.PWD_RESET_TOKEY_KEY);
