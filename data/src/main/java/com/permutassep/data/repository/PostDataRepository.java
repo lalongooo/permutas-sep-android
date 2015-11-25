@@ -2,8 +2,8 @@ package com.permutassep.data.repository;
 
 import com.permutassep.data.entity.mapper.PostEntityDataMapper;
 import com.permutassep.data.entity.mapper.PostPageEntityDataMapper;
-import com.permutassep.data.repository.datasource.PostDataStore;
-import com.permutassep.data.repository.datasource.PostDataStoreFactory;
+import com.permutassep.data.repository.datasource.post.PostDataStore;
+import com.permutassep.data.repository.datasource.post.PostDataStoreFactory;
 import com.permutassep.domain.Post;
 import com.permutassep.domain.PostPage;
 import com.permutassep.domain.repository.PostRepository;

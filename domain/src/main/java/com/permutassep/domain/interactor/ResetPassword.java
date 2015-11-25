@@ -7,7 +7,7 @@ package com.permutassep.domain.interactor;
 import com.permutassep.domain.Email;
 import com.permutassep.domain.executor.PostExecutionThread;
 import com.permutassep.domain.executor.ThreadExecutor;
-import com.permutassep.domain.repository.AuthenticationRepository;
+import com.permutassep.domain.repository.PasswordResetRepository;
 
 import javax.inject.Inject;
 
@@ -16,12 +16,12 @@ import rx.Observable;
 public class ResetPassword extends UseCase {
 
     private Email email;
-    private AuthenticationRepository authenticationRepository;
+    private PasswordResetRepository passwordResetRepository;
 
     @Inject
-    public ResetPassword(AuthenticationRepository authenticationRepository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
+    public ResetPassword(PasswordResetRepository passwordResetRepository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         super(threadExecutor, postExecutionThread);
-        this.authenticationRepository = authenticationRepository;
+        this.passwordResetRepository = passwordResetRepository;
     }
 
     public void setEmail(String email) {
@@ -30,6 +30,6 @@ public class ResetPassword extends UseCase {
 
     @Override
     protected Observable buildUseCaseObservable() {
-        return authenticationRepository.resetPassword(email);
+        return passwordResetRepository.resetPassword(email);
     }
 }

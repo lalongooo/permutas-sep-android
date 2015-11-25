@@ -1,7 +1,7 @@
-package com.permutassep.data.repository.datasource;
+package com.permutassep.data.repository.datasource.user;
 
 import com.permutassep.data.entity.UserEntity;
-import com.permutassep.data.repository.datasource.rest.permutassep.PermutasSEPRestClient;
+import com.permutassep.data.repository.datasource.restful.permutassep.PermutasSEPRestClient;
 
 import java.util.List;
 

@@ -302,7 +302,7 @@ public class FragmentLogin extends BaseFragment implements LoginView {
     }
 
     @Override
-    public void passwordRecovered(String email) {
+    public void passwordResetRequestSent(String email) {
         new MaterialDialog.Builder(getActivity())
                 .title(R.string.password_reset_dlg_title)
                 .content(String.format(getString(R.string.password_reset_email_sent_msg), email))

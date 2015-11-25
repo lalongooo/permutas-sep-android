@@ -9,10 +9,10 @@ import com.permutassep.domain.LoginDataWrapper;
 
 import javax.inject.Inject;
 
-public class LoginDataWrapperDataMapper {
+public class LoginDataWrapperEntityDataMapper {
 
     @Inject
-    public LoginDataWrapperDataMapper() {
+    public LoginDataWrapperEntityDataMapper() {
     }
 
     public LoginDataWrapper transform(LoginDataWrapperEntity loginDataWrapperEntity) {

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.permutassep.data.repository.datasource;
+package com.permutassep.data.repository.datasource.user;
 
 
 import com.permutassep.data.entity.UserEntity;

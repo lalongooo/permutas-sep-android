@@ -4,11 +4,13 @@ import android.content.Context;
 
 import com.permutassep.data.executor.JobExecutor;
 import com.permutassep.data.repository.AuthenticationDataRepository;
+import com.permutassep.data.repository.PasswordResetDataRepository;
 import com.permutassep.data.repository.PostDataRepository;
 import com.permutassep.data.repository.UserDataRepository;
 import com.permutassep.domain.executor.PostExecutionThread;
 import com.permutassep.domain.executor.ThreadExecutor;
 import com.permutassep.domain.repository.AuthenticationRepository;
+import com.permutassep.domain.repository.PasswordResetRepository;
 import com.permutassep.domain.repository.PostRepository;
 import com.permutassep.domain.repository.UserRepository;
 import com.permutassep.presentation.AndroidApplication;
@@ -73,4 +75,9 @@ public class ApplicationModule {
         return authenticationDataRepository;
     }
 
+    @Provides
+    @Singleton
+    PasswordResetRepository providesPasswordResetRepository(PasswordResetDataRepository passwordResetDataRepository) {
+        return passwordResetDataRepository;
+    }
 }

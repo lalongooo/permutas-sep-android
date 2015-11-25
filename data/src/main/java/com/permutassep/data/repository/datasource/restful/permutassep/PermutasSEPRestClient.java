@@ -1,4 +1,4 @@
-package com.permutassep.data.repository.datasource.rest.permutassep;
+package com.permutassep.data.repository.datasource.restful.permutassep;
 
 import android.util.Base64;
 

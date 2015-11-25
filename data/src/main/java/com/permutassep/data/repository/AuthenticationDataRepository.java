@@ -5,12 +5,10 @@ package com.permutassep.data.repository;
  */
 
 import com.permutassep.data.entity.UserEntity;
-import com.permutassep.data.entity.mapper.EmailEntityDataMapper;
-import com.permutassep.data.entity.mapper.LoginDataWrapperDataMapper;
+import com.permutassep.data.entity.mapper.LoginDataWrapperEntityDataMapper;
 import com.permutassep.data.entity.mapper.UserEntityDataMapper;
-import com.permutassep.data.repository.datasource.AuthenticationDataStore;
-import com.permutassep.data.repository.datasource.AuthenticationDataStoreFactory;
-import com.permutassep.domain.Email;
+import com.permutassep.data.repository.datasource.authentication.AuthenticationDataStore;
+import com.permutassep.data.repository.datasource.authentication.AuthenticationDataStoreFactory;
 import com.permutassep.domain.LoginDataWrapper;
 import com.permutassep.domain.User;
 import com.permutassep.domain.repository.AuthenticationRepository;
@@ -21,24 +19,21 @@ import rx.Observable;
 
 public class AuthenticationDataRepository implements AuthenticationRepository {
 
-
     private AuthenticationDataStoreFactory authenticationDataStoreFactory;
-    private LoginDataWrapperDataMapper loginDataWrapperDataMapper;
+    private LoginDataWrapperEntityDataMapper loginDataWrapperEntityDataMapper;
     private UserEntityDataMapper userEntityDataMapper;
-    private EmailEntityDataMapper emailEntityDataMapper;
 
     @Inject
-    public AuthenticationDataRepository(AuthenticationDataStoreFactory authenticationDataStoreFactory, LoginDataWrapperDataMapper loginDataWrapperDataMapper, UserEntityDataMapper userEntityDataMapper, EmailEntityDataMapper emailEntityDataMapper) {
+    public AuthenticationDataRepository(AuthenticationDataStoreFactory authenticationDataStoreFactory, LoginDataWrapperEntityDataMapper loginDataWrapperEntityDataMapper, UserEntityDataMapper userEntityDataMapper) {
         this.authenticationDataStoreFactory = authenticationDataStoreFactory;
-        this.loginDataWrapperDataMapper = loginDataWrapperDataMapper;
+        this.loginDataWrapperEntityDataMapper = loginDataWrapperEntityDataMapper;
         this.userEntityDataMapper = userEntityDataMapper;
-        this.emailEntityDataMapper = emailEntityDataMapper;
     }
 
     @Override
     public Observable<User> login(LoginDataWrapper loginDataWrapper) {
         AuthenticationDataStore authenticationDataStore = authenticationDataStoreFactory.createCloudDataStore();
-        return authenticationDataStore.login(loginDataWrapperDataMapper.transform(loginDataWrapper))
+        return authenticationDataStore.login(loginDataWrapperEntityDataMapper.transform(loginDataWrapper))
                 .map(this.userEntityDataMapper::transform);
     }
 
@@ -47,11 +42,5 @@ public class AuthenticationDataRepository implements AuthenticationRepository {
         AuthenticationDataStore authenticationDataStore = authenticationDataStoreFactory.createCloudDataStore();
         return authenticationDataStore.signUp(new UserEntity(user.getId(), user.getEmail(), user.getName(), user.getPassword(), user.getPhone(), user.getSocialUserId()))
                 .map(this.userEntityDataMapper::transform);
-    }
-
-    @Override
-    public Observable<String> resetPassword(Email email) {
-        AuthenticationDataStore authenticationDataStore = authenticationDataStoreFactory.createCloudDataStore();
-        return authenticationDataStore.resetPassword(emailEntityDataMapper.transform(email));
     }
 }

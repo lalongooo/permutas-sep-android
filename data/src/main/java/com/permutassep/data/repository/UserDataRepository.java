@@ -2,8 +2,8 @@ package com.permutassep.data.repository;
 
 
 import com.permutassep.data.entity.mapper.UserEntityDataMapper;
-import com.permutassep.data.repository.datasource.UserDataStore;
-import com.permutassep.data.repository.datasource.UserDataStoreFactory;
+import com.permutassep.data.repository.datasource.user.UserDataStore;
+import com.permutassep.data.repository.datasource.user.UserDataStoreFactory;
 import com.permutassep.domain.User;
 import com.permutassep.domain.repository.UserRepository;
 

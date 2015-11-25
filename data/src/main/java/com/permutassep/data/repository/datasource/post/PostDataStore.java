@@ -1,4 +1,4 @@
-package com.permutassep.data.repository.datasource;
+package com.permutassep.data.repository.datasource.post;
 
 import com.permutassep.data.entity.PostEntity;
 import com.permutassep.data.entity.PostPageEntity;

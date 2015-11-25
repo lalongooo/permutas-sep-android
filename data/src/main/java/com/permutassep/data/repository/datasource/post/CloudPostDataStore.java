@@ -1,4 +1,4 @@
-package com.permutassep.data.repository.datasource;
+package com.permutassep.data.repository.datasource.post;
 
 /**
  * By Jorge E. Hernandez (@lalongooo) 2015
@@ -8,8 +8,8 @@ import com.permutassep.data.entity.CityEntity;
 import com.permutassep.data.entity.PostEntity;
 import com.permutassep.data.entity.PostPageEntity;
 import com.permutassep.data.entity.TownEntity;
-import com.permutassep.data.repository.datasource.rest.inegifacil.InegiFacilRestClient;
-import com.permutassep.data.repository.datasource.rest.permutassep.PermutasSEPRestClient;
+import com.permutassep.data.repository.datasource.restful.inegifacil.InegiFacilRestClient;
+import com.permutassep.data.repository.datasource.restful.permutassep.PermutasSEPRestClient;
 
 import java.util.HashMap;
 import java.util.List;

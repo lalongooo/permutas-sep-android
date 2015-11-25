@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
@@ -13,7 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lalongooo.permutassep.R;
-import com.permutassep.BaseActivity;
 import com.permutassep.config.Config;
 import com.permutassep.model.AuthModel;
 import com.permutassep.model.ConfirmPasswordReset;
@@ -31,7 +31,7 @@ import retrofit.ResponseCallback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class ActivityNewPassword extends BaseActivity {
+public class ActivityNewPassword extends AppCompatActivity {
 
     private EditText etPasswordOne;
     private EditText etPasswordTwo;

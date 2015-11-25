@@ -21,6 +21,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 
 import com.lalongooo.permutassep.R;
+import com.permutassep.presentation.view.activity.ActivityAppOverview;
+import com.permutassep.presentation.view.activity.ActivityMain;
 import com.permutassep.presentation.view.activity.ActivityWritePost;
 import com.permutassep.presentation.view.activity.BaseActivity;
 import com.permutassep.presentation.view.fragment.FragmentCompleteFbData;
@@ -49,6 +51,17 @@ public class Navigator {
      */
     @Inject
     public Navigator() {
+    }
+
+
+    /**
+     * Navigates to the start of the app (ActivityAppOverview) after the user logs off.
+     *
+     * @param activity An activity needed to open the destination fragment.
+     */
+    public void navigateToStart(BaseActivity activity) {
+        activity.startActivity(new Intent(activity, ActivityAppOverview.class));
+        activity.finish();
     }
 
     /**
@@ -182,7 +195,6 @@ public class Navigator {
             fragmentTransaction.commit();
         }
     }
-
 
     /**
      * Goes to the user list screen.

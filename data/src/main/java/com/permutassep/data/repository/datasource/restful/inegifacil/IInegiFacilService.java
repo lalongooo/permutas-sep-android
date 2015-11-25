@@ -1,4 +1,4 @@
-package com.permutassep.data.repository.datasource.rest.inegifacil;
+package com.permutassep.data.repository.datasource.restful.inegifacil;
 
 
 import com.permutassep.data.entity.CityEntity;

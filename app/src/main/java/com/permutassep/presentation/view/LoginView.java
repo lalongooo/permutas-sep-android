@@ -34,5 +34,5 @@ public interface LoginView extends LoadDataView {
     /**
      * Successful password reset
      */
-    void passwordRecovered(String email);
+    void passwordResetRequestSent(String email);
 }

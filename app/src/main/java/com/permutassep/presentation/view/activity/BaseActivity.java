@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.permutassep.config.Config;
 import com.permutassep.presentation.AndroidApplication;
 import com.permutassep.presentation.internal.di.components.ApplicationComponent;
 import com.permutassep.presentation.internal.di.modules.ActivityModule;
@@ -24,7 +25,10 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.getApplicationComponent().inject(this);
-        if (!PrefUtils.isTosAccepted(this)) {
+
+        boolean isPasswordResetActivity = getIntent().getStringExtra(Config.PWD_RESET_TOKEY_KEY) != null;
+
+        if (!PrefUtils.isTosAccepted(this) && !isPasswordResetActivity) {
             Intent intent = new Intent(this, ActivityWelcome.class);
             startActivity(intent);
             finish();

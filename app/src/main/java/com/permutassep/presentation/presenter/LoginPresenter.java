@@ -182,7 +182,7 @@ public class LoginPresenter implements Presenter {
 
         @Override
         public void onNext(String string) {
-            loginView.passwordRecovered(email);
+            loginView.passwordResetRequestSent(email);
         }
 
     }

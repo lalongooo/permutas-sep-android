@@ -1,6 +1,7 @@
-package com.permutassep.data.repository.datasource.rest.permutassep;
+package com.permutassep.data.repository.datasource.restful.permutassep;
 
 
+import com.permutassep.data.entity.ConfirmPasswordResetEntity;
 import com.permutassep.data.entity.EmailEntity;
 import com.permutassep.data.entity.LoginDataWrapperEntity;
 import com.permutassep.data.entity.PostEntity;
@@ -10,7 +11,6 @@ import com.permutassep.data.entity.UserEntity;
 import java.util.List;
 import java.util.Map;
 
-import retrofit.ResponseCallback;
 import retrofit.client.Response;
 import retrofit.http.Body;
 import retrofit.http.GET;
@@ -54,4 +54,7 @@ public interface PermutasSEPService {
 
     @POST("/reset-password/")
     Observable<Response> resetPassword(@Body EmailEntity email);
+
+    @POST("/confirm-reset-password/")
+    Observable<Response> confirmPasswordReset(@Body ConfirmPasswordResetEntity confirmPasswordResetEntity);
 }

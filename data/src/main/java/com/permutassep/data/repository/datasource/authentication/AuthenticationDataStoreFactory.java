@@ -1,4 +1,4 @@
-package com.permutassep.data.repository.datasource;
+package com.permutassep.data.repository.datasource.authentication;
 
 /**
  * By Jorge E. Hernandez (@lalongooo) 2015

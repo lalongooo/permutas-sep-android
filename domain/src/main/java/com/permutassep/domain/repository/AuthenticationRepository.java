@@ -4,7 +4,6 @@ package com.permutassep.domain.repository;
  * By Jorge E. Hernandez (@lalongooo) 2015
  */
 
-import com.permutassep.domain.Email;
 import com.permutassep.domain.LoginDataWrapper;
 import com.permutassep.domain.User;
 
@@ -15,6 +14,4 @@ public interface AuthenticationRepository {
     Observable<User> login(LoginDataWrapper loginDataWrapper);
 
     Observable<User> signUp(User user);
-
-    Observable<String> resetPassword(Email email);
 }

@@ -278,7 +278,7 @@ public class ActivityMain extends BaseActivity
 
                 PrefUtils.clearApplicationPreferences(this);
                 LoginManager.getInstance().logOut();
-                navigator.navigateToLoginSignUp(this, false);
+                navigator.navigateToStart(this);
 
                 break;
 

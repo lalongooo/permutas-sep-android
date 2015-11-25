@@ -9,10 +9,12 @@ import com.permutassep.domain.User;
 import com.permutassep.domain.executor.PostExecutionThread;
 import com.permutassep.domain.executor.ThreadExecutor;
 import com.permutassep.domain.interactor.AuthenticateUser;
+import com.permutassep.domain.interactor.ConfirmPasswordReset;
 import com.permutassep.domain.interactor.ResetPassword;
 import com.permutassep.domain.interactor.SignUpUser;
 import com.permutassep.domain.interactor.UseCase;
 import com.permutassep.domain.repository.AuthenticationRepository;
+import com.permutassep.domain.repository.PasswordResetRepository;
 import com.permutassep.presentation.internal.di.PerActivity;
 import com.permutassep.presentation.model.UserModel;
 
@@ -27,6 +29,9 @@ public class AuthenticationModule {
     private String email;
     private String password;
     private UserModel userModel;
+
+    public AuthenticationModule() {
+    }
 
     public AuthenticationModule(String email, String password) {
         this.email = email;
@@ -68,9 +73,19 @@ public class AuthenticationModule {
     @PerActivity
     @Named("resetPassword")
     ResetPassword providesResetPasswordUseCase(
-            AuthenticationRepository authenticationRepository,
+            PasswordResetRepository passwordResetRepository,
             ThreadExecutor threadExecutor,
             PostExecutionThread postExecutionThread) {
-        return new ResetPassword(authenticationRepository, threadExecutor, postExecutionThread);
+        return new ResetPassword(passwordResetRepository, threadExecutor, postExecutionThread);
+    }
+
+    @Provides
+    @PerActivity
+    @Named("confirmPasswordReset")
+    ConfirmPasswordReset providesConfirmPasswordResetUseCase(
+            PasswordResetRepository passwordResetRepository,
+            ThreadExecutor threadExecutor,
+            PostExecutionThread postExecutionThread) {
+        return new ConfirmPasswordReset(passwordResetRepository, threadExecutor, postExecutionThread);
     }
 }
