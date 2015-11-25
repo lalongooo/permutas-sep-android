@@ -34,6 +34,7 @@ import com.permutassep.presentation.view.fragment.FragmentPostDetails;
 import com.permutassep.presentation.view.fragment.FragmentSearch;
 import com.permutassep.presentation.view.fragment.FragmentSearchResults;
 import com.permutassep.presentation.view.fragment.FragmentSignUp;
+import com.permutassep.presentation.view.fragment.TestRecyclerView;
 
 import java.util.HashMap;
 
@@ -150,7 +151,8 @@ public class Navigator {
                 fragmentTransaction.addToBackStack(null);
             }
 
-            fragmentTransaction.add(R.id.fragmentContainer, FragmentPagedPostList.newInstance());
+//            fragmentTransaction.add(R.id.fragmentContainer, FragmentPagedPostList.newInstance());
+            fragmentTransaction.add(R.id.fragmentContainer, new TestRecyclerView());
             fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
             fragmentTransaction.commit();
         }

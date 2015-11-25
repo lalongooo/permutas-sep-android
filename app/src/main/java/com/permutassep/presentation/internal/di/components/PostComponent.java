@@ -9,6 +9,7 @@ import com.permutassep.presentation.view.fragment.FragmentPagedPostList;
 import com.permutassep.presentation.view.fragment.FragmentPostDetails;
 import com.permutassep.presentation.view.fragment.FragmentPostList;
 import com.permutassep.presentation.view.fragment.FragmentSearchResults;
+import com.permutassep.presentation.view.fragment.TestRecyclerView;
 
 import dagger.Component;
 
@@ -30,5 +31,7 @@ public interface PostComponent extends ActivityComponent {
     void inject(ActivityWritePost activityWritePost);
 
     void inject(FragmentSearchResults fragmentSearchResults);
+
+    void inject(TestRecyclerView testRecyclerView);
 
 }
