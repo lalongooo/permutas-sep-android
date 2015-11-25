@@ -3,6 +3,7 @@ package com.permutassep.presentation.view.fragment;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -12,9 +13,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.RelativeLayout;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.lalongooo.permutassep.R;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
@@ -26,7 +27,6 @@ import com.permutassep.presentation.internal.di.components.DaggerPostComponent;
 import com.permutassep.presentation.internal.di.components.PostComponent;
 import com.permutassep.presentation.internal.di.modules.PostModule;
 import com.permutassep.presentation.model.PostModel;
-import com.permutassep.presentation.presenter.PostListPresenter;
 import com.permutassep.presentation.presenter.UserPostListPresenter;
 import com.permutassep.presentation.utils.PrefUtils;
 import com.permutassep.presentation.view.PostsListView;
@@ -41,7 +41,6 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * By Jorge E. Hernandez (@lalongooo) 2015
@@ -49,19 +48,12 @@ import butterknife.OnClick;
 public class FragmentMyPostList extends BaseFragment implements PostsListView {
 
     private static final String ARGUMENT_USER_ID = "ARGUMENT_USER_ID";
-
-    private int userId;
-
     @Inject
     UserPostListPresenter postListPresenter;
     @Bind(R.id.rv_users)
     RecyclerView rv_posts;
-    @Bind(R.id.rl_progress)
-    RelativeLayout rl_progress;
-    @Bind(R.id.rl_retry)
-    RelativeLayout rl_retry;
-    @Bind(R.id.bt_retry)
-    Button bt_retry;
+    private int userId;
+    private MaterialDialog progressDialog;
 
     private PostComponent postComponent;
     private FirstLaunchCompleteListener firstLaunchCompleteListener;
@@ -159,7 +151,7 @@ public class FragmentMyPostList extends BaseFragment implements PostsListView {
         this.userId = getArguments().getInt(ARGUMENT_USER_ID);
         postComponent = DaggerPostComponent.builder()
                 .applicationComponent(getComponent(ApplicationComponent.class))
-                .activityModule(((BaseActivity)getActivity()).getActivityModule())
+                .activityModule(((BaseActivity) getActivity()).getActivityModule())
                 .postModule(new PostModule(this.userId))
                 .build();
         postComponent.inject(this);
@@ -179,11 +171,6 @@ public class FragmentMyPostList extends BaseFragment implements PostsListView {
     @Override
     public Context getContext() {
         return this.getActivity().getApplicationContext();
-    }
-
-    @OnClick(R.id.bt_retry)
-    void onButtonRetryClick() {
-        FragmentMyPostList.this.loadUserPostsList();
     }
 
     /**
@@ -207,24 +194,39 @@ public class FragmentMyPostList extends BaseFragment implements PostsListView {
 
     @Override
     public void showLoading() {
-        this.rl_progress.setVisibility(View.VISIBLE);
-        this.getActivity().setProgressBarIndeterminateVisibility(true);
+        progressDialog = new MaterialDialog.Builder(getActivity())
+                .title(R.string.please_wait)
+                .content(R.string.app_post_list_loading_dlg_msg)
+                .progress(true, 0)
+                .progressIndeterminateStyle(false)
+                .show();
     }
 
     @Override
     public void hideLoading() {
-        this.rl_progress.setVisibility(View.GONE);
-        this.getActivity().setProgressBarIndeterminateVisibility(false);
+        if (progressDialog != null)
+            progressDialog.dismiss();
     }
 
     @Override
     public void showRetry() {
-        this.rl_retry.setVisibility(View.VISIBLE);
+        new MaterialDialog.Builder(getActivity())
+                .cancelable(false)
+                .title(R.string.ups)
+                .content(R.string.app_post_list_retry_dlg_message)
+                .positiveText(R.string.retry)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog materialDialog, @NonNull DialogAction dialogAction) {
+                        loadUserPostsList();
+                    }
+                })
+                .show();
     }
 
     @Override
     public void hideRetry() {
-        this.rl_retry.setVisibility(View.GONE);
+
     }
 
     @Override
