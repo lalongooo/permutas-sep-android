@@ -29,10 +29,10 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.permutassep.presentation.view.wizard.model.ProfessorContactInfoPage;
 import com.lalongooo.permutassep.R;
-import com.permutassep.model.User;
-import com.permutassep.utils.Utils;
+import com.permutassep.presentation.model.UserModel;
+import com.permutassep.presentation.utils.PrefUtils;
+import com.permutassep.presentation.view.wizard.model.ProfessorContactInfoPage;
 
 public class ProfessorContactInfoFragment extends Fragment {
     private static final String ARG_KEY = "key";
@@ -145,7 +145,7 @@ public class ProfessorContactInfoFragment extends Fragment {
             }
         });
 
-        User user = Utils.getUser(getActivity());
+        UserModel user = PrefUtils.getUser(getActivity());
 
         if(user != null){
             mNameView.setText(!TextUtils.isEmpty(user.getName()) ? user.getName() : "");

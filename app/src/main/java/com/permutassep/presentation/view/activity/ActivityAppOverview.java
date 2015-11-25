@@ -16,7 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lalongooo.permutassep.R;
-import com.permutassep.utils.Utils;
+import com.permutassep.presentation.utils.Utils;
 import com.viewpagerindicator.CirclePageIndicator;
 import com.viewpagerindicator.PageIndicator;
 

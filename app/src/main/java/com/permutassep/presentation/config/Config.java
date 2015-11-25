@@ -3,6 +3,11 @@ package com.permutassep.presentation.config;
 public class Config {
 
     /**
+     * Endpoint of the InegiFacil REST service
+     */
+    public static final String INEGI_FACIL_REST_BASE_URL = "http://inegifacil.com/";
+
+    /**
      * Date format used in the API REST Service
      */
     public static final String API_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";

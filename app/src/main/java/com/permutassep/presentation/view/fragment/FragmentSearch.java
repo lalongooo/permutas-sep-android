@@ -17,8 +17,8 @@ import com.permutassep.adapter.TownSpinnerBaseAdapter;
 import com.permutassep.model.City;
 import com.permutassep.model.State;
 import com.permutassep.model.Town;
+import com.permutassep.presentation.utils.Utils;
 import com.permutassep.rest.inegifacil.InegiFacilRestClient;
-import com.permutassep.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;

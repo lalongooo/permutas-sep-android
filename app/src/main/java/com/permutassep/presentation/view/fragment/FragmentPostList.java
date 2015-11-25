@@ -31,7 +31,6 @@ import com.permutassep.presentation.view.PostsListView;
 import com.permutassep.presentation.view.activity.BaseActivity;
 import com.permutassep.presentation.view.adapter.PostsAdapter;
 import com.permutassep.presentation.view.adapter.PostsLayoutManager;
-import com.permutassep.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Collection;
