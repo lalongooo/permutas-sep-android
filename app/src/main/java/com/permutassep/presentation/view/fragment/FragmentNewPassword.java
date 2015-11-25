@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.facebook.login.LoginManager;
 import com.lalongooo.permutassep.R;
 import com.permutassep.config.Config;
 import com.permutassep.presentation.internal.di.components.ApplicationComponent;
@@ -22,6 +23,7 @@ import com.permutassep.presentation.internal.di.components.AuthenticationCompone
 import com.permutassep.presentation.internal.di.components.DaggerAuthenticationComponent;
 import com.permutassep.presentation.model.ConfirmPasswordResetDataWrapperModel;
 import com.permutassep.presentation.presenter.NewPasswordPresenter;
+import com.permutassep.presentation.utils.PrefUtils;
 import com.permutassep.presentation.view.LoginView;
 import com.permutassep.presentation.view.NewPasswordView;
 import com.permutassep.presentation.view.activity.BaseActivity;
@@ -37,6 +39,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class FragmentNewPassword extends BaseFragment implements NewPasswordView {
+
+    /**
+     * Intent extra to be sent to the ActivityMain to let it know a new password reset is going to be performed.
+     */
+    public static final String EXTRA_RESET_PASSWORD = "extra_reset_password";
 
     /**
      * UI elements
@@ -148,6 +155,9 @@ public class FragmentNewPassword extends BaseFragment implements NewPasswordView
                 .content(R.string.password_reset_dlg_password_reset_successful)
                 .positiveText(R.string.accept)
                 .show();
+        PrefUtils.clearApplicationPreferences(getActivity());
+        LoginManager.getInstance().logOut();
+        navigationListener.onNextFragment(FragmentLogin.class);
     }
 
     @Override

@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.permutassep.config.Config;
 import com.permutassep.presentation.view.activity.ActivityMain;
-import com.permutassep.presentation.view.activity.ActivityNewPassword;
+import com.permutassep.presentation.view.fragment.FragmentNewPassword;
 import com.permutassep.rest.permutassep.RestPaths;
 
 public class IntentEvaluator extends AppCompatActivity {
@@ -26,9 +26,11 @@ public class IntentEvaluator extends AppCompatActivity {
                 String email = getIntent().getData().getQueryParameter(Config.PWD_RESET_EMAIL_KEY);
 
                 if (path.equals(RestPaths.REST_PASSWORD) && token != null && email != null) {
-                    intent = new Intent(IntentEvaluator.this, ActivityNewPassword.class);
+                    intent = new Intent(IntentEvaluator.this, ActivityMain.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra(Config.PWD_RESET_TOKEY_KEY, token);
                     intent.putExtra(Config.PWD_RESET_EMAIL_KEY, email);
+                    intent.putExtra(FragmentNewPassword.EXTRA_RESET_PASSWORD, true);
                 }
             } else {
                 if (getIntent().getData().getPathSegments().size() > 0 && getIntent().getData().getPathSegments().get(0).equals(RestPaths.REST_PASSWORD)) {

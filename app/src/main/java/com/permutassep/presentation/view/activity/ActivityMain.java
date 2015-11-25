@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 
 import com.facebook.login.LoginManager;
@@ -37,6 +38,7 @@ import com.permutassep.presentation.view.HomeView;
 import com.permutassep.presentation.view.fragment.FragmentLogin;
 import com.permutassep.presentation.view.fragment.FragmentLoginSignUp;
 import com.permutassep.presentation.view.fragment.FragmentMyPostList;
+import com.permutassep.presentation.view.fragment.FragmentNewPassword;
 import com.permutassep.presentation.view.fragment.FragmentPagedPostList;
 import com.permutassep.presentation.view.fragment.FragmentSearch;
 import com.permutassep.presentation.view.fragment.FragmentSignUp;
@@ -77,12 +79,16 @@ public class ActivityMain extends BaseActivity
 
         this.initializeInjector();
 
-        userModel = PrefUtils.getUser(this);
-        if (userModel != null) {
-            navigator.navigateToPostList(this, true);
-            renderDrawerOptions();
+        if (getIntent().getBooleanExtra(FragmentNewPassword.EXTRA_RESET_PASSWORD, false)) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new FragmentNewPassword()).commit();
         } else {
-            navigator.navigateToLoginSignUp(this, true);
+            userModel = PrefUtils.getUser(this);
+            if (userModel != null) {
+                navigator.navigateToPostList(this, true);
+                renderDrawerOptions();
+            } else {
+                navigator.navigateToLoginSignUp(this, true);
+            }
         }
     }
 
@@ -314,5 +320,11 @@ public class ActivityMain extends BaseActivity
         if (actionBar != null) {
             actionBar.setTitle(resId);
         }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        Log.i("onNewIntent", "onNewIntent was called!");
     }
 }
