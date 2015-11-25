@@ -274,6 +274,7 @@ public class FragmentLogin extends BaseFragment implements LoginView {
                 .content(R.string.app_login_dlg_login_logging_in)
                 .progress(true, 0)
                 .progressIndeterminateStyle(false)
+                .cancelable(false)
                 .show();
     }
 
@@ -292,6 +293,7 @@ public class FragmentLogin extends BaseFragment implements LoginView {
                 .title(R.string.please_wait)
                 .content(R.string.new_password_capture_email_loading)
                 .progress(true, 0)
+                .cancelable(false)
                 .progressIndeterminateStyle(false)
                 .show();
     }
