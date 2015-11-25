@@ -77,7 +77,7 @@
     <string name="password_reset_dlg_not_found_email">No pudimos encontrar tu cuenta con esa información</string>
     <string name="password_reset_email_sent_msg">Hemos enviado un correo electrónico a <b>%1$s</b>.\nHaz clic en el enlace que verás para restablecer tu contraseña.\nSi no ves el correo electrónico en tu bandeja de entrada, revisa otras carpetas, como Correo electrónico no deseado o Sociales.</string>
     <string name="password_reset_obsolete_token_error">El enlace de restablecimiento en el que has hecho clic ha expirado. Por favor, solicita uno nuevo.</string>
-    <string name="new_password_forgot_password_message">Olvidé mi contraseña</string>
+    <string name="new_password_forgot_password_message"><u>Olvidé mi contraseña</u></string>
     <string name="new_password_toolbar_title">Cambiar contraseña</string>
     <string name="new_password_label">Restablece tu contraseña</string>
     <string name="new_password_capture_email_label">Para recuperar tu contraseña, captura el correo que usaste en tu registro:</string>
