@@ -225,7 +225,7 @@ public class ActivityMain extends BaseActivity
                 actionBar.hide();
             }
         } else if (currentFragment instanceof FragmentPagedPostList) {
-            drawer.setSelection(DRAWER_IDENTIFIER_HOME, false);
+            if (drawer != null) drawer.setSelection(DRAWER_IDENTIFIER_HOME, false);
             setActionBarTitle(R.string.app_name);
         } else if (currentFragment instanceof FragmentSearch) {
             setActionBarTitle(R.string.app_main_toolbar_title_search);
