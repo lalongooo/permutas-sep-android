@@ -15,7 +15,7 @@ import com.lalongooo.permutassep.R;
 import com.paging.listview.PagingListView;
 import com.permutassep.BaseFragment;
 import com.permutassep.adapter.MyPagingAdapter;
-import com.permutassep.config.Config;
+import com.permutassep.presentation.config.Config;
 import com.permutassep.interfaces.FirstLaunchCompleteListener;
 import com.permutassep.model.Post;
 import com.permutassep.model.PostPage;

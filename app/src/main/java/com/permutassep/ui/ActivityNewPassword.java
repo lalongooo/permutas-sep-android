@@ -14,7 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lalongooo.permutassep.R;
-import com.permutassep.config.Config;
+import com.permutassep.presentation.config.Config;
 import com.permutassep.model.AuthModel;
 import com.permutassep.model.ConfirmPasswordReset;
 import com.permutassep.model.User;

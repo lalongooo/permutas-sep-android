@@ -19,7 +19,7 @@ import com.permutassep.BaseFragment;
 import com.permutassep.adapter.CitySpinnerBaseAdapter;
 import com.permutassep.adapter.StateSpinnerBaseAdapter;
 import com.permutassep.adapter.TownSpinnerBaseAdapter;
-import com.permutassep.config.Config;
+import com.permutassep.presentation.config.Config;
 import com.permutassep.model.City;
 import com.permutassep.model.Post;
 import com.permutassep.model.State;

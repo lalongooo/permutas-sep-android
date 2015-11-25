@@ -1,12 +1,13 @@
 package com.permutassep.rest.inegifacil;
 
-import com.permutassep.config.Config;
+/**
+ * By Jorge E. Hernandez (@lalongooo) 2015
+ */
+
+import com.permutassep.presentation.config.Config;
 
 import retrofit.RestAdapter;
 
-/**
- * Created by jorge.hernandez on 2/24/2015.
- */
 public class InegiFacilRestClient {
 
     private static IInegiFacilService restClient;

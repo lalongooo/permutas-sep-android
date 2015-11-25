@@ -5,9 +5,9 @@ import android.content.Context;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import com.permutassep.config.Config;
 import com.permutassep.model.Post;
 import com.permutassep.model.User;
+import com.permutassep.presentation.config.Config;
 import com.permutassep.utils.Utils;
 
 import java.io.FileNotFoundException;
@@ -37,55 +37,70 @@ public class PostTypeAdapter extends TypeAdapter<Post> {
                 String name = in.nextName();
 
 
-                if (name.equals("id")) {
-                    p.setId(in.nextInt());
-                } else if (name.equals("workday_type")) {
-                    p.setWorkdayType(in.nextString());
-                } else if (name.equals("position_type")) {
-                    p.setPositionType(in.nextString());
-                } else if (name.equals("post_date")) {
-                    SimpleDateFormat formatter = new SimpleDateFormat(Config.APP_DATE_FORMAT);
-                    p.setPostDate(formatter.parse(in.nextString()));
-                } else if (name.equals("is_teaching_career")) {
-                    p.setIsTeachingCareer(in.nextBoolean());
-                } else if (name.equals("academic_level")) {
-                    p.setAcademicLevel(in.nextString());
-                } else if (name.equals("post")) {
-                    p.setPostText(in.nextString());
-                } else if (name.equals("place_from_lon")) {
-                    p.setLonFrom(in.nextString());
-                } else if (name.equals("place_from_lat")) {
-                    p.setLatFrom(in.nextString());
-                } else if (name.equals("place_from_state")) {
-                    p.setStateFrom(Short.valueOf(in.nextString()));
-                } else if (name.equals("place_from_city")) {
-                    p.setCityFrom(Short.valueOf(in.nextString()));
-                } else if (name.equals("place_from_town")) {
-                    p.setTownFrom(Short.valueOf(in.nextString()));
-                } else if (name.equals("place_to_lon")) {
-                    p.setLonTo(in.nextString());
-                } else if (name.equals("place_to_lat")) {
-                    p.setLatTo(in.nextString());
-                } else if (name.equals("place_to_state")) {
-                    p.setStateTo(Short.valueOf(in.nextString()));
-                } else if (name.equals("place_to_city")) {
-                    p.setCityTo(Short.valueOf(in.nextString()));
-                } else if (name.equals("place_to_town")) {
-                    p.setTownTo(Short.valueOf(in.nextString()));
-                } else if (name.equals("user")) {
-                    in.nextInt();
-                    p.setUser(Utils.getUser(this.context));
+                switch (name) {
+                    case "id":
+                        p.setId(in.nextInt());
+                        break;
+                    case "workday_type":
+                        p.setWorkdayType(in.nextString());
+                        break;
+                    case "position_type":
+                        p.setPositionType(in.nextString());
+                        break;
+                    case "post_date":
+                        SimpleDateFormat formatter = new SimpleDateFormat(Config.APP_DATE_FORMAT);
+                        p.setPostDate(formatter.parse(in.nextString()));
+                        break;
+                    case "is_teaching_career":
+                        p.setIsTeachingCareer(in.nextBoolean());
+                        break;
+                    case "academic_level":
+                        p.setAcademicLevel(in.nextString());
+                        break;
+                    case "post":
+                        p.setPostText(in.nextString());
+                        break;
+                    case "place_from_lon":
+                        p.setLonFrom(in.nextString());
+                        break;
+                    case "place_from_lat":
+                        p.setLatFrom(in.nextString());
+                        break;
+                    case "place_from_state":
+                        p.setStateFrom(Short.valueOf(in.nextString()));
+                        break;
+                    case "place_from_city":
+                        p.setCityFrom(Short.valueOf(in.nextString()));
+                        break;
+                    case "place_from_town":
+                        p.setTownFrom(Short.valueOf(in.nextString()));
+                        break;
+                    case "place_to_lon":
+                        p.setLonTo(in.nextString());
+                        break;
+                    case "place_to_lat":
+                        p.setLatTo(in.nextString());
+                        break;
+                    case "place_to_state":
+                        p.setStateTo(Short.valueOf(in.nextString()));
+                        break;
+                    case "place_to_city":
+                        p.setCityTo(Short.valueOf(in.nextString()));
+                        break;
+                    case "place_to_town":
+                        p.setTownTo(Short.valueOf(in.nextString()));
+                        break;
+                    case "user":
+                        in.nextInt();
+                        p.setUser(Utils.getUser(this.context));
+                        break;
                 }
 
             }
 
             in.endObject();
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
+        } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
 

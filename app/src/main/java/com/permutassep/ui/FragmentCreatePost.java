@@ -45,7 +45,7 @@ import com.google.gson.GsonBuilder;
 import com.lalongooo.permutassep.R;
 import com.permutassep.BaseFragment;
 import com.permutassep.adapter.PostTypeAdapter;
-import com.permutassep.config.Config;
+import com.permutassep.presentation.config.Config;
 import com.permutassep.model.City;
 import com.permutassep.presentation.view.wizard.model.PermutaSepWizardModel;
 import com.permutassep.model.Post;

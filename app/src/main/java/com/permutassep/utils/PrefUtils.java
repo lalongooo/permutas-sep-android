@@ -1,14 +1,15 @@
 package com.permutassep.utils;
 
+/**
+ * By Jorge E. Hernandez (@lalongooo) 2015
+ */
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.permutassep.config.Config;
+import com.permutassep.presentation.config.Config;
 
-/**
- * Created by jorge.hernandez on 4/10/2015.
- */
 public class PrefUtils {
 
     /*

@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.permutassep.config.Config;
+import com.permutassep.presentation.config.Config;
 import com.permutassep.presentation.AndroidApplication;
 import com.permutassep.presentation.internal.di.components.ApplicationComponent;
 import com.permutassep.presentation.internal.di.modules.ActivityModule;

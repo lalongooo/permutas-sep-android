@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.permutassep.config.Config;
+import com.permutassep.presentation.config.Config;
 import com.permutassep.presentation.view.activity.ActivityMain;
 import com.permutassep.presentation.view.fragment.FragmentNewPassword;
 import com.permutassep.rest.permutassep.RestPaths;

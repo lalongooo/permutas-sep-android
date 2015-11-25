@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.facebook.login.LoginManager;
 import com.lalongooo.permutassep.R;
-import com.permutassep.config.Config;
+import com.permutassep.presentation.config.Config;
 import com.permutassep.presentation.internal.di.components.ApplicationComponent;
 import com.permutassep.presentation.internal.di.components.AuthenticationComponent;
 import com.permutassep.presentation.internal.di.components.DaggerAuthenticationComponent;

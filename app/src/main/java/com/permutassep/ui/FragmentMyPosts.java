@@ -16,7 +16,7 @@ import com.lalongooo.permutassep.R;
 import com.permutassep.BaseFragment;
 import com.permutassep.adapter.PostAdapter;
 import com.permutassep.adapter.PostTypeAdapter;
-import com.permutassep.config.Config;
+import com.permutassep.presentation.config.Config;
 import com.permutassep.model.Post;
 import com.permutassep.presentation.interfaces.OnPostItemSelectedListener;
 import com.permutassep.rest.permutassep.PermutasSEPRestClient;

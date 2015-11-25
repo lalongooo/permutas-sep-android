@@ -13,7 +13,7 @@ import com.facebook.login.LoginManager;
 import com.lalongooo.permutassep.BuildConfig;
 import com.lalongooo.permutassep.R;
 import com.permutassep.BaseActivity;
-import com.permutassep.config.Config;
+import com.permutassep.presentation.config.Config;
 import com.permutassep.model.AuthModel;
 import com.permutassep.model.User;
 import com.permutassep.rest.permutassep.PermutasSEPRestClient;

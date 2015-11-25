@@ -18,7 +18,7 @@ import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 
 import com.lalongooo.permutassep.R;
-import com.permutassep.config.Config;
+import com.permutassep.presentation.config.Config;
 import com.permutassep.model.State;
 import com.permutassep.model.User;
 

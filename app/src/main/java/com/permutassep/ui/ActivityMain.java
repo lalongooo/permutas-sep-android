@@ -22,7 +22,7 @@ import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.permutassep.BaseActivity;
-import com.permutassep.config.Config;
+import com.permutassep.presentation.config.Config;
 import com.permutassep.interfaces.FirstLaunchCompleteListener;
 import com.permutassep.model.Post;
 import com.permutassep.presentation.interfaces.OnPostItemSelectedListener;
