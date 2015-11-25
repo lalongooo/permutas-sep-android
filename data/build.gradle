@@ -49,9 +49,21 @@ android {
     }
 
     buildTypes {
+
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "com_permutassep_api_rest_endpoint", com_permutassep_debug_api_rest_endpoint
+            buildConfigField "String", "com_permutassep_api_rest_user", com_permutassep_debug_api_rest_user
+            buildConfigField "String", "com_permutassep_api_rest_password", com_permutassep_debug_api_rest_password
+        }
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "com_permutassep_api_rest_endpoint", com_permutassep_release_api_rest_endpoint
+            buildConfigField "String", "com_permutassep_api_rest_user", com_permutassep_release_api_rest_user
+            buildConfigField "String", "com_permutassep_api_rest_password", com_permutassep_release_api_rest_password
         }
     }
 }

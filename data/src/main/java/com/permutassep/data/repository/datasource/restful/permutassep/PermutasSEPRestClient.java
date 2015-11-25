@@ -4,6 +4,7 @@ import android.util.Base64;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.permutassep.data.BuildConfig;
 import com.permutassep.data.entity.PostEntity;
 import com.permutassep.data.entity.UserEntity;
 import com.permutassep.data.entity.typeadapter.PostEntityTypeAdapter;
@@ -17,9 +18,9 @@ import retrofit.converter.GsonConverter;
 
 public class PermutasSEPRestClient {
 
-    private static final String API_BASE_URL = "http://permuta-sep-dev.herokuapp.com/api/";
-    private static final String API_REST_USER = "permuta";
-    private static final String API_REST_PASSWORD = "Mut4.P3r#Dev_15";
+    private static final String API_BASE_URL = BuildConfig.com_permutassep_api_rest_endpoint;
+    private static final String API_REST_USER = BuildConfig.com_permutassep_api_rest_user;
+    private static final String API_REST_PASSWORD = BuildConfig.com_permutassep_api_rest_password;
     private static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
     private RestAdapter restAdapter;
     private boolean enablePostTypeAdapter;
