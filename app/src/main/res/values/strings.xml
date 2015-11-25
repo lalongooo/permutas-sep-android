@@ -115,6 +115,7 @@
     <string name="app_login_fb_dlg_wrong_email">Por favor, captura un email válido</string>
     <string name="app_login_btn_login">Iniciar sesión</string>
     <string name="app_login_dlg_login_title">Iniciar sesión</string>
+    <string name="app_login_dlg_login_wrong_credentials">Ocurrió un error al inciar sesión. Asegúrate de capturar bien tu correo/contraseña.</string>
     <string name="app_login_dlg_login_err_text">Usuario o contraseña incorrectos</string>
     <string name="app_login_dlg_login_err_not_registered_text">Usuario no registrado</string>
     <string name="app_login_dlg_login_logging_in">Iniciando sesión</string>

@@ -328,7 +328,10 @@ public class FragmentLogin extends BaseFragment implements LoginView {
 
     @Override
     public void showError(String message) {
-        this.showToastMessage(message);
+        new MaterialDialog.Builder(getActivity())
+                .title(R.string.app_login_dlg_login_title)
+                .content(message)
+                .positiveText(R.string.accept)
+                .show();
     }
-
 }

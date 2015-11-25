@@ -6,6 +6,7 @@ package com.permutassep.presentation.presenter;
 
 import android.support.annotation.NonNull;
 
+import com.lalongooo.permutassep.R;
 import com.permutassep.domain.User;
 import com.permutassep.domain.exception.DefaultErrorBundle;
 import com.permutassep.domain.exception.ErrorBundle;
@@ -85,6 +86,9 @@ public class LoginPresenter implements Presenter {
 
     private void showErrorMessage(ErrorBundle errorBundle) {
         String errorMessage = ErrorMessageFactory.create(this.loginView.getContext(), errorBundle.getException());
+        if (!errorMessage.equals(loginView.getContext().getString(R.string.exception_no_internet_connectivity_message))) {
+            errorMessage = loginView.getContext().getString(R.string.app_login_dlg_login_wrong_credentials);
+        }
         this.loginView.showError(errorMessage);
     }
 
