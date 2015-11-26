@@ -38,6 +38,13 @@ public class ComplexPreferences {
         preferences.edit().putString(key, GSON.toJson(object)).apply();
     }
 
+    public void removeObject(String key) {
+        if (TextUtils.isEmpty(key)) {
+            throw new IllegalArgumentException("key is empty or null");
+        }
+        preferences.edit().remove(key).apply();
+    }
+
     public <T> T getObject(String key, Class<T> a) {
 
         String gson = preferences.getString(key, null);
