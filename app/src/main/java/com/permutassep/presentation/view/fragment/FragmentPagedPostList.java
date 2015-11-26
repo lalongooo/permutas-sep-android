@@ -107,7 +107,7 @@ public class FragmentPagedPostList extends BaseFragment implements PagedPostsLis
             @Override
             public void onLoadMore(int current_page) {
                 if (hasNextPage) {
-                    FragmentPagedPostList.this.postListPresenter.initialize(current_page, 10);
+                    FragmentPagedPostList.this.postListPresenter.initialize(current_page, Config.NEWS_FEED_ITEMS_PER_PAGE);
                 }
             }
         });
@@ -195,12 +195,16 @@ public class FragmentPagedPostList extends BaseFragment implements PagedPostsLis
     @Override
     public void showLoading() {
 
-        progressDialog = new MaterialDialog.Builder(getActivity())
-                .title(R.string.please_wait)
-                .content(R.string.app_post_list_loading_dlg_msg)
-                .progress(true, 0)
-                .progressIndeterminateStyle(false)
-                .show();
+        if (progressDialog == null) {
+            progressDialog = new MaterialDialog.Builder(getActivity())
+                    .title(R.string.please_wait)
+                    .content(R.string.app_post_list_loading_dlg_msg)
+                    .progress(true, 0)
+                    .progressIndeterminateStyle(false)
+                    .show();
+        } else {
+            progressDialog.show();
+        }
     }
 
     @Override
