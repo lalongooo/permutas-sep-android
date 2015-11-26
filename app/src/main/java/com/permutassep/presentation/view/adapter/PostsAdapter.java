@@ -108,8 +108,9 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostViewHold
         void onPostItemClicked(PostModel postModel);
     }
 
-    public void clearPosts() {
-        this.postModelList.clear();
+    public void addPost(PostModel postModel) {
+        this.postModelList.add(0, postModel);
+        this.notifyDataSetChanged();
     }
 
     static class PostViewHolder extends RecyclerView.ViewHolder {

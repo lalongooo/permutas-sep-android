@@ -31,6 +31,7 @@ import com.permutassep.presentation.model.PostModel;
 import com.permutassep.presentation.presenter.PagedPostListPresenter;
 import com.permutassep.presentation.utils.PrefUtils;
 import com.permutassep.presentation.view.PagedPostsListView;
+import com.permutassep.presentation.view.activity.ActivityWritePost;
 import com.permutassep.presentation.view.activity.BaseActivity;
 import com.permutassep.presentation.view.adapter.PostsAdapter;
 import com.permutassep.presentation.view.adapter.PostsLayoutManager;
@@ -40,6 +41,7 @@ import java.util.Collection;
 
 import javax.inject.Inject;
 
+import br.kots.mob.complex.preferences.ComplexPreferences;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -239,20 +241,28 @@ public class FragmentPagedPostList extends BaseFragment implements PagedPostsLis
         this.showToastMessage(message);
     }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        PostModel postModel = ComplexPreferences.get(getActivity()).getObject(ActivityWritePost.NEW_POST_KEY, PostModel.class);
+        if (!hidden &&  postModel != null) {
+            ComplexPreferences.get(getActivity()).removeObject(ActivityWritePost.NEW_POST_KEY);
+            this.postsAdapter.addPost(postModel);
+        }
+    }
+
     /**
      * Synchronize with the fragment lifecycle by calling
      * the corresponding presenter methods
      */
-
     @Override
     public void onResume() {
         super.onResume();
         this.postListPresenter.resume();
-        if (PrefUtils.shouldReloadNewsFeed(getActivity())) {
-            PrefUtils.markNewsFeedToReload(getActivity(), false);
-            this.postsAdapter.clearPosts();
-            this.postsAdapter.notifyDataSetChanged();
-            this.loadUserList();
+        PostModel postModel = ComplexPreferences.get(getActivity()).getObject(ActivityWritePost.NEW_POST_KEY, PostModel.class);
+        if (postModel != null) {
+            ComplexPreferences.get(getActivity()).removeObject(ActivityWritePost.NEW_POST_KEY);
+            this.postsAdapter.addPost(postModel);
         }
     }
 

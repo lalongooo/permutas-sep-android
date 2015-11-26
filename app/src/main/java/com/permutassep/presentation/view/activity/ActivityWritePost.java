@@ -1,6 +1,5 @@
 package com.permutassep.presentation.view.activity;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -22,10 +21,8 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.google.gson.Gson;
 import com.lalongooo.permutassep.R;
 import com.permutassep.model.City;
-import com.permutassep.presentation.view.wizard.model.PermutaSepWizardModel;
 import com.permutassep.model.State;
 import com.permutassep.model.Town;
 import com.permutassep.presentation.internal.di.HasComponent;
@@ -39,6 +36,7 @@ import com.permutassep.presentation.view.WritePostView;
 import com.permutassep.presentation.view.wizard.model.AbstractWizardModel;
 import com.permutassep.presentation.view.wizard.model.ModelCallbacks;
 import com.permutassep.presentation.view.wizard.model.Page;
+import com.permutassep.presentation.view.wizard.model.PermutaSepWizardModel;
 import com.permutassep.presentation.view.wizard.model.PostTextPage;
 import com.permutassep.presentation.view.wizard.model.ProfessorCityFromPage;
 import com.permutassep.presentation.view.wizard.model.ProfessorCityToPage;
@@ -50,6 +48,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import br.kots.mob.complex.preferences.ComplexPreferences;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -65,6 +64,8 @@ public class ActivityWritePost extends BaseActivity implements
         ModelCallbacks,
         HasComponent<PostComponent>,
         WritePostView {
+
+    public static final String NEW_POST_KEY = "a_new_post";
 
     @Bind(R.id.next_button)
     Button mNextButton;
@@ -205,7 +206,7 @@ public class ActivityWritePost extends BaseActivity implements
                 .postModule(new PostModule())
                 .build();
         this.postComponent.inject(this);
-        this.writePostPresenter.setView(this);
+        this.writePostPresenter.setView(this, PrefUtils.getUser(ActivityWritePost.this));
     }
 
     @Override
@@ -377,13 +378,7 @@ public class ActivityWritePost extends BaseActivity implements
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog materialDialog, @NonNull DialogAction dialogAction) {
-                        Intent data = new Intent();
-                        data.putExtra("newPost", new Gson().toJson(postModel));
-                        if (getParent() == null) {
-                            setResult(Activity.RESULT_OK, data);
-                        } else {
-                            getParent().setResult(Activity.RESULT_OK, data);
-                        }
+                        ComplexPreferences.get(ActivityWritePost.this).putObject(NEW_POST_KEY, postModel);
                         finish();
                     }
                 })

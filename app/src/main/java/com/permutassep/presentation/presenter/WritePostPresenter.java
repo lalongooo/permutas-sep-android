@@ -12,6 +12,7 @@ import com.permutassep.domain.interactor.WritePost;
 import com.permutassep.presentation.internal.di.PerActivity;
 import com.permutassep.presentation.mapper.PostModelDataMapper;
 import com.permutassep.presentation.model.PostModel;
+import com.permutassep.presentation.model.UserModel;
 import com.permutassep.presentation.view.WritePostView;
 
 import javax.inject.Inject;
@@ -22,6 +23,7 @@ public class WritePostPresenter implements Presenter {
     private final WritePost writePostUseCase;
     private final PostModelDataMapper postModelDataMapper;
     private WritePostView writePostView;
+    private UserModel userModel;
 
     @Inject
     public WritePostPresenter(WritePost writePostUseCase, PostModelDataMapper postModelDataMapper) {
@@ -56,12 +58,15 @@ public class WritePostPresenter implements Presenter {
         this.writePostView.showRetry();
     }
 
-    public void setView(@NonNull WritePostView writePostView) {
+    public void setView(@NonNull WritePostView writePostView, UserModel userModel) {
         this.writePostView = writePostView;
+        this.userModel = userModel;
     }
 
     private void writtenPost(Post post) {
-        writePostView.writtenPost(this.postModelDataMapper.transform(post));
+        PostModel postModel = this.postModelDataMapper.transform(post);
+        postModel.setUser(userModel);
+        writePostView.writtenPost(postModel);
     }
 
     @Override
