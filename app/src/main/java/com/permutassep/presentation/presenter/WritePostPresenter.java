@@ -45,7 +45,7 @@ public class WritePostPresenter implements Presenter {
 
     private void sendPost(PostModel postModel) {
         this.writePostUseCase.setPost(postModelDataMapper.transform(postModel));
-        this.writePostUseCase.execute(new SignUpSubscriber());
+        this.writePostUseCase.execute(new WritePostSubscriber());
     }
 
     private void hideViewLoading() {
@@ -79,7 +79,7 @@ public class WritePostPresenter implements Presenter {
         writePostUseCase.unsubscribe();
     }
 
-    private final class SignUpSubscriber extends DefaultSubscriber<Post> {
+    private final class WritePostSubscriber extends DefaultSubscriber<Post> {
         @Override
         public void onCompleted() {
             WritePostPresenter.this.hideViewLoading();
