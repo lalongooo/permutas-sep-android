@@ -392,6 +392,7 @@ public class ActivityWritePost extends BaseActivity implements
                 .title(R.string.wizard_post_dlg_title)
                 .content(R.string.wizard_post_dlg_text)
                 .progress(true, 0)
+                .cancelable(false)
                 .progressIndeterminateStyle(false)
                 .show();
     }
