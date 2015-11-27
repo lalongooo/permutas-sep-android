@@ -66,6 +66,7 @@ public class FragmentPagedPostList extends BaseFragment implements PagedPostsLis
     private PostsLayoutManager postsLayoutManager;
     private PostListListener postListListener;
     private boolean hasNextPage;
+    private int currentPage = 1;
 
     private PostsAdapter.OnItemClickListener onItemClickListener = new PostsAdapter.OnItemClickListener() {
         @Override
@@ -108,6 +109,7 @@ public class FragmentPagedPostList extends BaseFragment implements PagedPostsLis
 
             @Override
             public void onLoadMore(int current_page) {
+                currentPage = current_page;
                 if (hasNextPage) {
                     FragmentPagedPostList.this.postListPresenter.initialize(current_page, Config.NEWS_FEED_ITEMS_PER_PAGE);
                 }
@@ -162,7 +164,7 @@ public class FragmentPagedPostList extends BaseFragment implements PagedPostsLis
     }
 
     private void loadUserList() {
-        this.postListPresenter.initialize(1, Config.NEWS_FEED_ITEMS_PER_PAGE);
+        this.postListPresenter.initialize(currentPage, Config.NEWS_FEED_ITEMS_PER_PAGE);
     }
 
     @Override
