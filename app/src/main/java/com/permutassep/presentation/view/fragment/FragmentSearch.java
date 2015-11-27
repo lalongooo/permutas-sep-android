@@ -55,11 +55,6 @@ public class FragmentSearch extends BaseFragment {
     private int cityToSelectedPosition = 0;
     private String townToSelectedPosition = "";
 
-    private List<City> mCitiesFrom = new ArrayList<>();
-    private List<Town> mTownsFrom = new ArrayList<>();
-    private List<City> mCitiesTo = new ArrayList<>();
-    private List<Town> mTownsTo = new ArrayList<>();
-
     private SearchPerformer searchPerformer;
 
 
@@ -134,9 +129,6 @@ public class FragmentSearch extends BaseFragment {
                     showDialog(getString(R.string.please_wait), getString(R.string.main_loading_cities));
                     // Remove localities
                     resetSpinner(spnLocalityFrom);
-                    mCitiesFrom.clear();
-                    mTownsFrom.clear();
-
                     stateFromSelectedPosition = selectedState.getId();
                     cityFromSelectedPosition = 0;
                     townFromSelectedPosition = "";
@@ -145,7 +137,6 @@ public class FragmentSearch extends BaseFragment {
                         InegiFacilRestClient.get().getCities(String.valueOf(selectedState.getId()), new Callback<ArrayList<City>>() {
                             @Override
                             public void success(ArrayList<City> cities, Response response) {
-                                mCitiesFrom = cities;
                                 spnMunicipalityFrom.setAdapter(new PlaceSpinnerBaseAdapter(getActivity(), cities));
                                 hideDialog();
                             }
@@ -181,7 +172,6 @@ public class FragmentSearch extends BaseFragment {
                 if (cityFromSelectedPosition != position) {
 
                     showDialog(getString(R.string.please_wait), getString(R.string.main_loading_localities));
-                    mTownsFrom.clear();
                     cityFromSelectedPosition = selectedCity.getClaveMunicipio();
                     townFromSelectedPosition = "";
 
@@ -189,7 +179,6 @@ public class FragmentSearch extends BaseFragment {
                         InegiFacilRestClient.get().getTowns(String.valueOf(selectedCity.getClaveEntidad()), String.valueOf(selectedCity.getClaveMunicipio()), new Callback<ArrayList<Town>>() {
                             @Override
                             public void success(ArrayList<Town> towns, Response response) {
-                                mTownsFrom = towns;
                                 spnLocalityFrom.setAdapter(new PlaceSpinnerBaseAdapter(getActivity(), towns));
                                 hideDialog();
                             }
@@ -241,9 +230,6 @@ public class FragmentSearch extends BaseFragment {
                     showDialog(getString(R.string.please_wait), getString(R.string.main_loading_cities));
                     // Remove localities
                     resetSpinner(spnLocalityTo);
-                    mCitiesTo.clear();
-                    mTownsTo.clear();
-
                     stateToSelectedPosition = selectedState.getId();
                     cityToSelectedPosition = 0;
                     townToSelectedPosition = "";
@@ -252,7 +238,6 @@ public class FragmentSearch extends BaseFragment {
                         InegiFacilRestClient.get().getCities(String.valueOf(selectedState.getId()), new Callback<ArrayList<City>>() {
                             @Override
                             public void success(ArrayList<City> cities, Response response) {
-                                mCitiesTo = cities;
                                 spnMunicipalityTo.setAdapter(new PlaceSpinnerBaseAdapter(getActivity(), cities));
                                 hideDialog();
                             }
@@ -288,7 +273,6 @@ public class FragmentSearch extends BaseFragment {
                 if (cityToSelectedPosition != position) {
 
                     showDialog(getString(R.string.please_wait), getString(R.string.main_loading_localities));
-                    mTownsTo.clear();
                     cityToSelectedPosition = selectedCity.getClaveMunicipio();
                     townToSelectedPosition = "";
 
@@ -296,7 +280,6 @@ public class FragmentSearch extends BaseFragment {
                         InegiFacilRestClient.get().getTowns(String.valueOf(selectedCity.getClaveEntidad()), String.valueOf(selectedCity.getClaveMunicipio()), new Callback<ArrayList<Town>>() {
                             @Override
                             public void success(ArrayList<Town> towns, Response response) {
-                                mTownsTo = towns;
                                 spnLocalityTo.setAdapter(new PlaceSpinnerBaseAdapter(getActivity(), towns));
                                 hideDialog();
                             }
