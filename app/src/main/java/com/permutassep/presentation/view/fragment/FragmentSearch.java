@@ -129,7 +129,7 @@ public class FragmentSearch extends BaseFragment {
 
                 State selectedState = (State) parent.getItemAtPosition(position);
 
-                if (position != stateFromSelectedPosition && selectedState.getId() != 0) {
+                if (position != stateFromSelectedPosition) {
 
                     showDialog(getString(R.string.please_wait), getString(R.string.main_loading_cities));
                     // Remove localities
@@ -160,13 +160,11 @@ public class FragmentSearch extends BaseFragment {
                         Log.d("An error ocurred", ex.getMessage());
                     }
                 } else {
-                    if (selectedState.getId() == 0) {
-                        stateFromSelectedPosition = 0;
-                        cityFromSelectedPosition = 0;
-                        townFromSelectedPosition = "";
-                        resetSpinner(spnMunicipalityFrom);
-                        resetSpinner(spnLocalityFrom);
-                    }
+                    stateFromSelectedPosition = 0;
+                    cityFromSelectedPosition = 0;
+                    townFromSelectedPosition = "";
+                    resetSpinner(spnMunicipalityFrom);
+                    resetSpinner(spnLocalityFrom);
                 }
             }
 
@@ -180,11 +178,12 @@ public class FragmentSearch extends BaseFragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 City selectedCity = (City) parent.getItemAtPosition(position);
-                if (cityFromSelectedPosition != position && position != 0 && getUserVisibleHint()) {
+                if (cityFromSelectedPosition != position) {
 
                     showDialog(getString(R.string.please_wait), getString(R.string.main_loading_localities));
                     mTownsFrom.clear();
                     cityFromSelectedPosition = selectedCity.getClaveMunicipio();
+                    townFromSelectedPosition = "";
 
                     try {
                         InegiFacilRestClient.get().getTowns(String.valueOf(selectedCity.getClaveEntidad()), String.valueOf(selectedCity.getClaveMunicipio()), new Callback<ArrayList<Town>>() {
@@ -205,10 +204,8 @@ public class FragmentSearch extends BaseFragment {
                         Log.d("An error occurred", ex.getMessage());
                     }
                 } else {
-                    if (position != 0) {
-                        townFromSelectedPosition = "";
-                        resetSpinner(spnLocalityFrom);
-                    }
+                    townFromSelectedPosition = "";
+                    resetSpinner(spnLocalityFrom);
                 }
             }
 
@@ -239,7 +236,7 @@ public class FragmentSearch extends BaseFragment {
 
                 State selectedState = (State) parent.getItemAtPosition(position);
 
-                if (position != stateToSelectedPosition && selectedState.getId() != 0) {
+                if (position != stateToSelectedPosition) {
 
                     showDialog(getString(R.string.please_wait), getString(R.string.main_loading_cities));
                     // Remove localities
@@ -249,6 +246,7 @@ public class FragmentSearch extends BaseFragment {
 
                     stateToSelectedPosition = selectedState.getId();
                     cityToSelectedPosition = 0;
+                    townToSelectedPosition = "";
 
                     try {
                         InegiFacilRestClient.get().getCities(String.valueOf(selectedState.getId()), new Callback<ArrayList<City>>() {
@@ -269,13 +267,11 @@ public class FragmentSearch extends BaseFragment {
                         Log.d("An error ocurred", ex.getMessage());
                     }
                 } else {
-                    if (selectedState.getId() == 0) {
-                        stateToSelectedPosition = 0;
-                        cityToSelectedPosition = 0;
-                        townToSelectedPosition = "";
-                        resetSpinner(spnMunicipalityTo);
-                        resetSpinner(spnLocalityTo);
-                    }
+                    stateToSelectedPosition = 0;
+                    cityToSelectedPosition = 0;
+                    townToSelectedPosition = "";
+                    resetSpinner(spnMunicipalityTo);
+                    resetSpinner(spnLocalityTo);
                 }
             }
 
@@ -289,11 +285,12 @@ public class FragmentSearch extends BaseFragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 City selectedCity = (City) parent.getItemAtPosition(position);
-                if (cityToSelectedPosition != position && position != 0 && getUserVisibleHint()) {
+                if (cityToSelectedPosition != position) {
 
                     showDialog(getString(R.string.please_wait), getString(R.string.main_loading_localities));
                     mTownsTo.clear();
                     cityToSelectedPosition = selectedCity.getClaveMunicipio();
+                    townToSelectedPosition = "";
 
                     try {
                         InegiFacilRestClient.get().getTowns(String.valueOf(selectedCity.getClaveEntidad()), String.valueOf(selectedCity.getClaveMunicipio()), new Callback<ArrayList<Town>>() {
@@ -314,10 +311,8 @@ public class FragmentSearch extends BaseFragment {
                         Log.d("An error occurred", ex.getMessage());
                     }
                 } else {
-                    if (position != 0) {
-                        townToSelectedPosition = "";
-                        resetSpinner(spnLocalityTo);
-                    }
+                    townToSelectedPosition = "";
+                    resetSpinner(spnLocalityTo);
                 }
             }
 
@@ -342,9 +337,10 @@ public class FragmentSearch extends BaseFragment {
     }
 
     private void resetSpinner(Spinner spinner) {
-        if (spinner.getAdapter() != null && spinner.getAdapter().getCount() > 0) {
-            spinner.setAdapter(null);
-
+        PlaceSpinnerBaseAdapter adapter = (PlaceSpinnerBaseAdapter) spinner.getAdapter();
+        if (adapter != null) {
+            adapter.clear();
+            adapter.notifyDataSetChanged();
         }
     }
 
