@@ -33,9 +33,7 @@ import android.widget.TextView;
 import com.permutassep.presentation.view.wizard.model.Page;
 import com.permutassep.presentation.view.wizard.model.ProfessorCityFromPage;
 import com.lalongooo.permutassep.R;
-import com.permutassep.adapter.CitySpinnerBaseAdapter;
-import com.permutassep.adapter.StateSpinnerBaseAdapter;
-import com.permutassep.adapter.TownSpinnerBaseAdapter;
+import com.permutassep.adapter.PlaceSpinnerBaseAdapter;
 import com.permutassep.model.City;
 import com.permutassep.model.State;
 import com.permutassep.model.Town;
@@ -114,17 +112,17 @@ public class ProfessorCityFromFragment extends Fragment {
             townSelectedPosition = savedInstanceState.getInt(TOWN_FROM_SELECTED_KEY);
 
             if(mStates.size() > 0){
-                spnState.setAdapter(new StateSpinnerBaseAdapter(getActivity(), mStates));
+                spnState.setAdapter(new PlaceSpinnerBaseAdapter(getActivity(), mStates));
                 spnState.setSelection(stateSelectedPosition, false);
             }
 
             if(mCities.size() > 0){
-                spnMunicipality.setAdapter(new CitySpinnerBaseAdapter(getActivity(), mCities));
+                spnMunicipality.setAdapter(new PlaceSpinnerBaseAdapter(getActivity(), mCities));
                 spnMunicipality.setSelection(citySelectedPosition, false);
             }
 
             if(mTowns.size() > 0){
-                spnLocality.setAdapter(new TownSpinnerBaseAdapter(getActivity(), mTowns));
+                spnLocality.setAdapter(new PlaceSpinnerBaseAdapter(getActivity(), mTowns));
                 spnLocality.setSelection(townSelectedPosition, false);
             }
 
@@ -176,7 +174,7 @@ public class ProfessorCityFromFragment extends Fragment {
             for (short i = 0; i < states.length; i++){
                 mStates.add(new State(i, states[i]));
             }
-            spnState.setAdapter(new StateSpinnerBaseAdapter(getActivity(), mStates));
+            spnState.setAdapter(new PlaceSpinnerBaseAdapter(getActivity(), mStates));
         }
 
         spnState.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -204,7 +202,7 @@ public class ProfessorCityFromFragment extends Fragment {
                             @Override
                             public void success(ArrayList<City> cities, Response response) {
                                 mCities = cities;
-                                spnMunicipality.setAdapter(new CitySpinnerBaseAdapter(getActivity(), cities));
+                                spnMunicipality.setAdapter(new PlaceSpinnerBaseAdapter(getActivity(), cities));
                                 hideDialog();
                             }
 
@@ -250,7 +248,7 @@ public class ProfessorCityFromFragment extends Fragment {
                             @Override
                             public void success(ArrayList<Town> towns, Response response) {
                                 mTowns = towns;
-                                spnLocality.setAdapter(new TownSpinnerBaseAdapter(getActivity(), towns));
+                                spnLocality.setAdapter(new PlaceSpinnerBaseAdapter(getActivity(), towns));
                                 hideDialog();
                             }
 

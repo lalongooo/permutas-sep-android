@@ -11,9 +11,7 @@ import android.widget.Spinner;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.lalongooo.permutassep.R;
-import com.permutassep.adapter.CitySpinnerBaseAdapter;
-import com.permutassep.adapter.StateSpinnerBaseAdapter;
-import com.permutassep.adapter.TownSpinnerBaseAdapter;
+import com.permutassep.adapter.PlaceSpinnerBaseAdapter;
 import com.permutassep.model.City;
 import com.permutassep.model.State;
 import com.permutassep.model.Town;
@@ -122,9 +120,9 @@ public class FragmentSearch extends BaseFragment {
 
     private void setupSpinners() {
 
-        List<State> mStatesFrom = Utils.getStateList(getActivity());
-        spnStateFrom.setAdapter(new StateSpinnerBaseAdapter(getActivity(), mStatesFrom));
+        List<State> stateList = Utils.getStateList(getActivity());
 
+        spnStateFrom.setAdapter(new PlaceSpinnerBaseAdapter(getActivity(), stateList));
         spnStateFrom.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -148,7 +146,7 @@ public class FragmentSearch extends BaseFragment {
                             @Override
                             public void success(ArrayList<City> cities, Response response) {
                                 mCitiesFrom = cities;
-                                spnMunicipalityFrom.setAdapter(new CitySpinnerBaseAdapter(getActivity(), cities));
+                                spnMunicipalityFrom.setAdapter(new PlaceSpinnerBaseAdapter(getActivity(), cities));
                                 hideDialog();
                             }
 
@@ -193,7 +191,7 @@ public class FragmentSearch extends BaseFragment {
                             @Override
                             public void success(ArrayList<Town> towns, Response response) {
                                 mTownsFrom = towns;
-                                spnLocalityFrom.setAdapter(new TownSpinnerBaseAdapter(getActivity(), towns));
+                                spnLocalityFrom.setAdapter(new PlaceSpinnerBaseAdapter(getActivity(), towns));
                                 hideDialog();
                             }
 
@@ -234,9 +232,7 @@ public class FragmentSearch extends BaseFragment {
         });
 
 
-        List<State> mStatesTo = Utils.getStateList(getActivity());
-        spnStateTo.setAdapter(new StateSpinnerBaseAdapter(getActivity(), mStatesTo));
-
+        spnStateTo.setAdapter(new PlaceSpinnerBaseAdapter(getActivity(), stateList));
         spnStateTo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -259,7 +255,7 @@ public class FragmentSearch extends BaseFragment {
                             @Override
                             public void success(ArrayList<City> cities, Response response) {
                                 mCitiesTo = cities;
-                                spnMunicipalityTo.setAdapter(new CitySpinnerBaseAdapter(getActivity(), cities));
+                                spnMunicipalityTo.setAdapter(new PlaceSpinnerBaseAdapter(getActivity(), cities));
                                 hideDialog();
                             }
 
@@ -304,7 +300,7 @@ public class FragmentSearch extends BaseFragment {
                             @Override
                             public void success(ArrayList<Town> towns, Response response) {
                                 mTownsTo = towns;
-                                spnLocalityTo.setAdapter(new TownSpinnerBaseAdapter(getActivity(), towns));
+                                spnLocalityTo.setAdapter(new PlaceSpinnerBaseAdapter(getActivity(), towns));
                                 hideDialog();
                             }
 
@@ -348,6 +344,7 @@ public class FragmentSearch extends BaseFragment {
     private void resetSpinner(Spinner spinner) {
         if (spinner.getAdapter() != null && spinner.getAdapter().getCount() > 0) {
             spinner.setAdapter(null);
+
         }
     }
 
@@ -356,6 +353,7 @@ public class FragmentSearch extends BaseFragment {
                 .title(title)
                 .content(text)
                 .progress(true, 0)
+                .cancelable(false)
                 .progressIndeterminateStyle(false)
                 .show();
     }

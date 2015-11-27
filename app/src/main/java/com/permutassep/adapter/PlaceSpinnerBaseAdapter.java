@@ -9,45 +9,36 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.permutassep.model.State;
+import com.permutassep.model.Place;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class StateSpinnerBaseAdapter extends BaseAdapter {
+public class PlaceSpinnerBaseAdapter extends SpinnerBaseAdapter<Place> {
 
     private Context context;
-    private List<State> states = new ArrayList<>();
+    private List<Place> places;
 
-    public StateSpinnerBaseAdapter(Context context, List<State> states) {
+    public PlaceSpinnerBaseAdapter(Context context, List<? extends Place> list) {
+        super(list);
         this.context = context;
-        this.states = states;
+        places = (List<Place>) list;
     }
 
-    @Override
-    public int getCount() {
-        return states.size();
-    }
-
-    @Override
-    public Object getItem(int position) {
-        return states.get(position);
-    }
 
     @Override
     public long getItemId(int position) {
-        return states.get(position).getId();
+        return places.get(position).getPlaceId();
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         TextView textview = (TextView) inflater.inflate(android.R.layout.simple_list_item_1, null);
-        textview.setText(states.get(position).getStateName());
+        textview.setText(places.get(position).getPlaceDescription());
         textview.setTextColor(Color.BLACK);
+
         return textview;
     }
 }

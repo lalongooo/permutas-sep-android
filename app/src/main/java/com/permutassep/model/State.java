@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.Expose;
 
-public class State implements Parcelable {
+public class State extends Place implements Parcelable {
 
     @Expose
     private short id;
@@ -26,18 +26,23 @@ public class State implements Parcelable {
     public String getStateName() {
         return mStateName;
     }
+
     public void setStateName(String stateName) {
         this.mStateName = stateName;
     }
+
     public short getId() {
         return id;
     }
+
     public void setId(short id) {
         this.id = id;
     }
+
     public String getShortCode() {
         return mShortCode;
     }
+
     public void setShortCode(String shortCode) {
         this.mShortCode = shortCode;
     }
@@ -57,6 +62,7 @@ public class State implements Parcelable {
         public State createFromParcel(Parcel source) {
             return new State(source);
         }
+
         public State[] newArray(int size) {
             return new State[size];
         }
@@ -73,5 +79,15 @@ public class State implements Parcelable {
                 "id=" + id +
                 ", mStateName='" + mStateName + '\'' +
                 '}';
+    }
+
+    @Override
+    public int getPlaceId() {
+        return getId();
+    }
+
+    @Override
+    public String getPlaceDescription() {
+        return getStateName();
     }
 }
