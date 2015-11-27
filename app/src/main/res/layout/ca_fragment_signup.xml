@@ -38,7 +38,8 @@
             android:layout_marginBottom="16dp"
             android:hint="@string/hint_your_phone"
             android:inputType="phone"
-            android:saveEnabled="false" />
+            android:saveEnabled="false"
+            android:maxLength="15"/>
 
         <EditText
             android:id="@+id/etPassword"
@@ -47,7 +48,8 @@
             android:layout_marginBottom="30dp"
             android:hint="@string/hint_your_password"
             android:inputType="textPassword"
-            android:saveEnabled="false" />
+            android:saveEnabled="false"
+            android:maxLength="32"/>
 
         <TextView
             android:id="@+id/btnRegister"
