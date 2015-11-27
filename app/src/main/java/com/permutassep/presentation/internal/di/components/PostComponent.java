@@ -7,7 +7,6 @@ import com.permutassep.presentation.view.activity.ActivityWritePost;
 import com.permutassep.presentation.view.fragment.FragmentMyPostList;
 import com.permutassep.presentation.view.fragment.FragmentPagedPostList;
 import com.permutassep.presentation.view.fragment.FragmentPostDetails;
-import com.permutassep.presentation.view.fragment.FragmentPostList;
 import com.permutassep.presentation.view.fragment.FragmentSearchResults;
 
 import dagger.Component;
@@ -18,8 +17,6 @@ import dagger.Component;
 @PerActivity
 @Component(dependencies = ApplicationComponent.class, modules = {ActivityModule.class, PostModule.class})
 public interface PostComponent extends ActivityComponent {
-
-    void inject(FragmentPostList fragmentPostList);
 
     void inject(FragmentPostDetails fragmentPostDetails);
 
