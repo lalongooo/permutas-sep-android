@@ -15,7 +15,10 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.lalongooo.permutassep.R;
+import com.permutassep.presentation.AndroidApplication;
 import com.permutassep.presentation.utils.Utils;
 import com.viewpagerindicator.CirclePageIndicator;
 import com.viewpagerindicator.PageIndicator;
@@ -132,6 +135,12 @@ public class ActivityAppOverview extends BaseActivity {
 
             @Override
             public void onPageSelected(int position) {
+                Tracker t = ((AndroidApplication) getApplication()).getTracker();
+                t.send(new HitBuilders.EventBuilder()
+                        .setCategory(getString(R.string.ga_event_category_ux))
+                        .setAction(getString(R.string.ga_event_action_swipe))
+                        .setLabel("Page " + String.valueOf(position))
+                        .build());
             }
 
             @Override

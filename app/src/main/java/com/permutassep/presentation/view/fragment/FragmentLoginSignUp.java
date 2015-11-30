@@ -11,7 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.lalongooo.permutassep.R;
+import com.permutassep.presentation.AndroidApplication;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -52,6 +55,12 @@ public class FragmentLoginSignUp extends BaseFragment {
 
     @OnClick(R.id.tvContinue)
     void onTvContinueClick() {
+        Tracker t = ((AndroidApplication) getActivity().getApplication()).getTracker();
+        t.send(new HitBuilders.EventBuilder()
+                .setCategory(getString(R.string.ga_event_category_ux))
+                .setAction(getString(R.string.ga_event_action_click))
+                .setLabel(getString(R.string.ga_login_action_anonymous))
+                .build());
         this.navigationListener.onNextFragment(FragmentPagedPostList.class);
     }
 }

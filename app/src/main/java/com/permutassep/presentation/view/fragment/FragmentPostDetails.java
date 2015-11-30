@@ -12,6 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -25,6 +27,7 @@ import com.lalongooo.permutassep.R;
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.permutassep.model.State;
+import com.permutassep.presentation.AndroidApplication;
 import com.permutassep.presentation.internal.di.components.ApplicationComponent;
 import com.permutassep.presentation.internal.di.components.DaggerPostComponent;
 import com.permutassep.presentation.internal.di.components.PostComponent;
@@ -174,6 +177,14 @@ public class FragmentPostDetails extends BaseFragment
 
     @OnClick(R.id.btnCall)
     void onButtonCallClick() {
+
+        Tracker t = ((AndroidApplication) getActivity().getApplication()).getTracker();
+        t.send(new HitBuilders.EventBuilder()
+                .setCategory(getString(R.string.ga_event_category_ux))
+                .setAction(getString(R.string.ga_event_action_click))
+                .setLabel(getString(R.string.ga_call_intent))
+                .build());
+
         Intent callIntent = new Intent(Intent.ACTION_CALL);
         callIntent.setData(Uri.parse("tel:".concat(postModel.getUser().getPhone())));
         startActivity(callIntent);
@@ -182,6 +193,12 @@ public class FragmentPostDetails extends BaseFragment
     @OnClick(R.id.btnEmail)
     void onButtonEmailClick() {
 
+        Tracker t = ((AndroidApplication) getActivity().getApplication()).getTracker();
+        t.send(new HitBuilders.EventBuilder()
+                .setCategory(getString(R.string.ga_event_category_ux))
+                .setAction(getString(R.string.ga_event_action_click))
+                .setLabel(getString(R.string.ga_mail_intent))
+                .build());
 
         UserModel user = PrefUtils.getUser(getActivity());
         String emailContent = String.format(getString(R.string.app_post_detail_mail_intent_content), postModel.getUser().getName(), user.getPhone(), user.getEmail(), user.getName());

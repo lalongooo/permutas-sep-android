@@ -4,8 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.permutassep.presentation.config.Config;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.permutassep.presentation.AndroidApplication;
+import com.permutassep.presentation.config.Config;
 import com.permutassep.presentation.internal.di.components.ApplicationComponent;
 import com.permutassep.presentation.internal.di.modules.ActivityModule;
 import com.permutassep.presentation.navigation.Navigator;
@@ -32,6 +35,20 @@ public abstract class BaseActivity extends AppCompatActivity {
             Intent intent = new Intent(this, ActivityWelcome.class);
             startActivity(intent);
             finish();
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if (GooglePlayServicesUtil.isGooglePlayServicesAvailable(getApplicationContext()) == 0) {
+            // Get tracker.
+            Tracker t = ((AndroidApplication) getApplication()).getTracker();
+            // Set screen name.
+            t.setScreenName(getClass().getName());
+            // Send a screen view.
+            t.send(new HitBuilders.ScreenViewBuilder().build());
         }
     }
 
