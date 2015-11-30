@@ -156,6 +156,13 @@ public class FragmentPostDetails extends BaseFragment
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         this.initialize();
+        ((AndroidApplication) getActivity().getApplication())
+                .getTracker()
+                .send(new HitBuilders.EventBuilder()
+                        .setCategory(getString(R.string.ga_event_category_ux))
+                        .setAction(getString(R.string.ga_event_action_click))
+                        .setLabel(getString(R.string.ga_app_get_details))
+                        .build());
     }
 
     private void initialize() {

@@ -16,7 +16,10 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.facebook.login.LoginManager;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.lalongooo.permutassep.R;
+import com.permutassep.presentation.AndroidApplication;
 import com.permutassep.presentation.config.Config;
 import com.permutassep.presentation.internal.di.components.ApplicationComponent;
 import com.permutassep.presentation.internal.di.components.AuthenticationComponent;
@@ -135,6 +138,13 @@ public class FragmentNewPassword extends BaseFragment implements NewPasswordView
     void onBtnResetPasswordClick() {
         if (form.isValid()) {
 
+            Tracker t1 = ((AndroidApplication) getActivity().getApplication()).getTracker();
+            t1.send(new HitBuilders.EventBuilder()
+                    .setCategory(getString(R.string.ga_event_category_ux))
+                    .setAction(getString(R.string.ga_event_action_click))
+                    .setLabel(getString(R.string.ga_app_confirm_new_password))
+                    .build());
+
             password = etPasswordOne.getText().toString();
             passwordConfirm = etPasswordTwo.getText().toString();
 
@@ -188,6 +198,14 @@ public class FragmentNewPassword extends BaseFragment implements NewPasswordView
 
     @Override
     public void showError(String message) {
+
+        Tracker t1 = ((AndroidApplication) getActivity().getApplication()).getTracker();
+        t1.send(new HitBuilders.EventBuilder()
+                .setCategory(getString(R.string.ga_event_category_ux))
+                .setAction(getString(R.string.ga_event_action_click))
+                .setLabel(getString(R.string.ga_app_confirm_new_password_error))
+                .build());
+
         new MaterialDialog.Builder(getActivity())
                 .title(R.string.password_reset_dlg_title)
                 .content(message)

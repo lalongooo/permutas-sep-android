@@ -11,6 +11,8 @@ import android.util.Log;
 import android.view.View;
 
 import com.facebook.login.LoginManager;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.lalongooo.permutassep.R;
 import com.mikepenz.aboutlibraries.Libs;
 import com.mikepenz.aboutlibraries.LibsBuilder;
@@ -23,6 +25,7 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
+import com.permutassep.presentation.AndroidApplication;
 import com.permutassep.presentation.interfaces.FirstLaunchCompleteListener;
 import com.permutassep.presentation.interfaces.FragmentMenuItemSelectedListener;
 import com.permutassep.presentation.interfaces.LoginCompleteListener;
@@ -160,6 +163,12 @@ public class ActivityMain extends BaseActivity
                 }
                 break;
             case DRAWER_IDENTIFIER_MY_POSTS:
+                Tracker t1 = ((AndroidApplication) getApplication()).getTracker();
+                t1.send(new HitBuilders.EventBuilder()
+                        .setCategory(getString(R.string.ga_event_category_ux))
+                        .setAction(getString(R.string.ga_event_action_click))
+                        .setLabel(getString(R.string.ga_app_my_posts))
+                        .build());
                 if (!(getCurrentDisplayedFragment() instanceof FragmentMyPostList)) {
                     navigator.navigateToUserPostList(this, this.userModel.getId(), true);
                     setActionBarTitle(R.string.app_main_toolbar_title_my_posts);
@@ -282,6 +291,13 @@ public class ActivityMain extends BaseActivity
 
             case R.id.action_logout:
 
+                Tracker t1 = ((AndroidApplication) getApplication()).getTracker();
+                t1.send(new HitBuilders.EventBuilder()
+                        .setCategory(getString(R.string.ga_event_category_ux))
+                        .setAction(getString(R.string.ga_event_action_click))
+                        .setLabel(getString(R.string.ga_app_logout))
+                        .build());
+
                 PrefUtils.clearApplicationPreferences(this);
                 LoginManager.getInstance().logOut();
                 navigator.navigateToStart(this);
@@ -289,6 +305,13 @@ public class ActivityMain extends BaseActivity
                 break;
 
             case R.id.action_about:
+
+                Tracker t2 = ((AndroidApplication) getApplication()).getTracker();
+                t2.send(new HitBuilders.EventBuilder()
+                        .setCategory(getString(R.string.ga_event_category_ux))
+                        .setAction(getString(R.string.ga_event_action_click))
+                        .setLabel(getString(R.string.ga_app_about))
+                        .build());
 
                 new LibsBuilder()
                         .withFields(R.string.class.getFields())

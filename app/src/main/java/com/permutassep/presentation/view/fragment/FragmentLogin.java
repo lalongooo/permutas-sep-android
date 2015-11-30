@@ -214,11 +214,25 @@ public class FragmentLogin extends BaseFragment implements LoginView {
 
             @Override
             public void onCancel() {
+                ((AndroidApplication) getActivity().getApplication())
+                        .getTracker()
+                        .send(new HitBuilders.EventBuilder()
+                                .setCategory(getString(R.string.ga_event_category_ux))
+                                .setAction(getString(R.string.ga_event_action_click))
+                                .setLabel(getString(R.string.ga_fb_login_action_label_on_canceled))
+                                .build());
                 showError(getString(R.string.app_login_fb_dlg_on_cancel));
             }
 
             @Override
             public void onError(FacebookException exception) {
+                ((AndroidApplication) getActivity().getApplication())
+                        .getTracker()
+                        .send(new HitBuilders.EventBuilder()
+                                .setCategory(getString(R.string.ga_event_category_ux))
+                                .setAction(getString(R.string.ga_event_action_click))
+                                .setLabel(getString(R.string.ga_fb_login_action_label_on_error))
+                                .build());
                 showError(getString(R.string.app_login_fb_dlg_on_error));
             }
         });
@@ -260,6 +274,15 @@ public class FragmentLogin extends BaseFragment implements LoginView {
 
     @OnClick(R.id.tvForgotPassword)
     void onForgotPasswordClick() {
+
+        ((AndroidApplication) getActivity().getApplication())
+                .getTracker()
+                .send(new HitBuilders.EventBuilder()
+                        .setCategory(getString(R.string.ga_event_category_ux))
+                        .setAction(getString(R.string.ga_event_action_click))
+                        .setLabel(getString(R.string.ga_login_action_reset_password))
+                        .build());
+
         new MaterialDialog.Builder(getActivity())
                 .title(R.string.password_reset_dlg_title)
                 .content(R.string.password_reset_dlg_msg)

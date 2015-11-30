@@ -192,14 +192,27 @@
     <string name="ga_event_action_swipe">SWIPE</string>
 
 
+    <!--GA Events-->
     <string name="ga_fb_login_action_label_on_completed">FBLogin:onCompleted</string>
+    <string name="ga_fb_login_action_label_on_canceled">FBLogin:onCanceled</string>
+    <string name="ga_fb_login_action_label_on_error">FBLogin:onError</string>
     <string name="ga_fb_login_action_label_authorized_email">FBLogin:authorizedEmail</string>
     <string name="ga_fb_login_action_label_unauthorized_email">FBLogin:unAuthorizedEmail</string>
     <string name="ga_login_action_label_bad_userorpassword">Login:BadUserOrPassword</string>
     <string name="ga_login_action_label_success">Login:Success</string>
     <string name="ga_login_action_anonymous">Login:Anonymous</string>
+    <string name="ga_login_action_reset_password">PwdResetRequest</string>
     <string name="ga_call_intent">Intent:Call</string>
     <string name="ga_mail_intent">Intent:Mail</string>
+    <string name="ga_app_logout">LogoutSelected</string>
+    <string name="ga_app_confirm_new_password">ConfirmNewPassword</string>
+    <string name="ga_app_confirm_new_password_error">ConfirmNewPasswordError</string>
+    <string name="ga_app_search">SearchSelected</string>
+    <string name="ga_app_get_details">GetPostDetails</string>
+    <string name="ga_app_about">AboutSelected</string>
+    <string name="ga_app_my_posts">MyPostsSelected</string>
+    <string name="ga_app_accept_tos">AcceptTOS</string>
+    <string name="ga_app_decline_tos">DeclineTOS</string>
 
     <string-array name="states">
         <item>Todo México</item>
