@@ -15,6 +15,7 @@ import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Logger;
 import com.google.android.gms.analytics.Tracker;
 import com.lalongooo.permutassep.BuildConfig;
+import com.lalongooo.permutassep.R;
 import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader;
 import com.mikepenz.materialdrawer.util.DrawerImageLoader;
 import com.permutassep.presentation.internal.di.components.ApplicationComponent;
@@ -28,6 +29,7 @@ import com.squareup.picasso.Picasso;
 public class AndroidApplication extends Application {
 
     private ApplicationComponent applicationComponent;
+    private Tracker mTracker;
 
     @Override
     public void onCreate() {
@@ -78,12 +80,16 @@ public class AndroidApplication extends Application {
      * @return A {@link Tracker} object
      */
     public synchronized Tracker getTracker() {
-        GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
-        analytics.setDryRun(BuildConfig.DEBUG);
-        analytics.getLogger().setLogLevel(Logger.LogLevel.VERBOSE);
-        Tracker t = analytics.newTracker(BuildConfig.google_analytics_property_id);
-        t.enableAdvertisingIdCollection(true);
-        return t;
+
+        if (mTracker == null) {
+            GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
+            analytics.setDryRun(BuildConfig.DEBUG);
+            analytics.getLogger().setLogLevel(Logger.LogLevel.VERBOSE);
+            mTracker = analytics.newTracker(R.xml.global_tracker);
+            mTracker.enableAdvertisingIdCollection(true);
+
+        }
+        return mTracker;
     }
 
 }
