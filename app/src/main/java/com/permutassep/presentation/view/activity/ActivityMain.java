@@ -156,23 +156,35 @@ public class ActivityMain extends BaseActivity
     public void onDrawerItemSelected(int drawerItemId) {
         switch (drawerItemId) {
             case DRAWER_IDENTIFIER_HOME:
+
+                ((AndroidApplication) getApplication())
+                        .getTracker()
+                        .send(new HitBuilders.EventBuilder()
+                                .setCategory(getString(R.string.ga_event_category_ux))
+                                .setAction(getString(R.string.ga_event_action_click))
+                                .setLabel(getString(R.string.ga_app_home))
+                                .build());
                 if (!(getCurrentDisplayedFragment() instanceof FragmentPagedPostList)) {
                     getSupportFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                     navigator.navigateToPostList(this, true);
                     setActionBarTitle(R.string.app_name);
                 }
+
                 break;
             case DRAWER_IDENTIFIER_MY_POSTS:
-                Tracker t1 = ((AndroidApplication) getApplication()).getTracker();
-                t1.send(new HitBuilders.EventBuilder()
-                        .setCategory(getString(R.string.ga_event_category_ux))
-                        .setAction(getString(R.string.ga_event_action_click))
-                        .setLabel(getString(R.string.ga_app_my_posts))
-                        .build());
+
+                ((AndroidApplication) getApplication())
+                        .getTracker()
+                        .send(new HitBuilders.EventBuilder()
+                                .setCategory(getString(R.string.ga_event_category_ux))
+                                .setAction(getString(R.string.ga_event_action_click))
+                                .setLabel(getString(R.string.ga_app_my_posts))
+                                .build());
                 if (!(getCurrentDisplayedFragment() instanceof FragmentMyPostList)) {
                     navigator.navigateToUserPostList(this, this.userModel.getId(), true);
                     setActionBarTitle(R.string.app_main_toolbar_title_my_posts);
                 }
+
                 break;
         }
     }

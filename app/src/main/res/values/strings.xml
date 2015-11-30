@@ -211,6 +211,7 @@
     <string name="ga_app_get_details">GetPostDetails</string>
     <string name="ga_app_about">AboutSelected</string>
     <string name="ga_app_my_posts">MyPostsSelected</string>
+    <string name="ga_app_home">HomeSelected</string>
     <string name="ga_app_accept_tos">AcceptTOS</string>
     <string name="ga_app_decline_tos">DeclineTOS</string>
 
