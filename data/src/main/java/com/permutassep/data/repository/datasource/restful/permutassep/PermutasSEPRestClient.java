@@ -36,7 +36,7 @@ public class PermutasSEPRestClient {
                 .Builder()
                 .setConverter(new GsonConverter(gson))
                 .setEndpoint(API_BASE_URL)
-                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE)
                 .setRequestInterceptor(new RequestInterceptor() {
                     @Override
                     public void intercept(RequestFacade request) {
@@ -83,7 +83,7 @@ public class PermutasSEPRestClient {
                 .Builder()
                 .setConverter(new GsonConverter(gson))
                 .setEndpoint(API_BASE_URL)
-                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE)
                 .setRequestInterceptor(request -> {
                     String credentials = API_REST_USER + ":" + API_REST_PASSWORD;
                     request.addHeader("Accept", "application/json");
