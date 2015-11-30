@@ -29,25 +29,36 @@ import com.squareup.picasso.Picasso;
 public class AndroidApplication extends Application {
 
     private ApplicationComponent applicationComponent;
-    private Tracker mTracker;
+    public static GoogleAnalytics analytics;
+    public static Tracker tracker;
 
     @Override
     public void onCreate() {
         super.onCreate();
         this.initializeInjector();
+        this.initializeGoogleAnalytics();
+        this.setUpDrawerImageLoader();
         FacebookSdk.sdkInitialize(getApplicationContext());
-        setUpDrawerImageLoader();
-
     }
 
+    /**
+     * Initialize the {@link ApplicationComponent} for dependency injection
+     */
     private void initializeInjector() {
         this.applicationComponent = DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
                 .build();
     }
 
-    public ApplicationComponent getApplicationComponent() {
-        return this.applicationComponent;
+    /**
+     * Initialize the Google Analytics objects, a {@link Tracker} and a {@link GoogleAnalytics} instance
+     */
+    private void initializeGoogleAnalytics() {
+        analytics = GoogleAnalytics.getInstance(this);
+        analytics.setDryRun(BuildConfig.DEBUG);
+
+        tracker = analytics.newTracker(R.xml.global_tracker);
+        tracker.enableAdvertisingIdCollection(true);
     }
 
     /**
@@ -73,6 +84,14 @@ public class AndroidApplication extends Application {
         });
     }
 
+    /**
+     * Retrieves the {@link ApplicationComponent} for dependency injection.
+     *
+     * @return an {@link ApplicationComponent}
+     */
+    public ApplicationComponent getApplicationComponent() {
+        return this.applicationComponent;
+    }
 
     /**
      * Retrieves the Tracker object to send hits to of Google Analytics
@@ -81,15 +100,9 @@ public class AndroidApplication extends Application {
      */
     public synchronized Tracker getTracker() {
 
-        if (mTracker == null) {
-            GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
-            analytics.setDryRun(BuildConfig.DEBUG);
-            analytics.getLogger().setLogLevel(Logger.LogLevel.VERBOSE);
-            mTracker = analytics.newTracker(R.xml.global_tracker);
-            mTracker.enableAdvertisingIdCollection(true);
-
+        if (analytics == null || tracker == null) {
+            initializeGoogleAnalytics();
         }
-        return mTracker;
+        return tracker;
     }
-
 }
