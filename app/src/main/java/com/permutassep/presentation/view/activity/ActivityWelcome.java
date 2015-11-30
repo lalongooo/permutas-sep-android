@@ -25,7 +25,7 @@ public class ActivityWelcome extends Activity {
                 t.send(new HitBuilders.EventBuilder()
                         .setCategory(getString(R.string.ga_event_category_ux))
                         .setAction(getString(R.string.ga_event_action_click))
-                        .setLabel(getString(R.string.ga_app_accept_tos))
+                        .setLabel(getString(R.string.ga_app_decline_tos))
                         .build());
                 finish();
             }
@@ -38,7 +38,7 @@ public class ActivityWelcome extends Activity {
                 t.send(new HitBuilders.EventBuilder()
                         .setCategory(getString(R.string.ga_event_category_ux))
                         .setAction(getString(R.string.ga_event_action_click))
-                        .setLabel(getString(R.string.ga_app_decline_tos))
+                        .setLabel(getString(R.string.ga_app_accept_tos))
                         .build());
                 PrefUtils.markTosAccepted(ActivityWelcome.this);
                 Intent intent = new Intent(ActivityWelcome.this, ActivityAppOverview.class);
