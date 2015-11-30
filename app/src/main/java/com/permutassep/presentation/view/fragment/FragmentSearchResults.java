@@ -194,6 +194,7 @@ public class FragmentSearchResults extends BaseFragment implements SearchPostsRe
         new MaterialDialog.Builder(getActivity())
                 .title(R.string.search_fragment_results_empty_dlg_title)
                 .content(R.string.search_fragment_results_empty_dlg_msg)
+                .cancelable(false)
                 .positiveText(android.R.string.ok)
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
