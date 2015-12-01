@@ -53,6 +53,17 @@ public class Config {
     public static final String REST_PASSWORD = "reset-password";
 
     /**
+     * Number of first characters in the phone number to hide to an anonymous user.
+     */
+    public static final int HIDE_PHONE_CHARACTERS = 6;
+
+    /**
+     * Character to replace the hidden characters for the phone and email with for an anonymous user.
+     */
+    public static final String CHARACTER_FOR_ANON_USER = "*";
+
+    // TODO: Review why this variable is not used.
+    /**
      * URL suffix for the password reset confirmation request
      */
     public static final String CONFIRM_RESET_PASSWORD = "confirm-reset-password";

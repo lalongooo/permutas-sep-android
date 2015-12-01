@@ -34,7 +34,7 @@
     <string name="wizard_post_retry_dlg_success_post_title">Felicidades!</string>
     <string name="wizard_post_retry_dlg_success_post_message">Acabas de publicar tu cambio de adscripción deseado. Te deseamos mucha suerte para que lo consigas.</string>
     <string name="app_overview_1st_item_text">Queremos que la información esté al alcance de todos</string>
-    <string name="app_overview_2nd_item_text">Creemos que nuestra solución hará a mas personas felices</string>
+    <string name="app_overview_2nd_item_text">Creemos que nuestra solución hará a más personas felices</string>
     <string name="app_overview_3rd_item_text">Esperamos que encuentres pronto tu permuta&#8230;de verdad.</string>
     <string name="app_overview_4th_item_text">Si crees importante este aporte, considera una donación.</string>
     <string name="app_overview_start_button">Comenzar a publicar!</string>
@@ -52,6 +52,9 @@
     <string name="app_sign_up_log_reg_dlg_title">Espera...</string>
     <string name="app_sign_up_log_reg_dlg_text">Te estamos registrando</string>
     <string name="app_sign_up_compl_fb_data_duplicated_email">El email o teléfono ya se encuentra registrados.</string>
+    <string name="app_sign_up_invite_dlg_title">Únete!</string>
+    <string name="app_sign_up_invite_dlg_msg">Si te registras, encontrarás más rápido tu permuta de centro de trabajo. Es gratis!</string>
+    <string name="app_sign_up_invite_dlg_ok_option">Registrarme</string>
     <string name="network_availability_dlg_text">Su dispositivo no tiene acceso a Internet.</string>
     <string name="search_state_prompt">Estado</string>
     <string name="search_city_prompt">Municipio</string>
@@ -192,14 +195,29 @@
     <string name="ga_event_action_swipe">SWIPE</string>
 
 
+    <!--GA Events-->
     <string name="ga_fb_login_action_label_on_completed">FBLogin:onCompleted</string>
+    <string name="ga_fb_login_action_label_on_canceled">FBLogin:onCanceled</string>
+    <string name="ga_fb_login_action_label_on_error">FBLogin:onError</string>
     <string name="ga_fb_login_action_label_authorized_email">FBLogin:authorizedEmail</string>
     <string name="ga_fb_login_action_label_unauthorized_email">FBLogin:unAuthorizedEmail</string>
     <string name="ga_login_action_label_bad_userorpassword">Login:BadUserOrPassword</string>
     <string name="ga_login_action_label_success">Login:Success</string>
     <string name="ga_login_action_anonymous">Login:Anonymous</string>
+    <string name="ga_login_action_reset_password">PwdResetRequest</string>
     <string name="ga_call_intent">Intent:Call</string>
     <string name="ga_mail_intent">Intent:Mail</string>
+    <string name="ga_app_logout">LogoutSelected</string>
+    <string name="ga_app_confirm_new_password">ConfirmNewPassword</string>
+    <string name="ga_app_confirm_new_password_error">ConfirmNewPasswordError</string>
+    <string name="ga_app_search">SearchSelected</string>
+    <string name="ga_app_get_details">GetPostDetails</string>
+    <string name="ga_app_about">AboutSelected</string>
+    <string name="ga_app_my_posts">MyPostsSelected</string>
+    <string name="ga_app_home">HomeSelected</string>
+    <string name="ga_app_accept_tos">AcceptTOS</string>
+    <string name="ga_app_decline_tos">DeclineTOS</string>
+    <string name="ga_app_signup_invite">SignUpInvite</string>
 
     <string-array name="states">
         <item>Todo México</item>

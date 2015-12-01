@@ -13,26 +13,37 @@ import com.permutassep.presentation.model.UserModel;
 
 public class PrefUtils {
 
-    /*
-    * Preference to store the current user logged
-    * in the application (the email and phone of this user can be modified on each post).
-    * */
+    /**
+     * Preference to store the current user logged
+     * in the application (the email and phone of this user can be modified on each post).
+     */
     public static final String PREF_USER_KEY = "permutas_sep_user";
 
-    /*
-    * Boolean indicating whether we performed the (first-time) drawer opened.
-    * */
+    /**
+     * Boolean indicating whether we performed the (first-time) drawer opened.
+     */
     public static final String PREF_DRAWER_OPENED = "pref_drawer_first_time_opened";
 
-    /*
-    * Boolean indicating that the news feed should be reloaded
-    * */
-    public static final String PREF_RELOAD_NEWS_FEED = "pref_reload_news_feed";
+    /**
+     * Boolean indicating whether the user has already registered or not.
+     */
+    public static final String PREF_IS_USER_LOGGED_IN = "pref_drawer_first_time_opened";
 
     /**
      * Boolean indicating whether ToS has been accepted
      */
     public static final String PREF_TOS_ACCEPTED = "pref_tos_accepted";
+
+
+    public static void markLoggedUser(final Context context, boolean loggedIn) {
+        SharedPreferences sp = context.getSharedPreferences(Config.APP_PREFERENCES_NAME, Context.MODE_PRIVATE);
+        sp.edit().putBoolean(PREF_IS_USER_LOGGED_IN, loggedIn).apply();
+    }
+
+    public static boolean isLoggedUser(final Context context) {
+        SharedPreferences sp = context.getSharedPreferences(Config.APP_PREFERENCES_NAME, Context.MODE_PRIVATE);
+        return sp.getBoolean(PREF_IS_USER_LOGGED_IN, false);
+    }
 
     public static boolean firstTimeDrawerOpened(final Context context) {
         SharedPreferences sp = context.getSharedPreferences(Config.APP_PREFERENCES_NAME, Context.MODE_PRIVATE);
@@ -42,16 +53,6 @@ public class PrefUtils {
     public static void markFirstTimeDrawerOpened(final Context context) {
         SharedPreferences sp = context.getSharedPreferences(Config.APP_PREFERENCES_NAME, Context.MODE_PRIVATE);
         sp.edit().putBoolean(PREF_DRAWER_OPENED, true).apply();
-    }
-
-    public static boolean shouldReloadNewsFeed(final Context context) {
-        SharedPreferences sp = context.getSharedPreferences(Config.APP_PREFERENCES_NAME, Context.MODE_PRIVATE);
-        return sp.getBoolean(PREF_RELOAD_NEWS_FEED, false);
-    }
-
-    public static void markNewsFeedToReload(final Context context, boolean reload) {
-        SharedPreferences sp = context.getSharedPreferences(Config.APP_PREFERENCES_NAME, Context.MODE_PRIVATE);
-        sp.edit().putBoolean(PREF_RELOAD_NEWS_FEED, reload).apply();
     }
 
     public static void clearApplicationPreferences(Context context) {

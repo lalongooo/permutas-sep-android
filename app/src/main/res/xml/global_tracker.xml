@@ -2,7 +2,6 @@
 <resources>
     <integer name="ga_sessionTimeout">300</integer>
     <bool name="ga_autoActivityTracking">true</bool>
-    <!--  The following value should be replaced with correct property id. -->
-    <string name="ga_trackingId">UA-62325816-2</string>
+    <string name="ga_trackingId">@string/google_analytics_property_id</string>
     <bool name="ga_reportUncaughtExceptions">true</bool>
 </resources>

@@ -10,11 +10,13 @@ import android.widget.AdapterView;
 import android.widget.Spinner;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.google.android.gms.analytics.HitBuilders;
 import com.lalongooo.permutassep.R;
 import com.permutassep.adapter.PlaceSpinnerBaseAdapter;
 import com.permutassep.model.City;
 import com.permutassep.model.State;
 import com.permutassep.model.Town;
+import com.permutassep.presentation.AndroidApplication;
 import com.permutassep.presentation.utils.Utils;
 import com.permutassep.rest.inegifacil.InegiFacilRestClient;
 
@@ -80,8 +82,16 @@ public class FragmentSearch extends BaseFragment {
 
     @OnClick(R.id.btnSearch)
     void onBtnSearchClick() {
-        HashMap<String, String> searchParams = new HashMap<>();
 
+        ((AndroidApplication) getActivity().getApplication())
+                .getTracker()
+                .send(new HitBuilders.EventBuilder()
+                        .setCategory(getString(R.string.ga_event_category_ux))
+                        .setAction(getString(R.string.ga_event_action_click))
+                        .setLabel(getString(R.string.ga_app_search))
+                        .build());
+
+        HashMap<String, String> searchParams = new HashMap<>();
         try {
             if (stateFromSelectedPosition != 0) {
                 searchParams.put("place_from_state", String.valueOf(stateFromSelectedPosition));

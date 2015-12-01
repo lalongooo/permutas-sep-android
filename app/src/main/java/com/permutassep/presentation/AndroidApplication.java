@@ -15,6 +15,7 @@ import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Logger;
 import com.google.android.gms.analytics.Tracker;
 import com.lalongooo.permutassep.BuildConfig;
+import com.lalongooo.permutassep.R;
 import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader;
 import com.mikepenz.materialdrawer.util.DrawerImageLoader;
 import com.permutassep.presentation.internal.di.components.ApplicationComponent;
@@ -28,24 +29,36 @@ import com.squareup.picasso.Picasso;
 public class AndroidApplication extends Application {
 
     private ApplicationComponent applicationComponent;
+    public static GoogleAnalytics analytics;
+    public static Tracker tracker;
 
     @Override
     public void onCreate() {
         super.onCreate();
         this.initializeInjector();
+        this.initializeGoogleAnalytics();
+        this.setUpDrawerImageLoader();
         FacebookSdk.sdkInitialize(getApplicationContext());
-        setUpDrawerImageLoader();
-
     }
 
+    /**
+     * Initialize the {@link ApplicationComponent} for dependency injection
+     */
     private void initializeInjector() {
         this.applicationComponent = DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
                 .build();
     }
 
-    public ApplicationComponent getApplicationComponent() {
-        return this.applicationComponent;
+    /**
+     * Initialize the Google Analytics objects, a {@link Tracker} and a {@link GoogleAnalytics} instance
+     */
+    private void initializeGoogleAnalytics() {
+        analytics = GoogleAnalytics.getInstance(this);
+        analytics.setDryRun(BuildConfig.DEBUG);
+
+        tracker = analytics.newTracker(R.xml.global_tracker);
+        tracker.enableAdvertisingIdCollection(true);
     }
 
     /**
@@ -71,6 +84,14 @@ public class AndroidApplication extends Application {
         });
     }
 
+    /**
+     * Retrieves the {@link ApplicationComponent} for dependency injection.
+     *
+     * @return an {@link ApplicationComponent}
+     */
+    public ApplicationComponent getApplicationComponent() {
+        return this.applicationComponent;
+    }
 
     /**
      * Retrieves the Tracker object to send hits to of Google Analytics
@@ -78,12 +99,10 @@ public class AndroidApplication extends Application {
      * @return A {@link Tracker} object
      */
     public synchronized Tracker getTracker() {
-        GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
-        analytics.setDryRun(BuildConfig.DEBUG);
-        analytics.getLogger().setLogLevel(Logger.LogLevel.VERBOSE);
-        Tracker t = analytics.newTracker(BuildConfig.google_analytics_property_id);
-        t.enableAdvertisingIdCollection(true);
-        return t;
-    }
 
+        if (analytics == null || tracker == null) {
+            initializeGoogleAnalytics();
+        }
+        return tracker;
+    }
 }
