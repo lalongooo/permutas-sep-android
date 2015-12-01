@@ -6,7 +6,7 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class City implements Parcelable {
+public class City extends Place implements Parcelable {
 
     @Expose
     private String id;
@@ -42,234 +42,182 @@ public class City implements Parcelable {
     private String lng;
 
     /**
-     *
-     * @return
-     * The id
+     * @return The id
      */
     public String getId() {
         return id;
     }
 
     /**
-     *
-     * @param id
-     * The id
+     * @param id The id
      */
     public void setId(String id) {
         this.id = id;
     }
 
     /**
-     *
-     * @return
-     * The claveEntidad
+     * @return The claveEntidad
      */
     public String getClaveEntidad() {
         return claveEntidad;
     }
 
     /**
-     *
-     * @param claveEntidad
-     * The clave_entidad
+     * @param claveEntidad The clave_entidad
      */
     public void setClaveEntidad(String claveEntidad) {
         this.claveEntidad = claveEntidad;
     }
 
     /**
-     *
-     * @return
-     * The nombreEntidad
+     * @return The nombreEntidad
      */
     public String getNombreEntidad() {
         return nombreEntidad;
     }
 
     /**
-     *
-     * @param nombreEntidad
-     * The nombre_entidad
+     * @param nombreEntidad The nombre_entidad
      */
     public void setNombreEntidad(String nombreEntidad) {
         this.nombreEntidad = nombreEntidad;
     }
 
     /**
-     *
-     * @return
-     * The claveMunicipio
+     * @return The claveMunicipio
      */
     public int getClaveMunicipio() {
         return claveMunicipio;
     }
 
     /**
-     *
-     * @param claveMunicipio
-     * The clave_municipio
+     * @param claveMunicipio The clave_municipio
      */
     public void setClaveMunicipio(int claveMunicipio) {
         this.claveMunicipio = claveMunicipio;
     }
 
     /**
-     *
-     * @return
-     * The nombreMunicipio
+     * @return The nombreMunicipio
      */
     public String getNombreMunicipio() {
         return nombreMunicipio;
     }
 
     /**
-     *
-     * @param nombreMunicipio
-     * The nombre_municipio
+     * @param nombreMunicipio The nombre_municipio
      */
     public void setNombreMunicipio(String nombreMunicipio) {
         this.nombreMunicipio = nombreMunicipio;
     }
 
     /**
-     *
-     * @return
-     * The claveInegi
+     * @return The claveInegi
      */
     public String getClaveInegi() {
         return claveInegi;
     }
 
     /**
-     *
-     * @param claveInegi
-     * The clave_inegi
+     * @param claveInegi The clave_inegi
      */
     public void setClaveInegi(String claveInegi) {
         this.claveInegi = claveInegi;
     }
 
     /**
-     *
-     * @return
-     * The nombreInegi
+     * @return The nombreInegi
      */
     public String getNombreInegi() {
         return nombreInegi;
     }
 
     /**
-     *
-     * @param nombreInegi
-     * The nombre_inegi
+     * @param nombreInegi The nombre_inegi
      */
     public void setNombreInegi(String nombreInegi) {
         this.nombreInegi = nombreInegi;
     }
 
     /**
-     *
-     * @return
-     * The minx
+     * @return The minx
      */
     public String getMinx() {
         return minx;
     }
 
     /**
-     *
-     * @param minx
-     * The minx
+     * @param minx The minx
      */
     public void setMinx(String minx) {
         this.minx = minx;
     }
 
     /**
-     *
-     * @return
-     * The miny
+     * @return The miny
      */
     public String getMiny() {
         return miny;
     }
 
     /**
-     *
-     * @param miny
-     * The miny
+     * @param miny The miny
      */
     public void setMiny(String miny) {
         this.miny = miny;
     }
 
     /**
-     *
-     * @return
-     * The maxx
+     * @return The maxx
      */
     public String getMaxx() {
         return maxx;
     }
 
     /**
-     *
-     * @param maxx
-     * The maxx
+     * @param maxx The maxx
      */
     public void setMaxx(String maxx) {
         this.maxx = maxx;
     }
 
     /**
-     *
-     * @return
-     * The maxy
+     * @return The maxy
      */
     public String getMaxy() {
         return maxy;
     }
 
     /**
-     *
-     * @param maxy
-     * The maxy
+     * @param maxy The maxy
      */
     public void setMaxy(String maxy) {
         this.maxy = maxy;
     }
 
     /**
-     *
-     * @return
-     * The lat
+     * @return The lat
      */
     public String getLat() {
         return lat;
     }
 
     /**
-     *
-     * @param lat
-     * The lat
+     * @param lat The lat
      */
     public void setLat(String lat) {
         this.lat = lat;
     }
 
     /**
-     *
-     * @return
-     * The lng
+     * @return The lng
      */
     public String getLng() {
         return lng;
     }
 
     /**
-     *
-     * @param lng
-     * The lng
+     * @param lng The lng
      */
     public void setLng(String lng) {
         this.lng = lng;
@@ -301,6 +249,7 @@ public class City implements Parcelable {
         public City createFromParcel(Parcel source) {
             return new City(source);
         }
+
         public City[] newArray(int size) {
             return new City[size];
         }
@@ -338,5 +287,15 @@ public class City implements Parcelable {
                 ", lat='" + lat + '\'' +
                 ", lng='" + lng + '\'' +
                 '}';
+    }
+
+    @Override
+    public int getPlaceId() {
+        return getClaveMunicipio();
+    }
+
+    @Override
+    public String getPlaceDescription() {
+        return getNombreMunicipio();
     }
 }

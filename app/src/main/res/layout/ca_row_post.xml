@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:card_view="http://schemas.android.com/tools"
+    android:paddingTop="1dp"
+    android:paddingLeft="3dp"
+    android:paddingRight="3dp">
+
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:id="@+id/cv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        card_view:cardElevation="2dp"
+        card_view:cardUseCompatPadding="true"
+        card_view:cardCornerRadius="4dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="5dp">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:src="@drawable/default_profile_picture" />
+
+            <TextView
+                android:id="@+id/tvUserName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/imageView"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/imageView"
+                android:layout_toRightOf="@+id/imageView"
+                android:text="Jorge E. Hernández"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/primary"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvFrom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/tvFromLabel"
+                android:layout_alignBottom="@+id/tvFromLabel"
+                android:layout_toRightOf="@+id/tvFromLabel"
+                android:text="San Luis Potosi"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textStyle="bold"
+                android:textColor="#303030"/>
+
+            <TextView
+                android:id="@+id/tvToLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/tvFromLabel"
+                android:layout_below="@+id/tvFromLabel"
+                android:text="A: "
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textStyle="bold"
+                android:textColor="@color/primary"/>
+
+            <TextView
+                android:id="@+id/tvTo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/tvToLabel"
+                android:layout_alignBottom="@+id/tvToLabel"
+                android:layout_toRightOf="@+id/tvToLabel"
+                android:text="San Luis Potosi"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textStyle="bold"
+                android:textColor="#303030"/>
+
+
+            <TextView
+                android:id="@+id/tvAcademicLevelLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/tvUserName"
+                android:layout_alignStart="@+id/tvUserName"
+                android:layout_below="@+id/tvToLabel"
+                android:layout_marginTop="10dp"
+                android:text="Secundaria "
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/primary"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvPostDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:text="Hace 6 horas"
+                android:textSize="10sp"
+                android:textColor="#303030"/>
+
+
+            <TextView
+                android:id="@+id/tvPostUserEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/tvUserName"
+                android:layout_alignStart="@+id/tvUserName"
+                android:layout_below="@+id/tvUserName"
+                android:text="hdez.jeduardo@gmail.com"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tvPostUserPhone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/tvUserName"
+                android:layout_alignStart="@+id/tvUserName"
+                android:layout_below="@+id/tvPostUserEmail"
+                android:text="8116916048"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/primary"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tvPostText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/tvUserName"
+                android:layout_alignStart="@+id/tvUserName"
+                android:layout_below="@+id/tvPostUserPhone"
+                android:layout_marginTop="5dp"
+                android:text="Este es un texto largo de ejemplo, para ver la ubicacion del elemento en cada elemento de la lista de publicaciones"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textSize="14sp"
+                android:textColor="#303030"
+                />
+
+
+            <TextView
+                android:id="@+id/tvFromLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/tvPostText"
+                android:layout_alignStart="@+id/tvPostText"
+                android:layout_below="@+id/tvPostText"
+                android:layout_marginTop="10dp"
+                android:text="De: "
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textStyle="bold"
+                android:textColor="@color/primary"/>
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

@@ -46,3 +46,5 @@ project.properties
 ant.properties
 build.xml
 proguard-project.txt
+gradle.properties
+google-services.json

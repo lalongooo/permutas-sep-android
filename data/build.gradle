@@ -1,0 +1,82 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'me.tatarka:gradle-retrolambda:3.1.0'
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'me.tatarka.retrolambda'
+
+android {
+    def globalConfiguration = rootProject.extensions.getByName("ext")
+
+    compileSdkVersion globalConfiguration.getAt("androidCompileSdkVersion")
+    buildToolsVersion globalConfiguration.getAt("androidBuildToolsVersion")
+
+    defaultConfig {
+        minSdkVersion globalConfiguration.getAt("androidMinSdkVersion")
+        targetSdkVersion globalConfiguration.getAt("androidTargetSdkVersion")
+        versionCode globalConfiguration.getAt("androidVersionCode")
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    packagingOptions {
+        exclude 'LICENSE.txt'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/ASL2.0'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+    }
+
+    lintOptions {
+        quiet true
+        abortOnError false
+        ignoreWarnings true
+        disable 'InvalidPackage'  // Some libraries have issues with this
+        disable 'OldTargetApi'    // Due to Robolectric that modifies the manifest when running tests
+    }
+
+    buildTypes {
+
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "com_permutassep_api_rest_endpoint", com_permutassep_debug_api_rest_endpoint
+            buildConfigField "String", "com_permutassep_api_rest_user", com_permutassep_debug_api_rest_user
+            buildConfigField "String", "com_permutassep_api_rest_password", com_permutassep_debug_api_rest_password
+        }
+
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "com_permutassep_api_rest_endpoint", com_permutassep_release_api_rest_endpoint
+            buildConfigField "String", "com_permutassep_api_rest_user", com_permutassep_release_api_rest_user
+            buildConfigField "String", "com_permutassep_api_rest_password", com_permutassep_release_api_rest_password
+        }
+    }
+}
+
+dependencies {
+    def dataDependencies = rootProject.ext.dataDependencies
+    compile project(':domain')
+    apt dataDependencies.daggerCompiler
+    compile dataDependencies.gson
+    compile dataDependencies.dagger
+    compile dataDependencies.retrofit
+    compile dataDependencies.okHttp
+    compile dataDependencies.androidAnnotations
+    compile dataDependencies.rxJava
+    compile dataDependencies.rxAndroid
+}

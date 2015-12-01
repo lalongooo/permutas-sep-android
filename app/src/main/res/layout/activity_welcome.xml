@@ -17,7 +17,7 @@
             android:layout_height="100dp"
             android:layout_gravity="center|top"
             android:scaleType="fitCenter"
-            android:src="@drawable/ic_launcher"
+            android:src="@mipmap/ic_launcher"
             android:tint="@color/colorPrimary" />
 
         <ScrollView

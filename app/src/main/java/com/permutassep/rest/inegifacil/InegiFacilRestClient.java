@@ -1,12 +1,14 @@
 package com.permutassep.rest.inegifacil;
 
-import com.permutassep.config.Config;
+/**
+ * By Jorge E. Hernandez (@lalongooo) 2015
+ */
+
+import com.lalongooo.permutassep.BuildConfig;
+import com.permutassep.presentation.config.Config;
 
 import retrofit.RestAdapter;
 
-/**
- * Created by jorge.hernandez on 2/24/2015.
- */
 public class InegiFacilRestClient {
 
     private static IInegiFacilService restClient;
@@ -16,7 +18,8 @@ public class InegiFacilRestClient {
         setupRestClient();
     }
 
-    private InegiFacilRestClient() {}
+    private InegiFacilRestClient() {
+    }
 
     public static IInegiFacilService get() {
         return restClient;
@@ -25,9 +28,8 @@ public class InegiFacilRestClient {
     private static void setupRestClient() {
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(BASE_URL)
+                .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE)
                 .build();
-//                .setClient(new OkClient(new OkHttpClient()))
-//                .builder.setLogLevel(RestAdapter.LogLevel.FULL);
 
         restClient = restAdapter.create(IInegiFacilService.class);
     }
