@@ -52,6 +52,9 @@
     <string name="app_sign_up_log_reg_dlg_title">Espera...</string>
     <string name="app_sign_up_log_reg_dlg_text">Te estamos registrando</string>
     <string name="app_sign_up_compl_fb_data_duplicated_email">El email o teléfono ya se encuentra registrados.</string>
+    <string name="app_sign_up_invite_dlg_title">Únete!</string>
+    <string name="app_sign_up_invite_dlg_msg">Si te registras, encontrarás más rápido tu permuta de centro de trabajo. Es gratis!</string>
+    <string name="app_sign_up_invite_dlg_ok_option">Registrarme</string>
     <string name="network_availability_dlg_text">Su dispositivo no tiene acceso a Internet.</string>
     <string name="search_state_prompt">Estado</string>
     <string name="search_city_prompt">Municipio</string>
@@ -214,6 +217,7 @@
     <string name="ga_app_home">HomeSelected</string>
     <string name="ga_app_accept_tos">AcceptTOS</string>
     <string name="ga_app_decline_tos">DeclineTOS</string>
+    <string name="ga_app_signup_invite">SignUpInvite</string>
 
     <string-array name="states">
         <item>Todo México</item>

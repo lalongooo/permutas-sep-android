@@ -231,6 +231,10 @@ public class ActivityMain extends BaseActivity
             navigator.navigateToPostList(this, true);
             setActionBarTitle(R.string.app_name);
         }
+
+        if (c == FragmentLoginSignUp.class) {
+            navigator.navigateToLoginSignUp(this, true);
+        }
     }
 
     /**

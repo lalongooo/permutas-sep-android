@@ -1,8 +1,11 @@
 package com.permutassep.presentation.view.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +15,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.maps.CameraUpdate;
@@ -35,6 +40,7 @@ import com.permutassep.presentation.internal.di.components.PostComponent;
 import com.permutassep.presentation.internal.di.modules.PostModule;
 import com.permutassep.presentation.model.PostModel;
 import com.permutassep.presentation.model.UserModel;
+import com.permutassep.presentation.navigation.Navigator;
 import com.permutassep.presentation.presenter.PostDetailsPresenter;
 import com.permutassep.presentation.utils.PrefUtils;
 import com.permutassep.presentation.utils.Utils;
@@ -46,6 +52,7 @@ import java.util.HashMap;
 
 import javax.inject.Inject;
 
+import br.kots.mob.complex.preferences.ComplexPreferences;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -140,6 +147,14 @@ public class FragmentPostDetails extends BaseFragment
         return fragmentPostDetails;
     }
 
+    protected Navigator.NavigationListener navigationListener;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.navigationListener = (Navigator.NavigationListener) getActivity();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View fragmentView = inflater.inflate(R.layout.ca_fragment_post_details, container, false);
@@ -186,35 +201,44 @@ public class FragmentPostDetails extends BaseFragment
     @OnClick(R.id.btnCall)
     void onButtonCallClick() {
 
-        Tracker t = ((AndroidApplication) getActivity().getApplication()).getTracker();
-        t.send(new HitBuilders.EventBuilder()
-                .setCategory(getString(R.string.ga_event_category_ux))
-                .setAction(getString(R.string.ga_event_action_click))
-                .setLabel(getString(R.string.ga_call_intent))
-                .build());
+        if (!PrefUtils.isLoggedUser(getActivity())) {
+            showSignUpInvitation();
+        } else {
 
-        Intent callIntent = new Intent(Intent.ACTION_CALL);
-        callIntent.setData(Uri.parse("tel:".concat(postModel.getUser().getPhone())));
-        startActivity(callIntent);
+            Tracker t = ((AndroidApplication) getActivity().getApplication()).getTracker();
+            t.send(new HitBuilders.EventBuilder()
+                    .setCategory(getString(R.string.ga_event_category_ux))
+                    .setAction(getString(R.string.ga_event_action_click))
+                    .setLabel(getString(R.string.ga_call_intent))
+                    .build());
+
+            Intent callIntent = new Intent(Intent.ACTION_CALL);
+            callIntent.setData(Uri.parse("tel:".concat(postModel.getUser().getPhone())));
+            startActivity(callIntent);
+        }
     }
 
     @OnClick(R.id.btnEmail)
     void onButtonEmailClick() {
 
-        Tracker t = ((AndroidApplication) getActivity().getApplication()).getTracker();
-        t.send(new HitBuilders.EventBuilder()
-                .setCategory(getString(R.string.ga_event_category_ux))
-                .setAction(getString(R.string.ga_event_action_click))
-                .setLabel(getString(R.string.ga_mail_intent))
-                .build());
+        if (!PrefUtils.isLoggedUser(getActivity())) {
+            showSignUpInvitation();
+        } else {
 
-        UserModel user = PrefUtils.getUser(getActivity());
-        String emailContent = String.format(getString(R.string.app_post_detail_mail_intent_content), postModel.getUser().getName(), user.getPhone(), user.getEmail(), user.getName());
+            Tracker t = ((AndroidApplication) getActivity().getApplication()).getTracker();
+            t.send(new HitBuilders.EventBuilder()
+                    .setCategory(getString(R.string.ga_event_category_ux))
+                    .setAction(getString(R.string.ga_event_action_click))
+                    .setLabel(getString(R.string.ga_mail_intent))
+                    .build());
 
-        Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(MAILTO_SCHEMA, postModel.getUser().getEmail(), null));
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_post_detail_mail_intent_subject));
-        emailIntent.putExtra(Intent.EXTRA_TEXT, emailContent);
-        startActivity(Intent.createChooser(emailIntent, getString(R.string.app_post_detail_mail_intent_chooser_title)));
+            UserModel user = PrefUtils.getUser(getActivity());
+            String emailContent = String.format(getString(R.string.app_post_detail_mail_intent_content), postModel.getUser().getName(), user.getPhone(), user.getEmail(), user.getName());
+            Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(MAILTO_SCHEMA, postModel.getUser().getEmail(), null));
+            emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_post_detail_mail_intent_subject));
+            emailIntent.putExtra(Intent.EXTRA_TEXT, emailContent);
+            startActivity(Intent.createChooser(emailIntent, getString(R.string.app_post_detail_mail_intent_chooser_title)));
+        }
     }
 
     /**
@@ -362,6 +386,30 @@ public class FragmentPostDetails extends BaseFragment
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void showSignUpInvitation() {
+
+        Tracker t = ((AndroidApplication) getActivity().getApplication()).getTracker();
+        t.send(new HitBuilders.EventBuilder()
+                .setCategory(getString(R.string.ga_event_category_ux))
+                .setAction(getString(R.string.ga_event_action_click))
+                .setLabel(getString(R.string.ga_app_signup_invite))
+                .build());
+
+        new MaterialDialog.Builder(getActivity())
+                .title(R.string.app_sign_up_invite_dlg_title)
+                .content(R.string.app_sign_up_invite_dlg_msg)
+                .positiveText(R.string.app_sign_up_invite_dlg_ok_option)
+                .negativeText(android.R.string.cancel)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog materialDialog, @NonNull DialogAction dialogAction) {
+                        getActivity().getSupportFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                        navigationListener.onNextFragment(FragmentLoginSignUp.class);
+                    }
+                })
+                .show();
     }
 
     private LatLng getLatLng(String lat, String lng) {
