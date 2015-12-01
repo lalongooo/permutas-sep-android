@@ -12,12 +12,13 @@ import android.widget.ImageView;
 
 import com.facebook.FacebookSdk;
 import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.Logger;
 import com.google.android.gms.analytics.Tracker;
 import com.lalongooo.permutassep.BuildConfig;
 import com.lalongooo.permutassep.R;
 import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader;
 import com.mikepenz.materialdrawer.util.DrawerImageLoader;
+import com.parse.Parse;
+import com.parse.ParseInstallation;
 import com.permutassep.presentation.internal.di.components.ApplicationComponent;
 import com.permutassep.presentation.internal.di.components.DaggerApplicationComponent;
 import com.permutassep.presentation.internal.di.modules.ApplicationModule;
@@ -28,9 +29,9 @@ import com.squareup.picasso.Picasso;
  */
 public class AndroidApplication extends Application {
 
-    private ApplicationComponent applicationComponent;
     public static GoogleAnalytics analytics;
     public static Tracker tracker;
+    private ApplicationComponent applicationComponent;
 
     @Override
     public void onCreate() {
@@ -38,6 +39,7 @@ public class AndroidApplication extends Application {
         this.initializeInjector();
         this.initializeGoogleAnalytics();
         this.setUpDrawerImageLoader();
+        this.setupParseCom();
         FacebookSdk.sdkInitialize(getApplicationContext());
     }
 
@@ -104,5 +106,13 @@ public class AndroidApplication extends Application {
             initializeGoogleAnalytics();
         }
         return tracker;
+    }
+
+    /**
+     * Setup parse.com according to https://parse.com/apps/quickstart#parse_push/android/native/existing
+     */
+    private void setupParseCom() {
+        Parse.initialize(this, BuildConfig.PARSE_COM_APPLICATION_ID, BuildConfig.PARSE_COM_CLIENT_KEY);
+        ParseInstallation.getCurrentInstallation().saveInBackground();
     }
 }
