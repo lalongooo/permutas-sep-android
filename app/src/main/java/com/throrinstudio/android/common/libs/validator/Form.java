@@ -23,8 +23,10 @@ public class Form {
 	 * @param validate
 	 *            {@link AbstractValidate} Validate to add
 	 */
-	public void addValidates(AbstractValidate validate) {
-		mValidates.add(validate);
+	public void addValidates(AbstractValidate... validate) {
+		for(AbstractValidate abstractValidate : validate){
+			mValidates.add(abstractValidate);
+		}
 	}
 
 	/**
@@ -32,7 +34,7 @@ public class Form {
 	 * 
 	 * @param validate
 	 *            {@link AbstractValidate} Validate to remove
-	 * @return validate that was removed from the form
+	 * @return isValid that was removed from the form
 	 */
 	public boolean removeValidates(AbstractValidate validate) {
 		if (mValidates != null && !mValidates.isEmpty()) {
@@ -42,12 +44,12 @@ public class Form {
 	}
 
 	/**
-	 * Called to validate our form.
+	 * Called to isValid our form.
 	 * If an error is found, it will be displayed in the corresponding field.
 	 * 
 	 * @return boolean true if the form is valid, otherwise false
 	 */
-	public boolean validate() {
+	public boolean isValid() {
 		boolean formValid = true;
 		for (AbstractValidate validate : mValidates) {
 			formValid = formValid & validate.isValid();	// Use & in order to evaluate both side of the operation.

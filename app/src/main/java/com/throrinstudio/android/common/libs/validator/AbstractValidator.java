@@ -40,7 +40,7 @@ public abstract class AbstractValidator {
 	 * Can check if the value passed in parameter is valid or not.
 	 * 
 	 * @param value
-	 *            {@link String} : the value to validate
+	 *            {@link String} : the value to isValid
 	 * @return boolean : true if valid, false otherwise.
 	 */
 	public abstract boolean isValid(String value)

@@ -1,20 +1,12 @@
 package com.permutassep;
 
-import com.lalongooo.permutassep.BuildConfig;
-
-import org.apache.http.NameValuePair;
-import org.apache.http.client.utils.URLEncodedUtils;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.RobolectricGradleTestRunner;
-import org.robolectric.annotation.Config;
+import org.mockito.runners.MockitoJUnitRunner;
 
-import java.net.URI;
-import java.util.List;
-
-@RunWith(RobolectricGradleTestRunner.class)
-@Config(constants = BuildConfig.class, sdk = 21)
+@RunWith(MockitoJUnitRunner.class)
 public class MyApplicationTests {
 
     @Before
@@ -24,11 +16,27 @@ public class MyApplicationTests {
 
     @Test
     public void testSomething() throws Exception {
-        String url = "http://permuta-sep-dev.herokuapp.com/reset-password/?token=5c58f5hbabsklh1poa1d5e3cu0t327&email=hdez.jeduardo@gmail.com";
-        List<NameValuePair> params = URLEncodedUtils.parse(new URI(url), "UTF-8");
+        String phone = "8116916048";
 
-        for (NameValuePair param : params) {
-            System.out.println(param.getName() + " : " + param.getValue());
-        }
+
+        int n = 6;
+        String g = "*";
+        String repeated = new String(new char[n]).replace("\0", g);
+
+
+        String hidden = phone.replace(phone.substring(0, 6), repeated);
+
+        Assert.assertEquals("******6048", hidden);
+    }
+
+    /**
+     * This test should replace the content before the "@" in an email address with "*"'s.
+     */
+    @Test
+    public void testEmailNameReplacement() {
+        String email = "hdez.jeduardo@gmail.com";
+        String name = email.substring(0, email.indexOf("@"));
+        String emailHidden = email.replace(name, new String(new char[name.length()]).replace("\0", "*"));
+        Assert.assertEquals("*************@gmail.com", emailHidden);
     }
 }

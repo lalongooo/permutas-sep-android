@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:baselineAligned="false"
+              android:orientation="vertical"
+              android:padding="10dp">
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp">
+
+            <TextView
+                style="@style/WizardFormLabel"
+                android:layout_marginTop="10dp"
+                android:text="@string/search_fragment_origin_label"/>
+
+            <Spinner
+                android:id="@+id/spn_state_origin"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:prompt="@string/search_state_prompt"
+                android:spinnerMode="dialog"/>
+
+            <Spinner
+                android:id="@+id/spn_city_origin"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:prompt="@string/search_city_prompt"
+                android:spinnerMode="dialog"/>
+
+            <Spinner
+                android:id="@+id/spn_town_origin"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:prompt="@string/search_town_prompt"
+                android:spinnerMode="dialog"/>
+
+
+            <TextView
+                style="@style/WizardFormLabel"
+                android:layout_marginBottom="4dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/search_fragment_target_label"/>
+
+            <Spinner
+                android:id="@+id/spn_state_to"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:prompt="@string/search_state_prompt"
+                android:spinnerMode="dialog"/>
+
+            <Spinner
+                android:id="@+id/spn_city_to"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:prompt="@string/search_city_prompt"
+                android:spinnerMode="dialog"/>
+
+            <Spinner
+                android:id="@+id/spn_town_to"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:prompt="@string/search_town_prompt"
+                android:spinnerMode="dialog"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <LinearLayout
+        style="?android:attr/buttonBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnSearch"
+            style="@style/TextAppearanceFinish"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/finish_background"
+            android:text="@string/search_fragment_btn_search"/>
+
+    </LinearLayout>
+
+</LinearLayout>

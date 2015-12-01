@@ -1,0 +1,66 @@
+allprojects {
+    repositories {
+        maven { url "https://jitpack.io" }
+        maven { url "http://dl.bintray.com/populov/maven" }
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        jcenter()
+    }
+}
+
+ext {
+    //Android
+    androidBuildToolsVersion = "23.0.2"
+    androidCompileSdkVersion = 23
+    androidMinSdkVersion = 14
+    androidTargetSdkVersion = 23
+
+    //Libraries
+    androidAnnotationsVersion = '20.0.0'
+    butterKnifeVersion = '7.0.1'
+    daggerVersion = '2.0'
+    gsonVersion = '2.3'
+    javaxAnnotationVersion = '10.0-b28'
+    okHttpVersion = '2.3.0'
+    recyclerViewVersion = '23.0.1'
+    retrofitVersion = '1.9.0'
+    rxAndroidVersion = '0.24.0'
+    rxJavaVersion = '1.0.14'
+
+    //Testing
+    robolectricVersion = '3.0'
+    jUnitVersion = '4.12'
+    assertJVersion = '1.7.1'
+    mockitoVersion = '1.9.5'
+    dexmakerVersion = '1.0'
+    espressoVersion = '2.0'
+    testingSupportLibVersion = '0.1'
+
+
+    presentationDependencies = [
+            daggerCompiler : "com.google.dagger:dagger-compiler:${daggerVersion}",
+            dagger         : "com.google.dagger:dagger:${daggerVersion}",
+            butterKnife    : "com.jakewharton:butterknife:${butterKnifeVersion}",
+            recyclerView   : "com.android.support:recyclerview-v7:${recyclerViewVersion}",
+            rxJava         : "io.reactivex:rxjava:${rxJavaVersion}",
+            rxAndroid      : "io.reactivex:rxandroid:${rxAndroidVersion}",
+            javaxAnnotation: "org.glassfish:javax.annotation:${javaxAnnotationVersion}",
+    ]
+
+    domainDependencies = [
+            daggerCompiler : "com.google.dagger:dagger-compiler:${daggerVersion}",
+            dagger         : "com.google.dagger:dagger:${daggerVersion}",
+            javaxAnnotation: "org.glassfish:javax.annotation:${javaxAnnotationVersion}",
+            rxJava         : "io.reactivex:rxjava:${rxJavaVersion}",
+    ]
+
+    dataDependencies = [
+            androidAnnotations: "com.android.support:support-annotations:${androidAnnotationsVersion}",
+            dagger            : "com.google.dagger:dagger:${daggerVersion}",
+            daggerCompiler    : "com.google.dagger:dagger-compiler:${daggerVersion}",
+            gson              : "com.google.code.gson:gson:${gsonVersion}",
+            okHttp            : "com.squareup.okhttp:okhttp:${okHttpVersion}",
+            retrofit          : "com.squareup.retrofit:retrofit:$retrofitVersion",
+            rxAndroid         : "io.reactivex:rxandroid:${rxAndroidVersion}",
+            rxJava            : "io.reactivex:rxjava:${rxJavaVersion}"
+    ]
+}

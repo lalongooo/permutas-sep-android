@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.lalongooo.permutassep"
-    android:versionCode="7"
-    android:versionName="7.0.0">
+    package="com.lalongooo.permutassep">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -14,13 +12,13 @@
         android:required="true" />
 
     <application
-        android:name="com.permutassep.PermutasSEPApplication"
+        android:name="com.permutassep.presentation.AndroidApplication"
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppThemeTemp">
         <activity
-            android:name="com.permutassep.ui.ActivityAppOverview"
+            android:name="com.permutassep.presentation.view.activity.ActivityAppOverview"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -33,6 +31,7 @@
             android:name="com.permutassep.IntentEvaluator"
             android:label="@string/app_name">
             <intent-filter>
+
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
@@ -54,44 +53,22 @@
 
             </intent-filter>
         </activity>
-        >
 
         <activity
-            android:name="com.permutassep.ui.ActivityNewPasswordEmailSent"
+            android:name="com.permutassep.presentation.view.activity.ActivityWritePost"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"/>
+            android:parentActivityName="com.permutassep.presentation.view.activity.ActivityMain" />
         <activity
-            android:name="com.permutassep.ui.ActivityNewPasswordCaptureEmail"
-            android:label="@string/app_name"
-            android:parentActivityName="com.permutassep.ui.ActivityLogin"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name="com.permutassep.ui.ActivityWelcome"
+            android:name="com.permutassep.presentation.view.activity.ActivityWelcome"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.permutassep.ui.ActivityLogin"
+            android:name="com.permutassep.presentation.view.activity.ActivityMain"
             android:label="@string/app_name"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.permutassep.ui.ActivityLoginSignUp"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.permutassep.ui.ActivityMain"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.permutassep.ui.ActivitySignUp"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.permutassep.ui.ActivityCompleteFbData"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name="com.permutassep.ui.ActivityNewPassword"
+            android:name="com.permutassep.presentation.view.activity.ActivityNewPassword"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
         <activity
@@ -99,6 +76,27 @@
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <receiver
+            android:name="com.google.android.gms.analytics.AnalyticsReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="com.google.android.gms.analytics.ANALYTICS_DISPATCH" />
+            </intent-filter>
+        </receiver>
+        <service
+            android:name="com.google.android.gms.analytics.AnalyticsService"
+            android:enabled="true"
+            android:exported="false" />
+
+        <receiver
+            android:name="com.google.android.gms.analytics.CampaignTrackingReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.android.vending.INSTALL_REFERRER" />
+            </intent-filter>
+        </receiver>
+        <service android:name="com.google.android.gms.analytics.CampaignTrackingService" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
