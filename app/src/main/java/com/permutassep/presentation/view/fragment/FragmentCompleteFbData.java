@@ -163,31 +163,26 @@ public class FragmentCompleteFbData extends BaseFragment implements SignUpView {
     public void onPause() {
         super.onPause();
         LoginManager.getInstance().logOut();
-        Log.i("onPause", "onPause");
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        Log.i("onStop", "onStop");
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        Log.i("onDestroyView", "onDestroyView");
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.i("onDestroy", "onDestroy");
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        Log.i("onDetach", "onDetach");
     }
 
     /**

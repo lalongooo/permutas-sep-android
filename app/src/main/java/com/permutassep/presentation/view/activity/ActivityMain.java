@@ -270,6 +270,7 @@ public class ActivityMain extends BaseActivity
     public void onLoginComplete(UserModel userModel) {
         this.userModel = userModel;
         PrefUtils.putUser(this, userModel);
+        PrefUtils.markLoggedUser(this, true);
         renderDrawerOptions();
     }
 
@@ -310,6 +311,7 @@ public class ActivityMain extends BaseActivity
                         .setLabel(getString(R.string.ga_app_logout))
                         .build());
 
+                PrefUtils.markLoggedUser(this, false);
                 PrefUtils.clearApplicationPreferences(this);
                 LoginManager.getInstance().logOut();
                 navigator.navigateToStart(this);

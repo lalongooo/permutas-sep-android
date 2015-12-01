@@ -25,9 +25,25 @@ public class PrefUtils {
     public static final String PREF_DRAWER_OPENED = "pref_drawer_first_time_opened";
 
     /**
+     * Boolean indicating whether the user has already registered or not.
+     */
+    public static final String PREF_IS_USER_LOGGED_IN = "pref_drawer_first_time_opened";
+
+    /**
      * Boolean indicating whether ToS has been accepted
      */
     public static final String PREF_TOS_ACCEPTED = "pref_tos_accepted";
+
+
+    public static void markLoggedUser(final Context context, boolean loggedIn) {
+        SharedPreferences sp = context.getSharedPreferences(Config.APP_PREFERENCES_NAME, Context.MODE_PRIVATE);
+        sp.edit().putBoolean(PREF_IS_USER_LOGGED_IN, loggedIn).apply();
+    }
+
+    public static boolean isLoggedUser(final Context context) {
+        SharedPreferences sp = context.getSharedPreferences(Config.APP_PREFERENCES_NAME, Context.MODE_PRIVATE);
+        return sp.getBoolean(PREF_IS_USER_LOGGED_IN, false);
+    }
 
     public static boolean firstTimeDrawerOpened(final Context context) {
         SharedPreferences sp = context.getSharedPreferences(Config.APP_PREFERENCES_NAME, Context.MODE_PRIVATE);

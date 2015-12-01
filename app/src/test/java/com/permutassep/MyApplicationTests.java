@@ -24,8 +24,19 @@ public class MyApplicationTests {
         String repeated = new String(new char[n]).replace("\0", g);
 
 
-        String hidden = phone.replace(phone.substring(0,6), repeated);
+        String hidden = phone.replace(phone.substring(0, 6), repeated);
 
         Assert.assertEquals("******6048", hidden);
+    }
+
+    /**
+     * This test should replace the content before the "@" in an email address with "*"'s.
+     */
+    @Test
+    public void testEmailNameReplacement() {
+        String email = "hdez.jeduardo@gmail.com";
+        String name = email.substring(0, email.indexOf("@"));
+        String emailHidden = email.replace(name, new String(new char[name.length()]).replace("\0", "*"));
+        Assert.assertEquals("*************@gmail.com", emailHidden);
     }
 }

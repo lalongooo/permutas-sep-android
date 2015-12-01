@@ -10,7 +10,9 @@ import android.widget.TextView;
 
 import com.lalongooo.permutassep.R;
 import com.permutassep.model.State;
+import com.permutassep.presentation.config.Config;
 import com.permutassep.presentation.model.PostModel;
+import com.permutassep.presentation.utils.PrefUtils;
 import com.permutassep.presentation.utils.TimeAgo;
 import com.permutassep.presentation.utils.Utils;
 import com.squareup.picasso.Picasso;
@@ -66,8 +68,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostViewHold
 
         holder.tvUserName.setText(postModel.getUser().getName());
         holder.tvPostDate.setText(mTimeAgo.timeAgo(Utils.toDate(postModel.getPostDate())));
-        holder.tvPostUserEmail.setText(postModel.getUser().getEmail());
-        holder.tvPostUserPhone.setText(postModel.getUser().getPhone());
+        holder.tvPostUserEmail.setText(PrefUtils.isLoggedUser(mContext) ? postModel.getUser().getEmail() : postModel.getUser().getEmail().replace(postModel.getUser().getEmail().substring(0, postModel.getUser().getEmail().indexOf("@")), new String(new char[postModel.getUser().getEmail().substring(0, postModel.getUser().getEmail().indexOf("@")).length()]).replace("\0", "*")));
+        holder.tvPostUserPhone.setText(PrefUtils.isLoggedUser(mContext) ? postModel.getUser().getPhone() : postModel.getUser().getPhone().replace(postModel.getUser().getPhone().substring(0, Config.HIDE_PHONE_CHARACTERS), new String(new char[6]).replace("\0", Config.CHARACTER_FOR_ANON_USER)));
         holder.tvPostText.setText(postModel.getPostText());
         holder.tvFrom.setText(states.get((String.valueOf(postModel.getStateFrom()))).getStateName());
         holder.tvTo.setText(states.get(String.valueOf(postModel.getStateTo())).getStateName());

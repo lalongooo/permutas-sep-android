@@ -28,6 +28,7 @@ import com.mikepenz.fontawesome_typeface_library.FontAwesome;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.permutassep.model.State;
 import com.permutassep.presentation.AndroidApplication;
+import com.permutassep.presentation.config.Config;
 import com.permutassep.presentation.internal.di.components.ApplicationComponent;
 import com.permutassep.presentation.internal.di.components.DaggerPostComponent;
 import com.permutassep.presentation.internal.di.components.PostComponent;
@@ -231,8 +232,8 @@ public class FragmentPostDetails extends BaseFragment
             this.tvStateFromCode.setText(states.get((post.getStateFromCode())).getShortCode());
             this.tvStateToCode.setText(states.get((post.getStateToCode())).getShortCode());
             this.tvUserName.setText(post.getUser().getName());
-            this.tvPostUserEmail.setText(post.getUser().getEmail());
-            this.tvPostUserPhone.setText(post.getUser().getPhone());
+            this.tvPostUserEmail.setText(PrefUtils.isLoggedUser(getActivity()) ? post.getUser().getEmail() : post.getUser().getEmail().replace(post.getUser().getEmail().substring(0, post.getUser().getEmail().indexOf("@")), new String(new char[post.getUser().getEmail().substring(0, post.getUser().getEmail().indexOf("@")).length()]).replace("\0", "*")));
+            this.tvPostUserPhone.setText(PrefUtils.isLoggedUser(getActivity()) ? post.getUser().getPhone() : post.getUser().getPhone().replace(post.getUser().getPhone().substring(0, Config.HIDE_PHONE_CHARACTERS), new String(new char[6]).replace("\0", Config.CHARACTER_FOR_ANON_USER)));
             this.tvPostText.setText(post.getPostText());
             this.tvStateFrom.setText(post.getStateFrom());
             this.tvCityFrom.setText(post.getCityFrom());
