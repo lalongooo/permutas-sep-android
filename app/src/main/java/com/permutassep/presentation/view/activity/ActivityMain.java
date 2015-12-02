@@ -25,6 +25,7 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
+import com.parse.ParseInstallation;
 import com.permutassep.presentation.AndroidApplication;
 import com.permutassep.presentation.interfaces.FirstLaunchCompleteListener;
 import com.permutassep.presentation.interfaces.FragmentMenuItemSelectedListener;
@@ -276,6 +277,9 @@ public class ActivityMain extends BaseActivity
         PrefUtils.putUser(this, userModel);
         PrefUtils.markLoggedUser(this, true);
         renderDrawerOptions();
+        ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+        installation.put("PSUser", userModel.getId());
+        installation.saveInBackground();
     }
 
     /**
