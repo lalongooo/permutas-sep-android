@@ -1,4 +1,4 @@
-package com.permutassep.presentation.view.fragment;
+package com.permutassep.ui;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -29,7 +29,6 @@ import com.permutassep.presentation.model.PostModel;
 import com.permutassep.presentation.presenter.SearchPostsResultsPresenter;
 import com.permutassep.presentation.utils.PrefUtils;
 import com.permutassep.presentation.view.SearchPostsResultsView;
-import com.permutassep.presentation.view.activity.BaseActivity;
 import com.permutassep.presentation.view.adapter.PostsAdapter;
 import com.permutassep.presentation.view.adapter.PostsLayoutManager;
 
@@ -45,7 +44,7 @@ import butterknife.ButterKnife;
 /**
  * By Jorge E. Hernandez (@lalongooo) 2015
  */
-public class FragmentSearchResults extends BaseFragment implements SearchPostsResultsView {
+public class FragmentResult extends BaseFragment implements SearchPostsResultsView {
 
     private static final String ARGUMENT_SEARCH_PARAMS = "argument_search_params";
 
@@ -63,15 +62,15 @@ public class FragmentSearchResults extends BaseFragment implements SearchPostsRe
     private PostsLayoutManager postsLayoutManager;
     private PostListListener postListListener;
 
-    public static FragmentSearchResults newInstance(HashMap<String, String> searchParams) {
+    public static FragmentResult newInstance(HashMap<String, String> searchParams) {
 
-        FragmentSearchResults fragmentSearchResults = new FragmentSearchResults();
+        FragmentResult mFragmentResult = new FragmentResult();
 
         Bundle args = new Bundle();
         args.putSerializable(ARGUMENT_SEARCH_PARAMS, searchParams);
-        fragmentSearchResults.setArguments(args);
+        mFragmentResult.setArguments(args);
 
-        return fragmentSearchResults;
+        return mFragmentResult;
     }
 
     @Override
@@ -101,8 +100,8 @@ public class FragmentSearchResults extends BaseFragment implements SearchPostsRe
     private PostsAdapter.OnItemClickListener onItemClickListener = new PostsAdapter.OnItemClickListener() {
         @Override
         public void onPostItemClicked(PostModel postModel) {
-            if (FragmentSearchResults.this.postListPresenter != null && postModel != null) {
-                FragmentSearchResults.this.postListPresenter.onPostClicked(postModel);
+            if (FragmentResult.this.postListPresenter != null && postModel != null) {
+                FragmentResult.this.postListPresenter.onPostClicked(postModel);
             }
         }
     };

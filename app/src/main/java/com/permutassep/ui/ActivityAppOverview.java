@@ -1,4 +1,4 @@
-package com.permutassep.presentation.view.activity;
+package com.permutassep.ui;
 
 import android.animation.ObjectAnimator;
 import android.animation.StateListAnimator;

@@ -1,4 +1,4 @@
-package com.permutassep.presentation.view.fragment;
+package com.permutassep.ui;
 
 /**
  * By Jorge E. Hernandez (@lalongooo) 2015
@@ -29,7 +29,6 @@ import com.permutassep.presentation.presenter.NewPasswordPresenter;
 import com.permutassep.presentation.utils.PrefUtils;
 import com.permutassep.presentation.view.LoginView;
 import com.permutassep.presentation.view.NewPasswordView;
-import com.permutassep.presentation.view.activity.BaseActivity;
 import com.throrinstudio.android.common.libs.validator.Form;
 import com.throrinstudio.android.common.libs.validator.Validate;
 import com.throrinstudio.android.common.libs.validator.validator.LengthValidator;

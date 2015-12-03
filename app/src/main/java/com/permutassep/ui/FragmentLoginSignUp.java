@@ -1,4 +1,4 @@
-package com.permutassep.presentation.view.fragment;
+package com.permutassep.ui;
 
 /**
  * By Jorge E. Hernandez (@lalongooo) 2015
@@ -61,6 +61,6 @@ public class FragmentLoginSignUp extends BaseFragment {
                 .setAction(getString(R.string.ga_event_action_click))
                 .setLabel(getString(R.string.ga_login_action_anonymous))
                 .build());
-        this.navigationListener.onNextFragment(FragmentPagedPostList.class);
+        this.navigationListener.onNextFragment(FragmentPagedNewsFeed.class);
     }
 }

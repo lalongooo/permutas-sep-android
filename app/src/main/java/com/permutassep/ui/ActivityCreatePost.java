@@ -1,4 +1,4 @@
-package com.permutassep.presentation.view.activity;
+package com.permutassep.ui;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -58,7 +58,7 @@ import butterknife.OnClick;
  */
 
 
-public class ActivityWritePost extends BaseActivity implements
+public class ActivityCreatePost extends BaseActivity implements
         PageFragmentCallbacks,
         ReviewFragment.Callbacks,
         ModelCallbacks,
@@ -90,7 +90,7 @@ public class ActivityWritePost extends BaseActivity implements
     private MaterialDialog progressDialog;
 
     public static Intent getCallingIntent(Context context) {
-        return new Intent(context, ActivityWritePost.class);
+        return new Intent(context, ActivityCreatePost.class);
     }
 
     @Override
@@ -166,7 +166,7 @@ public class ActivityWritePost extends BaseActivity implements
                 } else if (mPager.getCurrentItem() == mCurrentPageSequence.size()) {
 
 
-                    new MaterialDialog.Builder(ActivityWritePost.this)
+                    new MaterialDialog.Builder(ActivityCreatePost.this)
                             .content(R.string.submit_confirm_message)
                             .positiveText(R.string.submit_confirm_button)
                             .negativeText(android.R.string.cancel)
@@ -206,7 +206,7 @@ public class ActivityWritePost extends BaseActivity implements
                 .postModule(new PostModule())
                 .build();
         this.postComponent.inject(this);
-        this.writePostPresenter.setView(this, PrefUtils.getUser(ActivityWritePost.this));
+        this.writePostPresenter.setView(this, PrefUtils.getUser(ActivityCreatePost.this));
     }
 
     @Override
@@ -306,7 +306,7 @@ public class ActivityWritePost extends BaseActivity implements
         if (post == null) {
 
             post = new PostModel();
-            post.setUser(PrefUtils.getUser(ActivityWritePost.this));
+            post.setUser(PrefUtils.getUser(ActivityCreatePost.this));
 
             for (Page p : mWizardModel.getCurrentPageSequence()) {
                 switch (p.getKey()) {
@@ -377,7 +377,7 @@ public class ActivityWritePost extends BaseActivity implements
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog materialDialog, @NonNull DialogAction dialogAction) {
-                        ComplexPreferences.get(ActivityWritePost.this).putObject(NEW_POST_KEY, postModel);
+                        ComplexPreferences.get(ActivityCreatePost.this).putObject(NEW_POST_KEY, postModel);
                         finish();
                     }
                 })

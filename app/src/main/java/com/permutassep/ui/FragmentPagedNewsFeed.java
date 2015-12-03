@@ -1,4 +1,4 @@
-package com.permutassep.presentation.view.fragment;
+package com.permutassep.ui;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -19,18 +20,17 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.lalongooo.permutassep.R;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
+import com.permutassep.presentation.config.Config;
 import com.permutassep.presentation.interfaces.FirstLaunchCompleteListener;
 import com.permutassep.presentation.interfaces.FragmentMenuItemSelectedListener;
 import com.permutassep.presentation.interfaces.PostListListener;
 import com.permutassep.presentation.internal.di.components.ApplicationComponent;
 import com.permutassep.presentation.internal.di.components.DaggerPostComponent;
 import com.permutassep.presentation.internal.di.components.PostComponent;
-import com.permutassep.presentation.internal.di.modules.PostModule;
 import com.permutassep.presentation.model.PostModel;
-import com.permutassep.presentation.presenter.UserPostListPresenter;
+import com.permutassep.presentation.presenter.PagedPostListPresenter;
 import com.permutassep.presentation.utils.PrefUtils;
-import com.permutassep.presentation.view.PostsListView;
-import com.permutassep.presentation.view.activity.BaseActivity;
+import com.permutassep.presentation.view.PagedPostsListView;
 import com.permutassep.presentation.view.adapter.PostsAdapter;
 import com.permutassep.presentation.view.adapter.PostsLayoutManager;
 
@@ -39,20 +39,22 @@ import java.util.Collection;
 
 import javax.inject.Inject;
 
+import br.kots.mob.complex.preferences.ComplexPreferences;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
  * By Jorge E. Hernandez (@lalongooo) 2015
  */
-public class FragmentMyPostList extends BaseFragment implements PostsListView {
+public class FragmentPagedNewsFeed extends BaseFragment implements PagedPostsListView {
 
-    private static final String ARGUMENT_USER_ID = "ARGUMENT_USER_ID";
+    public static final String TAG = "FragmentPagedPostList";
+
     @Inject
-    UserPostListPresenter postListPresenter;
+    PagedPostListPresenter postListPresenter;
+
     @Bind(R.id.rv_users)
     RecyclerView rv_posts;
-    private int userId;
     private MaterialDialog progressDialog;
 
     private PostComponent postComponent;
@@ -61,29 +63,22 @@ public class FragmentMyPostList extends BaseFragment implements PostsListView {
     private PostsAdapter postsAdapter;
     private PostsLayoutManager postsLayoutManager;
     private PostListListener postListListener;
+    private boolean hasNextPage;
+    private int currentPage = 1;
 
     private PostsAdapter.OnItemClickListener onItemClickListener = new PostsAdapter.OnItemClickListener() {
         @Override
         public void onPostItemClicked(PostModel postModel) {
-            if (FragmentMyPostList.this.postListPresenter != null && postModel != null) {
-                FragmentMyPostList.this.postListPresenter.onPostClicked(postModel);
-            }
+            postListPresenter.onPostClicked(postModel);
         }
     };
 
-
-    public FragmentMyPostList() {
+    public FragmentPagedNewsFeed() {
         super();
     }
 
-    public static FragmentMyPostList newInstance(int userId) {
-        FragmentMyPostList fragmentMyPostList = new FragmentMyPostList();
-
-        Bundle args = new Bundle();
-        args.putInt(ARGUMENT_USER_ID, userId);
-        fragmentMyPostList.setArguments(args);
-
-        return fragmentMyPostList;
+    public static FragmentPagedNewsFeed newInstance() {
+        return new FragmentPagedNewsFeed();
     }
 
     @Override
@@ -108,6 +103,16 @@ public class FragmentMyPostList extends BaseFragment implements PostsListView {
         this.postsAdapter = new PostsAdapter(getActivity(), new ArrayList<PostModel>());
         this.postsAdapter.setOnItemClickListener(onItemClickListener);
         this.rv_posts.setAdapter(postsAdapter);
+        this.rv_posts.addOnScrollListener(new EndlessRecyclerOnScrollListener(postsLayoutManager) {
+
+            @Override
+            public void onLoadMore(int current_page) {
+                currentPage = current_page;
+                if (hasNextPage) {
+                    FragmentPagedNewsFeed.this.postListPresenter.initialize(current_page, Config.NEWS_FEED_ITEMS_PER_PAGE);
+                }
+            }
+        });
     }
 
     @Override
@@ -116,6 +121,13 @@ public class FragmentMyPostList extends BaseFragment implements PostsListView {
         this.postListListener = (PostListListener) getActivity();
         this.firstLaunchCompleteListener = (FirstLaunchCompleteListener) getActivity();
         this.fragmentMenuItemSelectedListener = (FragmentMenuItemSelectedListener) getActivity();
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        this.initialize();
+        this.loadUserList();
     }
 
     @SuppressWarnings("deprecation")
@@ -140,26 +152,17 @@ public class FragmentMyPostList extends BaseFragment implements PostsListView {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        this.initialize();
-        this.loadUserPostsList();
-    }
-
     private void initialize() {
-        this.userId = getArguments().getInt(ARGUMENT_USER_ID);
         postComponent = DaggerPostComponent.builder()
                 .applicationComponent(getComponent(ApplicationComponent.class))
                 .activityModule(((BaseActivity) getActivity()).getActivityModule())
-                .postModule(new PostModule(this.userId))
                 .build();
         postComponent.inject(this);
-        this.postListPresenter.setView(this, PrefUtils.getUser(getActivity()));
+        this.postListPresenter.setView(this);
     }
 
-    private void loadUserPostsList() {
-        this.postListPresenter.initialize();
+    private void loadUserList() {
+        this.postListPresenter.initialize(currentPage, Config.NEWS_FEED_ITEMS_PER_PAGE);
     }
 
     @Override
@@ -178,28 +181,32 @@ public class FragmentMyPostList extends BaseFragment implements PostsListView {
      */
 
     @Override
-    public void renderPostList(Collection<PostModel> postModelCollection) {
+    public void renderPostList(Collection<PostModel> postModelCollection, boolean hasNextPage) {
+        firstLaunchCompleteListener.onFirstLaunchComplete();
+        this.hasNextPage = hasNextPage;
         if (postModelCollection != null) {
             this.postsAdapter.setPostsCollection(postModelCollection);
         }
-        firstLaunchCompleteListener.onFirstLaunchComplete();
     }
 
     @Override
     public void viewPostDetail(PostModel postModel) {
-        if (this.postListListener != null) {
-            this.postListListener.onPostClicked(postModel);
-        }
+        this.postListListener.onPostClicked(postModel);
     }
 
     @Override
     public void showLoading() {
-        progressDialog = new MaterialDialog.Builder(getActivity())
-                .title(R.string.please_wait)
-                .content(R.string.app_post_list_loading_dlg_msg)
-                .progress(true, 0)
-                .progressIndeterminateStyle(false)
-                .show();
+
+        if (progressDialog == null) {
+            progressDialog = new MaterialDialog.Builder(getActivity())
+                    .title(R.string.please_wait)
+                    .content(R.string.app_post_list_loading_dlg_msg)
+                    .progress(true, 0)
+                    .progressIndeterminateStyle(false)
+                    .show();
+        } else {
+            progressDialog.show();
+        }
     }
 
     @Override
@@ -218,7 +225,7 @@ public class FragmentMyPostList extends BaseFragment implements PostsListView {
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog materialDialog, @NonNull DialogAction dialogAction) {
-                        loadUserPostsList();
+                        loadUserList();
                     }
                 })
                 .show();
@@ -234,15 +241,29 @@ public class FragmentMyPostList extends BaseFragment implements PostsListView {
         this.showToastMessage(message);
     }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        PostModel postModel = ComplexPreferences.get(getActivity()).getObject(ActivityCreatePost.NEW_POST_KEY, PostModel.class);
+        if (!hidden &&  postModel != null) {
+            ComplexPreferences.get(getActivity()).removeObject(ActivityCreatePost.NEW_POST_KEY);
+            this.postsAdapter.addPost(postModel);
+        }
+    }
+
     /**
      * Synchronize with the fragment lifecycle by calling
      * the corresponding presenter methods
      */
-
     @Override
     public void onResume() {
         super.onResume();
         this.postListPresenter.resume();
+        PostModel postModel = ComplexPreferences.get(getActivity()).getObject(ActivityCreatePost.NEW_POST_KEY, PostModel.class);
+        if (postModel != null) {
+            ComplexPreferences.get(getActivity()).removeObject(ActivityCreatePost.NEW_POST_KEY);
+            this.postsAdapter.addPost(postModel);
+        }
     }
 
     @Override
@@ -255,5 +276,50 @@ public class FragmentMyPostList extends BaseFragment implements PostsListView {
     public void onDestroy() {
         super.onDestroy();
         this.postListPresenter.destroy();
+    }
+
+
+    public abstract class EndlessRecyclerOnScrollListener extends RecyclerView.OnScrollListener {
+        public String TAG = EndlessRecyclerOnScrollListener.class.getSimpleName();
+        int firstVisibleItem, visibleItemCount, totalItemCount;
+        private int previousTotal = 0; // The total number of items in the dataset after the last load
+        private boolean loading = true; // True if we are still waiting for the last set of data to load.
+        private int visibleThreshold = 2; // The minimum amount of items to have below your current scroll position before loading more.
+        private int current_page = 1;
+
+        private LinearLayoutManager mLinearLayoutManager;
+
+        public EndlessRecyclerOnScrollListener(LinearLayoutManager linearLayoutManager) {
+            this.mLinearLayoutManager = linearLayoutManager;
+        }
+
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+
+            visibleItemCount = recyclerView.getChildCount();
+            totalItemCount = mLinearLayoutManager.getItemCount();
+            firstVisibleItem = mLinearLayoutManager.findFirstVisibleItemPosition();
+
+            if (loading) {
+                if (totalItemCount > previousTotal) {
+                    loading = false;
+                    previousTotal = totalItemCount;
+                }
+            }
+            if (!loading && (totalItemCount - visibleItemCount)
+                    <= (firstVisibleItem + visibleThreshold)) {
+                // End has been reached
+
+                // Do something
+                current_page++;
+
+                onLoadMore(current_page);
+
+                loading = true;
+            }
+        }
+
+        public abstract void onLoadMore(int current_page);
     }
 }

@@ -1,4 +1,4 @@
-package com.permutassep.presentation.view.fragment;
+package com.permutassep.ui;
 
 /**
  * By Jorge E. Hernandez (@lalongooo) 2015
@@ -12,7 +12,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +29,6 @@ import com.permutassep.presentation.internal.di.modules.AuthenticationModule;
 import com.permutassep.presentation.model.UserModel;
 import com.permutassep.presentation.presenter.SignUpPresenter;
 import com.permutassep.presentation.view.SignUpView;
-import com.permutassep.presentation.view.activity.BaseActivity;
 import com.throrinstudio.android.common.libs.validator.Form;
 import com.throrinstudio.android.common.libs.validator.Validate;
 import com.throrinstudio.android.common.libs.validator.validator.EmailValidator;
@@ -68,7 +66,7 @@ public class FragmentCompleteFbData extends BaseFragment implements SignUpView {
      * A static method to create a new instance of the {@link FragmentCompleteFbData} class
      *
      * @param bundle The incomplete data after the Facebook login
-     * @return An instance of {@link FragmentPostDetails}
+     * @return An instance of {@link FragmentPostDetail}
      */
     public static FragmentCompleteFbData newInstance(Bundle bundle) {
         FragmentCompleteFbData fragmentCompleteFbData = new FragmentCompleteFbData();
@@ -193,7 +191,7 @@ public class FragmentCompleteFbData extends BaseFragment implements SignUpView {
     public void signedUpUser(UserModel userModel) {
         this.loginCompleteListener.onLoginComplete(userModel);
         getActivity().getSupportFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-        this.navigationListener.onNextFragment(FragmentPagedPostList.class);
+        this.navigationListener.onNextFragment(FragmentPagedNewsFeed.class);
     }
 
     @Override

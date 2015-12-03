@@ -3,11 +3,11 @@ package com.permutassep.presentation.internal.di.components;
 import com.permutassep.presentation.internal.di.PerActivity;
 import com.permutassep.presentation.internal.di.modules.ActivityModule;
 import com.permutassep.presentation.internal.di.modules.PostModule;
-import com.permutassep.presentation.view.activity.ActivityWritePost;
-import com.permutassep.presentation.view.fragment.FragmentMyPostList;
-import com.permutassep.presentation.view.fragment.FragmentPagedPostList;
-import com.permutassep.presentation.view.fragment.FragmentPostDetails;
-import com.permutassep.presentation.view.fragment.FragmentSearchResults;
+import com.permutassep.ui.ActivityCreatePost;
+import com.permutassep.ui.FragmentMyPosts;
+import com.permutassep.ui.FragmentPagedNewsFeed;
+import com.permutassep.ui.FragmentPostDetail;
+import com.permutassep.ui.FragmentResult;
 
 import dagger.Component;
 
@@ -18,14 +18,14 @@ import dagger.Component;
 @Component(dependencies = ApplicationComponent.class, modules = {ActivityModule.class, PostModule.class})
 public interface PostComponent extends ActivityComponent {
 
-    void inject(FragmentPostDetails fragmentPostDetails);
+    void inject(FragmentPostDetail mFragmentPostDetail);
 
-    void inject(FragmentPagedPostList fragmentPagedPostList);
+    void inject(FragmentPagedNewsFeed mFragmentPagedNewsFeed);
 
-    void inject(FragmentMyPostList fragmentPagedPostList);
+    void inject(FragmentMyPosts fragmentPagedPostList);
 
-    void inject(ActivityWritePost activityWritePost);
+    void inject(ActivityCreatePost activityWritePost);
 
-    void inject(FragmentSearchResults fragmentSearchResults);
+    void inject(FragmentResult mFragmentResult);
 
 }

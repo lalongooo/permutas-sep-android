@@ -18,7 +18,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppThemeTemp">
         <activity
-            android:name="com.permutassep.presentation.view.activity.ActivityAppOverview"
+            android:name="com.permutassep.ui.ActivityAppOverview"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -55,21 +55,17 @@
         </activity>
 
         <activity
-            android:name="com.permutassep.presentation.view.activity.ActivityWritePost"
+            android:name="com.permutassep.ui.ActivityCreatePost"
             android:label="@string/app_name"
-            android:parentActivityName="com.permutassep.presentation.view.activity.ActivityMain" />
+            android:parentActivityName="com.permutassep.ui.ActivityMain" />
         <activity
-            android:name="com.permutassep.presentation.view.activity.ActivityWelcome"
+            android:name="com.permutassep.ui.ActivityWelcome"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.permutassep.presentation.view.activity.ActivityMain"
+            android:name="com.permutassep.ui.ActivityMain"
             android:label="@string/app_name"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.permutassep.presentation.view.activity.ActivityNewPassword"
-            android:label="@string/app_name"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.facebook.FacebookActivity"

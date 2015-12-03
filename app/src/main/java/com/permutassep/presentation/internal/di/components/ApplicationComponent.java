@@ -9,7 +9,7 @@ import com.permutassep.domain.repository.PasswordResetRepository;
 import com.permutassep.domain.repository.PostRepository;
 import com.permutassep.presentation.internal.di.modules.ApplicationModule;
 import com.permutassep.presentation.navigation.Navigator;
-import com.permutassep.presentation.view.activity.BaseActivity;
+import com.permutassep.ui.BaseActivity;
 
 import javax.inject.Singleton;
 

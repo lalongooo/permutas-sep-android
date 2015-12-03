@@ -1,4 +1,4 @@
-package com.permutassep.presentation.view.activity;
+package com.permutassep.ui;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -38,13 +38,6 @@ import com.permutassep.presentation.model.UserModel;
 import com.permutassep.presentation.navigation.Navigator;
 import com.permutassep.presentation.utils.PrefUtils;
 import com.permutassep.presentation.view.HomeView;
-import com.permutassep.presentation.view.fragment.FragmentLogin;
-import com.permutassep.presentation.view.fragment.FragmentLoginSignUp;
-import com.permutassep.presentation.view.fragment.FragmentMyPostList;
-import com.permutassep.presentation.view.fragment.FragmentNewPassword;
-import com.permutassep.presentation.view.fragment.FragmentPagedPostList;
-import com.permutassep.presentation.view.fragment.FragmentSearch;
-import com.permutassep.presentation.view.fragment.FragmentSignUp;
 
 import java.util.HashMap;
 
@@ -164,7 +157,7 @@ public class ActivityMain extends BaseActivity
                                 .setAction(getString(R.string.ga_event_action_click))
                                 .setLabel(getString(R.string.ga_app_home))
                                 .build());
-                if (!(getCurrentDisplayedFragment() instanceof FragmentPagedPostList)) {
+                if (!(getCurrentDisplayedFragment() instanceof FragmentPagedNewsFeed)) {
                     getSupportFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                     navigator.navigateToPostList(this, true);
                     setActionBarTitle(R.string.app_name);
@@ -180,7 +173,7 @@ public class ActivityMain extends BaseActivity
                                 .setAction(getString(R.string.ga_event_action_click))
                                 .setLabel(getString(R.string.ga_app_my_posts))
                                 .build());
-                if (!(getCurrentDisplayedFragment() instanceof FragmentMyPostList)) {
+                if (!(getCurrentDisplayedFragment() instanceof FragmentMyPosts)) {
                     navigator.navigateToUserPostList(this, this.userModel.getId(), true);
                     setActionBarTitle(R.string.app_main_toolbar_title_my_posts);
                 }
@@ -227,7 +220,7 @@ public class ActivityMain extends BaseActivity
             navigator.navigateToSignUp(this);
         }
 
-        if (c == FragmentPagedPostList.class) {
+        if (c == FragmentPagedNewsFeed.class) {
             navigator.navigateToPostList(this, true);
             setActionBarTitle(R.string.app_name);
         }
@@ -249,12 +242,12 @@ public class ActivityMain extends BaseActivity
             if (actionBar != null) {
                 actionBar.hide();
             }
-        } else if (currentFragment instanceof FragmentPagedPostList) {
+        } else if (currentFragment instanceof FragmentPagedNewsFeed) {
             if (drawer != null) drawer.setSelection(DRAWER_IDENTIFIER_HOME, false);
             setActionBarTitle(R.string.app_name);
         } else if (currentFragment instanceof FragmentSearch) {
             setActionBarTitle(R.string.app_main_toolbar_title_search);
-        } else if (currentFragment instanceof FragmentMyPostList) {
+        } else if (currentFragment instanceof FragmentMyPosts) {
             setActionBarTitle(R.string.app_main_toolbar_title_my_posts);
         }
     }
