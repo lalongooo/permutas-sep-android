@@ -1,4 +1,4 @@
-package com.permutassep.presentation.view.fragment;
+package com.permutassep.ui;
 
 /**
  * By Jorge E. Hernandez (@lalongooo) 2015

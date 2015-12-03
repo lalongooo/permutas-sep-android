@@ -7,10 +7,10 @@ package com.permutassep.presentation.internal.di.components;
 import com.permutassep.presentation.internal.di.PerActivity;
 import com.permutassep.presentation.internal.di.modules.ActivityModule;
 import com.permutassep.presentation.internal.di.modules.AuthenticationModule;
-import com.permutassep.presentation.view.fragment.FragmentCompleteFbData;
-import com.permutassep.presentation.view.fragment.FragmentLogin;
-import com.permutassep.presentation.view.fragment.FragmentNewPassword;
-import com.permutassep.presentation.view.fragment.FragmentSignUp;
+import com.permutassep.ui.FragmentCompleteFbData;
+import com.permutassep.ui.FragmentLogin;
+import com.permutassep.ui.FragmentNewPassword;
+import com.permutassep.ui.FragmentSignUp;
 
 import dagger.Component;
 

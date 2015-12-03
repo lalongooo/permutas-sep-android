@@ -16,9 +16,11 @@
 
 package com.permutassep.presentation.view.wizard.model;
 
+import com.permutassep.ui.ActivityCreatePost;
+
 /**
  * Callback interface connecting {@link Page}, {@link com.permutassep.presentation.view.wizard.model.AbstractWizardModel}, and model container
- * objects (e.g. {@link com.permutassep.presentation.view.activity.ActivityWritePost}.
+ * objects (e.g. {@link ActivityCreatePost}.
  */
 public interface ModelCallbacks {
     void onPageDataChanged(Page page);

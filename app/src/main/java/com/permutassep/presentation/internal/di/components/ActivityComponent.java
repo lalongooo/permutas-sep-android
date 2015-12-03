@@ -5,8 +5,7 @@ import android.support.v7.widget.Toolbar;
 
 import com.permutassep.presentation.internal.di.PerActivity;
 import com.permutassep.presentation.internal.di.modules.ActivityModule;
-import com.permutassep.presentation.view.activity.ActivityMain;
-import com.permutassep.presentation.view.activity.ActivityWritePost;
+import com.permutassep.ui.ActivityMain;
 
 import dagger.Component;
 

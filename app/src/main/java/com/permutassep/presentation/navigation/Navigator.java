@@ -21,19 +21,18 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 
 import com.lalongooo.permutassep.R;
-import com.permutassep.presentation.view.activity.ActivityAppOverview;
-import com.permutassep.presentation.view.activity.ActivityMain;
-import com.permutassep.presentation.view.activity.ActivityWritePost;
-import com.permutassep.presentation.view.activity.BaseActivity;
-import com.permutassep.presentation.view.fragment.FragmentCompleteFbData;
-import com.permutassep.presentation.view.fragment.FragmentLogin;
-import com.permutassep.presentation.view.fragment.FragmentLoginSignUp;
-import com.permutassep.presentation.view.fragment.FragmentMyPostList;
-import com.permutassep.presentation.view.fragment.FragmentPagedPostList;
-import com.permutassep.presentation.view.fragment.FragmentPostDetails;
-import com.permutassep.presentation.view.fragment.FragmentSearch;
-import com.permutassep.presentation.view.fragment.FragmentSearchResults;
-import com.permutassep.presentation.view.fragment.FragmentSignUp;
+import com.permutassep.ui.ActivityAppOverview;
+import com.permutassep.ui.ActivityCreatePost;
+import com.permutassep.ui.BaseActivity;
+import com.permutassep.ui.FragmentCompleteFbData;
+import com.permutassep.ui.FragmentLogin;
+import com.permutassep.ui.FragmentLoginSignUp;
+import com.permutassep.ui.FragmentMyPosts;
+import com.permutassep.ui.FragmentPagedNewsFeed;
+import com.permutassep.ui.FragmentPostDetail;
+import com.permutassep.ui.FragmentResult;
+import com.permutassep.ui.FragmentSearch;
+import com.permutassep.ui.FragmentSignUp;
 
 import java.util.HashMap;
 
@@ -150,7 +149,7 @@ public class Navigator {
                 fragmentTransaction.addToBackStack(null);
             }
 
-            fragmentTransaction.add(R.id.fragmentContainer, FragmentPagedPostList.newInstance());
+            fragmentTransaction.add(R.id.fragmentContainer, FragmentPagedNewsFeed.newInstance());
             fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
             fragmentTransaction.commit();
         }
@@ -165,7 +164,7 @@ public class Navigator {
         activity.getSupportFragmentManager()
                 .beginTransaction()
                 .hide(activity.getSupportFragmentManager().findFragmentById(R.id.fragmentContainer))
-                .add(R.id.fragmentContainer, FragmentPostDetails.newInstance(postId))
+                .add(R.id.fragmentContainer, FragmentPostDetail.newInstance(postId))
                 .addToBackStack(null)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .commitAllowingStateLoss();
@@ -190,7 +189,7 @@ public class Navigator {
                 fragmentTransaction.addToBackStack(null);
             }
 
-            fragmentTransaction.add(R.id.fragmentContainer, FragmentMyPostList.newInstance(userId));
+            fragmentTransaction.add(R.id.fragmentContainer, FragmentMyPosts.newInstance(userId));
             fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
             fragmentTransaction.commit();
         }
@@ -203,7 +202,7 @@ public class Navigator {
      */
     public void navigateToWritePost(BaseActivity baseActivity) {
         if (baseActivity != null) {
-            Intent intentToLaunch = ActivityWritePost.getCallingIntent(baseActivity);
+            Intent intentToLaunch = ActivityCreatePost.getCallingIntent(baseActivity);
             baseActivity.startActivityForResult(intentToLaunch, 8999);
         }
     }
@@ -250,7 +249,7 @@ public class Navigator {
                 fragmentTransaction.addToBackStack(null);
             }
 
-            fragmentTransaction.add(R.id.fragmentContainer, FragmentSearchResults.newInstance(searchParams));
+            fragmentTransaction.add(R.id.fragmentContainer, FragmentResult.newInstance(searchParams));
             fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
             fragmentTransaction.commit();
         }

@@ -1,4 +1,4 @@
-package com.permutassep.presentation.view.fragment;
+package com.permutassep.ui;
 
 import android.content.Context;
 import android.content.Intent;
@@ -45,14 +45,12 @@ import com.permutassep.presentation.presenter.PostDetailsPresenter;
 import com.permutassep.presentation.utils.PrefUtils;
 import com.permutassep.presentation.utils.Utils;
 import com.permutassep.presentation.view.PostDetailsView;
-import com.permutassep.presentation.view.activity.BaseActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 
 import javax.inject.Inject;
 
-import br.kots.mob.complex.preferences.ComplexPreferences;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -61,7 +59,7 @@ import butterknife.OnClick;
  * Created by lalongooo on 27/09/15.
  **/
 
-public class FragmentPostDetails extends BaseFragment
+public class FragmentPostDetail extends BaseFragment
         implements PostDetailsView, OnMapReadyCallback {
 
     private static final String ARGUMENT_POST_ID = "ARGUMENT_POST_ID";
@@ -127,24 +125,24 @@ public class FragmentPostDetails extends BaseFragment
     /**
      * Empty constructor
      */
-    public FragmentPostDetails() {
+    public FragmentPostDetail() {
         super();
     }
 
     /**
-     * A static method to create a new instance of the {@link FragmentPostDetails} class
+     * A static method to create a new instance of the {@link FragmentPostDetail} class
      *
      * @param postId The id of the post to be displayed
-     * @return An instance of {@link FragmentPostDetails}
+     * @return An instance of {@link FragmentPostDetail}
      */
-    public static FragmentPostDetails newInstance(int postId) {
-        FragmentPostDetails fragmentPostDetails = new FragmentPostDetails();
+    public static FragmentPostDetail newInstance(int postId) {
+        FragmentPostDetail mFragmentPostDetail = new FragmentPostDetail();
 
         Bundle args = new Bundle();
         args.putInt(ARGUMENT_POST_ID, postId);
-        fragmentPostDetails.setArguments(args);
+        mFragmentPostDetail.setArguments(args);
 
-        return fragmentPostDetails;
+        return mFragmentPostDetail;
     }
 
     protected Navigator.NavigationListener navigationListener;

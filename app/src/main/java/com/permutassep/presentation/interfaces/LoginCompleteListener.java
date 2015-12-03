@@ -5,9 +5,10 @@ package com.permutassep.presentation.interfaces;
  */
 
 import com.permutassep.presentation.model.UserModel;
+import com.permutassep.ui.ActivityMain;
 
 /**
- * Interface implemented in the {@link com.permutassep.presentation.view.activity.ActivityMain},
+ * Interface implemented in the {@link ActivityMain},
  * it is used to listen when the login has been successful in the different fragments where
  * a login/sign up is performed.
  */
