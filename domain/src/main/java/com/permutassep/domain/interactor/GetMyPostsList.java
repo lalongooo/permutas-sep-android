@@ -28,4 +28,8 @@ public class GetMyPostsList extends UseCase {
     protected Observable buildUseCaseObservable() {
         return postRepository.userPosts(userId);
     }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
 }
