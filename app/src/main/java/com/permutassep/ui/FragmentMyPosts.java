@@ -158,7 +158,7 @@ public class FragmentMyPosts extends BaseFragment implements PostsListView {
     }
 
     private void loadUserPostsList() {
-        this.postListPresenter.initialize();
+        this.postListPresenter.initialize(this.userId);
     }
 
     @Override

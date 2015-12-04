@@ -58,10 +58,8 @@ public class PostModule {
     @Provides
     @PerActivity
     @Named("myPostsList")
-    UseCase provideGetMyPostsListUseCase(
-            PostRepository postRepository, ThreadExecutor threadExecutor,
-            PostExecutionThread postExecutionThread) {
-        return new GetMyPostsList(id, postRepository, threadExecutor, postExecutionThread);
+    UseCase provideGetMyPostsListUseCase(GetMyPostsList mGetMyPostsList) {
+        return mGetMyPostsList;
     }
 
     @Provides

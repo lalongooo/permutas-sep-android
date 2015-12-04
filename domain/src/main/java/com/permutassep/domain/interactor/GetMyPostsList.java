@@ -4,6 +4,8 @@ import com.permutassep.domain.executor.PostExecutionThread;
 import com.permutassep.domain.executor.ThreadExecutor;
 import com.permutassep.domain.repository.PostRepository;
 
+import javax.inject.Inject;
+
 import rx.Observable;
 
 /**
@@ -15,9 +17,9 @@ public class GetMyPostsList extends UseCase {
     private int userId = -1;
     private PostRepository postRepository;
 
-    public GetMyPostsList(int userId, PostRepository postRepository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
+    @Inject
+    public GetMyPostsList(PostRepository postRepository, ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         super(threadExecutor, postExecutionThread);
-        this.userId = userId;
         this.postRepository = postRepository;
     }
 

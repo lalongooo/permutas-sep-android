@@ -25,18 +25,19 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
-import com.parse.ParseInstallation;
 import com.permutassep.presentation.AndroidApplication;
 import com.permutassep.presentation.interfaces.FirstLaunchCompleteListener;
 import com.permutassep.presentation.interfaces.FragmentMenuItemSelectedListener;
 import com.permutassep.presentation.interfaces.LoginCompleteListener;
 import com.permutassep.presentation.interfaces.PostListListener;
 import com.permutassep.presentation.internal.di.HasComponent;
-import com.permutassep.presentation.internal.di.components.ActivityComponent;
-import com.permutassep.presentation.internal.di.components.DaggerActivityComponent;
+import com.permutassep.presentation.internal.di.components.DaggerPostComponent;
+import com.permutassep.presentation.internal.di.components.PostComponent;
+import com.permutassep.presentation.internal.di.modules.PostModule;
 import com.permutassep.presentation.model.PostModel;
 import com.permutassep.presentation.model.UserModel;
 import com.permutassep.presentation.navigation.Navigator;
+import com.permutassep.presentation.utils.ParseUtils;
 import com.permutassep.presentation.utils.PrefUtils;
 import com.permutassep.presentation.view.HomeView;
 
@@ -49,7 +50,7 @@ import javax.inject.Inject;
  */
 public class ActivityMain extends BaseActivity
         implements HomeView,
-        HasComponent<ActivityComponent>,
+        HasComponent<PostComponent>,
         PostListListener,
         Navigator.NavigationListener,
         FragmentManager.OnBackStackChangedListener,
@@ -62,11 +63,16 @@ public class ActivityMain extends BaseActivity
 
     public static final int DRAWER_IDENTIFIER_HOME = 1;
     public static final int DRAWER_IDENTIFIER_MY_POSTS = 2;
+
     @Inject
     Toolbar toolbar;
+
+    @Inject
+    ParseUtils parseUtils;
+
     private Drawer drawer;
     private UserModel userModel;
-    private ActivityComponent activityComponent;
+    private PostComponent postComponent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +89,7 @@ public class ActivityMain extends BaseActivity
             if (userModel != null) {
                 navigator.navigateToPostList(this, true);
                 renderDrawerOptions();
+                parseUtils.setUpParseInstallationUser(userModel.getId());
             } else {
                 navigator.navigateToLoginSignUp(this, true);
             }
@@ -90,11 +97,13 @@ public class ActivityMain extends BaseActivity
     }
 
     private void initializeInjector() {
-        this.activityComponent = DaggerActivityComponent.builder()
+
+        this.postComponent = DaggerPostComponent.builder()
                 .applicationComponent(getApplicationComponent())
                 .activityModule(getActivityModule())
+                .postModule(new PostModule())
                 .build();
-        this.activityComponent.inject(this);
+        this.postComponent.inject(this);
     }
 
     @Override
@@ -184,8 +193,8 @@ public class ActivityMain extends BaseActivity
     }
 
     @Override
-    public ActivityComponent getComponent() {
-        return activityComponent;
+    public PostComponent getComponent() {
+        return postComponent;
     }
 
     @Override
@@ -270,9 +279,7 @@ public class ActivityMain extends BaseActivity
         PrefUtils.putUser(this, userModel);
         PrefUtils.markLoggedUser(this, true);
         renderDrawerOptions();
-        ParseInstallation installation = ParseInstallation.getCurrentInstallation();
-        installation.put("PSUser", userModel.getId());
-        installation.saveInBackground();
+        parseUtils.setUpParseInstallationUser(userModel.getId());
     }
 
     /**

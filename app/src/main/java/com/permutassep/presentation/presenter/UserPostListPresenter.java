@@ -4,7 +4,7 @@ import com.permutassep.domain.Post;
 import com.permutassep.domain.exception.DefaultErrorBundle;
 import com.permutassep.domain.exception.ErrorBundle;
 import com.permutassep.domain.interactor.DefaultSubscriber;
-import com.permutassep.domain.interactor.UseCase;
+import com.permutassep.domain.interactor.GetMyPostsList;
 import com.permutassep.presentation.exception.ErrorMessageFactory;
 import com.permutassep.presentation.mapper.PostModelDataMapper;
 import com.permutassep.presentation.model.PostModel;
@@ -15,7 +15,6 @@ import java.util.Collection;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
 /**
  * By Jorge E. Hernandez (@lalongooo) 2015
@@ -23,14 +22,14 @@ import javax.inject.Named;
 
 public class UserPostListPresenter implements Presenter {
 
-    private final UseCase getPostByUserUseCase;
+    private final GetMyPostsList getMyPostsListUseCase;
     private final PostModelDataMapper postModelDataMapper;
     private PostsListView postsListView;
     private UserModel userModel;
 
     @Inject
-    public UserPostListPresenter(@Named("myPostsList") UseCase getPostsList, PostModelDataMapper postModelDataMapper) {
-        this.getPostByUserUseCase = getPostsList;
+    public UserPostListPresenter(GetMyPostsList getMyPostsListUseCase, PostModelDataMapper postModelDataMapper) {
+        this.getMyPostsListUseCase = getMyPostsListUseCase;
         this.postModelDataMapper = postModelDataMapper;
     }
 
@@ -42,17 +41,17 @@ public class UserPostListPresenter implements Presenter {
     /**
      * Initializes the presenter by start retrieving the user list.
      */
-    public void initialize() {
-        this.loadUserPostsList();
+    public void initialize(int userId) {
+        this.loadUserPostsList(userId);
     }
 
     /**
      * Loads all users.
      */
-    private void loadUserPostsList() {
+    private void loadUserPostsList(int userId) {
         this.hideViewRetry();
         this.showViewLoading();
-        this.getUserPostsList();
+        this.getUserPostsList(userId);
     }
 
     public void onPostClicked(PostModel postModel) {
@@ -67,8 +66,9 @@ public class UserPostListPresenter implements Presenter {
         this.postsListView.showLoading();
     }
 
-    private void getUserPostsList() {
-        this.getPostByUserUseCase.execute(new PostListSubscriber());
+    private void getUserPostsList(int userId) {
+        this.getMyPostsListUseCase.setUserId(userId);
+        this.getMyPostsListUseCase.execute(new PostListSubscriber());
     }
 
     private void hideViewLoading() {
@@ -86,10 +86,27 @@ public class UserPostListPresenter implements Presenter {
 
     private void showUsersCollectionInView(Collection<Post> postCollection) {
         final Collection<PostModel> postModelCollection = this.postModelDataMapper.transform(postCollection);
-        for(PostModel postModel: postModelCollection){
+        for (PostModel postModel : postModelCollection) {
             postModel.setUser(userModel);
         }
         this.postsListView.renderPostList(postModelCollection);
+    }
+
+    /**
+     * Methods from the {@link Presenter}
+     */
+
+    @Override
+    public void resume() {
+    }
+
+    @Override
+    public void pause() {
+    }
+
+    @Override
+    public void destroy() {
+        getMyPostsListUseCase.unsubscribe();
     }
 
     private final class PostListSubscriber extends DefaultSubscriber<List<Post>> {
@@ -110,22 +127,5 @@ public class UserPostListPresenter implements Presenter {
         public void onNext(List<Post> posts) {
             UserPostListPresenter.this.showUsersCollectionInView(posts);
         }
-    }
-
-    /**
-     * Methods from the {@link Presenter}
-     */
-
-    @Override
-    public void resume() {
-    }
-
-    @Override
-    public void pause() {
-    }
-
-    @Override
-    public void destroy() {
-        getPostByUserUseCase.unsubscribe();
     }
 }

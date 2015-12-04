@@ -4,6 +4,7 @@ import com.permutassep.presentation.internal.di.PerActivity;
 import com.permutassep.presentation.internal.di.modules.ActivityModule;
 import com.permutassep.presentation.internal.di.modules.PostModule;
 import com.permutassep.ui.ActivityCreatePost;
+import com.permutassep.ui.ActivityMain;
 import com.permutassep.ui.FragmentMyPosts;
 import com.permutassep.ui.FragmentPagedNewsFeed;
 import com.permutassep.ui.FragmentPostDetail;
@@ -27,5 +28,7 @@ public interface PostComponent extends ActivityComponent {
     void inject(ActivityCreatePost activityWritePost);
 
     void inject(FragmentResult mFragmentResult);
+
+    void inject(ActivityMain mActivityMain);
 
 }
