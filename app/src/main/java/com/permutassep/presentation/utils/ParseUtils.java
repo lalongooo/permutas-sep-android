@@ -62,6 +62,8 @@ public class ParseUtils {
         @Override
         public void onNext(List<Post> posts) {
 
+            final ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+            
             if (posts != null && posts.size() > 0) {
 
                 TreeSet<Integer> states = new TreeSet<>();
@@ -74,7 +76,6 @@ public class ParseUtils {
                     towns.add(Integer.valueOf(post.getTownTo()));
                 }
 
-                final ParseInstallation installation = ParseInstallation.getCurrentInstallation();
                 installation.addAll(PARSE_INSTALLATION_COLUMN_PS_STATE_INTERESTS, states);
                 installation.addAll(PARSE_INSTALLATION_COLUMN_PS_CITY_INTERESTS, cities);
                 installation.addAll(PARSE_INSTALLATION_COLUMN_PS_TOWN_INTERESTS, towns);
@@ -88,6 +89,9 @@ public class ParseUtils {
                     }
                 });
 
+            } else {
+                installation.put(PARSE_INSTALLATION_COLUMN_PS_SELF_UPDATED, 1);
+                installation.saveInBackground();
             }
         }
     }
