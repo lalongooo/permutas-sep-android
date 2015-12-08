@@ -25,6 +25,7 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
+import com.parse.ParseInstallation;
 import com.permutassep.presentation.AndroidApplication;
 import com.permutassep.presentation.interfaces.FirstLaunchCompleteListener;
 import com.permutassep.presentation.interfaces.FragmentMenuItemSelectedListener;
@@ -67,9 +68,6 @@ public class ActivityMain extends BaseActivity
     @Inject
     Toolbar toolbar;
 
-    @Inject
-    ParseUtils parseUtils;
-
     private Drawer drawer;
     private UserModel userModel;
     private PostComponent postComponent;
@@ -88,8 +86,8 @@ public class ActivityMain extends BaseActivity
             userModel = PrefUtils.getUser(this);
             if (userModel != null) {
                 navigator.navigateToPostList(this, true);
+                ParseUtils.setUpParseInstallationUser(userModel.getId());
                 renderDrawerOptions();
-                parseUtils.setUpParseInstallationUser(userModel.getId());
             } else {
                 navigator.navigateToLoginSignUp(this, true);
             }
@@ -277,9 +275,9 @@ public class ActivityMain extends BaseActivity
     public void onLoginComplete(UserModel userModel) {
         this.userModel = userModel;
         PrefUtils.putUser(this, userModel);
+        ParseUtils.setUpParseInstallationUser(userModel.getId());
         PrefUtils.markLoggedUser(this, true);
         renderDrawerOptions();
-        parseUtils.setUpParseInstallationUser(userModel.getId());
     }
 
     /**
