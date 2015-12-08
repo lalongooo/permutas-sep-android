@@ -69,7 +69,7 @@ public class Utils {
 
         List<State> states = new ArrayList<>();
 
-        for (short i = 0; i < state_descr.length; i++) {
+        for (int i = 0; i < state_descr.length; i++) {
             State s = new State(i, state_descr[i], state_codes[i]);
             states.add(s);
         }

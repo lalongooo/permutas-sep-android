@@ -379,7 +379,8 @@ public class FragmentPostDetail extends BaseFragment
         LatLngBounds bounds = b.build();
 
         try {
-            CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, mapView.getWidth(), mapView.getHeight(), 100);
+            int paddingInPixels = (int)(Math.min(getView().getWidth(), getView().getHeight()) * 0.1);
+            CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, mapView.getWidth(), mapView.getHeight(), paddingInPixels);
             map.animateCamera(cu);
         } catch (Exception e) {
             e.printStackTrace();

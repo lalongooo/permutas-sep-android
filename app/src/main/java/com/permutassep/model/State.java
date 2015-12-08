@@ -8,16 +8,16 @@ import com.google.gson.annotations.Expose;
 public class State extends Place implements Parcelable {
 
     @Expose
-    private short id;
+    private int id;
     private String mStateName;
     private String mShortCode;
 
-    public State(short id, String stateName) {
+    public State(int id, String stateName) {
         this.id = id;
         this.mStateName = stateName;
     }
 
-    public State(short id, String stateName, String shortCode) {
+    public State(int id, String stateName, String shortCode) {
         this.id = id;
         this.mStateName = stateName;
         this.mShortCode = shortCode;
@@ -31,7 +31,7 @@ public class State extends Place implements Parcelable {
         this.mStateName = stateName;
     }
 
-    public short getId() {
+    public int getId() {
         return id;
     }
 
