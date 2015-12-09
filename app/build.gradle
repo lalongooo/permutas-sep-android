@@ -38,8 +38,8 @@ android {
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
-            buildConfigField "String", "PARSE_COM_APPLICATION_ID", parse_com_application_id
-            buildConfigField "String", "PARSE_COM_CLIENT_KEY", parse_com_client_key
+            buildConfigField "String", "PARSE_COM_APPLICATION_ID", parse_com_debug_application_id
+            buildConfigField "String", "PARSE_COM_CLIENT_KEY", parse_com_debug_client_key
             buildConfigField "String", "com_permutassep_api_rest_endpoint", com_permutassep_debug_api_rest_endpoint
             buildConfigField "String", "com_permutassep_api_rest_user", com_permutassep_debug_api_rest_user
             buildConfigField "String", "com_permutassep_api_rest_password", com_permutassep_debug_api_rest_password
@@ -52,8 +52,8 @@ android {
             signingConfig signingConfigs.releaseConfig
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
-            buildConfigField "String", "PARSE_COM_APPLICATION_ID", parse_com_application_id
-            buildConfigField "String", "PARSE_COM_CLIENT_KEY", parse_com_client_key
+            buildConfigField "String", "PARSE_COM_APPLICATION_ID", parse_com_release_application_id
+            buildConfigField "String", "PARSE_COM_CLIENT_KEY", parse_com_release_client_key
             buildConfigField "String", "com_permutassep_api_rest_endpoint", com_permutassep_release_api_rest_endpoint
             buildConfigField "String", "com_permutassep_api_rest_user", com_permutassep_release_api_rest_user
             buildConfigField "String", "com_permutassep_api_rest_password", com_permutassep_release_api_rest_password
