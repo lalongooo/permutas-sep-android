@@ -63,8 +63,13 @@
 
         <activity
             android:name="com.permutassep.ui.ActivityCreatePost"
-            android:label="@string/app_name"
-            android:parentActivityName="com.permutassep.ui.ActivityMain" />
+            android:parentActivityName="com.permutassep.ui.ActivityMain"
+            android:label="@string/app_name">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.permutassep.ui.ActivityMain" />
+        </activity>
         <activity
             android:name="com.permutassep.ui.ActivityWelcome"
             android:label="@string/app_name"
@@ -105,7 +110,7 @@
 
         <!--Parse.com receivers-->
         <receiver
-            android:name="com.parse.ParsePushBroadcastReceiver"
+            android:name="com.permutassep.push.PushBroadcastReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.parse.push.intent.RECEIVE"/>
@@ -119,14 +124,13 @@
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION"/>
-
-                <!--
-                  IMPORTANT: Change "com.parse.starter" to match your app's package name.
-                -->
                 <category android:name="com.permutassep"/>
             </intent-filter>
         </receiver>
 
+        <meta-data
+            android:name="com.parse.push.notification_icon"
+            android:resource="@drawable/ic_notif_ps" />
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />

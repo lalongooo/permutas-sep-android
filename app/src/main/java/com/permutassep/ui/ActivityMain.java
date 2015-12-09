@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 
 import com.facebook.login.LoginManager;
@@ -25,7 +24,6 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
-import com.parse.ParseInstallation;
 import com.permutassep.presentation.AndroidApplication;
 import com.permutassep.presentation.interfaces.FirstLaunchCompleteListener;
 import com.permutassep.presentation.interfaces.FragmentMenuItemSelectedListener;
@@ -41,6 +39,7 @@ import com.permutassep.presentation.navigation.Navigator;
 import com.permutassep.presentation.utils.ParseUtils;
 import com.permutassep.presentation.utils.PrefUtils;
 import com.permutassep.presentation.view.HomeView;
+import com.permutassep.push.PushBroadcastReceiver;
 
 import java.util.HashMap;
 
@@ -85,8 +84,13 @@ public class ActivityMain extends BaseActivity
         } else {
             userModel = PrefUtils.getUser(this);
             if (userModel != null) {
-                navigator.navigateToPostList(this, true);
-                ParseUtils.setUpParseInstallationUser(userModel.getId());
+                if (getIntent().getStringExtra(PushBroadcastReceiver.PUSH_POST_ID_EXTRA) != null) {
+                    int psPostId = Integer.valueOf(getIntent().getStringExtra(PushBroadcastReceiver.PUSH_POST_ID_EXTRA));
+                    navigator.navigateToPostDetailsFromNotification(this, psPostId);
+                } else {
+                    navigator.navigateToPostList(this, true);
+                    ParseUtils.setUpParseInstallationUser(userModel.getId());
+                }
                 renderDrawerOptions();
             } else {
                 navigator.navigateToLoginSignUp(this, true);
@@ -199,6 +203,11 @@ public class ActivityMain extends BaseActivity
     public void onBackPressed() {
         if (drawer != null && drawer.isDrawerOpen()) {
             drawer.closeDrawer();
+        } else if (getIntent().getStringExtra(PushBroadcastReceiver.PUSH_POST_ID_EXTRA) != null) {
+            getIntent().removeExtra(PushBroadcastReceiver.PUSH_POST_ID_EXTRA);
+            getSupportFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            navigator.navigateToPostList(this, true);
+            navigator.navigateToPostList(this, true);
         } else {
             super.onBackPressed();
             if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
@@ -319,6 +328,7 @@ public class ActivityMain extends BaseActivity
 
                 PrefUtils.markLoggedUser(this, false);
                 PrefUtils.clearApplicationPreferences(this);
+                ParseUtils.clearParseInstallationUser();
                 LoginManager.getInstance().logOut();
                 navigator.navigateToStart(this);
 
@@ -363,11 +373,5 @@ public class ActivityMain extends BaseActivity
         if (actionBar != null) {
             actionBar.setTitle(resId);
         }
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        Log.i("onNewIntent", "onNewIntent was called!");
     }
 }

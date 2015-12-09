@@ -8,9 +8,10 @@ import com.parse.ParseInstallation;
 
 public class ParseUtils {
 
+    private static final String PARSE_INSTALLATION_COLUMN_PS_USER = "PSUser";
+
     public static void setUpParseInstallationUser(int userId) {
 
-        String PARSE_INSTALLATION_COLUMN_PS_USER = "PSUser";
         ParseInstallation installation = ParseInstallation.getCurrentInstallation();
         if (installation.get(PARSE_INSTALLATION_COLUMN_PS_USER) == null
                 ||
@@ -18,5 +19,11 @@ public class ParseUtils {
             installation.put(PARSE_INSTALLATION_COLUMN_PS_USER, userId);
             installation.saveInBackground();
         }
+    }
+
+    public static void clearParseInstallationUser() {
+        ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+        installation.put(PARSE_INSTALLATION_COLUMN_PS_USER, -1);
+        installation.saveInBackground();
     }
 }

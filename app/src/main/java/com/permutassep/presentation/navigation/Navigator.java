@@ -167,7 +167,21 @@ public class Navigator {
                 .add(R.id.fragmentContainer, FragmentPostDetail.newInstance(postId))
                 .addToBackStack(null)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                .commitAllowingStateLoss();
+                .commit();
+    }
+
+
+    /**
+     * Navigates to the post details fragment coming from a push notification.
+     * @param activity An activity needed to open the destination fragment.
+     * @param postId The id of the publication to be displayed on the fragment
+     */
+    public void navigateToPostDetailsFromNotification(BaseActivity activity, int postId) {
+        activity.getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.fragmentContainer, FragmentPostDetail.newInstance(postId))
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .commit();
     }
 
     /**
