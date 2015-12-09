@@ -266,6 +266,8 @@ public class ActivityMain extends BaseActivity
             setActionBarTitle(R.string.app_main_toolbar_title_search);
         } else if (currentFragment instanceof FragmentMyPosts) {
             setActionBarTitle(R.string.app_main_toolbar_title_my_posts);
+        } else if (currentFragment instanceof FragmentPostDetail) {
+            setActionBarTitle(R.string.app_main_toolbar_title_post_details);
         }
     }
 
@@ -372,6 +374,15 @@ public class ActivityMain extends BaseActivity
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setTitle(resId);
+        }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if (intent.getStringExtra(PushBroadcastReceiver.PUSH_POST_ID_EXTRA) != null) {
+            int psPostId = Integer.valueOf(intent.getStringExtra(PushBroadcastReceiver.PUSH_POST_ID_EXTRA));
+            this.navigator.navigateToPostDetails(this, psPostId);
         }
     }
 }
