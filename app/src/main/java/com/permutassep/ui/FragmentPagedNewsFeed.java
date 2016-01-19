@@ -4,10 +4,12 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,6 +24,7 @@ import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.permutassep.presentation.config.Config;
 import com.permutassep.presentation.interfaces.FirstLaunchCompleteListener;
+import com.permutassep.presentation.interfaces.FloatingActionButtonClickListener;
 import com.permutassep.presentation.interfaces.FragmentMenuItemSelectedListener;
 import com.permutassep.presentation.interfaces.PostListListener;
 import com.permutassep.presentation.internal.di.components.ApplicationComponent;
@@ -42,6 +45,7 @@ import javax.inject.Inject;
 import br.kots.mob.complex.preferences.ComplexPreferences;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * By Jorge E. Hernandez (@lalongooo) 2015
@@ -58,6 +62,7 @@ public class FragmentPagedNewsFeed extends BaseFragment implements PagedPostsLis
     private MaterialDialog progressDialog;
 
     private PostComponent postComponent;
+    private FloatingActionButtonClickListener floatingActionButtonClickListener;
     private FirstLaunchCompleteListener firstLaunchCompleteListener;
     private FragmentMenuItemSelectedListener fragmentMenuItemSelectedListener;
     private PostsAdapter postsAdapter;
@@ -121,6 +126,7 @@ public class FragmentPagedNewsFeed extends BaseFragment implements PagedPostsLis
         this.postListListener = (PostListListener) getActivity();
         this.firstLaunchCompleteListener = (FirstLaunchCompleteListener) getActivity();
         this.fragmentMenuItemSelectedListener = (FragmentMenuItemSelectedListener) getActivity();
+        this.floatingActionButtonClickListener = (FloatingActionButtonClickListener) getActivity();
     }
 
     @Override
@@ -136,7 +142,6 @@ public class FragmentPagedNewsFeed extends BaseFragment implements PagedPostsLis
         inflater.inflate(R.menu.main, menu);
 
         if (PrefUtils.getUser(getActivity()) != null) {
-            menu.findItem(R.id.action_post).setIcon(new IconicsDrawable(getActivity(), GoogleMaterial.Icon.gmd_add).color(Color.WHITE).actionBarSize()).setVisible(true);
             menu.findItem(R.id.action_search).setIcon(new IconicsDrawable(getActivity(), GoogleMaterial.Icon.gmd_search).color(Color.WHITE).actionBarSize());
             menu.findItem(R.id.action_logout).setVisible(true);
         }
@@ -160,6 +165,12 @@ public class FragmentPagedNewsFeed extends BaseFragment implements PagedPostsLis
         postComponent.inject(this);
         this.postListPresenter.setView(this);
     }
+
+    @OnClick(R.id.floatingActionButton)
+    void onFabClick() {
+        floatingActionButtonClickListener.onFloatingActionButtonClick();
+    }
+
 
     private void loadUserList() {
         this.postListPresenter.initialize(currentPage, Config.NEWS_FEED_ITEMS_PER_PAGE);
@@ -245,7 +256,7 @@ public class FragmentPagedNewsFeed extends BaseFragment implements PagedPostsLis
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         PostModel postModel = ComplexPreferences.get(getActivity()).getObject(ActivityCreatePost.NEW_POST_KEY, PostModel.class);
-        if (!hidden &&  postModel != null) {
+        if (!hidden && postModel != null) {
             ComplexPreferences.get(getActivity()).removeObject(ActivityCreatePost.NEW_POST_KEY);
             this.postsAdapter.addPost(postModel);
         }
@@ -277,7 +288,6 @@ public class FragmentPagedNewsFeed extends BaseFragment implements PagedPostsLis
         super.onDestroy();
         this.postListPresenter.destroy();
     }
-
 
     public abstract class EndlessRecyclerOnScrollListener extends RecyclerView.OnScrollListener {
         public String TAG = EndlessRecyclerOnScrollListener.class.getSimpleName();

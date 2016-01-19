@@ -126,7 +126,6 @@ public class FragmentResult extends BaseFragment implements SearchPostsResultsVi
         inflater.inflate(R.menu.main, menu);
 
         if (PrefUtils.getUser(getActivity()) != null) {
-            menu.findItem(R.id.action_post).setIcon(new IconicsDrawable(getActivity(), GoogleMaterial.Icon.gmd_add).color(Color.WHITE).actionBarSize()).setVisible(true);
             menu.findItem(R.id.action_search).setIcon(new IconicsDrawable(getActivity(), GoogleMaterial.Icon.gmd_search).color(Color.WHITE).actionBarSize());
             menu.findItem(R.id.action_logout).setVisible(true);
         }

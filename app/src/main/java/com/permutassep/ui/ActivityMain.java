@@ -26,6 +26,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.permutassep.presentation.AndroidApplication;
 import com.permutassep.presentation.interfaces.FirstLaunchCompleteListener;
+import com.permutassep.presentation.interfaces.FloatingActionButtonClickListener;
 import com.permutassep.presentation.interfaces.FragmentMenuItemSelectedListener;
 import com.permutassep.presentation.interfaces.LoginCompleteListener;
 import com.permutassep.presentation.interfaces.PostListListener;
@@ -58,7 +59,8 @@ public class ActivityMain extends BaseActivity
         LoginCompleteListener,
         FirstLaunchCompleteListener,
         FragmentMenuItemSelectedListener,
-        FragmentSearch.SearchPerformer {
+        FragmentSearch.SearchPerformer,
+        FloatingActionButtonClickListener {
 
 
     public static final int DRAWER_IDENTIFIER_HOME = 1;
@@ -310,10 +312,6 @@ public class ActivityMain extends BaseActivity
 
         switch (menuId) {
 
-            case R.id.action_post:
-                this.navigator.navigateToWritePost(this);
-                break;
-
             case R.id.action_search:
                 this.navigator.navigateToSearchPosts(this, true);
                 setActionBarTitle(R.string.app_main_toolbar_title_search);
@@ -384,5 +382,14 @@ public class ActivityMain extends BaseActivity
             int psPostId = Integer.valueOf(intent.getStringExtra(PushBroadcastReceiver.PUSH_POST_ID_EXTRA));
             this.navigator.navigateToPostDetails(this, psPostId);
         }
+    }
+
+    /**
+     * Method from {@link FloatingActionButtonClickListener}
+     */
+
+    @Override
+    public void onFloatingActionButtonClick() {
+        this.navigator.navigateToWritePost(this);
     }
 }

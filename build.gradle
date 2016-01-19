@@ -5,7 +5,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.0.0-alpha1'
+        classpath 'com.android.tools.build:gradle:2.0.0-alpha3'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
         classpath 'com.google.gms:google-services:1.5.0-beta2'
     }
@@ -16,7 +16,7 @@ allprojects {
     ext {
         androidApplicationId = 'com.permutassep'
         androidVersionCode = 12
-        androidVersionName = "8.1.1"
+        androidVersionName = "8.1.2"
     }
 
 
