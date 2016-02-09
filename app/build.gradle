@@ -72,6 +72,9 @@ dependencies {
     compile project(':domain')
     compile project(':data')
 
+    debugCompile project(path: ':data', configuration: "libraryDebug")
+    releaseCompile project(path: ':data', configuration: "libraryRelease")
+
     apt presentationDependencies.daggerCompiler
     compile presentationDependencies.dagger
     compile presentationDependencies.recyclerView

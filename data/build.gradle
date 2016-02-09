@@ -66,6 +66,13 @@ android {
             buildConfigField "String", "com_permutassep_api_rest_password", com_permutassep_release_api_rest_password
         }
     }
+
+    defaultPublishConfig 'release'
+    publishNonDefault true
+    productFlavors {
+        library {
+        }
+    }
 }
 
 dependencies {
