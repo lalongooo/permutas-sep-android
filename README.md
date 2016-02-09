@@ -1,8 +1,7 @@
 ### Permutas SEP
 Permutas SEP ayuda a los profesores de México a encontrar, de una manera mas ágil y rápida, sus cambios de adscripción.
 
-[![Descargar de Google Play](https://developer.android.com/images/brand/en_app_rgb_wo_45.png)](https://play.google.com/store/apps/details?id=com.permutassep)
-
+[![Descargar de Google Play](http://steverichey.github.io/google-play-badge-svg/img/es_get.svg)](https://play.google.com/store/apps/details?id=com.permutassep =100x20)
 
 ### ¿Cuál es la problemática?
 Seguramente todos tenemos a un familiar, amigo o conocido que es profesor de la SEP.
