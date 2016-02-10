@@ -61,6 +61,7 @@ public class AndroidApplication extends Application {
 
         tracker = analytics.newTracker(R.xml.global_tracker);
         tracker.enableAdvertisingIdCollection(true);
+        tracker.enableExceptionReporting(true);
     }
 
     /**
