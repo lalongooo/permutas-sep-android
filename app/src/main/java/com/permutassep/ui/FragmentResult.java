@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -53,6 +54,8 @@ public class FragmentResult extends BaseFragment implements SearchPostsResultsVi
 
     @Bind(R.id.rv_users)
     RecyclerView rv_posts;
+    @Bind(R.id.floatingActionButton)
+    FloatingActionButton floatingActionButton;
     private MaterialDialog progressDialog;
 
     private HashMap<String, String> searchParams;
@@ -89,6 +92,7 @@ public class FragmentResult extends BaseFragment implements SearchPostsResultsVi
     }
 
     private void setupUI() {
+        this.floatingActionButton.setVisibility(View.GONE);
         this.postsLayoutManager = new PostsLayoutManager(getActivity());
         this.rv_posts.setLayoutManager(postsLayoutManager);
 

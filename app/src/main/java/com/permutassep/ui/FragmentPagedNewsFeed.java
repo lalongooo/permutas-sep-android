@@ -9,7 +9,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -59,6 +58,10 @@ public class FragmentPagedNewsFeed extends BaseFragment implements PagedPostsLis
 
     @Bind(R.id.rv_users)
     RecyclerView rv_posts;
+
+    @Bind(R.id.floatingActionButton)
+    FloatingActionButton floatingActionButton;
+
     private MaterialDialog progressDialog;
 
     private PostComponent postComponent;
@@ -102,6 +105,7 @@ public class FragmentPagedNewsFeed extends BaseFragment implements PagedPostsLis
     }
 
     private void setupUI() {
+        this.floatingActionButton.setVisibility(PrefUtils.getUser(getActivity()) == null ? View.GONE : View.VISIBLE);
         this.postsLayoutManager = new PostsLayoutManager(getActivity());
         this.rv_posts.setLayoutManager(postsLayoutManager);
 
