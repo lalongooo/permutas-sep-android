@@ -298,8 +298,8 @@ public class ActivityMain extends BaseActivity
      */
     @Override
     public void onFirstLaunchComplete() {
-        if (!PrefUtils.firstTimeDrawerOpened(this) && userModel != null) {
-            PrefUtils.markFirstTimeDrawerOpened(this);
+        if (PrefUtils.isFirstTimeLogin(this) && userModel != null) {
+            PrefUtils.setNotFirstTimeLogin(this);
             drawer.openDrawer();
         }
     }

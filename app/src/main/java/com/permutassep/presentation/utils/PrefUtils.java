@@ -22,7 +22,7 @@ public class PrefUtils {
     /**
      * Boolean indicating whether we performed the (first-time) drawer opened.
      */
-    public static final String PREF_DRAWER_OPENED = "pref_drawer_first_time_opened";
+    public static final String PREF_IS_FIRST_TIME_LOGIN = "pref_drawer_first_time_opened";
 
     /**
      * Boolean indicating whether the user has already registered or not.
@@ -45,14 +45,14 @@ public class PrefUtils {
         return sp.getBoolean(PREF_IS_USER_LOGGED_IN, false);
     }
 
-    public static boolean firstTimeDrawerOpened(final Context context) {
+    public static boolean isFirstTimeLogin(final Context context) {
         SharedPreferences sp = context.getSharedPreferences(Config.APP_PREFERENCES_NAME, Context.MODE_PRIVATE);
-        return sp.getBoolean(PREF_DRAWER_OPENED, false);
+        return sp.getBoolean(PREF_IS_FIRST_TIME_LOGIN, true);
     }
 
-    public static void markFirstTimeDrawerOpened(final Context context) {
+    public static void setNotFirstTimeLogin(final Context context) {
         SharedPreferences sp = context.getSharedPreferences(Config.APP_PREFERENCES_NAME, Context.MODE_PRIVATE);
-        sp.edit().putBoolean(PREF_DRAWER_OPENED, true).apply();
+        sp.edit().putBoolean(PREF_IS_FIRST_TIME_LOGIN, false).apply();
     }
 
     public static void clearApplicationPreferences(Context context) {
