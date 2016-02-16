@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp"
+        android:background="#2196f3"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvMakePayment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="30dp"
+            android:text="Realizar pago"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:typeface="normal"/>
+
+        <ImageView
+            android:id="@+id/ivPsLogo"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_below="@+id/tvMakePayment"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10dp"
+            android:background="#333444"
+            android:src="@mipmap/ic_launcher"/>
+
+        <TableLayout
+            android:id="@+id/tableLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ivPsLogo"
+            android:layout_centerHorizontal="true"
+            android:background="#333444"
+            android:orientation="vertical">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <Button
+                    style="@style/PaymentButton"
+                    android:text="$5.00"/>
+
+                <Button
+                    style="@style/PaymentButton"
+                    android:text="$10.00"/>
+
+                <Button
+                    style="@style/PaymentButton"
+                    android:text="$20.00"/>
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <Button
+                    style="@style/PaymentButton"
+                    android:text="$30.00"/>
+
+                <Button
+                    style="@style/PaymentButton"
+                    android:text="$50.00"/>
+
+                <Button
+                    style="@style/PaymentButton"
+                    android:text="$100.00"/>
+
+            </TableRow>
+
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+                <Button
+                    style="@style/PaymentButton"
+                    android:layout_width="wrap_content"
+                    android:layout_marginEnd="50dp"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginRight="50dp"
+                    android:layout_marginStart="50dp"
+                    android:layout_span="3"
+                    android:text="Otra cantidad"/>
+
+            </TableRow>
+        </TableLayout>
+
+        <TableLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tableLayout"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="30dp"
+            android:background="#333444"
+            android:columnOrderPreserved="false"
+            android:orientation="vertical">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:weightSum="3">
+
+                <ImageView
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_column="0"
+                    android:layout_margin="20dp"
+                    android:layout_weight="1"
+                    android:src="@mipmap/ic_launcher"
+                    />
+
+                <ImageView
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_column="1"
+                    android:layout_margin="20dp"
+                    android:layout_weight="1"
+                    android:src="@mipmap/ic_launcher"
+                    />
+
+                <ImageView
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_column="2"
+                    android:layout_margin="20dp"
+                    android:layout_weight="1"
+                    android:src="@mipmap/ic_launcher"
+                    />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:weightSum="3">
+
+                <ImageView
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_column="0"
+                    android:layout_margin="20dp"
+                    android:layout_weight="1"
+                    android:src="@mipmap/ic_launcher"
+                    />
+
+                <ImageView
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_column="1"
+                    android:layout_margin="20dp"
+                    android:layout_weight="1"
+                    android:src="@mipmap/ic_launcher"
+                    />
+
+                <ImageView
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_column="2"
+                    android:layout_margin="20dp"
+                    android:layout_weight="1"
+                    android:src="@mipmap/ic_launcher"
+                    />
+            </TableRow>
+        </TableLayout>
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>
