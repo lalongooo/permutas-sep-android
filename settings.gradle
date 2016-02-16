@@ -1,1 +1,1 @@
-include ':app', ':data', ':domain', ':compropago-java'
+include ':app', ':data', ':domain', ':compropago-java', ':compropago-android'
