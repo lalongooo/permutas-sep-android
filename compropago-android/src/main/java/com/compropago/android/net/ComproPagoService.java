@@ -6,12 +6,13 @@ import com.compropago.android.model.ComproPagoChargeResponse;
 import com.compropago.android.model.ComproPagoSendSmsResponse;
 import com.compropago.android.model.ComproPagoVerifyChargeResponse;
 
-import retrofit2.Callback;
-import retrofit2.http.Body;
-import retrofit2.http.Field;
-import retrofit2.http.GET;
-import retrofit2.http.POST;
-import retrofit2.http.Path;
+import retrofit.Callback;
+import retrofit.http.Body;
+import retrofit.http.Field;
+import retrofit.http.GET;
+import retrofit.http.POST;
+import retrofit.http.Path;
+
 
 public interface ComproPagoService {
 
