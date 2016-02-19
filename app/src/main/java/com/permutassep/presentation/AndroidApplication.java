@@ -8,8 +8,10 @@ import android.app.Application;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.util.Log;
 import android.widget.ImageView;
 
+import com.compropago.ComproPago;
 import com.facebook.FacebookSdk;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
@@ -41,6 +43,7 @@ public class AndroidApplication extends Application {
         this.setUpDrawerImageLoader();
         this.setupParseCom();
         FacebookSdk.sdkInitialize(getApplicationContext());
+        Log.i("Test: ", new ComproPago().getVariable());
     }
 
     /**

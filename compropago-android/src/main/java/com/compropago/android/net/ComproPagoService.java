@@ -1,9 +1,11 @@
 package com.compropago.android.net;
 
-import com.compropago.model.ComproPagoChargeRequest;
-import com.compropago.model.ComproPagoChargeResponse;
-import com.compropago.model.ComproPagoSendSmsResponse;
-import com.compropago.model.ComproPagoVerifyChargeResponse;
+
+
+import com.compropago.android.model.ComproPagoChargeRequest;
+import com.compropago.android.model.ComproPagoChargeResponse;
+import com.compropago.android.model.ComproPagoSendSmsResponse;
+import com.compropago.android.model.ComproPagoVerifyChargeResponse;
 
 import retrofit2.Callback;
 import retrofit2.http.Body;
