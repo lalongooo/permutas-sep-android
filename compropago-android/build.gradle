@@ -11,18 +11,30 @@ android {
         versionName "1.0"
     }
     buildTypes {
-        release {
+
+        debug {
             minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            buildConfigField "String", "COMPROPAGO_API_HOST", compropago_api_host_debug
+            buildConfigField "String", "COMPROPAGO_API_PUBLIC_KEY", compropago_api_public_key_debug
+            buildConfigField "String", "COMPROPAGO_API_PASSWORD", compropago_api_password_debug
+        }
+
+        release {
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "COMPROPAGO_API_HOST", compropago_api_host_release
+            buildConfigField "String", "COMPROPAGO_API_PUBLIC_KEY", compropago_api_public_key_release
+            buildConfigField "String", "COMPROPAGO_API_PASSWORD", compropago_api_password_release
         }
     }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.squareup.retrofit2:retrofit:2.0.0-beta4'
     compile 'com.google.code.gson:gson:2.4'
 
+    testCompile 'org.mockito:mockito-core:1.9.5'
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.1.1'
+    compile 'com.squareup.retrofit:retrofit:1.9.0'
 }

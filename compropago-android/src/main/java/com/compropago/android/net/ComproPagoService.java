@@ -1,7 +1,6 @@
 package com.compropago.android.net;
 
 
-
 import com.compropago.android.model.ComproPagoChargeRequest;
 import com.compropago.android.model.ComproPagoChargeResponse;
 import com.compropago.android.model.ComproPagoSendSmsResponse;
