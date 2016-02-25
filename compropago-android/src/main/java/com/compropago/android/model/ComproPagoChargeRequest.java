@@ -5,6 +5,21 @@ import com.google.gson.annotations.SerializedName;
 
 public class ComproPagoChargeRequest {
 
+    /**
+     * JSON Example
+     *
+     {
+         "order_id":"SMGCURL1",
+         "order_price":75.0,
+         "order_name":"SAMSUNG GOLD CURL",
+         "image_url":"https://test.amazon.com/5f4373",
+         "customer_name":"Alejandra Leyva",
+         "customer_email":"noreply@compropago.com",
+         "payment_type":"OXXO"
+     }
+     *
+     */
+
     @SerializedName("order_id")
     @Expose
     private String orderId;
@@ -26,6 +41,7 @@ public class ComproPagoChargeRequest {
     @SerializedName("payment_type")
     @Expose
     private String paymentType;
+
 
     /**
      *

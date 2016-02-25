@@ -1,18 +1,16 @@
 package com.compropago.android.net;
 
 
-
 import com.compropago.android.model.ComproPagoChargeRequest;
 import com.compropago.android.model.ComproPagoChargeResponse;
 import com.compropago.android.model.ComproPagoSendSmsResponse;
 import com.compropago.android.model.ComproPagoVerifyChargeResponse;
 
-import retrofit2.Callback;
-import retrofit2.http.Body;
-import retrofit2.http.Field;
-import retrofit2.http.GET;
-import retrofit2.http.POST;
-import retrofit2.http.Path;
+import retrofit.Callback;
+import retrofit.http.Body;
+import retrofit.http.GET;
+import retrofit.http.POST;
+import retrofit.http.Path;
 
 public interface ComproPagoService {
 
@@ -23,5 +21,16 @@ public interface ComproPagoService {
     void verifyCharge(@Path("payment_id") String paymentId, Callback<ComproPagoVerifyChargeResponse> verifyChargeResponse);
 
     @POST("/v1/charges/{payment_id}/sms")
-    void sendSmsInstructions(@Field("customer_phone") String customerPhoneNumber, Callback<ComproPagoSendSmsResponse> sendSmsResponse);
+    void sendSmsInstructions(@Path("customer_phone") String customerPhoneNumber, Callback<ComproPagoSendSmsResponse> sendSmsResponse);
+
+    @POST("/v1/charges")
+    ComproPagoChargeResponse charge(@Body ComproPagoChargeRequest chargeRequest);
+
+    @GET("/v1/charges/{payment_id}")
+    ComproPagoVerifyChargeResponse verifyCharge(@Path("payment_id") String paymentId);
+
+    @POST("/v1/charges/{payment_id}/sms")
+    ComproPagoSendSmsResponse sendSmsInstructions(@Path("customer_phone") String customerPhoneNumber);
+
+
 }

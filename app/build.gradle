@@ -9,6 +9,13 @@ android {
     compileSdkVersion globalConfiguration.getAt("androidCompileSdkVersion")
     buildToolsVersion globalConfiguration.getAt("androidBuildToolsVersion")
 
+    testOptions {
+        unitTests.all {
+            // All the usual Gradle options.
+            jvmArgs '-XX:MaxPermSize=256m'
+        }
+    }
+
     defaultConfig {
         minSdkVersion globalConfiguration.getAt("androidMinSdkVersion")
         targetSdkVersion globalConfiguration.getAt("androidTargetSdkVersion")

@@ -5,15 +5,24 @@ sourceCompatibility = 1.7
 //noinspection GroovyUnusedAssignment
 targetCompatibility = 1.7
 
-configurations {
-    provided
-}
 
 sourceSets {
     main {
-        compileClasspath += configurations.provided
+        java {
+            srcDirs = ['src/main/java']
+        }
+    }
+
+    test {
+        java {
+            srcDirs = ['src/test/java']
+        }
     }
 }
+
+
+
+
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
