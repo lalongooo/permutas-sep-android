@@ -1,6 +1,5 @@
 package com.compropago.android.net;
 
-
 import android.util.Base64;
 
 import com.compropago.android.BuildConfig;
@@ -8,11 +7,9 @@ import com.compropago.android.BuildConfig;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 
-
-
 public class ComproPagoRestClient {
 
-    RestAdapter restAdapter;
+    private RestAdapter restAdapter;
 
     public ComproPagoRestClient() {
 
@@ -23,9 +20,9 @@ public class ComproPagoRestClient {
                 .setRequestInterceptor(new RequestInterceptor() {
                     @Override
                     public void intercept(RequestFacade request) {
-                        String credentials = BuildConfig.COMPROPAGO_API_PUBLIC_KEY + ":" + BuildConfig.COMPROPAGO_API_PASSWORD;
+                        String credentials = BuildConfig.COMPROPAGO_API_PUBLIC_KEY + ":";
                         request.addHeader("Accept", "application/json");
-                        request.addHeader("Authorization", BuildConfig.DEBUG ? "Basic cGtfdGVzdF82ODlhOTk4ODM0NzQzNjFhNTo=" : "Basic " + Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP));
+                        request.addHeader("Authorization", BuildConfig.DEBUG ? "Basic c2tfdGVzdF80MTMxODg1MGFlMjY0NDk1Yjo=" : "Basic " + Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP));
                     }
                 });
 
@@ -36,7 +33,4 @@ public class ComproPagoRestClient {
     public ComproPagoService get() {
         return restAdapter.create(ComproPagoService.class);
     }
-
-
-
 }

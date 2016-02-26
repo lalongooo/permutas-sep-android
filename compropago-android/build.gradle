@@ -11,6 +11,7 @@ android {
         versionName "1.0"
     }
     buildTypes {
+
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
@@ -26,7 +27,6 @@ android {
             buildConfigField "String", "COMPROPAGO_API_PUBLIC_KEY", compropago_api_public_key_release
             buildConfigField "String", "COMPROPAGO_API_PASSWORD", compropago_api_password_release
         }
-
     }
 }
 
@@ -36,5 +36,6 @@ dependencies {
     compile 'com.google.code.gson:gson:2.4'
 
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.1.1'
+
+
 }
