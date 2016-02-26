@@ -2,9 +2,12 @@ package com.compropago.android;
 
 import com.compropago.android.model.ComproPagoChargeRequest;
 import com.compropago.android.model.ComproPagoChargeResponse;
+import com.compropago.android.model.ComproPagoSendSmsResponse;
+import com.compropago.android.model.ComproPagoVerifyChargeResponse;
 import com.compropago.android.net.ComproPagoRestClient;
 import com.compropago.android.net.ComproPagoService;
 
+import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
@@ -27,7 +30,7 @@ public class ComproPago {
         return mComproPago;
     }
 
-    public static void charge(String orderId, double orderPrice, String orderName, String imageUrl, String customerName, String customerEmail, String paymentType, final Callback callback) {
+    public static void charge(String orderId, double orderPrice, String orderName, String imageUrl, String customerName, String customerEmail, String paymentType, final ChargeCallback mChargeCallback) {
 
         ComproPagoChargeRequest chargeRequest = new ComproPagoChargeRequest();
         chargeRequest.setOrderId(orderId);
@@ -38,22 +41,61 @@ public class ComproPago {
         chargeRequest.setCustomerEmail(customerEmail);
         chargeRequest.setPaymentType(paymentType);
 
-
         comproPagoService.charge(chargeRequest, new retrofit.Callback<ComproPagoChargeResponse>() {
             @Override
             public void success(ComproPagoChargeResponse mComproPagoChargeResponse, Response response) {
-                callback.onSuccess(mComproPagoChargeResponse);
+                mChargeCallback.onSuccess(mComproPagoChargeResponse);
             }
 
             @Override
             public void failure(RetrofitError error) {
-                callback.onFailure(error.getResponse().getStatus(), error.getMessage());
+                mChargeCallback.onFailure(error.getResponse().getStatus(), error.getMessage());
             }
         });
     }
 
-    interface Callback {
+    public static void verifyCharge(String paymentId, final VerifyChargeCallback verifyChargeCallback) {
+        comproPagoService.verifyCharge(paymentId, new retrofit.Callback<ComproPagoVerifyChargeResponse>() {
+            @Override
+            public void success(ComproPagoVerifyChargeResponse mComproPagoVerifyChargeResponse, Response response) {
+                verifyChargeCallback.onSuccess(mComproPagoVerifyChargeResponse);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                verifyChargeCallback.onFailure(error.getResponse().getStatus(), error.getMessage());
+            }
+        });
+    }
+
+    public static void sendSms(String paymentId, String customerPhone, final SendSmsCallback sendSmsCallback) {
+        comproPagoService.sendSmsInstructions(paymentId, customerPhone, new Callback<ComproPagoSendSmsResponse>() {
+            @Override
+            public void success(ComproPagoSendSmsResponse mComproPagoSendSmsResponse, Response response) {
+                sendSmsCallback.onSuccess(mComproPagoSendSmsResponse);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                sendSmsCallback.onFailure(error.getResponse().getStatus(), error.getMessage());
+            }
+        });
+    }
+
+    interface ChargeCallback {
         void onSuccess(ComproPagoChargeResponse comproPagoChargeResponse);
+
+        void onFailure(int errorCode, String message);
+    }
+
+    interface VerifyChargeCallback {
+        void onSuccess(ComproPagoVerifyChargeResponse verifyChargeResponse);
+
+        void onFailure(int errorCode, String message);
+    }
+
+    interface SendSmsCallback {
+        void onSuccess(ComproPagoSendSmsResponse verifyChargeResponse);
 
         void onFailure(int errorCode, String message);
     }
