@@ -21,7 +21,24 @@
     <string name="action_about">Acerca de</string>
     <string name="tos_welcome_to_ps_app">¡Gracias por usar Permutas SEP!</string>
     <string name="tos_welcome_text">Antes de comenzar, considera leer esta importante información legal referente al uso de esta aplicación. ¡Solo te tomará un minuto!</string>
-    <string name="about_activity_description">Este proyecto ha sido posible gracias a software de código abierto. Por favor, encuentre a continuación la información de este estupendo software.</string>
+    <string name="about_activity_description"><![CDATA[<b>Permutas SEP</b> le permite a los maestros de México acercarse a sus familias, a sus lugares de origen y hasta a mudarse de la ciudad a la playa.
+<br/>
+<a href="http://permutassep.com">permutassep.com</a>
+<br/>
+<br/>
+<b>Autores: </b>
+<br/>
+<a href="http://twitter.com/krescruz">Cresencio</a> y <a href="http://twitter.com/lalongooo">Jorge</a>
+<br/>
+<br/>
+<b>Agradecimientos</b>
+<br/>
+LEP Fernando Gabriel Osorio Hurtado
+<br/>
+Tamaulipas
+<br/>
+<br/>
+<b>A continuacion las licencias de software de código abierto:</b>]]></string>
     <string name="about_activity_title">Acerca de</string>
     <string name="wizard_contact_suggest_data_completion_dialog_msg">Si completas los datos en esta seccion, podrán contactarte con mayor facilidad. Presiona Siguiente si no quieres agregar mayor información</string>
     <string name="wizard_post_text_label">Información adicional</string>
