@@ -94,6 +94,7 @@ public class ActivityMain extends BaseActivity
                     ParseUtils.setUpParseInstallationUser(userModel.getId());
                 }
                 renderDrawerOptions();
+                PrefUtils.markLoggedUser(this, true);
             } else {
                 navigator.navigateToLoginSignUp(this, true);
             }

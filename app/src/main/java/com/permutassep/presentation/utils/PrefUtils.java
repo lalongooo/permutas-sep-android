@@ -27,7 +27,7 @@ public class PrefUtils {
     /**
      * Boolean indicating whether the user has already registered or not.
      */
-    public static final String PREF_IS_USER_LOGGED_IN = "pref_drawer_first_time_opened";
+    public static final String PREF_IS_USER_LOGGED_IN = "pref_is_user_logged_in";
 
     /**
      * Boolean indicating whether ToS has been accepted

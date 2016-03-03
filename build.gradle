@@ -15,8 +15,8 @@ allprojects {
 
     ext {
         androidApplicationId = 'com.permutassep'
-        androidVersionCode = 14
-        androidVersionName = "8.1.3"
+        androidVersionCode = 15
+        androidVersionName = "8.1.4"
     }
 
 
