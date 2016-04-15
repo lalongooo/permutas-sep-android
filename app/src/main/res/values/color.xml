@@ -6,6 +6,9 @@
     <color name="step_pager_next_tab_color">#66000000</color>
     <color name="review_green">@color/primary</color>
     <color name="text_light">@color/primary</color>
+    <color name="suggest_donation_bg">#fff</color>
+    <color name="suggest_donation_btn_bg">#00C853</color>
+    <color name="suggest_donation_text_color">@color/colorPrimary</color>
 
     <color name="body_text_2">#8a000000</color>
     <color name="error_message">#DD2E44</color>
