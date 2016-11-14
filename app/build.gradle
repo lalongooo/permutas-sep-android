@@ -16,6 +16,15 @@ android {
         applicationId globalConfiguration.getAt("androidApplicationId")
         versionCode globalConfiguration.getAt("androidVersionCode")
         versionName globalConfiguration.getAt("androidVersionName")
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    packagingOptions {
+        exclude 'LICENSE.txt'
+    }
+
+    lintOptions {
+        abortOnError false
     }
 
     compileOptions {
@@ -118,4 +127,10 @@ dependencies {
     testCompile 'org.mockito:mockito-core:1.10.19'
     // Set this dependency if you want to use Hamcrest matching
     testCompile 'org.hamcrest:hamcrest-library:1.1'
+
+
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
+    androidTestCompile 'com.android.support:support-annotations:23.1.1'
+    androidTestCompile 'com.android.support.test:runner:0.5'
+
 }

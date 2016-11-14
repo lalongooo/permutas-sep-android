@@ -1,9 +1,6 @@
 package com.permutassep.ui;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -66,7 +63,7 @@ public class ActivityCreatePost extends BaseActivity implements
         WritePostView {
 
     public static final String NEW_POST_KEY = "a_new_post";
-
+    static DialogFragment dialogFragment;
     @Bind(R.id.next_button)
     Button mNextButton;
     @Bind(R.id.prev_button)
@@ -145,23 +142,16 @@ public class ActivityCreatePost extends BaseActivity implements
 
                 if (suggestDataCompletion && mCurrentPageSequence.get(mPager.getCurrentItem()).getKey().equals(PermutaSepWizardModel.CONTACT_INFO_KEY)) {
 
-                    DialogFragment dg = new DialogFragment() {
-
-                        @NonNull
-                        @Override
-                        public Dialog onCreateDialog(Bundle savedInstanceState) {
-                            return new AlertDialog.Builder(getActivity())
-                                    .setMessage(R.string.wizard_contact_suggest_data_completion_dialog_msg)
-                                    .setPositiveButton(R.string.submit_confirm_button, new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            suggestDataCompletion = false;
-                                        }
-                                    })
-                                    .create();
-                        }
-                    };
-                    dg.show(getSupportFragmentManager(), "contact_data_dialog");
+                    new MaterialDialog.Builder(ActivityCreatePost.this)
+                            .content(R.string.wizard_contact_suggest_data_completion_dialog_msg)
+                            .positiveText(R.string.submit_confirm_button)
+                            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(@NonNull MaterialDialog materialDialog, @NonNull DialogAction dialogAction) {
+                                    suggestDataCompletion = false;
+                                }
+                            })
+                            .show();
 
                 } else if (mPager.getCurrentItem() == mCurrentPageSequence.size()) {
 
