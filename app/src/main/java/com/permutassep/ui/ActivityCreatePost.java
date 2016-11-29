@@ -48,7 +48,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import br.kots.mob.complex.preferences.ComplexPreferences;
+import com.permutassep.presentation.utils.ComplexPreferences;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
