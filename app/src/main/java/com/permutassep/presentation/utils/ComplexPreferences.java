@@ -1,4 +1,4 @@
-package br.kots.mob.complex.preferences;
+package com.permutassep.presentation.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
