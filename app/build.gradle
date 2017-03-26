@@ -105,10 +105,10 @@ dependencies {
     compile('com.mikepenz:materialdrawer:4.3.4@aar') {
         transitive = true
     }
-    compile('com.mikepenz:aboutlibraries:5.0.2@aar') {
+    compile('com.mikepenz:aboutlibraries:5.9.4@aar') {
         transitive = true
     }
-    compile('com.github.afollestad.material-dialogs:core:0.8.5.0@aar') {
+    compile('com.afollestad.material-dialogs:core:0.9.4.2') {
         transitive = true
     }
 
