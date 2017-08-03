@@ -9,7 +9,6 @@ public class PermutaSepWizardModel extends AbstractWizardModel {
 	}
 
     public static final String POST_TEXT_KEY = "post_text_page_key";
-    public static final String CONTACT_INFO_KEY = "contact_info_page_key";
     public static final String CITY_FROM_KEY = "city_from_page_key";
     public static final String CITY_TO_KEY = "city_to_page_key";
     public static final String POSITION_TYPE_KEY = "position_type_page_key";
@@ -20,7 +19,6 @@ public class PermutaSepWizardModel extends AbstractWizardModel {
 	@Override
 	protected PageList onNewRootPageList() {
 		return new PageList(
-//                new ProfessorContactInfoPage(this, "Tu información").setRequired(true).setKey(CONTACT_INFO_KEY),
                 new ProfessorCityFromPage(this, "Tu ciudad de origen").setRequired(true).setKey(CITY_FROM_KEY),
                 new ProfessorCityToPage(this, "Tu lugar deseado").setRequired(true).setKey(CITY_TO_KEY),
                 new SingleFixedChoicePage(this, "Nivel académico").setChoices("Educación Especial", "Pre-escolar", "Primaria", "Secundaria", "Tele-secundaria", "Medio superior","Administrativo", "Intendencia").setRequired(true).setKey(ACADEMIC_LEVEL_KEY),

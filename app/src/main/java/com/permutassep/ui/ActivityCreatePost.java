@@ -1,13 +1,9 @@
 package com.permutassep.ui;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -31,6 +27,7 @@ import com.permutassep.presentation.internal.di.components.PostComponent;
 import com.permutassep.presentation.internal.di.modules.PostModule;
 import com.permutassep.presentation.model.PostModel;
 import com.permutassep.presentation.presenter.WritePostPresenter;
+import com.permutassep.presentation.utils.ComplexPreferences;
 import com.permutassep.presentation.utils.PrefUtils;
 import com.permutassep.presentation.view.WritePostView;
 import com.permutassep.presentation.view.wizard.model.AbstractWizardModel;
@@ -48,7 +45,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import com.permutassep.presentation.utils.ComplexPreferences;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -79,7 +75,6 @@ public class ActivityCreatePost extends BaseActivity implements
     Toolbar toolbar;
     @Inject
     WritePostPresenter writePostPresenter;
-    private boolean suggestDataCompletion = false;
     private boolean mEditingAfterReview;
     private boolean mConsumePageSelectedEvent;
     private PostComponent postComponent;
@@ -143,27 +138,7 @@ public class ActivityCreatePost extends BaseActivity implements
             @Override
             public void onClick(View view) {
 
-                if (suggestDataCompletion && mCurrentPageSequence.get(mPager.getCurrentItem()).getKey().equals(PermutaSepWizardModel.CONTACT_INFO_KEY)) {
-
-                    DialogFragment dg = new DialogFragment() {
-
-                        @NonNull
-                        @Override
-                        public Dialog onCreateDialog(Bundle savedInstanceState) {
-                            return new AlertDialog.Builder(getActivity())
-                                    .setMessage(R.string.wizard_contact_suggest_data_completion_dialog_msg)
-                                    .setPositiveButton(R.string.submit_confirm_button, new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            suggestDataCompletion = false;
-                                        }
-                                    })
-                                    .create();
-                        }
-                    };
-                    dg.show(getSupportFragmentManager(), "contact_data_dialog");
-
-                } else if (mPager.getCurrentItem() == mCurrentPageSequence.size()) {
+                if (mPager.getCurrentItem() == mCurrentPageSequence.size()) {
 
 
                     new MaterialDialog.Builder(ActivityCreatePost.this)
@@ -451,7 +426,7 @@ public class ActivityCreatePost extends BaseActivity implements
     public class MyPagerAdapter extends FragmentStatePagerAdapter {
         private int mCutOffPage;
 
-        public MyPagerAdapter(FragmentManager fm) {
+        MyPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
@@ -477,11 +452,11 @@ public class ActivityCreatePost extends BaseActivity implements
             return Math.min(mCutOffPage + 1, mCurrentPageSequence.size() + 1);
         }
 
-        public int getCutOffPage() {
+        int getCutOffPage() {
             return mCutOffPage;
         }
 
-        public void setCutOffPage(int cutOffPage) {
+        void setCutOffPage(int cutOffPage) {
             if (cutOffPage < 0) {
                 cutOffPage = Integer.MAX_VALUE;
             }
