@@ -18,7 +18,7 @@ Los medios a los que han recurrido los profesores son Blogs y grupos de Facebook
 Este sistema adoptado tiene 3 problemas:
 
 - Es dificil encontrar una publicación que esté destinada a determinado determinado centro de trabajo en determinado lugar.
-- La información no está centralizada y los porfesores tienen que buscar entre blogs y diversos grupos de Facebook.
+- La información no está centralizada y los profesores tienen que buscar entre blogs y diversos grupos de Facebook.
 - En la mayoría de los casos, es dificil encontrar una permuta uno a uno (1 - 1), y se tiene que recurrir a una triangulación.
 
 Por ejemplo:
