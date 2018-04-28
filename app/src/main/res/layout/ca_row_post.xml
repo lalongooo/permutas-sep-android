@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:card_view="http://schemas.android.com/tools"
-    android:paddingTop="1dp"
+    android:layout_height="wrap_content"
     android:paddingLeft="3dp"
-    android:paddingRight="3dp">
+    android:paddingRight="3dp"
+    android:paddingTop="1dp">
 
-    <android.support.v7.widget.CardView
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:foreground="?android:attr/selectableItemBackground"
+    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/cv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:foreground="?android:attr/selectableItemBackground"
+        card_view:cardCornerRadius="4dp"
         card_view:cardElevation="2dp"
-        card_view:cardUseCompatPadding="true"
-        card_view:cardCornerRadius="4dp">
+        card_view:cardUseCompatPadding="true">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -29,7 +28,8 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                android:src="@drawable/default_profile_picture" />
+                android:src="@drawable/default_profile_picture"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:id="@+id/tvUserName"
@@ -40,11 +40,11 @@
                 android:layout_marginStart="10dp"
                 android:layout_toEndOf="@+id/imageView"
                 android:layout_toRightOf="@+id/imageView"
-                android:text="Jorge E. Hernández"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/primary"
                 android:textSize="15sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="Jorge E. Hernández" />
 
             <TextView
                 android:id="@+id/tvFrom"
@@ -52,22 +52,24 @@
                 android:layout_height="wrap_content"
                 android:layout_alignBaseline="@+id/tvFromLabel"
                 android:layout_alignBottom="@+id/tvFromLabel"
+                android:layout_toEndOf="@+id/tvFromLabel"
                 android:layout_toRightOf="@+id/tvFromLabel"
-                android:text="San Luis Potosi"
                 android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#303030"
                 android:textStyle="bold"
-                android:textColor="#303030"/>
+                tools:text="San Luis Potosi" />
 
             <TextView
                 android:id="@+id/tvToLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@+id/tvFromLabel"
+                android:layout_alignStart="@+id/tvFromLabel"
                 android:layout_below="@+id/tvFromLabel"
-                android:text="A: "
                 android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/primary"
                 android:textStyle="bold"
-                android:textColor="@color/primary"/>
+                tools:text="A: " />
 
             <TextView
                 android:id="@+id/tvTo"
@@ -75,12 +77,12 @@
                 android:layout_height="wrap_content"
                 android:layout_alignBaseline="@+id/tvToLabel"
                 android:layout_alignBottom="@+id/tvToLabel"
+                android:layout_toEndOf="@+id/tvToLabel"
                 android:layout_toRightOf="@+id/tvToLabel"
-                android:text="San Luis Potosi"
                 android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#303030"
                 android:textStyle="bold"
-                android:textColor="#303030"/>
-
+                tools:text="San Luis Potosi" />
 
             <TextView
                 android:id="@+id/tvAcademicLevelLabel"
@@ -90,10 +92,10 @@
                 android:layout_alignStart="@+id/tvUserName"
                 android:layout_below="@+id/tvToLabel"
                 android:layout_marginTop="10dp"
-                android:text="Secundaria "
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/primary"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="Secundaria " />
 
             <TextView
                 android:id="@+id/tvPostDate"
@@ -102,10 +104,9 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
-                android:text="Hace 6 horas"
+                android:textColor="#303030"
                 android:textSize="10sp"
-                android:textColor="#303030"/>
-
+                tools:text="Hace 6 horas" />
 
             <TextView
                 android:id="@+id/tvPostUserEmail"
@@ -114,9 +115,9 @@
                 android:layout_alignLeft="@+id/tvUserName"
                 android:layout_alignStart="@+id/tvUserName"
                 android:layout_below="@+id/tvUserName"
-                android:text="hdez.jeduardo@gmail.com"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                tools:text="hdez.jeduardo@gmail.com" />
 
             <TextView
                 android:id="@+id/tvPostUserPhone"
@@ -125,10 +126,10 @@
                 android:layout_alignLeft="@+id/tvUserName"
                 android:layout_alignStart="@+id/tvUserName"
                 android:layout_below="@+id/tvPostUserEmail"
-                android:text="8116916048"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/primary"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                tools:text="8116916048" />
 
             <TextView
                 android:id="@+id/tvPostText"
@@ -138,12 +139,10 @@
                 android:layout_alignStart="@+id/tvUserName"
                 android:layout_below="@+id/tvPostUserPhone"
                 android:layout_marginTop="5dp"
-                android:text="Este es un texto largo de ejemplo, para ver la ubicacion del elemento en cada elemento de la lista de publicaciones"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textSize="14sp"
                 android:textColor="#303030"
-                />
-
+                android:textSize="14sp"
+                tools:text="Este es un texto largo de ejemplo, para ver la ubicacion del elemento en cada elemento de la lista de publicaciones" />
 
             <TextView
                 android:id="@+id/tvFromLabel"
@@ -153,10 +152,10 @@
                 android:layout_alignStart="@+id/tvPostText"
                 android:layout_below="@+id/tvPostText"
                 android:layout_marginTop="10dp"
-                android:text="De: "
                 android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/primary"
                 android:textStyle="bold"
-                android:textColor="@color/primary"/>
+                tools:text="De: " />
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>
