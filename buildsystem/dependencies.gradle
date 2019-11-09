@@ -44,6 +44,8 @@ ext {
             rxJava             : "io.reactivex:rxjava:${rxJavaVersion}",
             rxAndroid          : "io.reactivex:rxandroid:${rxAndroidVersion}",
             javaxAnnotation    : "javax.annotation:jsr250-api:1.0",
+            okHttp            : "com.squareup.okhttp:okhttp:${okHttpVersion}",
+            retrofit          : "com.squareup.retrofit:retrofit:$retrofitVersion",
     ]
 
     domainDependencies = [

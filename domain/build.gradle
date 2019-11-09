@@ -3,13 +3,9 @@ apply plugin: 'java'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-
 dependencies {
     def domainDependencies = rootProject.ext.domainDependencies
-
-    // provided domainDependencies.daggerCompiler
     implementation domainDependencies.javaxAnnotation
-
     implementation domainDependencies.dagger
     implementation domainDependencies.rxJava
 }
