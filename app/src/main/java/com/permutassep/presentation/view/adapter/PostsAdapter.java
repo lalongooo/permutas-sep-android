@@ -21,7 +21,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -116,23 +116,23 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostViewHold
     }
 
     static class PostViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.imageView)
+        @BindView(R.id.imageView)
         ImageView imageView;
-        @Bind(R.id.tvUserName)
+        @BindView(R.id.tvUserName)
         TextView tvUserName;
-        @Bind(R.id.tvPostDate)
+        @BindView(R.id.tvPostDate)
         TextView tvPostDate;
-        @Bind(R.id.tvPostUserEmail)
+        @BindView(R.id.tvPostUserEmail)
         TextView tvPostUserEmail;
-        @Bind(R.id.tvPostUserPhone)
+        @BindView(R.id.tvPostUserPhone)
         TextView tvPostUserPhone;
-        @Bind(R.id.tvPostText)
+        @BindView(R.id.tvPostText)
         TextView tvPostText;
-        @Bind(R.id.tvFrom)
+        @BindView(R.id.tvFrom)
         TextView tvFrom;
-        @Bind(R.id.tvTo)
+        @BindView(R.id.tvTo)
         TextView tvTo;
-        @Bind(R.id.tvAcademicLevelLabel)
+        @BindView(R.id.tvAcademicLevelLabel)
         TextView tvAcademicLevelLabel;
 
         public PostViewHolder(View itemView) {

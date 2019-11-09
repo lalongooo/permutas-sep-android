@@ -39,7 +39,7 @@ import java.util.HashMap;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -52,9 +52,9 @@ public class FragmentResult extends BaseFragment implements SearchPostsResultsVi
     @Inject
     SearchPostsResultsPresenter postListPresenter;
 
-    @Bind(R.id.rv_users)
+    @BindView(R.id.rv_users)
     RecyclerView rv_posts;
-    @Bind(R.id.floatingActionButton)
+    @BindView(R.id.floatingActionButton)
     FloatingActionButton floatingActionButton;
     private MaterialDialog progressDialog;
 
@@ -163,12 +163,6 @@ public class FragmentResult extends BaseFragment implements SearchPostsResultsVi
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
-    }
-
-    @Override
     public Context getContext() {
         return this.getActivity().getApplicationContext();
     }
@@ -192,7 +186,7 @@ public class FragmentResult extends BaseFragment implements SearchPostsResultsVi
     }
 
     @Override
-    public void showEmptyResultsMessage(){
+    public void showEmptyResultsMessage() {
         new MaterialDialog.Builder(getActivity())
                 .title(R.string.search_fragment_results_empty_dlg_title)
                 .content(R.string.search_fragment_results_empty_dlg_msg)
@@ -239,9 +233,10 @@ public class FragmentResult extends BaseFragment implements SearchPostsResultsVi
                 })
                 .show();
     }
+
     @Override
     public void hideRetry() {
-        
+
     }
 
     @Override

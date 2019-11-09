@@ -51,7 +51,7 @@ import java.util.HashMap;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -69,51 +69,51 @@ public class FragmentPostDetail extends BaseFragment
      * UI elements
      */
 
-    @Bind(R.id.tvUserName)
+    @BindView(R.id.tvUserName)
     TextView tvUserName;
-    @Bind(R.id.tvPostUserEmail)
+    @BindView(R.id.tvPostUserEmail)
     TextView tvPostUserEmail;
-    @Bind(R.id.tvPostUserPhone)
+    @BindView(R.id.tvPostUserPhone)
     TextView tvPostUserPhone;
-    @Bind(R.id.tvPostText)
+    @BindView(R.id.tvPostText)
     TextView tvPostText;
-    @Bind(R.id.tvStateFromCode)
+    @BindView(R.id.tvStateFromCode)
     TextView tvStateFromCode;
-    @Bind(R.id.tvStateToCode)
+    @BindView(R.id.tvStateToCode)
     TextView tvStateToCode;
-    @Bind(R.id.tvStateFrom)
+    @BindView(R.id.tvStateFrom)
     TextView tvStateFrom;
-    @Bind(R.id.tvCityFrom)
+    @BindView(R.id.tvCityFrom)
     TextView tvCityFrom;
-    @Bind(R.id.tvTownFrom)
+    @BindView(R.id.tvTownFrom)
     TextView tvTownFrom;
-    @Bind(R.id.tvStateTo)
+    @BindView(R.id.tvStateTo)
     TextView tvStateTo;
-    @Bind(R.id.tvCityTo)
+    @BindView(R.id.tvCityTo)
     TextView tvCityTo;
-    @Bind(R.id.tvTownTo)
+    @BindView(R.id.tvTownTo)
     TextView tvTownTo;
-    @Bind(R.id.tvAcademicLevel)
+    @BindView(R.id.tvAcademicLevel)
     TextView tvAcademicLevel;
-    @Bind(R.id.tvWorkdayType)
+    @BindView(R.id.tvWorkdayType)
     TextView tvWorkdayType;
-    @Bind(R.id.tvPositionType)
+    @BindView(R.id.tvPositionType)
     TextView tvPositionType;
-    @Bind(R.id.tvIsTeachingCareer)
+    @BindView(R.id.tvIsTeachingCareer)
     TextView tvIsTeachingCareer;
-    @Bind(R.id.tvPostDate)
+    @BindView(R.id.tvPostDate)
     TextView tvPostDate;
-    @Bind(R.id.rl_progress)
+    @BindView(R.id.rl_progress)
     RelativeLayout rl_progress;
-    @Bind(R.id.rl_retry)
+    @BindView(R.id.rl_retry)
     RelativeLayout rl_retry;
-    @Bind(R.id.layoutPostDetails)
+    @BindView(R.id.layoutPostDetails)
     LinearLayout layoutPostDetails;
-    @Bind(R.id.mapView)
+    @BindView(R.id.mapView)
     MapView mapView;
-    @Bind(R.id.imageView)
+    @BindView(R.id.imageView)
     ImageView imageView;
-    @Bind(R.id.ivArrow)
+    @BindView(R.id.ivArrow)
     ImageView ivArrow;
 
     @Inject

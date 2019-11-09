@@ -53,7 +53,7 @@ import org.json.JSONObject;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -62,13 +62,13 @@ public class FragmentLogin extends BaseFragment implements LoginView {
     /**
      * UI elements
      */
-    @Bind(R.id.etName)
+    @BindView(R.id.etName)
     EditText etName;
-    @Bind(R.id.etPassword)
+    @BindView(R.id.etPassword)
     EditText etPassword;
-    @Bind(R.id.btnFbLogin)
+    @BindView(R.id.btnFbLogin)
     LoginButton loginButton;
-    @Bind(R.id.tvForgotPassword)
+    @BindView(R.id.tvForgotPassword)
     TextView tvForgotPassword;
 
     @Inject

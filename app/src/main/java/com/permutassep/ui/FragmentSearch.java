@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import retrofit.Callback;
@@ -36,17 +36,17 @@ public class FragmentSearch extends BaseFragment {
     /**
      * UI elements
      */
-    @Bind(R.id.spn_state_origin)
+    @BindView(R.id.spn_state_origin)
     Spinner spnStateFrom;
-    @Bind(R.id.spn_city_origin)
+    @BindView(R.id.spn_city_origin)
     Spinner spnMunicipalityFrom;
-    @Bind(R.id.spn_town_origin)
+    @BindView(R.id.spn_town_origin)
     Spinner spnLocalityFrom;
-    @Bind(R.id.spn_state_to)
+    @BindView(R.id.spn_state_to)
     Spinner spnStateTo;
-    @Bind(R.id.spn_city_to)
+    @BindView(R.id.spn_city_to)
     Spinner spnMunicipalityTo;
-    @Bind(R.id.spn_town_to)
+    @BindView(R.id.spn_town_to)
     Spinner spnLocalityTo;
 
     private MaterialDialog progressDialog;
