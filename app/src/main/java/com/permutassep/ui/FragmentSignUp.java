@@ -44,7 +44,7 @@ import org.json.JSONObject;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -53,15 +53,15 @@ public class FragmentSignUp extends BaseFragment implements SignUpView {
     /**
      * UI elements
      */
-    @Bind(R.id.etName)
+    @BindView(R.id.etName)
     EditText etName;
-    @Bind(R.id.etEmail)
+    @BindView(R.id.etEmail)
     EditText etEmail;
-    @Bind(R.id.etPhone)
+    @BindView(R.id.etPhone)
     EditText etPhone;
-    @Bind(R.id.etPassword)
+    @BindView(R.id.etPassword)
     EditText etPassword;
-    @Bind(R.id.btnLogin)
+    @BindView(R.id.btnLogin)
     LoginButton loginButton;
     @Inject
     SignUpPresenter signUpPresenter;

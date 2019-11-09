@@ -9,15 +9,14 @@ allprojects {
 
 ext {
     //Android
-    androidBuildToolsVersion = "26.0.1"
     androidCompileSdkVersion = 26
     androidMinSdkVersion = 14
     androidTargetSdkVersion = 26
 
     //Libraries
     androidAnnotationsVersion = '20.0.0'
-    butterKnifeVersion = '7.0.1'
-    daggerVersion = '2.0'
+    butterKnifeVersion = '8.0.1'
+    daggerVersion = '2.22.1'
     gsonVersion = '2.3'
     javaxAnnotationVersion = '10.0-b28'
     okHttpVersion = '2.3.0'
@@ -37,19 +36,20 @@ ext {
 
 
     presentationDependencies = [
-            daggerCompiler : "com.google.dagger:dagger-compiler:${daggerVersion}",
-            dagger         : "com.google.dagger:dagger:${daggerVersion}",
-            butterKnife    : "com.jakewharton:butterknife:${butterKnifeVersion}",
-            recyclerView   : "com.android.support:recyclerview-v7:${recyclerViewVersion}",
-            rxJava         : "io.reactivex:rxjava:${rxJavaVersion}",
-            rxAndroid      : "io.reactivex:rxandroid:${rxAndroidVersion}",
-            javaxAnnotation: "org.glassfish:javax.annotation:${javaxAnnotationVersion}",
+            daggerCompiler     : "com.google.dagger:dagger-compiler:${daggerVersion}",
+            dagger             : "com.google.dagger:dagger:${daggerVersion}",
+            butterKnife        : "com.jakewharton:butterknife:${butterKnifeVersion}",
+            butterKnifeCompiler: "com.jakewharton:butterknife-compiler:${butterKnifeVersion}",
+            recyclerView       : "com.android.support:recyclerview-v7:${recyclerViewVersion}",
+            rxJava             : "io.reactivex:rxjava:${rxJavaVersion}",
+            rxAndroid          : "io.reactivex:rxandroid:${rxAndroidVersion}",
+            javaxAnnotation    : "javax.annotation:jsr250-api:1.0",
     ]
 
     domainDependencies = [
             daggerCompiler : "com.google.dagger:dagger-compiler:${daggerVersion}",
             dagger         : "com.google.dagger:dagger:${daggerVersion}",
-            javaxAnnotation: "org.glassfish:javax.annotation:${javaxAnnotationVersion}",
+            javaxAnnotation: "javax.annotation:jsr250-api:1.0",
             rxJava         : "io.reactivex:rxjava:${rxJavaVersion}",
     ]
 

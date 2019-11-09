@@ -36,7 +36,8 @@ import com.throrinstudio.android.common.libs.validator.validator.NotEmptyValidat
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -50,11 +51,11 @@ public class FragmentNewPassword extends BaseFragment implements NewPasswordView
     /**
      * UI elements
      */
-    @Bind(R.id.etPasswordOne)
+    @BindView(R.id.etPasswordOne)
     EditText etPasswordOne;
-    @Bind(R.id.etPasswordTwo)
+    @BindView(R.id.etPasswordTwo)
     EditText etPasswordTwo;
-    @Bind(R.id.btnResetPassword)
+    @BindView(R.id.btnResetPassword)
     TextView btnResetPassword;
 
     @Inject

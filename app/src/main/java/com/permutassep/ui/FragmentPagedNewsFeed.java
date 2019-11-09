@@ -31,6 +31,7 @@ import com.permutassep.presentation.internal.di.components.DaggerPostComponent;
 import com.permutassep.presentation.internal.di.components.PostComponent;
 import com.permutassep.presentation.model.PostModel;
 import com.permutassep.presentation.presenter.PagedPostListPresenter;
+import com.permutassep.presentation.utils.ComplexPreferences;
 import com.permutassep.presentation.utils.PrefUtils;
 import com.permutassep.presentation.view.PagedPostsListView;
 import com.permutassep.presentation.view.adapter.PostsAdapter;
@@ -41,8 +42,7 @@ import java.util.Collection;
 
 import javax.inject.Inject;
 
-import com.permutassep.presentation.utils.ComplexPreferences;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -56,10 +56,10 @@ public class FragmentPagedNewsFeed extends BaseFragment implements PagedPostsLis
     @Inject
     PagedPostListPresenter postListPresenter;
 
-    @Bind(R.id.rv_users)
+    @BindView(R.id.rv_users)
     RecyclerView rv_posts;
 
-    @Bind(R.id.floatingActionButton)
+    @BindView(R.id.floatingActionButton)
     FloatingActionButton floatingActionButton;
 
     private MaterialDialog progressDialog;
@@ -178,12 +178,6 @@ public class FragmentPagedNewsFeed extends BaseFragment implements PagedPostsLis
 
     private void loadUserList() {
         this.postListPresenter.initialize(currentPage, Config.NEWS_FEED_ITEMS_PER_PAGE);
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
     }
 
     @Override

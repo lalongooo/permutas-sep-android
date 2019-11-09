@@ -37,7 +37,7 @@ import com.throrinstudio.android.common.libs.validator.validator.PhoneValidator;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -47,11 +47,11 @@ public class FragmentCompleteFbData extends BaseFragment implements SignUpView {
      * UI elements
      */
 
-    @Bind(R.id.etName)
+    @BindView(R.id.etName)
     EditText etName;
-    @Bind(R.id.etEmail)
+    @BindView(R.id.etEmail)
     EditText etEmail;
-    @Bind(R.id.etPhone)
+    @BindView(R.id.etPhone)
     EditText etPhone;
 
     @Inject

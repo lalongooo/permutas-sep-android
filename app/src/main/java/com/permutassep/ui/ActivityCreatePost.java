@@ -45,7 +45,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -63,13 +63,13 @@ public class ActivityCreatePost extends BaseActivity implements
 
     public static final String NEW_POST_KEY = "a_new_post";
 
-    @Bind(R.id.next_button)
+    @BindView(R.id.next_button)
     Button mNextButton;
-    @Bind(R.id.prev_button)
+    @BindView(R.id.prev_button)
     Button mPrevButton;
-    @Bind(R.id.pager)
+    @BindView(R.id.pager)
     ViewPager mPager;
-    @Bind(R.id.strip)
+    @BindView(R.id.strip)
     StepPagerStrip mStepPagerStrip;
     @Inject
     Toolbar toolbar;

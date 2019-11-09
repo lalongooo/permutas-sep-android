@@ -38,7 +38,7 @@ import java.util.Collection;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -49,7 +49,7 @@ public class FragmentMyPosts extends BaseFragment implements PostsListView {
     private static final String ARGUMENT_USER_ID = "ARGUMENT_USER_ID";
     @Inject
     UserPostListPresenter postListPresenter;
-    @Bind(R.id.rv_users)
+    @BindView(R.id.rv_users)
     RecyclerView rv_posts;
     private int userId;
     private MaterialDialog progressDialog;
@@ -163,7 +163,6 @@ public class FragmentMyPosts extends BaseFragment implements PostsListView {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.unbind(this);
     }
 
     @Override
