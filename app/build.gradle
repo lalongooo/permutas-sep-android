@@ -26,10 +26,17 @@ android {
     signingConfigs {
 
         releaseConfig {
-            storeFile file(com_permutassep_release_keystore_file);
-            storePassword(com_permutassep_release_keystore_password);
-            keyAlias(com_permutassep_release_key_alias);
-            keyPassword(com_permutassep_release_key_password);
+            keyAlias releaseKeyAlias
+            keyPassword releaseKeyPassword
+            storeFile file("$rootDir${releaseKeyStoreFile}")
+            storePassword releaseStorePassword
+        }
+
+        debugConfig {
+            keyAlias debugKeyAlias
+            keyPassword debugKeyPassword
+            storeFile file("$rootDir${debugKeyStoreFile}")
+            storePassword debugStorePassword
         }
     }
 
@@ -37,6 +44,7 @@ android {
 
         debug {
             minifyEnabled false
+            signingConfig signingConfigs.debugConfig
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
             buildConfigField "String", "PARSE_COM_APPLICATION_ID", parse_com_debug_application_id
             buildConfigField "String", "PARSE_COM_CLIENT_KEY", parse_com_debug_client_key
@@ -49,8 +57,8 @@ android {
         }
 
         release {
-            signingConfig signingConfigs.releaseConfig
             minifyEnabled false
+            signingConfig signingConfigs.releaseConfig
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
             buildConfigField "String", "PARSE_COM_APPLICATION_ID", parse_com_release_application_id
             buildConfigField "String", "PARSE_COM_CLIENT_KEY", parse_com_release_client_key
