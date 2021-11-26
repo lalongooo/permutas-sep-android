@@ -10,22 +10,14 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 import com.lalongooo.permutassep.R;
-import com.permutassep.presentation.AndroidApplication;
 import com.permutassep.presentation.utils.Utils;
-import com.viewpagerindicator.CirclePageIndicator;
-import com.viewpagerindicator.PageIndicator;
 
 public class ActivityAppOverview extends BaseActivity {
     private ViewPager viewPager;
-    private PageIndicator indicator;
     private ImageView topImage1;
     private ImageView topImage2;
     private int lastPage = 0;
@@ -63,90 +55,11 @@ public class ActivityAppOverview extends BaseActivity {
         }
         topImage1 = (ImageView) findViewById(R.id.icon_image1);
         topImage2 = (ImageView) findViewById(R.id.icon_image2);
-        indicator = (CirclePageIndicator) findViewById(R.id.indicator);
 
         topImage2.setVisibility(View.GONE);
         viewPager.setAdapter(new IntroAdapter());
         viewPager.setPageMargin(0);
         viewPager.setOffscreenPageLimit(1);
-        indicator.setViewPager(viewPager);
-        indicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-                if (lastPage != viewPager.getCurrentItem()) {
-                    lastPage = viewPager.getCurrentItem();
-
-                    final ImageView fadeoutImage;
-                    final ImageView fadeinImage;
-                    if (topImage1.getVisibility() == View.VISIBLE) {
-                        fadeoutImage = topImage1;
-                        fadeinImage = topImage2;
-
-                    } else {
-                        fadeoutImage = topImage2;
-                        fadeinImage = topImage1;
-                    }
-
-                    fadeinImage.bringToFront();
-                    fadeinImage.setImageResource(icons[lastPage]);
-                    fadeinImage.clearAnimation();
-                    fadeoutImage.clearAnimation();
-
-                    Animation outAnimation = AnimationUtils.loadAnimation(ActivityAppOverview.this, R.anim.icon_anim_fade_out);
-                    outAnimation.setAnimationListener(new Animation.AnimationListener() {
-                        @Override
-                        public void onAnimationStart(Animation animation) {
-                        }
-
-                        @Override
-                        public void onAnimationEnd(Animation animation) {
-                            fadeoutImage.setVisibility(View.GONE);
-                        }
-
-                        @Override
-                        public void onAnimationRepeat(Animation animation) {
-
-                        }
-                    });
-
-                    Animation inAnimation = AnimationUtils.loadAnimation(ActivityAppOverview.this, R.anim.icon_anim_fade_in);
-                    inAnimation.setAnimationListener(new Animation.AnimationListener() {
-                        @Override
-                        public void onAnimationStart(Animation animation) {
-                            fadeinImage.setVisibility(View.VISIBLE);
-                        }
-
-                        @Override
-                        public void onAnimationEnd(Animation animation) {
-                        }
-
-                        @Override
-                        public void onAnimationRepeat(Animation animation) {
-
-                        }
-                    });
-
-
-                    fadeoutImage.startAnimation(outAnimation);
-                    fadeinImage.startAnimation(inAnimation);
-                }
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                Tracker t = ((AndroidApplication) getApplication()).getTracker();
-                t.send(new HitBuilders.EventBuilder()
-                        .setCategory(getString(R.string.ga_event_category_ux))
-                        .setAction(getString(R.string.ga_event_action_swipe))
-                        .setLabel("Page " + String.valueOf(position))
-                        .build());
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-            }
-        });
 
         startMessagingButton.setOnClickListener(new View.OnClickListener() {
             @Override

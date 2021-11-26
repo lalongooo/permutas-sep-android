@@ -86,7 +86,6 @@ dependencies {
     implementation presentationDependencies.javaxAnnotation
     implementation 'com.parse.bolts:bolts-android:1.3.0'
     implementation 'com.parse:parse-android:1.11.0'
-    implementation 'com.github.JakeWharton:ViewPagerIndicator:2.4.1'
     implementation 'com.android.support:support-v4:27.0.1'
     implementation 'com.android.support:appcompat-v7:27.0.1'
     implementation 'com.android.support:cardview-v7:27.0.1'
