@@ -5,11 +5,9 @@
 package com.permutassep.presentation.view.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.LinearLayoutManager;
 
-/**
- * Layout manager to position items inside a {@link android.support.v7.widget.RecyclerView}.
- */
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 public class PostsLayoutManager extends LinearLayoutManager {
   public PostsLayoutManager(Context context) {
     super(context);

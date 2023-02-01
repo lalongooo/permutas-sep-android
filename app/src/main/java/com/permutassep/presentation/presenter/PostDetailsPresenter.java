@@ -1,6 +1,5 @@
 package com.permutassep.presentation.presenter;
 
-import android.support.annotation.NonNull;
 
 import com.permutassep.domain.Post;
 import com.permutassep.domain.exception.DefaultErrorBundle;
@@ -34,7 +33,7 @@ public class PostDetailsPresenter implements Presenter {
         this.postModelDataMapper = postModelDataMapper;
     }
 
-    public void setView(@NonNull PostDetailsView postDetailsView) {
+    public void setView(PostDetailsView postDetailsView) {
         this.postDetailsView = postDetailsView;
     }
 

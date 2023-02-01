@@ -19,7 +19,6 @@ package com.permutassep.presentation.view.wizard.ui;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,13 +29,15 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.permutassep.presentation.view.wizard.model.Page;
-import com.permutassep.presentation.view.wizard.model.ProfessorCityToPage;
+import androidx.fragment.app.Fragment;
+
 import com.lalongooo.permutassep.R;
 import com.permutassep.adapter.PlaceSpinnerBaseAdapter;
 import com.permutassep.model.City;
 import com.permutassep.model.State;
 import com.permutassep.model.Town;
+import com.permutassep.presentation.view.wizard.model.Page;
+import com.permutassep.presentation.view.wizard.model.ProfessorCityToPage;
 import com.permutassep.rest.inegifacil.InegiFacilRestClient;
 
 import java.util.ArrayList;

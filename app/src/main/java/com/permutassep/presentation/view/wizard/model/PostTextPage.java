@@ -4,8 +4,9 @@ package com.permutassep.presentation.view.wizard.model;
  * By Jorge E. Hernandez (@lalongooo) 2015
  */
 
-import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+
+import androidx.fragment.app.Fragment;
 
 import com.permutassep.presentation.view.wizard.ui.PostTextFragment;
 

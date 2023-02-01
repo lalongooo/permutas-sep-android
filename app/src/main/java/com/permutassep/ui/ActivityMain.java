@@ -1,17 +1,16 @@
 package com.permutassep.ui;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.ActionBar;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+
 import com.facebook.login.LoginManager;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 import com.lalongooo.permutassep.R;
 import com.mikepenz.aboutlibraries.Libs;
 import com.mikepenz.aboutlibraries.LibsBuilder;
@@ -24,7 +23,6 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
-import com.permutassep.presentation.AndroidApplication;
 import com.permutassep.presentation.interfaces.FirstLaunchCompleteListener;
 import com.permutassep.presentation.interfaces.FloatingActionButtonClickListener;
 import com.permutassep.presentation.interfaces.FragmentMenuItemSelectedListener;
@@ -54,7 +52,7 @@ public class ActivityMain extends BaseActivity
         HasComponent<PostComponent>,
         PostListListener,
         Navigator.NavigationListener,
-        FragmentManager.OnBackStackChangedListener,
+        androidx.fragment.app.FragmentManager.OnBackStackChangedListener,
         FragmentSignUp.FacebookSignUpListener,
         LoginCompleteListener,
         FirstLaunchCompleteListener,
@@ -65,9 +63,6 @@ public class ActivityMain extends BaseActivity
 
     public static final int DRAWER_IDENTIFIER_HOME = 1;
     public static final int DRAWER_IDENTIFIER_MY_POSTS = 2;
-
-    @Inject
-    Toolbar toolbar;
 
     private Drawer drawer;
     private UserModel userModel;
@@ -137,7 +132,7 @@ public class ActivityMain extends BaseActivity
                 .withActivity(this)
                 .withActionBarDrawerToggle(true)
                 .withAccountHeader(accountHeader)
-                .withToolbar(toolbar)
+                // .withToolbar(toolbar)
                 .addDrawerItems(
                         new PrimaryDrawerItem()
                                 .withName(getString(R.string.app_nav_drawer_1))
@@ -164,14 +159,6 @@ public class ActivityMain extends BaseActivity
     public void onDrawerItemSelected(int drawerItemId) {
         switch (drawerItemId) {
             case DRAWER_IDENTIFIER_HOME:
-
-                ((AndroidApplication) getApplication())
-                        .getTracker()
-                        .send(new HitBuilders.EventBuilder()
-                                .setCategory(getString(R.string.ga_event_category_ux))
-                                .setAction(getString(R.string.ga_event_action_click))
-                                .setLabel(getString(R.string.ga_app_home))
-                                .build());
                 if (!(getCurrentDisplayedFragment() instanceof FragmentPagedNewsFeed)) {
                     getSupportFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                     navigator.navigateToPostList(this, true);
@@ -180,14 +167,6 @@ public class ActivityMain extends BaseActivity
 
                 break;
             case DRAWER_IDENTIFIER_MY_POSTS:
-
-                ((AndroidApplication) getApplication())
-                        .getTracker()
-                        .send(new HitBuilders.EventBuilder()
-                                .setCategory(getString(R.string.ga_event_category_ux))
-                                .setAction(getString(R.string.ga_event_action_click))
-                                .setLabel(getString(R.string.ga_app_my_posts))
-                                .build());
                 if (!(getCurrentDisplayedFragment() instanceof FragmentMyPosts)) {
                     navigator.navigateToUserPostList(this, this.userModel.getId(), true);
                     setActionBarTitle(R.string.app_main_toolbar_title_my_posts);
@@ -258,7 +237,7 @@ public class ActivityMain extends BaseActivity
 
         Fragment currentFragment = getCurrentDisplayedFragment();
         if (currentFragment instanceof FragmentLoginSignUp) {
-            ActionBar actionBar = getSupportActionBar();
+            ActionBar actionBar = getActionBar();
             if (actionBar != null) {
                 actionBar.hide();
             }
@@ -319,14 +298,6 @@ public class ActivityMain extends BaseActivity
                 break;
 
             case R.id.action_logout:
-
-                Tracker t1 = ((AndroidApplication) getApplication()).getTracker();
-                t1.send(new HitBuilders.EventBuilder()
-                        .setCategory(getString(R.string.ga_event_category_ux))
-                        .setAction(getString(R.string.ga_event_action_click))
-                        .setLabel(getString(R.string.ga_app_logout))
-                        .build());
-
                 PrefUtils.markLoggedUser(this, false);
                 PrefUtils.clearApplicationPreferences(this);
                 ParseUtils.clearParseInstallationUser();
@@ -336,13 +307,6 @@ public class ActivityMain extends BaseActivity
                 break;
 
             case R.id.action_about:
-
-                Tracker t2 = ((AndroidApplication) getApplication()).getTracker();
-                t2.send(new HitBuilders.EventBuilder()
-                        .setCategory(getString(R.string.ga_event_category_ux))
-                        .setAction(getString(R.string.ga_event_action_click))
-                        .setLabel(getString(R.string.ga_app_about))
-                        .build());
 
                 new LibsBuilder()
                         .withFields(R.string.class.getFields())
@@ -370,7 +334,7 @@ public class ActivityMain extends BaseActivity
     }
 
     private void setActionBarTitle(int resId) {
-        ActionBar actionBar = getSupportActionBar();
+        ActionBar actionBar = getActionBar();
         if (actionBar != null) {
             actionBar.setTitle(resId);
         }

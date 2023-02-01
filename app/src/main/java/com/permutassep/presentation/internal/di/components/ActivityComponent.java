@@ -1,7 +1,6 @@
 package com.permutassep.presentation.internal.di.components;
 
-import android.app.Activity;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.permutassep.presentation.internal.di.PerActivity;
 import com.permutassep.presentation.internal.di.modules.ActivityModule;
@@ -23,7 +22,5 @@ public interface ActivityComponent extends ApplicationComponent {
     void inject(ActivityMain activityMain);
 
     //Exposed to sub-graphs.
-    Activity activity();
-
-    Toolbar toolbar();
+    AppCompatActivity activity();
 }

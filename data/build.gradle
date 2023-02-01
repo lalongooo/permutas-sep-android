@@ -24,7 +24,6 @@ android {
     defaultConfig {
         minSdkVersion globalConfiguration.getAt("androidMinSdkVersion")
         targetSdkVersion globalConfiguration.getAt("androidTargetSdkVersion")
-        versionCode globalConfiguration.getAt("androidVersionCode")
     }
 
     buildTypes {
@@ -50,6 +49,7 @@ android {
         sourceCompatibility 1.8
         targetCompatibility 1.8
     }
+    namespace 'com.permutassep.data'
 }
 
 dependencies {

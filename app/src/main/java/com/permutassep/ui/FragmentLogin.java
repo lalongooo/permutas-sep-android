@@ -4,22 +4,20 @@ package com.permutassep.ui;
  * By Jorge E. Hernandez (@lalongooo) 2015
  */
 
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import androidx.fragment.app.FragmentManager;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.facebook.CallbackManager;
@@ -30,11 +28,8 @@ import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 import com.lalongooo.permutassep.BuildConfig;
 import com.lalongooo.permutassep.R;
-import com.permutassep.presentation.AndroidApplication;
 import com.permutassep.presentation.interfaces.LoginCompleteListener;
 import com.permutassep.presentation.internal.di.components.ApplicationComponent;
 import com.permutassep.presentation.internal.di.components.AuthenticationComponent;
@@ -95,14 +90,13 @@ public class FragmentLogin extends BaseFragment implements LoginView {
         return new FragmentLogin();
     }
 
-    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View fragmentView = inflater.inflate(R.layout.ca_fragment_login, container, false);
         ButterKnife.bind(this, fragmentView);
         setUpFacebookLoginButton();
 
-        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        ActionBar actionBar = getActivity().getActionBar();
         if (actionBar != null) {
             actionBar.hide();
         }
@@ -113,7 +107,7 @@ public class FragmentLogin extends BaseFragment implements LoginView {
     private void setUpFacebookLoginButton() {
         callbackManager = CallbackManager.Factory.create();
         loginButton.setReadPermissions("email");
-        loginButton.setFragment(this);
+        // loginButton.setFragment(this);
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -125,15 +119,6 @@ public class FragmentLogin extends BaseFragment implements LoginView {
                             public void onCompleted(JSONObject jsonObject, GraphResponse response) {
                                 hideLoading();
                                 String email = null;
-
-                                ((AndroidApplication) getActivity().getApplication())
-                                        .getTracker()
-                                        .send(new HitBuilders.EventBuilder()
-                                                .setCategory(getString(R.string.ga_event_category_ux))
-                                                .setAction(getString(R.string.ga_event_action_click))
-                                                .setLabel(getString(R.string.ga_fb_login_action_label_on_completed))
-                                                .build());
-
                                 try {
 
                                     /**
@@ -143,14 +128,6 @@ public class FragmentLogin extends BaseFragment implements LoginView {
                                     email = jsonObject.getString("email");
 
                                 } catch (JSONException e) {
-
-                                    ((AndroidApplication) getActivity().getApplication())
-                                            .getTracker()
-                                            .send(new HitBuilders.EventBuilder()
-                                                    .setCategory(getString(R.string.ga_event_category_ux))
-                                                    .setAction(getString(R.string.ga_event_action_click))
-                                                    .setLabel(getString(R.string.ga_fb_login_action_label_unauthorized_email))
-                                                    .build());
 
                                     /**
                                      * Create an EditText to capture the missing user email
@@ -191,15 +168,6 @@ public class FragmentLogin extends BaseFragment implements LoginView {
                                 }
 
                                 if (email != null) {
-
-                                    ((AndroidApplication) getActivity().getApplication())
-                                            .getTracker()
-                                            .send(new HitBuilders.EventBuilder()
-                                                    .setCategory(getString(R.string.ga_event_category_ux))
-                                                    .setAction(getString(R.string.ga_event_action_click))
-                                                    .setLabel(getString(R.string.ga_fb_login_action_label_authorized_email))
-                                                    .build());
-
                                     initializeInjector(email, BuildConfig.com_permutassep_fb_login_dummy_password);
                                     loginPresenter.login();
                                 }
@@ -213,25 +181,11 @@ public class FragmentLogin extends BaseFragment implements LoginView {
 
             @Override
             public void onCancel() {
-                ((AndroidApplication) getActivity().getApplication())
-                        .getTracker()
-                        .send(new HitBuilders.EventBuilder()
-                                .setCategory(getString(R.string.ga_event_category_ux))
-                                .setAction(getString(R.string.ga_event_action_click))
-                                .setLabel(getString(R.string.ga_fb_login_action_label_on_canceled))
-                                .build());
                 showError(getString(R.string.app_login_fb_dlg_on_cancel));
             }
 
             @Override
             public void onError(FacebookException exception) {
-                ((AndroidApplication) getActivity().getApplication())
-                        .getTracker()
-                        .send(new HitBuilders.EventBuilder()
-                                .setCategory(getString(R.string.ga_event_category_ux))
-                                .setAction(getString(R.string.ga_event_action_click))
-                                .setLabel(getString(R.string.ga_fb_login_action_label_on_error))
-                                .build());
                 showError(getString(R.string.app_login_fb_dlg_on_error));
             }
         });
@@ -274,14 +228,6 @@ public class FragmentLogin extends BaseFragment implements LoginView {
     @OnClick(R.id.tvForgotPassword)
     void onForgotPasswordClick() {
 
-        ((AndroidApplication) getActivity().getApplication())
-                .getTracker()
-                .send(new HitBuilders.EventBuilder()
-                        .setCategory(getString(R.string.ga_event_category_ux))
-                        .setAction(getString(R.string.ga_event_action_click))
-                        .setLabel(getString(R.string.ga_login_action_reset_password))
-                        .build());
-
         new MaterialDialog.Builder(getActivity())
                 .title(R.string.password_reset_dlg_title)
                 .content(R.string.password_reset_dlg_msg)
@@ -289,7 +235,7 @@ public class FragmentLogin extends BaseFragment implements LoginView {
                 .inputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS)
                 .input(R.string.password_reset_dlg_input_hint, 0, false, new MaterialDialog.InputCallback() {
                     @Override
-                    public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
+                    public void onInput(MaterialDialog dialog, CharSequence input) {
                         initializeInjector(input.toString(), BuildConfig.com_permutassep_fb_login_dummy_password);
                         loginPresenter.validateEmail(input.toString());
                     }
@@ -312,14 +258,6 @@ public class FragmentLogin extends BaseFragment implements LoginView {
 
     @Override
     public void authorizeUser(UserModel userModel) {
-
-        Tracker t = ((AndroidApplication) getActivity().getApplication()).getTracker();
-        t.send(new HitBuilders.EventBuilder()
-                .setCategory(getString(R.string.ga_event_category_ux))
-                .setAction(getString(R.string.ga_event_action_click))
-                .setLabel(getString(R.string.ga_login_action_label_success))
-                .build());
-
         this.hideKeyboard();
         getActivity().getSupportFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         this.navigationListener.onNextFragment(FragmentPagedNewsFeed.class);
@@ -389,14 +327,6 @@ public class FragmentLogin extends BaseFragment implements LoginView {
 
     @Override
     public void showError(String message) {
-
-        Tracker t = ((AndroidApplication) getActivity().getApplication()).getTracker();
-        t.send(new HitBuilders.EventBuilder()
-                .setCategory(getString(R.string.ga_event_category_ux))
-                .setAction(getString(R.string.ga_event_action_click))
-                .setLabel(getString(R.string.ga_login_action_label_bad_userorpassword))
-                .build());
-
         LoginManager.getInstance().logOut();
         new MaterialDialog.Builder(getActivity())
                 .title(R.string.app_login_dlg_login_title)

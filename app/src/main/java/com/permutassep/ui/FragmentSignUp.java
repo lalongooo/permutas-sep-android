@@ -4,16 +4,17 @@ package com.permutassep.ui;
  * By Jorge E. Hernandez (@lalongooo) 2015
  */
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.facebook.CallbackManager;
@@ -87,7 +88,7 @@ public class FragmentSignUp extends BaseFragment implements SignUpView {
         ButterKnife.bind(this, fragmentView);
         setUpFacebookLoginButton();
 
-        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        ActionBar actionBar = ((FragmentActivity) getActivity()).getActionBar();
         if (actionBar != null) {
             actionBar.hide();
         }
@@ -110,7 +111,7 @@ public class FragmentSignUp extends BaseFragment implements SignUpView {
     private void setUpFacebookLoginButton() {
         callbackManager = CallbackManager.Factory.create();
         loginButton.setReadPermissions("email");
-        loginButton.setFragment(this);
+        // loginButton.setFragment();
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {

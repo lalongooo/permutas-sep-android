@@ -1,6 +1,6 @@
 package com.permutassep.presentation.view.wizard.model;
 
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 
 import com.permutassep.presentation.view.wizard.ui.ProfessorCityFromFragment;
 import com.permutassep.model.City;

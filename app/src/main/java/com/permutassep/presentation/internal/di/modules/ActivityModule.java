@@ -1,11 +1,7 @@
 package com.permutassep.presentation.internal.di.modules;
 
-import android.app.Activity;
-import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.app.AppCompatActivity;
 
-import com.lalongooo.permutassep.R;
 import com.permutassep.presentation.internal.di.PerActivity;
 
 import dagger.Module;
@@ -16,9 +12,9 @@ import dagger.Provides;
  */
 @Module
 public class ActivityModule {
-    private final Activity activity;
+    private final AppCompatActivity activity;
 
-    public ActivityModule(Activity activity) {
+    public ActivityModule(AppCompatActivity activity) {
         this.activity = activity;
     }
 
@@ -27,17 +23,7 @@ public class ActivityModule {
      */
     @Provides
     @PerActivity
-    Activity activity() {
+    AppCompatActivity activity() {
         return this.activity;
-    }
-
-    @Provides
-    @PerActivity
-    Toolbar providesToolbar() {
-        AppCompatActivity appCompatActivity = (AppCompatActivity) activity;
-        Toolbar toolbar = (Toolbar) appCompatActivity.findViewById(R.id.toolbar);
-        toolbar.setTitleTextColor(Color.WHITE);
-        appCompatActivity.setSupportActionBar(toolbar);
-        return toolbar;
     }
 }

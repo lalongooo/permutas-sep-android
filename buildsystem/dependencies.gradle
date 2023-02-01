@@ -9,9 +9,9 @@ allprojects {
 
 ext {
     //Android
-    androidCompileSdkVersion = 26
-    androidMinSdkVersion = 14
-    androidTargetSdkVersion = 26
+    androidCompileSdkVersion = 33
+    androidMinSdkVersion = 21
+    androidTargetSdkVersion = 33
 
     //Libraries
     androidAnnotationsVersion = '20.0.0'
@@ -20,7 +20,7 @@ ext {
     gsonVersion = '2.3'
     javaxAnnotationVersion = '10.0-b28'
     okHttpVersion = '2.3.0'
-    recyclerViewVersion = '23.0.1'
+    recyclerViewVersion = '1.2.1'
     retrofitVersion = '1.9.0'
     rxAndroidVersion = '0.24.0'
     rxJavaVersion = '1.0.14'
@@ -40,7 +40,7 @@ ext {
             dagger             : "com.google.dagger:dagger:${daggerVersion}",
             butterKnife        : "com.jakewharton:butterknife:${butterKnifeVersion}",
             butterKnifeCompiler: "com.jakewharton:butterknife-compiler:${butterKnifeVersion}",
-            recyclerView       : "com.android.support:recyclerview-v7:${recyclerViewVersion}",
+            recyclerView       : "androidx.recyclerview:recyclerview:${recyclerViewVersion}",
             rxJava             : "io.reactivex:rxjava:${rxJavaVersion}",
             rxAndroid          : "io.reactivex:rxandroid:${rxAndroidVersion}",
             javaxAnnotation    : "javax.annotation:jsr250-api:1.0",
