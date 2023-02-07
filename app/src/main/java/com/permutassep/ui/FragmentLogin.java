@@ -73,6 +73,7 @@ public class FragmentLogin extends BaseFragment implements LoginView {
     private MaterialDialog progressDialog;
     private AuthenticationComponent authenticationComponent;
     private CallbackManager callbackManager;
+    private EditText editTextEmail;
 
     /**
      * Empty constructor
@@ -107,7 +108,7 @@ public class FragmentLogin extends BaseFragment implements LoginView {
     private void setUpFacebookLoginButton() {
         callbackManager = CallbackManager.Factory.create();
         loginButton.setReadPermissions("email");
-        // loginButton.setFragment(this);
+        loginButton.setFragment(this);
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -132,25 +133,24 @@ public class FragmentLogin extends BaseFragment implements LoginView {
                                     /**
                                      * Create an EditText to capture the missing user email
                                      */
-                                    EditText input = new EditText(getActivity());
+                                    editTextEmail = new EditText(requireContext());
                                     float scale = getResources().getDisplayMetrics().density;
                                     int dpAsPixels = (int) (15 * scale + 0.5f);
-                                    input.setPadding(dpAsPixels, dpAsPixels, dpAsPixels, dpAsPixels);
+                                    editTextEmail.setPadding(dpAsPixels, dpAsPixels, dpAsPixels, dpAsPixels);
 
                                     /**
                                      * Create an AlertDialog with the previously EditText created for the user to capture
                                      * the missing email, add button event listeners ans show.
                                      */
                                     AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
-                                    alert.setView(input);
+                                    alert.setView(editTextEmail);
                                     alert.setCancelable(false);
                                     alert.setTitle(R.string.app_login_fb_dlg_missing_email_title);
                                     alert.setMessage(R.string.app_login_fb_dlg_missing_email_text);
                                     alert.setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int whichButton) {
-                                            EditText editText = (EditText) ((AlertDialog) dialog).getCurrentFocus();
-                                            if (new EmailValidator(getActivity()).isValid(editText.getText().toString())) {
-                                                initializeInjector(editText.getText().toString(), BuildConfig.com_permutassep_fb_login_dummy_password);
+                                            if (new EmailValidator(getActivity()).isValid(editTextEmail.getText().toString())) {
+                                                initializeInjector(editTextEmail.getText().toString(), BuildConfig.com_permutassep_fb_login_dummy_password);
                                                 loginPresenter.login();
                                             } else {
                                                 LoginManager.getInstance().logOut();
