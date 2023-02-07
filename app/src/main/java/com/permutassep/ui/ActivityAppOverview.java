@@ -14,6 +14,7 @@ import android.widget.TextView;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.lalongooo.permutassep.R;
 import com.permutassep.presentation.utils.Utils;
 
@@ -26,12 +27,15 @@ public class ActivityAppOverview extends BaseActivity {
     private int[] icons;
     private int[] messages;
 
+    private FirebaseAnalytics firebaseAnalytics;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.ca_activity_app_overview);
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         icons = new int[]{
                 R.drawable.app_overview_1_buy,
@@ -69,6 +73,7 @@ public class ActivityAppOverview extends BaseActivity {
                 finish();
             }
         });
+        firebaseAnalytics.logEvent(this.getLocalClassName(), null);
     }
 
     private class IntroAdapter extends PagerAdapter {
