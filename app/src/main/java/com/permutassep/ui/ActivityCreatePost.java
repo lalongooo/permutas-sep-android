@@ -1,19 +1,19 @@
 package com.permutassep.ui;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
+
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -72,8 +72,6 @@ public class ActivityCreatePost extends BaseActivity implements
     @BindView(R.id.strip)
     StepPagerStrip mStepPagerStrip;
     @Inject
-    Toolbar toolbar;
-    @Inject
     WritePostPresenter writePostPresenter;
     private boolean mEditingAfterReview;
     private boolean mConsumePageSelectedEvent;
@@ -94,9 +92,9 @@ public class ActivityCreatePost extends BaseActivity implements
         this.setContentView(R.layout.ca_activity_createpost);
         ButterKnife.bind(this);
         this.initializeInjector();
-        this.setSupportActionBar(toolbar);
+        // setActionBar(toolbar);
 
-        ActionBar actionBar = this.getSupportActionBar();
+        ActionBar actionBar = getActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setTitle(R.string.action_post);
@@ -147,7 +145,7 @@ public class ActivityCreatePost extends BaseActivity implements
                             .negativeText(android.R.string.cancel)
                             .onPositive(new MaterialDialog.SingleButtonCallback() {
                                 @Override
-                                public void onClick(@NonNull MaterialDialog materialDialog, @NonNull DialogAction dialogAction) {
+                                public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
                                     writePostPresenter.writePost(getPostModelFromWizard());
                                 }
                             })
@@ -351,7 +349,7 @@ public class ActivityCreatePost extends BaseActivity implements
                 .cancelable(false)
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
-                    public void onClick(@NonNull MaterialDialog materialDialog, @NonNull DialogAction dialogAction) {
+                    public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
                         ComplexPreferences.get(ActivityCreatePost.this).putObject(NEW_POST_KEY, postModel);
                         finish();
                     }
@@ -385,7 +383,7 @@ public class ActivityCreatePost extends BaseActivity implements
                 .positiveText(R.string.retry)
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
-                    public void onClick(@NonNull MaterialDialog materialDialog, @NonNull DialogAction dialogAction) {
+                    public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
                         writePostPresenter.writePost(getPostModelFromWizard());
                     }
                 })

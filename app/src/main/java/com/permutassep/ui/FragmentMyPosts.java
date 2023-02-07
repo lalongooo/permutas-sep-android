@@ -1,18 +1,17 @@
 package com.permutassep.ui;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -90,7 +89,7 @@ public class FragmentMyPosts extends BaseFragment implements PostsListView {
         View fragmentView = inflater.inflate(R.layout.ca_fragment_post_list, container, false);
         ButterKnife.bind(this, fragmentView);
 
-        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        ActionBar actionBar = getActivity().getActionBar();
         if (actionBar != null) {
             actionBar.show();
         }
@@ -214,7 +213,7 @@ public class FragmentMyPosts extends BaseFragment implements PostsListView {
                 .positiveText(R.string.retry)
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
-                    public void onClick(@NonNull MaterialDialog materialDialog, @NonNull DialogAction dialogAction) {
+                    public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
                         loadUserPostsList();
                     }
                 })

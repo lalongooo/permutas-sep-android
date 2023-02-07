@@ -16,8 +16,9 @@
 
 package com.permutassep.presentation.view.wizard.model;
 
-import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+
+import androidx.fragment.app.Fragment;
 
 import com.permutassep.presentation.view.wizard.ui.ProfessorContactInfoFragment;
 

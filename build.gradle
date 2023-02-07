@@ -2,14 +2,15 @@ apply from: 'buildsystem/dependencies.gradle'
 
 buildscript {
     repositories {
+        google()
         jcenter()
         maven {
             url "https://maven.google.com"
         }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.2'
-        classpath 'com.google.gms:google-services:2.1.0'
+        classpath 'com.android.tools.build:gradle:7.4.0'
+        classpath 'com.google.gms:google-services:4.3.15'
         // classpath 'me.tatarka:gradle-retrolambda:3.1.0'
     }
 }
@@ -23,6 +24,7 @@ allprojects {
     }
 
     repositories {
+        google()
         jcenter()
         maven {
             url "https://maven.google.com"

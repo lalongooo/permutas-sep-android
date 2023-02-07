@@ -19,7 +19,6 @@ package com.permutassep.presentation.view.wizard.ui;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,9 +26,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.fragment.app.ListFragment;
+
+import com.lalongooo.permutassep.R;
 import com.permutassep.presentation.view.wizard.model.Page;
 import com.permutassep.presentation.view.wizard.model.SingleFixedChoicePage;
-import com.lalongooo.permutassep.R;
 
 import java.util.ArrayList;
 import java.util.List;

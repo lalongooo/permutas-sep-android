@@ -1,11 +1,5 @@
 package com.permutassep.presentation.presenter;
 
-/**
- * By Jorge E. Hernandez (@lalongooo) 2015
- */
-
-import android.support.annotation.NonNull;
-
 import com.lalongooo.permutassep.R;
 import com.permutassep.domain.exception.DefaultErrorBundle;
 import com.permutassep.domain.exception.ErrorBundle;
@@ -32,7 +26,7 @@ public class NewPasswordPresenter implements Presenter {
         this.confirmPasswordResetDataMapper = confirmPasswordResetDataMapper;
     }
 
-    public void setView(@NonNull NewPasswordView newPasswordView) {
+    public void setView(NewPasswordView newPasswordView) {
         this.newPasswordView = newPasswordView;
     }
 

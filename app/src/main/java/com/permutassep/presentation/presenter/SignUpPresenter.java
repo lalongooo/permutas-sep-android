@@ -4,8 +4,6 @@ package com.permutassep.presentation.presenter;
  * By Jorge E. Hernandez (@lalongooo) 2015
  */
 
-import android.support.annotation.NonNull;
-
 import com.permutassep.domain.User;
 import com.permutassep.domain.exception.DefaultErrorBundle;
 import com.permutassep.domain.exception.ErrorBundle;
@@ -68,7 +66,7 @@ public class SignUpPresenter implements Presenter {
         }
     }
 
-    public void setView(@NonNull SignUpView loginView) {
+    public void setView(SignUpView loginView) {
         this.signUpView = loginView;
     }
 

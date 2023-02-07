@@ -4,8 +4,6 @@ package com.permutassep.presentation.presenter;
  * By Jorge E. Hernandez (@lalongooo) 2015
  */
 
-import android.support.annotation.NonNull;
-
 import com.permutassep.domain.Post;
 import com.permutassep.domain.interactor.DefaultSubscriber;
 import com.permutassep.domain.interactor.WritePost;
@@ -58,7 +56,7 @@ public class WritePostPresenter implements Presenter {
         this.writePostView.showRetry();
     }
 
-    public void setView(@NonNull WritePostView writePostView, UserModel userModel) {
+    public void setView(WritePostView writePostView, UserModel userModel) {
         this.writePostView = writePostView;
         this.userModel = userModel;
     }

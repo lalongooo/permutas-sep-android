@@ -4,10 +4,8 @@ package com.permutassep.ui;
  * By Jorge E. Hernandez (@lalongooo) 2015
  */
 
+import android.app.ActionBar;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +14,7 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.facebook.login.LoginManager;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 import com.lalongooo.permutassep.R;
-import com.permutassep.presentation.AndroidApplication;
 import com.permutassep.presentation.config.Config;
 import com.permutassep.presentation.internal.di.components.ApplicationComponent;
 import com.permutassep.presentation.internal.di.components.AuthenticationComponent;
@@ -36,7 +31,6 @@ import com.throrinstudio.android.common.libs.validator.validator.NotEmptyValidat
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -84,13 +78,12 @@ public class FragmentNewPassword extends BaseFragment implements NewPasswordView
         return new FragmentNewPassword();
     }
 
-    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View fragmentView = inflater.inflate(R.layout.ca_fragment_new_password, container, false);
         ButterKnife.bind(this, fragmentView);
 
-        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        ActionBar actionBar = getActivity().getActionBar();
         if (actionBar != null) {
             actionBar.hide();
         }
@@ -102,7 +95,7 @@ public class FragmentNewPassword extends BaseFragment implements NewPasswordView
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+    public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         token = getActivity().getIntent().getStringExtra(Config.PWD_RESET_TOKEY_KEY);
         email = getActivity().getIntent().getStringExtra(Config.PWD_RESET_EMAIL_KEY);
@@ -137,14 +130,6 @@ public class FragmentNewPassword extends BaseFragment implements NewPasswordView
     @OnClick(R.id.btnResetPassword)
     void onBtnResetPasswordClick() {
         if (form.isValid()) {
-
-            Tracker t1 = ((AndroidApplication) getActivity().getApplication()).getTracker();
-            t1.send(new HitBuilders.EventBuilder()
-                    .setCategory(getString(R.string.ga_event_category_ux))
-                    .setAction(getString(R.string.ga_event_action_click))
-                    .setLabel(getString(R.string.ga_app_confirm_new_password))
-                    .build());
-
             password = etPasswordOne.getText().toString();
             passwordConfirm = etPasswordTwo.getText().toString();
 
@@ -198,14 +183,6 @@ public class FragmentNewPassword extends BaseFragment implements NewPasswordView
 
     @Override
     public void showError(String message) {
-
-        Tracker t1 = ((AndroidApplication) getActivity().getApplication()).getTracker();
-        t1.send(new HitBuilders.EventBuilder()
-                .setCategory(getString(R.string.ga_event_category_ux))
-                .setAction(getString(R.string.ga_event_action_click))
-                .setLabel(getString(R.string.ga_app_confirm_new_password_error))
-                .build());
-
         new MaterialDialog.Builder(getActivity())
                 .title(R.string.password_reset_dlg_title)
                 .content(message)

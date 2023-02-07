@@ -17,8 +17,9 @@ package com.permutassep.presentation.navigation;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.lalongooo.permutassep.R;
 import com.permutassep.ui.ActivityAppOverview;
@@ -71,7 +72,7 @@ public class Navigator {
     public void navigateToLoginSignUp(BaseActivity activity, boolean addToBackStack) {
         if (activity != null) {
 
-            FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
+            androidx.fragment.app.FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragmentContainer, FragmentLoginSignUp.newInstance());
             if (addToBackStack) {
                 fragmentTransaction.addToBackStack(null);
@@ -173,8 +174,9 @@ public class Navigator {
 
     /**
      * Navigates to the post details fragment coming from a push notification.
+     *
      * @param activity An activity needed to open the destination fragment.
-     * @param postId The id of the publication to be displayed on the fragment
+     * @param postId   The id of the publication to be displayed on the fragment
      */
     public void navigateToPostDetailsFromNotification(BaseActivity activity, int postId) {
         activity.getSupportFragmentManager()

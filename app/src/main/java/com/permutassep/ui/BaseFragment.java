@@ -6,22 +6,14 @@ package com.permutassep.ui;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.permutassep.presentation.AndroidApplication;
 import com.permutassep.presentation.internal.di.HasComponent;
 import com.permutassep.presentation.navigation.Navigator;
 
-/**
- * Base {@link Fragment} class for every fragment in this application.
- */
-public class BaseFragment extends Fragment {
+public class BaseFragment extends androidx.fragment.app.Fragment {
 
     protected Navigator.NavigationListener navigationListener;
 
@@ -35,14 +27,6 @@ public class BaseFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
-        if (GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity().getApplicationContext()) == 0) {
-            // Get tracker.
-            Tracker t = ((AndroidApplication) getActivity().getApplication()).getTracker();
-            // Set screen name.
-            t.setScreenName(getClass().getName());
-            // Send a screen view.
-            t.send(new HitBuilders.ScreenViewBuilder().build());
-        }
     }
 
     /**

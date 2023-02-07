@@ -6,7 +6,6 @@ package com.permutassep.presentation.view.wizard.ui;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -16,8 +15,10 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.permutassep.presentation.view.wizard.model.PostTextPage;
+import androidx.fragment.app.Fragment;
+
 import com.lalongooo.permutassep.R;
+import com.permutassep.presentation.view.wizard.model.PostTextPage;
 
 public class PostTextFragment extends Fragment {
 
@@ -38,7 +39,8 @@ public class PostTextFragment extends Fragment {
         return fragment;
     }
 
-    public PostTextFragment(){}
+    public PostTextFragment() {
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -83,10 +85,12 @@ public class PostTextFragment extends Fragment {
 
         mTextView.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
 
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
 
             @Override
             public void afterTextChanged(Editable editable) {
