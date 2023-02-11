@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'org.jetbrains.kotlin.android'
+apply plugin: 'kotlin-kapt'
 
 android {
 
@@ -107,6 +108,7 @@ dependencies {
     // implementation 'com.google.android.gms:play-services-analytics:8.3.0'
     implementation platform('com.google.firebase:firebase-bom:31.2.0')
     implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-auth-ktx'
     // implementation 'com.google.android.gms:play-services-maps:8.3.0'
     implementation 'com.facebook.android:facebook-android-sdk:15.2.0'
     implementation 'com.squareup.retrofit:retrofit:1.9.0'
@@ -120,8 +122,8 @@ dependencies {
     implementation 'com.mikepenz:aboutlibraries:5.9.4@aar'
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
 
-    annotationProcessor presentationDependencies.daggerCompiler
-    annotationProcessor presentationDependencies.butterKnifeCompiler
+    kapt presentationDependencies.daggerCompiler
+    kapt  presentationDependencies.butterKnifeCompiler
 
     // Unit testing dependencies
     testImplementation 'junit:junit:4.12'
