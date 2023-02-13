@@ -17,6 +17,13 @@ android {
         versionCode globalConfiguration.getAt("androidVersionCode")
         versionName globalConfiguration.getAt("androidVersionName")
     }
+    buildFeatures {
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.4.0-alpha02"
+    }
 
     compileOptions {
         sourceCompatibility 1.8
@@ -80,10 +87,19 @@ android {
 dependencies {
 
 
+    implementation 'androidx.compose.ui:ui-tooling-preview:1.1.1'
+    debugImplementation 'androidx.compose.ui:ui-tooling:1.1.1'
     def presentationDependencies = rootProject.ext.presentationDependencies
 
     implementation project(':domain')
     implementation project(':data')
+
+    def composeBom = platform('androidx.compose:compose-bom:2022.12.00')
+    implementation composeBom
+    implementation "com.google.accompanist:accompanist-appcompat-theme:0.25.1" // when using a AppCompat theme
+    androidTestImplementation composeBom
+    implementation 'androidx.compose.material3:material3'
+
 
     implementation presentationDependencies.dagger
     implementation presentationDependencies.recyclerView
