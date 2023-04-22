@@ -3,9 +3,11 @@ on: push
 jobs:
   create_google_services_json:
     name: "Create google-services.json"
+    steps:
+      run: |
+        echo $GOOGLE_SERVICES_JSON | base64 -di > ./app/google-services.json
     env:
       GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
-    run: echo $GOOGLE_SERVICES_JSON | base64 -di > ./app/google-services.json
 
   unit_tests:
     name: "Run tests"
