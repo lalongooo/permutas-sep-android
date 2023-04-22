@@ -15,8 +15,12 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.afollestad.materialdialogs.MaterialDialog
-import com.facebook.*
+import com.facebook.AccessToken
+import com.facebook.CallbackManager
 import com.facebook.CallbackManager.Factory.create
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
+import com.facebook.GraphRequest
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.facebook.login.widget.LoginButton
@@ -42,11 +46,7 @@ import javax.inject.Inject
 /**
  * By Jorge E. Hernandez (@lalongooo) 2015
  */
-class FragmentLogin
-/**
- * Empty constructor
- */
-    : BaseFragment(), LoginView {
+class FragmentLogin : BaseFragment(), LoginView {
     /**
      * UI elements
      */
@@ -71,7 +71,11 @@ class FragmentLogin
     private lateinit var callbackManager: CallbackManager
     private lateinit var editTextEmail: EditText
     private lateinit var firebaseAuth: FirebaseAuth
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View? {
         val fragmentView = inflater.inflate(R.layout.ca_fragment_login, container, false)
         ButterKnife.bind(this, fragmentView)
         setUpFacebookLoginButton()
@@ -85,20 +89,23 @@ class FragmentLogin
         callbackManager = create()
         facebookLoginButton.setReadPermissions(Arrays.asList("email"))
         facebookLoginButton.setFragment(this)
-        facebookLoginButton.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
-            override fun onSuccess(result: LoginResult) {
-                showLoading()
-                getFacebookEmail(result.accessToken)
-            }
+        facebookLoginButton.registerCallback(
+            callbackManager,
+            object : FacebookCallback<LoginResult> {
+                override fun onSuccess(result: LoginResult) {
+                    showLoading()
+                    getFacebookEmail(result.accessToken)
+                }
 
-            override fun onCancel() {
-                showError(getString(R.string.app_login_fb_dlg_on_cancel))
-            }
+                override fun onCancel() {
+                    showError(getString(R.string.app_login_fb_dlg_on_cancel))
+                }
 
-            override fun onError(error: FacebookException) {
-                showError(getString(R.string.app_login_fb_dlg_on_error))
-            }
-        })
+                override fun onError(error: FacebookException) {
+                    showError(getString(R.string.app_login_fb_dlg_on_error))
+                }
+            },
+        )
     }
 
     private fun getFacebookEmail(accessToken: AccessToken) {
@@ -108,7 +115,6 @@ class FragmentLogin
                 val email = jsonObject?.getString("email")!!
                 handleFacebookAccessToken(accessToken, email)
             } catch (e: Exception) {
-
                 val scale = resources.displayMetrics.density
                 val dpAsPixels = (15 * scale + 0.5f).toInt()
                 editTextEmail = EditText(requireContext())
@@ -156,13 +162,13 @@ class FragmentLogin
     private fun updateUserEmail(email: String) {
         firebaseAuth.currentUser?.let { firebaseUser ->
             firebaseUser.updateEmail(email)
-                    .addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            requireActivity().supportFragmentManager
-                                    .popBackStackImmediate(null, POP_BACK_STACK_INCLUSIVE)
-                            navigationListener.onNextFragment(FragmentPagedNewsFeed::class.java)
-                        }
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        requireActivity().supportFragmentManager
+                            .popBackStackImmediate(null, POP_BACK_STACK_INCLUSIVE)
+                        navigationListener.onNextFragment(FragmentPagedNewsFeed::class.java)
                     }
+                }
         }
     }
 
@@ -198,22 +204,25 @@ class FragmentLogin
     @OnClick(R.id.tvForgotPassword)
     fun onForgotPasswordClick() {
         MaterialDialog.Builder(activity!!)
-                .title(R.string.password_reset_dlg_title)
-                .content(R.string.password_reset_dlg_msg)
-                .inputRangeRes(6, 200, R.color.md_red_100)
-                .inputType(InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS)
-                .input(R.string.password_reset_dlg_input_hint, 0, false) { dialog, input ->
-                    initializeInjector(input.toString(), BuildConfig.com_permutassep_fb_login_dummy_password)
-                    loginPresenter!!.validateEmail(input.toString())
-                }.show()
+            .title(R.string.password_reset_dlg_title)
+            .content(R.string.password_reset_dlg_msg)
+            .inputRangeRes(6, 200, R.color.md_red_100)
+            .inputType(InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS)
+            .input(R.string.password_reset_dlg_input_hint, 0, false) { dialog, input ->
+                initializeInjector(
+                    input.toString(),
+                    BuildConfig.com_permutassep_fb_login_dummy_password,
+                )
+                loginPresenter!!.validateEmail(input.toString())
+            }.show()
     }
 
     private fun initializeInjector(user: String, password: String) {
         authenticationComponent = DaggerAuthenticationComponent.builder()
-                .applicationComponent(getComponent(ApplicationComponent::class.java))
-                .activityModule((activity as BaseActivity?)!!.activityModule)
-                .authenticationModule(AuthenticationModule(user, password))
-                .build()
+            .applicationComponent(getComponent(ApplicationComponent::class.java))
+            .activityModule((activity as BaseActivity?)!!.activityModule)
+            .authenticationModule(AuthenticationModule(user, password))
+            .build()
         authenticationComponent.inject(this)
         loginPresenter!!.setView(this)
     }
@@ -230,30 +239,30 @@ class FragmentLogin
 
     override fun showLoading() {
         progressDialog = MaterialDialog.Builder(activity!!)
-                .title(R.string.app_login_dlg_login_title)
-                .content(R.string.app_login_dlg_login_logging_in)
-                .progress(true, 0)
-                .progressIndeterminateStyle(false)
-                .cancelable(false)
-                .show()
+            .title(R.string.app_login_dlg_login_title)
+            .content(R.string.app_login_dlg_login_logging_in)
+            .progress(true, 0)
+            .progressIndeterminateStyle(false)
+            .cancelable(false)
+            .show()
     }
 
     override fun notRegisteredUser() {
         MaterialDialog.Builder(activity!!)
-                .title(R.string.password_reset_dlg_title)
-                .content(R.string.new_password_capture_email_wrong)
-                .positiveText(R.string.accept)
-                .show()
+            .title(R.string.password_reset_dlg_title)
+            .content(R.string.new_password_capture_email_wrong)
+            .positiveText(R.string.accept)
+            .show()
     }
 
     override fun showLoadingValidateUser() {
         progressDialog = MaterialDialog.Builder(activity!!)
-                .title(R.string.please_wait)
-                .content(R.string.new_password_capture_email_loading)
-                .progress(true, 0)
-                .cancelable(false)
-                .progressIndeterminateStyle(false)
-                .show()
+            .title(R.string.please_wait)
+            .content(R.string.new_password_capture_email_loading)
+            .progress(true, 0)
+            .cancelable(false)
+            .progressIndeterminateStyle(false)
+            .show()
     }
 
     override fun performPasswordReset(email: String) {
@@ -262,10 +271,10 @@ class FragmentLogin
 
     override fun passwordResetRequestSent(email: String) {
         MaterialDialog.Builder(activity!!)
-                .title(R.string.password_reset_dlg_title)
-                .content(String.format(getString(R.string.password_reset_email_sent_msg), email))
-                .positiveText(R.string.accept)
-                .show()
+            .title(R.string.password_reset_dlg_title)
+            .content(String.format(getString(R.string.password_reset_email_sent_msg), email))
+            .positiveText(R.string.accept)
+            .show()
     }
 
     override fun hideLoading() {
@@ -277,10 +286,10 @@ class FragmentLogin
     override fun showError(message: String) {
         LoginManager.getInstance().logOut()
         MaterialDialog.Builder(activity!!)
-                .title(R.string.app_login_dlg_login_title)
-                .content(message)
-                .positiveText(R.string.accept)
-                .show()
+            .title(R.string.app_login_dlg_login_title)
+            .content(message)
+            .positiveText(R.string.accept)
+            .show()
     }
 
     companion object {
