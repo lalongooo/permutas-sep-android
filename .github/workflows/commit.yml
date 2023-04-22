@@ -7,9 +7,6 @@ jobs:
     env:
       GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
     steps:
-      - name: Setup Node v18
-        with:
-          node-version: 18
         run: |
           echo $GOOGLE_SERVICES_JSON | base64 -di > ./app/google-services.json
 
