@@ -2,8 +2,8 @@ name: "Build & Test"
 on: push
 jobs:
   create_google_services_json:
-    name: "Create google-services.json"
-    run: "Hello world!"
+    - name: Create annotation for build error
+      run: echo "Hello world!"
 
   unit_tests:
     name: "Run tests"
