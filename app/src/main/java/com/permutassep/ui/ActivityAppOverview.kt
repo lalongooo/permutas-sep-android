@@ -27,15 +27,33 @@ class ActivityAppOverview : BaseActivity() {
         startMessagingButton.text = getString(R.string.app_overview_start_button)
 
         val animator = StateListAnimator()
-        animator.addState(intArrayOf(android.R.attr.state_pressed), ObjectAnimator.ofFloat(startMessagingButton, "translationZ", Utils.dp(2f, this).toFloat(), Utils.dp(4f, this).toFloat()).setDuration(200))
-        animator.addState(intArrayOf(), ObjectAnimator.ofFloat(startMessagingButton, "translationZ", Utils.dp(4f, this).toFloat(), Utils.dp(2f, this).toFloat()).setDuration(200))
+        animator.addState(
+            intArrayOf(
+                android.R.attr.state_pressed,
+            ),
+            ObjectAnimator.ofFloat(
+                startMessagingButton,
+                "translationZ",
+                Utils.dp(2f, this).toFloat(),
+                Utils.dp(4f, this).toFloat(),
+            ).setDuration(200),
+        )
+        animator.addState(
+            intArrayOf(),
+            ObjectAnimator.ofFloat(
+                startMessagingButton,
+                "translationZ",
+                Utils.dp(4f, this).toFloat(),
+                Utils.dp(2f, this).toFloat(),
+            ).setDuration(200),
+        )
         startMessagingButton.stateListAnimator = animator
 
         messages = intArrayOf(
-                R.string.app_overview_1st_item_text,
-                R.string.app_overview_2nd_item_text,
-                R.string.app_overview_3rd_item_text,
-                R.string.app_overview_4th_item_text
+            R.string.app_overview_1st_item_text,
+            R.string.app_overview_2nd_item_text,
+            R.string.app_overview_3rd_item_text,
+            R.string.app_overview_4th_item_text,
         )
         topImage1 = findViewById(R.id.icon_image1)
         topImage2 = findViewById(R.id.icon_image2)
@@ -60,7 +78,8 @@ class ActivityAppOverview : BaseActivity() {
             val view = View.inflate(container.context, R.layout.activity_app_overview_vp, null)
             val messageTextView = view.findViewById<View>(R.id.message_text) as TextView
             container.addView(view, 0)
-            messageTextView.text = Utils.replaceTags(getString(messages[position]), applicationContext)
+            messageTextView.text =
+                Utils.replaceTags(getString(messages[position]), applicationContext)
             return view
         }
 
