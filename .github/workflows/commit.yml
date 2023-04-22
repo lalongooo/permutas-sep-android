@@ -1,9 +1,12 @@
 name: "Build & Test"
 on: push
 jobs:
-  create_google_services_json:
-    - name: Create annotation for build error
-      run: echo "Hello world!"
+  sample-step:
+    steps:
+      - name: Create google-services.json
+        run: echo "Hello world!"
+        env:
+          GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
 
   unit_tests:
     name: "Run tests"
