@@ -2,11 +2,10 @@ name: "Build & Test"
 on: push
 jobs:
   sample-step:
-    name: Create google-services.json
     runs-on: ubuntu-latest
-    run: echo "Hello world!"
-    env:
-      GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
+    steps:
+      - name: "Greet"
+        run: echo "Hello world!"
 
   unit_tests:
     name: "Run tests"
