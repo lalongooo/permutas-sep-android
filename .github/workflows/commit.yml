@@ -2,6 +2,7 @@ name: "Build & Test"
 on: push
 jobs:
   create-google-services-json-file:
+    name: "Create google-services.json"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
