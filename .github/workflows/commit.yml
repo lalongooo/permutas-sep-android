@@ -3,7 +3,7 @@ on: push
 jobs:
 
   ktlint:
-    name: Run ktlint check
+    name: 🧐 Run ktlint check
     continue-on-error: true
     runs-on: ubuntu-latest
     steps:
@@ -14,7 +14,7 @@ jobs:
           ./ktlint -F "**/src/**/*.kt" "!**/generated/**" --android --reporter=plain?group_by_file
 
   unit_tests:
-    name: "Run tests"
+    name: 🧑🏼‍🔬 Run tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -31,7 +31,7 @@ jobs:
           arguments: :app:test --stacktrace
 
   build_app:
-    name: "Build app"
+    name: 🏗 Build app
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
