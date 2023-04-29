@@ -54,7 +54,7 @@ Tamaulipas
     <string name="app_overview_2nd_item_text">Creemos que nuestra solución hará a más personas felices</string>
     <string name="app_overview_3rd_item_text">Esperamos que encuentres pronto tu permuta&#8230;de verdad.</string>
     <string name="app_overview_4th_item_text">Si crees importante este aporte, considera una donación.</string>
-    <string name="app_overview_start_button">Comenzar a publicar!</string>
+    <string name="app_overview_start_posting_button">!Comenzar a publicar!</string>
     <string name="app_overview_signup_button">Registrarse</string>
     <string name="edit_profile_button_edit">Actualizar datos</string>
     <string name="app_sign_up">Registrarme</string>

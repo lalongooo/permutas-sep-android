@@ -24,7 +24,7 @@ class ActivityAppOverview : BaseActivity() {
         setContentView(R.layout.ca_activity_app_overview)
         viewPager = findViewById<View>(R.id.intro_view_pager) as ViewPager
         val startMessagingButton = findViewById<View>(R.id.start_messaging_button) as TextView
-        startMessagingButton.text = getString(R.string.app_overview_start_button)
+        startMessagingButton.text = getString(R.string.app_overview_start_posting_button)
 
         val animator = StateListAnimator()
         animator.addState(
