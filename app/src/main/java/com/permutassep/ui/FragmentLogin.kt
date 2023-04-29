@@ -40,7 +40,7 @@ import com.throrinstudio.android.common.libs.validator.Form
 import com.throrinstudio.android.common.libs.validator.Validate
 import com.throrinstudio.android.common.libs.validator.validator.EmailValidator
 import com.throrinstudio.android.common.libs.validator.validator.NotEmptyValidator
-import java.util.*
+import java.util.Arrays
 import javax.inject.Inject
 
 /**
