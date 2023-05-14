@@ -21,7 +21,9 @@ jobs:
       - name: "Create google-services.json file"
         env:
           GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
-        run: echo $GOOGLE_SERVICES_JSON | base64 -di > ./app/google-services.json
+        run: |
+          echo $GOOGLE_SERVICES_JSON | base64 -di > ./app/google-services.json
+          touch local.properties
       - uses: actions/setup-java@v1
         with:
           distribution: 'temurin'
@@ -38,7 +40,9 @@ jobs:
       - name: "Create google-services.json file"
         env:
           GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
-        run: echo $GOOGLE_SERVICES_JSON | base64 -di > ./app/google-services.json
+        run: |
+          echo $GOOGLE_SERVICES_JSON | base64 -di > ./app/google-services.json
+          touch local.properties
       - uses: actions/setup-java@v1
         with:
           distribution: 'temurin'
