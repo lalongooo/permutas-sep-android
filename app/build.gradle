@@ -1,22 +1,20 @@
-apply plugin: 'com.android.application'
-apply plugin: 'com.google.gms.google-services'
-apply plugin: 'org.jetbrains.kotlin.android'
-apply plugin: 'kotlin-kapt'
-apply plugin: "org.jlleitschuh.gradle.ktlint"
+plugins {
+    id 'com.android.application'
+    id 'com.google.gms.google-services'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'org.jlleitschuh.gradle.ktlint'
+}
 
 android {
-
-    def globalConfiguration = rootProject.extensions.getByName("ext")
-
-    compileSdkVersion globalConfiguration.getAt("androidCompileSdkVersion")
-
+    compileSdkVersion rootProject.ext.androidCompileSdkVersion
     defaultConfig {
-        minSdkVersion globalConfiguration.getAt("androidMinSdkVersion")
-        targetSdkVersion globalConfiguration.getAt("androidTargetSdkVersion")
+        minSdkVersion rootProject.ext.androidMinSdkVersion
+        targetSdkVersion rootProject.ext.androidTargetSdkVersion
 
-        applicationId globalConfiguration.getAt("androidApplicationId")
-        versionCode globalConfiguration.getAt("androidVersionCode")
-        versionName globalConfiguration.getAt("androidVersionName")
+        applicationId rootProject.ext.androidApplicationId
+        versionCode rootProject.ext.androidVersionCode
+        versionName rootProject.ext.androidVersionName
     }
 
     compileOptions {

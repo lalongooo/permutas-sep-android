@@ -1,11 +1,10 @@
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-    }
-}
-
 ext {
+
+    //Application IDs
+    androidApplicationId = 'com.permutassep'
+    androidVersionCode = 16
+    androidVersionName = "8.1.5"
+
     //Android
     androidCompileSdkVersion = 33
     androidMinSdkVersion = 21
