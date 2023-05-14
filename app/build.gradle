@@ -4,6 +4,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'org.jlleitschuh.gradle.ktlint'
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 
 android {
@@ -15,6 +16,8 @@ android {
         applicationId rootProject.ext.androidApplicationId
         versionCode rootProject.ext.androidVersionCode
         versionName rootProject.ext.androidVersionName
+
+        manifestPlaceholders.google_maps_api_key = google_maps_api_key
     }
 
     compileOptions {
@@ -51,7 +54,6 @@ android {
             buildConfigField "String", "com_permutassep_api_rest_user", com_permutassep_debug_api_rest_user
             buildConfigField "String", "com_permutassep_api_rest_password", com_permutassep_debug_api_rest_password
             buildConfigField "String", "com_permutassep_fb_login_dummy_password", com_permutassep_debug_fb_login_dummy_password
-            resValue "string", "google_maps_api_key", google_maps_api_key
             resValue "string", "facebook_app_id", facebook_app_id
             resValue "string", "fb_login_protocol_scheme", fb_login_protocol_scheme
             resValue "string", "facebook_client_token", facebook_client_token
@@ -67,7 +69,6 @@ android {
             buildConfigField "String", "com_permutassep_api_rest_user", com_permutassep_release_api_rest_user
             buildConfigField "String", "com_permutassep_api_rest_password", com_permutassep_release_api_rest_password
             buildConfigField "String", "com_permutassep_fb_login_dummy_password", com_permutassep_release_fb_login_dummy_password
-            resValue "string", "google_maps_api_key", google_maps_api_key
             resValue "string", "facebook_app_id", facebook_app_id
             resValue "string", "fb_login_protocol_scheme", fb_login_protocol_scheme
             resValue "string", "facebook_client_token", facebook_client_token
@@ -108,7 +109,7 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:31.2.0')
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-auth-ktx'
-    // implementation 'com.google.android.gms:play-services-maps:8.3.0'
+    implementation 'com.google.android.gms:play-services-maps:18.1.0'
     implementation 'com.facebook.android:facebook-android-sdk:15.2.0'
     implementation 'com.squareup.retrofit:retrofit:1.9.0'
     implementation 'com.squareup.okhttp:okhttp:2.0.0'
