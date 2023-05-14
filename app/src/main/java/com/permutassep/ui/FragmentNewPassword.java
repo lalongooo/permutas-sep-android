@@ -1,20 +1,18 @@
 package com.permutassep.ui;
 
-/**
- * By Jorge E. Hernandez (@lalongooo) 2015
- */
-
 import android.app.ActionBar;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.facebook.login.LoginManager;
 import com.lalongooo.permutassep.R;
+import com.lalongooo.permutassep.databinding.CaFragmentNewPasswordBinding;
 import com.permutassep.presentation.config.Config;
 import com.permutassep.presentation.internal.di.components.ApplicationComponent;
 import com.permutassep.presentation.internal.di.components.AuthenticationComponent;
@@ -31,26 +29,11 @@ import com.throrinstudio.android.common.libs.validator.validator.NotEmptyValidat
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
 public class FragmentNewPassword extends BaseFragment implements NewPasswordView {
 
-    /**
-     * Intent extra to be sent to the ActivityMain to let it know a new password reset is going to be performed.
-     */
     public static final String EXTRA_RESET_PASSWORD = "extra_reset_password";
 
-    /**
-     * UI elements
-     */
-    @BindView(R.id.etPasswordOne)
-    EditText etPasswordOne;
-    @BindView(R.id.etPasswordTwo)
-    EditText etPasswordTwo;
-    @BindView(R.id.btnResetPassword)
-    TextView btnResetPassword;
+    private CaFragmentNewPasswordBinding binding;
 
     @Inject
     NewPasswordPresenter newPasswordPresenter;
@@ -80,36 +63,58 @@ public class FragmentNewPassword extends BaseFragment implements NewPasswordView
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View fragmentView = inflater.inflate(R.layout.ca_fragment_new_password, container, false);
-        ButterKnife.bind(this, fragmentView);
-
+        binding = CaFragmentNewPasswordBinding.inflate(inflater, container, false);
         ActionBar actionBar = getActivity().getActionBar();
         if (actionBar != null) {
             actionBar.hide();
         }
-
         setUI();
         initializeInjector();
+        return binding.getRoot();
+    }
 
-        return fragmentView;
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        binding.btnResetPassword.setOnClickListener(v -> {
+            if (form.isValid()) {
+                password = binding.etPasswordOne.getText().toString();
+                passwordConfirm = binding.etPasswordTwo.getText().toString();
+
+                ConfirmPasswordResetDataWrapperModel confirmPasswordResetDataWrapperModel =
+                        new ConfirmPasswordResetDataWrapperModel(token, password, passwordConfirm);
+                newPasswordPresenter.confirmPasswordReset(confirmPasswordResetDataWrapperModel);
+            }
+        });
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        token = getActivity().getIntent().getStringExtra(Config.PWD_RESET_TOKEY_KEY);
-        email = getActivity().getIntent().getStringExtra(Config.PWD_RESET_EMAIL_KEY);
+        token = requireActivity().getIntent().getStringExtra(Config.PWD_RESET_TOKEY_KEY);
+        email = requireActivity().getIntent().getStringExtra(Config.PWD_RESET_EMAIL_KEY);
     }
 
     private void setUI() {
-
-        Validate vPasswordOne = new Validate(etPasswordOne);
+        Validate vPasswordOne = new Validate(binding.etPasswordOne);
         vPasswordOne.addValidator(new NotEmptyValidator(getActivity()));
-        vPasswordOne.addValidator(new LengthValidator(getActivity(), R.string.new_password_password_length_error, Config.PASSWORD_MIN_LENGTH, Config.PASSWORD_MAX_LENGTH));
+        vPasswordOne.addValidator(
+                new LengthValidator(
+                        getActivity(),
+                        R.string.new_password_password_length_error,
+                        Config.PASSWORD_MIN_LENGTH,
+                        Config.PASSWORD_MAX_LENGTH)
+        );
 
-        Validate vPasswordTwo = new Validate(etPasswordTwo);
+        Validate vPasswordTwo = new Validate(binding.etPasswordTwo);
         vPasswordTwo.addValidator(new NotEmptyValidator(getActivity()));
-        vPasswordTwo.addValidator(new LengthValidator(getActivity(), R.string.new_password_password_length_error, Config.PASSWORD_MIN_LENGTH, Config.PASSWORD_MAX_LENGTH));
+        vPasswordTwo.addValidator(
+                new LengthValidator(
+                        getActivity(),
+                        R.string.new_password_password_length_error,
+                        Config.PASSWORD_MIN_LENGTH,
+                        Config.PASSWORD_MAX_LENGTH)
+        );
 
         form = new Form();
         form.addValidates(vPasswordOne);
@@ -126,38 +131,25 @@ public class FragmentNewPassword extends BaseFragment implements NewPasswordView
         this.newPasswordPresenter.setView(this);
     }
 
-
-    @OnClick(R.id.btnResetPassword)
-    void onBtnResetPasswordClick() {
-        if (form.isValid()) {
-            password = etPasswordOne.getText().toString();
-            passwordConfirm = etPasswordTwo.getText().toString();
-
-            ConfirmPasswordResetDataWrapperModel confirmPasswordResetDataWrapperModel =
-                    new ConfirmPasswordResetDataWrapperModel(token, password, passwordConfirm);
-            newPasswordPresenter.confirmPasswordReset(confirmPasswordResetDataWrapperModel);
-        }
-    }
-
     /**
      * Methods from the {@link LoginView} interface
      */
 
     @Override
     public void passwordCorrectlyReset() {
-        new MaterialDialog.Builder(getActivity())
+        new MaterialDialog.Builder(requireActivity())
                 .title(R.string.password_reset_dlg_title)
                 .content(R.string.password_reset_dlg_password_reset_successful)
                 .positiveText(R.string.accept)
                 .show();
-        PrefUtils.clearApplicationPreferences(getActivity());
+        PrefUtils.clearApplicationPreferences(requireActivity());
         LoginManager.getInstance().logOut();
         navigationListener.onNextFragment(FragmentLogin.class);
     }
 
     @Override
     public void showLoading() {
-        progressDialog = new MaterialDialog.Builder(getActivity())
+        progressDialog = new MaterialDialog.Builder(requireActivity())
                 .title(R.string.password_reset_dlg_title)
                 .content(R.string.password_reset_dlg_resetting_password)
                 .progress(true, 0)
@@ -183,7 +175,7 @@ public class FragmentNewPassword extends BaseFragment implements NewPasswordView
 
     @Override
     public void showError(String message) {
-        new MaterialDialog.Builder(getActivity())
+        new MaterialDialog.Builder(requireActivity())
                 .title(R.string.password_reset_dlg_title)
                 .content(message)
                 .positiveText(R.string.accept)

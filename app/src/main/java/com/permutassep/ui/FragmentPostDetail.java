@@ -7,27 +7,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-//import com.google.android.gms.maps.CameraUpdate;
-//import com.google.android.gms.maps.CameraUpdateFactory;
-//import com.google.android.gms.maps.GoogleMap;
-//import com.google.android.gms.maps.MapView;
-//import com.google.android.gms.maps.OnMapReadyCallback;
-//import com.google.android.gms.maps.model.LatLng;
-//import com.google.android.gms.maps.model.LatLngBounds;
-//import com.google.android.gms.maps.model.MarkerOptions;
-//import com.google.android.gms.maps.model.PolylineOptions;
 import com.lalongooo.permutassep.R;
-import com.mikepenz.fontawesome_typeface_library.FontAwesome;
-import com.mikepenz.iconics.IconicsDrawable;
+import com.lalongooo.permutassep.databinding.CaFragmentPostDetailsBinding;
 import com.permutassep.model.State;
 import com.permutassep.presentation.config.Config;
 import com.permutassep.presentation.internal.di.components.ApplicationComponent;
@@ -47,83 +35,19 @@ import java.util.HashMap;
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
-/**
- * Created by lalongooo on 27/09/15.
- **/
-
 public class FragmentPostDetail extends BaseFragment
         implements PostDetailsView /* OnMapReadyCallback */ {
 
     private static final String ARGUMENT_POST_ID = "ARGUMENT_POST_ID";
     private static final String MAILTO_SCHEMA = "mailto";
 
-    /**
-     * UI elements
-     */
-
-    @BindView(R.id.tvUserName)
-    TextView tvUserName;
-    @BindView(R.id.tvPostUserEmail)
-    TextView tvPostUserEmail;
-    @BindView(R.id.tvPostUserPhone)
-    TextView tvPostUserPhone;
-    @BindView(R.id.tvPostText)
-    TextView tvPostText;
-    @BindView(R.id.tvStateFromCode)
-    TextView tvStateFromCode;
-    @BindView(R.id.tvStateToCode)
-    TextView tvStateToCode;
-    @BindView(R.id.tvStateFrom)
-    TextView tvStateFrom;
-    @BindView(R.id.tvCityFrom)
-    TextView tvCityFrom;
-    @BindView(R.id.tvTownFrom)
-    TextView tvTownFrom;
-    @BindView(R.id.tvStateTo)
-    TextView tvStateTo;
-    @BindView(R.id.tvCityTo)
-    TextView tvCityTo;
-    @BindView(R.id.tvTownTo)
-    TextView tvTownTo;
-    @BindView(R.id.tvAcademicLevel)
-    TextView tvAcademicLevel;
-    @BindView(R.id.tvWorkdayType)
-    TextView tvWorkdayType;
-    @BindView(R.id.tvPositionType)
-    TextView tvPositionType;
-    @BindView(R.id.tvIsTeachingCareer)
-    TextView tvIsTeachingCareer;
-    @BindView(R.id.tvPostDate)
-    TextView tvPostDate;
-    @BindView(R.id.rl_progress)
-    RelativeLayout rl_progress;
-    @BindView(R.id.rl_retry)
-    RelativeLayout rl_retry;
-    @BindView(R.id.layoutPostDetails)
-    LinearLayout layoutPostDetails;
-//    @BindView(R.id.mapView)
-//    MapView mapView;
-    @BindView(R.id.imageView)
-    ImageView imageView;
-    @BindView(R.id.ivArrow)
-    ImageView ivArrow;
+    private CaFragmentPostDetailsBinding binding;
 
     @Inject
     PostDetailsPresenter postDetailsPresenter;
     private int postId;
     private PostModel postModel;
     private PostComponent postComponent;
-
-    /**
-     * Empty constructor
-     */
-    public FragmentPostDetail() {
-        super();
-    }
 
     /**
      * A static method to create a new instance of the {@link FragmentPostDetail} class
@@ -151,21 +75,44 @@ public class FragmentPostDetail extends BaseFragment
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View fragmentView = inflater.inflate(R.layout.ca_fragment_post_details, container, false);
-        ButterKnife.bind(this, fragmentView);
+        binding = CaFragmentPostDetailsBinding.inflate(inflater, container, false);
 //        mapView.onCreate(savedInstanceState);
 //        ivArrow.setImageDrawable(
 //                new IconicsDrawable(getActivity(), FontAwesome.Icon.faw_angle_right)
 //                        .color(ContextCompat.getColor(getActivity(), R.color.colorPrimary))
 //                        .sizeDp(30));
-
-        return fragmentView;
+        return binding.getRoot();
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         this.initialize();
+
+        binding.viewRetry.btRetry.setOnClickListener(v -> postDetailsPresenter.initialize(postId));
+
+        binding.postDetails.btnCall.setOnClickListener(v -> {
+            if (!PrefUtils.isLoggedUser(requireActivity())) {
+                showSignUpInvitation();
+            } else {
+                Intent callIntent = new Intent(Intent.ACTION_CALL);
+                callIntent.setData(Uri.parse("tel:".concat(postModel.getUser().getPhone())));
+                startActivity(callIntent);
+            }
+        });
+
+        binding.postDetails.btnEmail.setOnClickListener(v -> {
+            if (!PrefUtils.isLoggedUser(requireActivity())) {
+                showSignUpInvitation();
+            } else {
+                UserModel user = PrefUtils.getUser(requireActivity());
+                String emailContent = String.format(getString(R.string.app_post_detail_mail_intent_content), postModel.getUser().getName(), user.getPhone(), user.getEmail(), user.getName());
+                Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(MAILTO_SCHEMA, postModel.getUser().getEmail(), null));
+                emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_post_detail_mail_intent_subject));
+                emailIntent.putExtra(Intent.EXTRA_TEXT, emailContent);
+                startActivity(Intent.createChooser(emailIntent, getString(R.string.app_post_detail_mail_intent_chooser_title)));
+            }
+        });
     }
 
     private void initialize() {
@@ -180,38 +127,6 @@ public class FragmentPostDetail extends BaseFragment
         this.postDetailsPresenter.initialize(this.postId);
     }
 
-    @OnClick(R.id.bt_retry)
-    void onButtonRetryClick() {
-        this.postDetailsPresenter.initialize(this.postId);
-    }
-
-    @OnClick(R.id.btnCall)
-    void onButtonCallClick() {
-
-        if (!PrefUtils.isLoggedUser(getActivity())) {
-            showSignUpInvitation();
-        } else {
-            Intent callIntent = new Intent(Intent.ACTION_CALL);
-            callIntent.setData(Uri.parse("tel:".concat(postModel.getUser().getPhone())));
-            startActivity(callIntent);
-        }
-    }
-
-    @OnClick(R.id.btnEmail)
-    void onButtonEmailClick() {
-
-        if (!PrefUtils.isLoggedUser(getActivity())) {
-            showSignUpInvitation();
-        } else {
-            UserModel user = PrefUtils.getUser(getActivity());
-            String emailContent = String.format(getString(R.string.app_post_detail_mail_intent_content), postModel.getUser().getName(), user.getPhone(), user.getEmail(), user.getName());
-            Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(MAILTO_SCHEMA, postModel.getUser().getEmail(), null));
-            emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_post_detail_mail_intent_subject));
-            emailIntent.putExtra(Intent.EXTRA_TEXT, emailContent);
-            startActivity(Intent.createChooser(emailIntent, getString(R.string.app_post_detail_mail_intent_chooser_title)));
-        }
-    }
-
     /**
      * Methods from the implemented interface PostDetailsView
      */
@@ -219,28 +134,27 @@ public class FragmentPostDetail extends BaseFragment
     @Override
     public void renderPost(PostModel post) {
         if (post != null) {
-            HashMap<String, State> states = Utils.getStates(getActivity());
+            HashMap<String, State> states = Utils.getStates(requireActivity());
 
             this.postModel = post;
-//            this.mapView.getMapAsync(this);
-
-            this.tvStateFromCode.setText(states.get((post.getStateFromCode())).getShortCode());
-            this.tvStateToCode.setText(states.get((post.getStateToCode())).getShortCode());
-            this.tvUserName.setText(post.getUser().getName());
-            this.tvPostUserEmail.setText(PrefUtils.isLoggedUser(getActivity()) ? post.getUser().getEmail() : post.getUser().getEmail().replace(post.getUser().getEmail().substring(0, post.getUser().getEmail().indexOf("@")), new String(new char[post.getUser().getEmail().substring(0, post.getUser().getEmail().indexOf("@")).length()]).replace("\0", "*")));
-            this.tvPostUserPhone.setText(PrefUtils.isLoggedUser(getActivity()) ? post.getUser().getPhone() : post.getUser().getPhone().replace(post.getUser().getPhone().substring(0, Config.HIDE_PHONE_CHARACTERS), new String(new char[6]).replace("\0", Config.CHARACTER_FOR_ANON_USER)));
-            this.tvPostText.setText(post.getPostText());
-            this.tvStateFrom.setText(post.getStateFrom());
-            this.tvCityFrom.setText(post.getCityFrom());
-            this.tvTownFrom.setText(post.getTownFrom());
-            this.tvStateTo.setText(post.getStateTo());
-            this.tvCityTo.setText(post.getCityTo());
-            this.tvTownTo.setText(post.getTownTo());
-            this.tvAcademicLevel.setText(post.getAcademicLevel());
-            this.tvWorkdayType.setText(post.getWorkdayType());
-            this.tvPositionType.setText(post.getPositionType());
-            this.tvPostDate.setText(Utils.formatDate(post.getPostDate()));
-            this.layoutPostDetails.setVisibility(View.VISIBLE);
+            // this.mapView.getMapAsync(this);
+            binding.postDetails.tvStateFromCode.setText(states.get((post.getStateFromCode())).getShortCode());
+            binding.postDetails.tvStateToCode.setText(states.get((post.getStateToCode())).getShortCode());
+            binding.postDetails.tvUserName.setText(post.getUser().getName());
+            binding.postDetails.tvPostUserEmail.setText(PrefUtils.isLoggedUser(requireActivity()) ? post.getUser().getEmail() : post.getUser().getEmail().replace(post.getUser().getEmail().substring(0, post.getUser().getEmail().indexOf("@")), new String(new char[post.getUser().getEmail().substring(0, post.getUser().getEmail().indexOf("@")).length()]).replace("\0", "*")));
+            binding.postDetails.tvPostUserPhone.setText(PrefUtils.isLoggedUser(requireActivity()) ? post.getUser().getPhone() : post.getUser().getPhone().replace(post.getUser().getPhone().substring(0, Config.HIDE_PHONE_CHARACTERS), new String(new char[6]).replace("\0", Config.CHARACTER_FOR_ANON_USER)));
+            binding.postDetails.tvPostText.setText(post.getPostText());
+            binding.postDetails.tvStateFrom.setText(post.getStateFrom());
+            binding.postDetails.tvCityFrom.setText(post.getCityFrom());
+            binding.postDetails.tvTownFrom.setText(post.getTownFrom());
+            binding.postDetails.tvStateTo.setText(post.getStateTo());
+            binding.postDetails.tvCityTo.setText(post.getCityTo());
+            binding.postDetails.tvTownTo.setText(post.getTownTo());
+            binding.postDetails.tvAcademicLevel.setText(post.getAcademicLevel());
+            binding.postDetails.tvWorkdayType.setText(post.getWorkdayType());
+            binding.postDetails.tvPositionType.setText(post.getPositionType());
+            binding.postDetails.tvPostDate.setText(Utils.formatDate(post.getPostDate()));
+            binding.postDetails.layoutPostDetails.setVisibility(View.VISIBLE);
             Picasso.with(getActivity())
                     .load(post.getUser().getProfilePictureUrl())
                     .placeholder(R.drawable.default_profile_picture)
@@ -248,36 +162,36 @@ public class FragmentPostDetail extends BaseFragment
                     .resizeDimen(R.dimen.list_detail_image_size, R.dimen.list_detail_image_size)
                     .centerInside()
                     .tag(getActivity())
-                    .into(this.imageView);
+                    .into(binding.postDetails.imageView);
 
             if (post.isTeachingCareer()) {
-                tvIsTeachingCareer.setText(getString(R.string.app_post_detail_teaching_career));
+                binding.postDetails.tvIsTeachingCareer.setText(getString(R.string.app_post_detail_teaching_career));
             } else {
-                tvIsTeachingCareer.setText(getString(R.string.app_post_detail_no_teaching_career));
+                binding.postDetails.tvIsTeachingCareer.setText(getString(R.string.app_post_detail_no_teaching_career));
             }
         }
     }
 
     @Override
     public void showLoading() {
-        this.rl_progress.setVisibility(View.VISIBLE);
-        this.getActivity().setProgressBarIndeterminateVisibility(true);
+        binding.progressView.rlProgress.setVisibility(View.VISIBLE);
+        requireActivity().setProgressBarIndeterminateVisibility(true);
     }
 
     @Override
     public void hideLoading() {
-        this.rl_progress.setVisibility(View.GONE);
+        binding.progressView.rlProgress.setVisibility(View.GONE);
         this.getActivity().setProgressBarIndeterminateVisibility(false);
     }
 
     @Override
     public void showRetry() {
-        this.rl_retry.setVisibility(View.VISIBLE);
+        binding.viewRetry.rlRetry.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideRetry() {
-        this.rl_retry.setVisibility(View.GONE);
+        binding.viewRetry.rlRetry.setVisibility(View.GONE);
     }
 
     @Override
@@ -323,11 +237,7 @@ public class FragmentPostDetail extends BaseFragment
 //        mapView.onSaveInstanceState(outState);
     }
 
-    /**
-     * Methods from the implemented interface OnMapReadyCallback
-     */
-
-//    @Override
+    //    @Override
 //    public void onMapReady(GoogleMap map) {
 //
 //        LatLng origin = getLatLng(postModel.getLatFrom(), postModel.getLonFrom());
@@ -359,7 +269,6 @@ public class FragmentPostDetail extends BaseFragment
 //            e.printStackTrace();
 //        }
 //    }
-
     private void showSignUpInvitation() {
 
         new MaterialDialog.Builder(getActivity())

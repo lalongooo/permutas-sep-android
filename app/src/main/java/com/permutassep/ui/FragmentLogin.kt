@@ -9,11 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.TextView
 import androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.OnClick
 import com.afollestad.materialdialogs.MaterialDialog
 import com.facebook.AccessToken
 import com.facebook.CallbackManager
@@ -23,11 +19,11 @@ import com.facebook.FacebookException
 import com.facebook.GraphRequest
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
-import com.facebook.login.widget.LoginButton
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.lalongooo.permutassep.BuildConfig
 import com.lalongooo.permutassep.R
+import com.lalongooo.permutassep.databinding.CaFragmentLoginBinding
 import com.permutassep.presentation.interfaces.LoginCompleteListener
 import com.permutassep.presentation.internal.di.components.ApplicationComponent
 import com.permutassep.presentation.internal.di.components.AuthenticationComponent
@@ -47,20 +43,9 @@ import javax.inject.Inject
  * By Jorge E. Hernandez (@lalongooo) 2015
  */
 class FragmentLogin : BaseFragment(), LoginView {
-    /**
-     * UI elements
-     */
-    @BindView(R.id.etName)
-    lateinit var etName: EditText
 
-    @BindView(R.id.etPassword)
-    lateinit var etPassword: EditText
-
-    @BindView(R.id.btnFbLogin)
-    lateinit var facebookLoginButton: LoginButton
-
-    @BindView(R.id.tvForgotPassword)
-    lateinit var tvForgotPassword: TextView
+    private var _binding: CaFragmentLoginBinding? = null
+    private val binding get() = _binding!!
 
     @JvmField
     @Inject
@@ -71,25 +56,59 @@ class FragmentLogin : BaseFragment(), LoginView {
     private lateinit var callbackManager: CallbackManager
     private lateinit var editTextEmail: EditText
     private lateinit var firebaseAuth: FirebaseAuth
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        val fragmentView = inflater.inflate(R.layout.ca_fragment_login, container, false)
-        ButterKnife.bind(this, fragmentView)
+    ): View {
+        _binding = CaFragmentLoginBinding.inflate(inflater, container, false)
         setUpFacebookLoginButton()
         firebaseAuth = FirebaseAuth.getInstance()
-        val actionBar = activity!!.actionBar
+        val actionBar = requireActivity().actionBar
         actionBar?.hide()
-        return fragmentView
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.btnLogin.setOnClickListener {
+            val vName = Validate(binding.etName)
+            vName.addValidator(EmailValidator(activity))
+            val vPassword = Validate(binding.etPassword)
+            vPassword.addValidator(NotEmptyValidator(activity))
+            val form = Form()
+            form.addValidates(vName, vPassword)
+            if (form.isValid) {
+                val user = binding.etName.text.toString()
+                val password = binding.etPassword.text.toString()
+                initializeInjector(user, password)
+                loginPresenter!!.login()
+            }
+        }
+
+        binding.tvForgotPassword.setOnClickListener {
+            MaterialDialog.Builder(requireActivity())
+                .title(R.string.password_reset_dlg_title)
+                .content(R.string.password_reset_dlg_msg)
+                .inputRangeRes(6, 200, R.color.md_red_100)
+                .inputType(InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS)
+                .input(R.string.password_reset_dlg_input_hint, 0, false) { dialog, input ->
+                    initializeInjector(
+                        input.toString(),
+                        BuildConfig.com_permutassep_fb_login_dummy_password,
+                    )
+                    loginPresenter!!.validateEmail(input.toString())
+                }.show()
+        }
     }
 
     private fun setUpFacebookLoginButton() {
         callbackManager = create()
-        facebookLoginButton.setReadPermissions(Arrays.asList("email"))
-        facebookLoginButton.setFragment(this)
-        facebookLoginButton.registerCallback(
+        binding.btnFbLogin.setReadPermissions(Arrays.asList("email"))
+        binding.btnFbLogin.setFragment(this)
+        binding.btnFbLogin.registerCallback(
             callbackManager,
             object : FacebookCallback<LoginResult> {
                 override fun onSuccess(result: LoginResult) {
@@ -180,41 +199,6 @@ class FragmentLogin : BaseFragment(), LoginView {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         loginCompleteListener = activity as LoginCompleteListener?
-    }
-
-    @OnClick(R.id.btnLogin)
-    fun onBtnLoginClick() {
-        /**
-         * Add validations of the EditText's
-         */
-        val vName = Validate(etName)
-        vName.addValidator(EmailValidator(activity))
-        val vPassword = Validate(etPassword)
-        vPassword.addValidator(NotEmptyValidator(activity))
-        val form = Form()
-        form.addValidates(vName, vPassword)
-        if (form.isValid) {
-            val user = etName!!.text.toString()
-            val password = etPassword!!.text.toString()
-            initializeInjector(user, password)
-            loginPresenter!!.login()
-        }
-    }
-
-    @OnClick(R.id.tvForgotPassword)
-    fun onForgotPasswordClick() {
-        MaterialDialog.Builder(activity!!)
-            .title(R.string.password_reset_dlg_title)
-            .content(R.string.password_reset_dlg_msg)
-            .inputRangeRes(6, 200, R.color.md_red_100)
-            .inputType(InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS)
-            .input(R.string.password_reset_dlg_input_hint, 0, false) { dialog, input ->
-                initializeInjector(
-                    input.toString(),
-                    BuildConfig.com_permutassep_fb_login_dummy_password,
-                )
-                loginPresenter!!.validateEmail(input.toString())
-            }.show()
     }
 
     private fun initializeInjector(user: String, password: String) {

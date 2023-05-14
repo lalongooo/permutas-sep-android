@@ -11,11 +11,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.annotation.NonNull;
 
-import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.lalongooo.permutassep.R;
+import com.lalongooo.permutassep.databinding.CaFragmentPostListBinding;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.permutassep.presentation.interfaces.FirstLaunchCompleteListener;
@@ -37,19 +37,14 @@ import java.util.Collection;
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
-/**
- * By Jorge E. Hernandez (@lalongooo) 2015
- */
 public class FragmentMyPosts extends BaseFragment implements PostsListView {
 
     private static final String ARGUMENT_USER_ID = "ARGUMENT_USER_ID";
     @Inject
     UserPostListPresenter postListPresenter;
-    @BindView(R.id.rv_users)
-    RecyclerView rv_posts;
+
+    private CaFragmentPostListBinding binding;
+
     private int userId;
     private MaterialDialog progressDialog;
 
@@ -60,19 +55,11 @@ public class FragmentMyPosts extends BaseFragment implements PostsListView {
     private PostsLayoutManager postsLayoutManager;
     private PostListListener postListListener;
 
-    private PostsAdapter.OnItemClickListener onItemClickListener = new PostsAdapter.OnItemClickListener() {
-        @Override
-        public void onPostItemClicked(PostModel postModel) {
-            if (FragmentMyPosts.this.postListPresenter != null && postModel != null) {
-                FragmentMyPosts.this.postListPresenter.onPostClicked(postModel);
-            }
+    private PostsAdapter.OnItemClickListener onItemClickListener = postModel -> {
+        if (FragmentMyPosts.this.postListPresenter != null && postModel != null) {
+            FragmentMyPosts.this.postListPresenter.onPostClicked(postModel);
         }
     };
-
-
-    public FragmentMyPosts() {
-        super();
-    }
 
     public static FragmentMyPosts newInstance(int userId) {
         FragmentMyPosts mFragmentMyPosts = new FragmentMyPosts();
@@ -85,9 +72,8 @@ public class FragmentMyPosts extends BaseFragment implements PostsListView {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View fragmentView = inflater.inflate(R.layout.ca_fragment_post_list, container, false);
-        ButterKnife.bind(this, fragmentView);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        binding = CaFragmentPostListBinding.inflate(inflater, container, false);
 
         ActionBar actionBar = getActivity().getActionBar();
         if (actionBar != null) {
@@ -96,16 +82,15 @@ public class FragmentMyPosts extends BaseFragment implements PostsListView {
 
         setupUI();
         setHasOptionsMenu(true);
-        return fragmentView;
+        return binding.getRoot();
     }
 
     private void setupUI() {
-        this.postsLayoutManager = new PostsLayoutManager(getActivity());
-        this.rv_posts.setLayoutManager(postsLayoutManager);
-
-        this.postsAdapter = new PostsAdapter(getActivity(), new ArrayList<PostModel>());
-        this.postsAdapter.setOnItemClickListener(onItemClickListener);
-        this.rv_posts.setAdapter(postsAdapter);
+        postsLayoutManager = new PostsLayoutManager(getActivity());
+        binding.rvUsers.setLayoutManager(postsLayoutManager);
+        postsAdapter = new PostsAdapter(requireActivity(), new ArrayList<PostModel>());
+        postsAdapter.setOnItemClickListener(onItemClickListener);
+        binding.rvUsers.setAdapter(postsAdapter);
     }
 
     @Override
@@ -146,11 +131,7 @@ public class FragmentMyPosts extends BaseFragment implements PostsListView {
 
     private void initialize() {
         this.userId = getArguments().getInt(ARGUMENT_USER_ID);
-        postComponent = DaggerPostComponent.builder()
-                .applicationComponent(getComponent(ApplicationComponent.class))
-                .activityModule(((BaseActivity) getActivity()).getActivityModule())
-                .postModule(new PostModule(this.userId))
-                .build();
+        postComponent = DaggerPostComponent.builder().applicationComponent(getComponent(ApplicationComponent.class)).activityModule(((BaseActivity) getActivity()).getActivityModule()).postModule(new PostModule(this.userId)).build();
         postComponent.inject(this);
         this.postListPresenter.setView(this, PrefUtils.getUser(getActivity()));
     }
@@ -190,33 +171,22 @@ public class FragmentMyPosts extends BaseFragment implements PostsListView {
 
     @Override
     public void showLoading() {
-        progressDialog = new MaterialDialog.Builder(getActivity())
-                .title(R.string.please_wait)
-                .content(R.string.app_post_list_loading_dlg_msg)
-                .progress(true, 0)
-                .progressIndeterminateStyle(false)
-                .show();
+        progressDialog = new MaterialDialog.Builder(getActivity()).title(R.string.please_wait).content(R.string.app_post_list_loading_dlg_msg).progress(true, 0).progressIndeterminateStyle(false).show();
     }
 
     @Override
     public void hideLoading() {
-        if (progressDialog != null)
-            progressDialog.dismiss();
+        if (progressDialog != null) progressDialog.dismiss();
     }
 
     @Override
     public void showRetry() {
-        new MaterialDialog.Builder(getActivity())
+        new MaterialDialog.Builder(requireActivity())
                 .cancelable(false)
                 .title(R.string.ups)
                 .content(R.string.app_post_list_retry_dlg_message)
                 .positiveText(R.string.retry)
-                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
-                        loadUserPostsList();
-                    }
-                })
+                .onPositive((materialDialog, dialogAction) -> loadUserPostsList())
                 .show();
     }
 
@@ -229,11 +199,6 @@ public class FragmentMyPosts extends BaseFragment implements PostsListView {
     public void showError(String message) {
         this.showToastMessage(message);
     }
-
-    /**
-     * Synchronize with the fragment lifecycle by calling
-     * the corresponding presenter methods
-     */
 
     @Override
     public void onResume() {

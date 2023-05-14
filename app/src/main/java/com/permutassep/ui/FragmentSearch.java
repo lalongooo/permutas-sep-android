@@ -9,8 +9,12 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Spinner;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.lalongooo.permutassep.R;
+import com.lalongooo.permutassep.databinding.CaFragmentSearchBinding;
 import com.permutassep.adapter.PlaceSpinnerBaseAdapter;
 import com.permutassep.model.City;
 import com.permutassep.model.State;
@@ -22,30 +26,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class FragmentSearch extends BaseFragment {
 
-    /**
-     * UI elements
-     */
-    @BindView(R.id.spn_state_origin)
-    Spinner spnStateFrom;
-    @BindView(R.id.spn_city_origin)
-    Spinner spnMunicipalityFrom;
-    @BindView(R.id.spn_town_origin)
-    Spinner spnLocalityFrom;
-    @BindView(R.id.spn_state_to)
-    Spinner spnStateTo;
-    @BindView(R.id.spn_city_to)
-    Spinner spnMunicipalityTo;
-    @BindView(R.id.spn_town_to)
-    Spinner spnLocalityTo;
+    private CaFragmentSearchBinding binding;
 
     private MaterialDialog progressDialog;
     private int stateFromSelectedPosition = 0;
@@ -63,14 +50,54 @@ public class FragmentSearch extends BaseFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        View fragmentView = inflater.inflate(R.layout.ca_fragment_search, container, false);
-        ButterKnife.bind(this, fragmentView);
-        setupSpinners();
-
-        return fragmentView;
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        binding = CaFragmentSearchBinding.inflate(inflater, container, false);
+        return binding.getRoot();
     }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setupSpinners();
+        setupUI();
+    }
+
+    private void setupUI() {
+        binding.btnSearch.setOnClickListener(v -> {
+
+            HashMap<String, String> searchParams = new HashMap<>();
+            try {
+                if (stateFromSelectedPosition != 0) {
+                    searchParams.put("place_from_state", String.valueOf(stateFromSelectedPosition));
+                }
+                if (cityFromSelectedPosition != 0) {
+                    searchParams.put("place_from_city", String.valueOf(cityFromSelectedPosition));
+                }
+                if (!townFromSelectedPosition.equals("")) {
+                    searchParams.put("place_from_town", townFromSelectedPosition);
+                }
+                if (stateToSelectedPosition != 0) {
+                    searchParams.put("place_to_state", String.valueOf(stateToSelectedPosition));
+                }
+                if (cityToSelectedPosition != 0) {
+                    searchParams.put("place_to_city", String.valueOf(cityToSelectedPosition));
+                }
+                if (!townToSelectedPosition.equals("")) {
+                    searchParams.put("place_to_town", townToSelectedPosition);
+                }
+            } catch (Exception e) {
+
+                new MaterialDialog.Builder(requireActivity())
+                        .title(R.string.ups)
+                        .content(R.string.search_fragment_filters_error_msg)
+                        .positiveText(R.string.accept)
+                        .show();
+            }
+
+            searchPerformer.onPerformSearch(searchParams);
+        });
+    }
+
 
     @Override
     public void onAttach(Context context) {
@@ -78,46 +105,12 @@ public class FragmentSearch extends BaseFragment {
         searchPerformer = (SearchPerformer) getActivity();
     }
 
-    @OnClick(R.id.btnSearch)
-    void onBtnSearchClick() {
-        HashMap<String, String> searchParams = new HashMap<>();
-        try {
-            if (stateFromSelectedPosition != 0) {
-                searchParams.put("place_from_state", String.valueOf(stateFromSelectedPosition));
-            }
-            if (cityFromSelectedPosition != 0) {
-                searchParams.put("place_from_city", String.valueOf(cityFromSelectedPosition));
-            }
-            if (!townFromSelectedPosition.equals("")) {
-                searchParams.put("place_from_town", townFromSelectedPosition);
-            }
-            if (stateToSelectedPosition != 0) {
-                searchParams.put("place_to_state", String.valueOf(stateToSelectedPosition));
-            }
-            if (cityToSelectedPosition != 0) {
-                searchParams.put("place_to_city", String.valueOf(cityToSelectedPosition));
-            }
-            if (!townToSelectedPosition.equals("")) {
-                searchParams.put("place_to_town", townToSelectedPosition);
-            }
-        } catch (Exception e) {
-
-            new MaterialDialog.Builder(getActivity())
-                    .title(R.string.ups)
-                    .content(R.string.search_fragment_filters_error_msg)
-                    .positiveText(R.string.accept)
-                    .show();
-        }
-
-        searchPerformer.onPerformSearch(searchParams);
-    }
-
     private void setupSpinners() {
 
         List<State> stateList = Utils.getStateList(getActivity());
 
-        spnStateFrom.setAdapter(new PlaceSpinnerBaseAdapter(getActivity(), stateList));
-        spnStateFrom.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        binding.spnStateOrigin.setAdapter(new PlaceSpinnerBaseAdapter(getActivity(), stateList));
+        binding.spnStateOrigin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
@@ -127,7 +120,7 @@ public class FragmentSearch extends BaseFragment {
 
                     showDialog(getString(R.string.please_wait), getString(R.string.main_loading_cities));
                     // Remove localities
-                    resetSpinner(spnLocalityFrom);
+                    resetSpinner(binding.spnStateOrigin);
                     stateFromSelectedPosition = selectedState.getId();
                     cityFromSelectedPosition = 0;
                     townFromSelectedPosition = "";
@@ -136,7 +129,7 @@ public class FragmentSearch extends BaseFragment {
                         InegiFacilRestClient.get().getCities(String.valueOf(selectedState.getId()), new Callback<ArrayList<City>>() {
                             @Override
                             public void success(ArrayList<City> cities, Response response) {
-                                spnMunicipalityFrom.setAdapter(new PlaceSpinnerBaseAdapter(getActivity(), cities));
+                                binding.spnCityOrigin.setAdapter(new PlaceSpinnerBaseAdapter(getActivity(), cities));
                                 hideDialog();
                             }
 
@@ -153,8 +146,8 @@ public class FragmentSearch extends BaseFragment {
                     stateFromSelectedPosition = 0;
                     cityFromSelectedPosition = 0;
                     townFromSelectedPosition = "";
-                    resetSpinner(spnMunicipalityFrom);
-                    resetSpinner(spnLocalityFrom);
+                    resetSpinner(binding.spnCityOrigin);
+                    resetSpinner(binding.spnTownOrigin);
                 }
             }
 
@@ -163,7 +156,7 @@ public class FragmentSearch extends BaseFragment {
             }
         });
 
-        spnMunicipalityFrom.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        binding.spnCityOrigin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
@@ -178,7 +171,7 @@ public class FragmentSearch extends BaseFragment {
                         InegiFacilRestClient.get().getTowns(String.valueOf(selectedCity.getClaveEntidad()), String.valueOf(selectedCity.getClaveMunicipio()), new Callback<ArrayList<Town>>() {
                             @Override
                             public void success(ArrayList<Town> towns, Response response) {
-                                spnLocalityFrom.setAdapter(new PlaceSpinnerBaseAdapter(getActivity(), towns));
+                                binding.spnTownOrigin.setAdapter(new PlaceSpinnerBaseAdapter(getActivity(), towns));
                                 hideDialog();
                             }
 
@@ -193,7 +186,7 @@ public class FragmentSearch extends BaseFragment {
                     }
                 } else {
                     townFromSelectedPosition = "";
-                    resetSpinner(spnLocalityFrom);
+                    resetSpinner(binding.spnTownOrigin);
                 }
             }
 
@@ -202,7 +195,7 @@ public class FragmentSearch extends BaseFragment {
             }
         });
 
-        spnLocalityFrom.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        binding.spnTownOrigin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
@@ -217,8 +210,8 @@ public class FragmentSearch extends BaseFragment {
         });
 
 
-        spnStateTo.setAdapter(new PlaceSpinnerBaseAdapter(getActivity(), stateList));
-        spnStateTo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        binding.spnStateTo.setAdapter(new PlaceSpinnerBaseAdapter(getActivity(), stateList));
+        binding.spnStateTo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
@@ -228,7 +221,7 @@ public class FragmentSearch extends BaseFragment {
 
                     showDialog(getString(R.string.please_wait), getString(R.string.main_loading_cities));
                     // Remove localities
-                    resetSpinner(spnLocalityTo);
+                    resetSpinner(binding.spnTownTo);
                     stateToSelectedPosition = selectedState.getId();
                     cityToSelectedPosition = 0;
                     townToSelectedPosition = "";
@@ -237,7 +230,7 @@ public class FragmentSearch extends BaseFragment {
                         InegiFacilRestClient.get().getCities(String.valueOf(selectedState.getId()), new Callback<ArrayList<City>>() {
                             @Override
                             public void success(ArrayList<City> cities, Response response) {
-                                spnMunicipalityTo.setAdapter(new PlaceSpinnerBaseAdapter(getActivity(), cities));
+                                binding.spnCityTo.setAdapter(new PlaceSpinnerBaseAdapter(getActivity(), cities));
                                 hideDialog();
                             }
 
@@ -254,8 +247,8 @@ public class FragmentSearch extends BaseFragment {
                     stateToSelectedPosition = 0;
                     cityToSelectedPosition = 0;
                     townToSelectedPosition = "";
-                    resetSpinner(spnMunicipalityTo);
-                    resetSpinner(spnLocalityTo);
+                    resetSpinner(binding.spnCityTo);
+                    resetSpinner(binding.spnTownTo);
                 }
             }
 
@@ -264,7 +257,7 @@ public class FragmentSearch extends BaseFragment {
             }
         });
 
-        spnMunicipalityTo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        binding.spnCityTo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
@@ -279,7 +272,7 @@ public class FragmentSearch extends BaseFragment {
                         InegiFacilRestClient.get().getTowns(String.valueOf(selectedCity.getClaveEntidad()), String.valueOf(selectedCity.getClaveMunicipio()), new Callback<ArrayList<Town>>() {
                             @Override
                             public void success(ArrayList<Town> towns, Response response) {
-                                spnLocalityTo.setAdapter(new PlaceSpinnerBaseAdapter(getActivity(), towns));
+                                binding.spnTownTo.setAdapter(new PlaceSpinnerBaseAdapter(getActivity(), towns));
                                 hideDialog();
                             }
 
@@ -294,7 +287,7 @@ public class FragmentSearch extends BaseFragment {
                     }
                 } else {
                     townToSelectedPosition = "";
-                    resetSpinner(spnLocalityTo);
+                    resetSpinner(binding.spnTownTo);
                 }
             }
 
@@ -303,7 +296,7 @@ public class FragmentSearch extends BaseFragment {
             }
         });
 
-        spnLocalityTo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        binding.spnTownTo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
@@ -327,7 +320,7 @@ public class FragmentSearch extends BaseFragment {
     }
 
     private void showDialog(String title, String text) {
-        progressDialog = new MaterialDialog.Builder(getActivity())
+        progressDialog = new MaterialDialog.Builder(requireActivity())
                 .title(title)
                 .content(text)
                 .progress(true, 0)

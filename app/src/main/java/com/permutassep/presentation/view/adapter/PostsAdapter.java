@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.lalongooo.permutassep.R;
+import com.lalongooo.permutassep.databinding.CaRowPostBinding;
 import com.permutassep.model.State;
 import com.permutassep.presentation.config.Config;
 import com.permutassep.presentation.model.PostModel;
@@ -21,9 +21,6 @@ import com.squareup.picasso.Picasso;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * By Jorge E. Hernandez (@lalongooo) 2015
@@ -59,8 +56,9 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostViewHold
 
     @Override
     public PostViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = this.layoutInflater.inflate(R.layout.ca_row_post, parent, false);
-        return new PostViewHolder(view);
+        CaRowPostBinding binding =
+                CaRowPostBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        return new PostViewHolder(binding);
     }
 
     @Override
@@ -117,29 +115,18 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostViewHold
     }
 
     static class PostViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.imageView)
         ImageView imageView;
-        @BindView(R.id.tvUserName)
         TextView tvUserName;
-        @BindView(R.id.tvPostDate)
         TextView tvPostDate;
-        @BindView(R.id.tvPostUserEmail)
         TextView tvPostUserEmail;
-        @BindView(R.id.tvPostUserPhone)
         TextView tvPostUserPhone;
-        @BindView(R.id.tvPostText)
         TextView tvPostText;
-        @BindView(R.id.tvFrom)
         TextView tvFrom;
-        @BindView(R.id.tvTo)
         TextView tvTo;
-        @BindView(R.id.tvAcademicLevelLabel)
         TextView tvAcademicLevelLabel;
 
-        public PostViewHolder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
+        public PostViewHolder(CaRowPostBinding binding) {
+            super(binding.getRoot());
         }
     }
-
 }
