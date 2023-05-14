@@ -6,10 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.Toast;
 
-import androidx.appcompat.widget.Toolbar;
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
@@ -18,6 +17,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.lalongooo.permutassep.R;
+import com.lalongooo.permutassep.databinding.CaActivityCreatepostBinding;
 import com.permutassep.model.City;
 import com.permutassep.model.State;
 import com.permutassep.model.Town;
@@ -45,32 +45,11 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
-/**
- * By Jorge E. Hernandez (@lalongooo) 2015
- */
-
-
-public class ActivityCreatePost extends BaseActivity implements
-        PageFragmentCallbacks,
-        ReviewFragment.Callbacks,
-        ModelCallbacks,
-        HasComponent<PostComponent>,
-        WritePostView {
+public class ActivityCreatePost extends BaseActivity implements PageFragmentCallbacks, ReviewFragment.Callbacks, ModelCallbacks, HasComponent<PostComponent>, WritePostView {
 
     public static final String NEW_POST_KEY = "a_new_post";
 
-    @BindView(R.id.next_button)
-    Button mNextButton;
-    @BindView(R.id.prev_button)
-    Button mPrevButton;
-    @BindView(R.id.pager)
-    ViewPager mPager;
-    @BindView(R.id.strip)
-    StepPagerStrip mStepPagerStrip;
+    private CaActivityCreatepostBinding binding;
     @Inject
     WritePostPresenter writePostPresenter;
     private boolean mEditingAfterReview;
@@ -89,8 +68,8 @@ public class ActivityCreatePost extends BaseActivity implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.ca_activity_createpost);
-        ButterKnife.bind(this);
+        binding = CaActivityCreatepostBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
         this.initializeInjector();
         // setActionBar(toolbar);
 
@@ -106,21 +85,21 @@ public class ActivityCreatePost extends BaseActivity implements
 
         mWizardModel.registerListener(this);
         mPagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
-        mPager.setAdapter(mPagerAdapter);
-        mStepPagerStrip.setOnPageSelectedListener(new StepPagerStrip.OnPageSelectedListener() {
+        binding.pager.setAdapter(mPagerAdapter);
+        binding.strip.setOnPageSelectedListener(new StepPagerStrip.OnPageSelectedListener() {
             @Override
             public void onPageStripSelected(int position) {
                 position = Math.min(mPagerAdapter.getCount() - 1, position);
-                if (mPager.getCurrentItem() != position) {
-                    mPager.setCurrentItem(position);
+                if (binding.pager.getCurrentItem() != position) {
+                    binding.pager.setCurrentItem(position);
                 }
             }
         });
 
-        mPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+        binding.pager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
-                mStepPagerStrip.setCurrentPage(position);
+                binding.strip.setCurrentPage(position);
 
                 if (mConsumePageSelectedEvent) {
                     mConsumePageSelectedEvent = false;
@@ -132,40 +111,28 @@ public class ActivityCreatePost extends BaseActivity implements
             }
         });
 
-        mNextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        binding.nextButton.setOnClickListener(view -> {
 
-                if (mPager.getCurrentItem() == mCurrentPageSequence.size()) {
+            if (binding.pager.getCurrentItem() == mCurrentPageSequence.size()) {
 
 
-                    new MaterialDialog.Builder(ActivityCreatePost.this)
-                            .content(R.string.submit_confirm_message)
-                            .positiveText(R.string.submit_confirm_button)
-                            .negativeText(android.R.string.cancel)
-                            .onPositive(new MaterialDialog.SingleButtonCallback() {
-                                @Override
-                                public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
-                                    writePostPresenter.writePost(getPostModelFromWizard());
-                                }
-                            })
-                            .show();
-                } else {
-                    if (mEditingAfterReview) {
-                        mPager.setCurrentItem(mPagerAdapter.getCount() - 1);
-                    } else {
-                        mPager.setCurrentItem(mPager.getCurrentItem() + 1);
+                new MaterialDialog.Builder(ActivityCreatePost.this).content(R.string.submit_confirm_message).positiveText(R.string.submit_confirm_button).negativeText(android.R.string.cancel).onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
+                        writePostPresenter.writePost(getPostModelFromWizard());
                     }
+                }).show();
+            } else {
+                if (mEditingAfterReview) {
+                    binding.pager.setCurrentItem(mPagerAdapter.getCount() - 1);
+                } else {
+                    binding.pager.setCurrentItem(binding.pager.getCurrentItem() + 1);
                 }
             }
         });
 
-        mPrevButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPager.setCurrentItem(mPager.getCurrentItem() - 1);
-            }
-        });
+        binding.prevButton.setOnClickListener(v -> binding.pager.setCurrentItem(binding.pager.getCurrentItem() - 1));
+        binding.retryView.btRetry.setOnClickListener(v -> writePostPresenter.writePost(getPostModelFromWizard()));
 
         onPageTreeChanged();
         updateBottomBar();
@@ -173,11 +140,7 @@ public class ActivityCreatePost extends BaseActivity implements
 
     private void initializeInjector() {
 
-        this.postComponent = DaggerPostComponent.builder()
-                .applicationComponent(getApplicationComponent())
-                .activityModule(getActivityModule())
-                .postModule(new PostModule())
-                .build();
+        this.postComponent = DaggerPostComponent.builder().applicationComponent(getApplicationComponent()).activityModule(getActivityModule()).postModule(new PostModule()).build();
         this.postComponent.inject(this);
         this.writePostPresenter.setView(this, PrefUtils.getUser(ActivityCreatePost.this));
     }
@@ -186,28 +149,27 @@ public class ActivityCreatePost extends BaseActivity implements
     public void onPageTreeChanged() {
         mCurrentPageSequence = mWizardModel.getCurrentPageSequence();
         recalculateCutOffPage();
-        mStepPagerStrip.setPageCount(mCurrentPageSequence.size() + 1); // + 1 = review step
+        binding.strip.setPageCount(mCurrentPageSequence.size() + 1); // + 1 = review step
         mPagerAdapter.notifyDataSetChanged();
         updateBottomBar();
     }
 
     private void updateBottomBar() {
-        int position = mPager.getCurrentItem();
+        int position = binding.pager.getCurrentItem();
         if (position == mCurrentPageSequence.size()) {
-            mNextButton.setText(R.string.finish);
-            mNextButton.setBackgroundResource(R.drawable.finish_background);
-            mNextButton.setTextAppearance(this, R.style.TextAppearanceFinish);
+            binding.nextButton.setText(R.string.finish);
+            binding.nextButton.setBackgroundResource(R.drawable.finish_background);
+            binding.nextButton.setTextAppearance(this, R.style.TextAppearanceFinish);
         } else {
-            mNextButton.setText(mEditingAfterReview ? R.string.review : R.string.next);
-            mNextButton.setBackgroundResource(R.drawable.selectable_item_background);
-            mNextButton.setTextAppearance(this, R.style.TextAppearanceCapturing);
+            binding.nextButton.setText(mEditingAfterReview ? R.string.review : R.string.next);
+            binding.nextButton.setBackgroundResource(R.drawable.selectable_item_background);
+            binding.nextButton.setTextAppearance(this, R.style.TextAppearanceCapturing);
             if (!mCurrentPageSequence.get(position).isCompleted()) {
-                mNextButton.setTextColor(getResources().getColor(android.R.color.darker_gray));
+                binding.nextButton.setTextColor(getResources().getColor(android.R.color.darker_gray));
             }
-            mNextButton.setEnabled(position != mPagerAdapter.getCutOffPage());
+            binding.nextButton.setEnabled(position != mPagerAdapter.getCutOffPage());
         }
-
-        mPrevButton.setVisibility(position <= 0 ? View.INVISIBLE : View.VISIBLE);
+        binding.prevButton.setVisibility(position <= 0 ? View.INVISIBLE : View.VISIBLE);
     }
 
     @Override
@@ -233,7 +195,7 @@ public class ActivityCreatePost extends BaseActivity implements
             if (mCurrentPageSequence.get(i).getKey().equals(key)) {
                 mConsumePageSelectedEvent = true;
                 mEditingAfterReview = true;
-                mPager.setCurrentItem(i);
+                binding.pager.setCurrentItem(i);
                 updateBottomBar();
                 break;
             }
@@ -342,52 +304,34 @@ public class ActivityCreatePost extends BaseActivity implements
 
     @Override
     public void writtenPost(final PostModel postModel) {
-        new MaterialDialog.Builder(this)
-                .title(R.string.wizard_post_retry_dlg_success_post_title)
-                .content(R.string.wizard_post_retry_dlg_success_post_message)
-                .positiveText(android.R.string.ok)
-                .cancelable(false)
-                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
-                        ComplexPreferences.get(ActivityCreatePost.this).putObject(NEW_POST_KEY, postModel);
-                        finish();
-                    }
-                })
-                .show();
+        new MaterialDialog.Builder(this).title(R.string.wizard_post_retry_dlg_success_post_title).content(R.string.wizard_post_retry_dlg_success_post_message).positiveText(android.R.string.ok).cancelable(false).onPositive(new MaterialDialog.SingleButtonCallback() {
+            @Override
+            public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
+                ComplexPreferences.get(ActivityCreatePost.this).putObject(NEW_POST_KEY, postModel);
+                finish();
+            }
+        }).show();
     }
 
     @Override
     public void showLoading() {
 
-        progressDialog = new MaterialDialog.Builder(this)
-                .title(R.string.wizard_post_dlg_title)
-                .content(R.string.wizard_post_dlg_text)
-                .progress(true, 0)
-                .cancelable(false)
-                .progressIndeterminateStyle(false)
-                .show();
+        progressDialog = new MaterialDialog.Builder(this).title(R.string.wizard_post_dlg_title).content(R.string.wizard_post_dlg_text).progress(true, 0).cancelable(false).progressIndeterminateStyle(false).show();
     }
 
     @Override
     public void hideLoading() {
-        if (progressDialog != null)
-            progressDialog.dismiss();
+        if (progressDialog != null) progressDialog.dismiss();
     }
 
     @Override
     public void showRetry() {
-        new MaterialDialog.Builder(this)
-                .title(R.string.ups)
-                .content(R.string.wizard_post_retry_dlg_message)
-                .positiveText(R.string.retry)
-                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
-                        writePostPresenter.writePost(getPostModelFromWizard());
-                    }
-                })
-                .show();
+        new MaterialDialog.Builder(this).title(R.string.ups).content(R.string.wizard_post_retry_dlg_message).positiveText(R.string.retry).onPositive(new MaterialDialog.SingleButtonCallback() {
+            @Override
+            public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
+                writePostPresenter.writePost(getPostModelFromWizard());
+            }
+        }).show();
     }
 
     @Override
@@ -397,11 +341,6 @@ public class ActivityCreatePost extends BaseActivity implements
     @Override
     public void showError(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-    }
-
-    @OnClick(R.id.bt_retry)
-    void onButtonRetryClick() {
-        this.writePostPresenter.writePost(this.getPostModelFromWizard());
     }
 
     @Override
@@ -438,7 +377,7 @@ public class ActivityCreatePost extends BaseActivity implements
         }
 
         @Override
-        public void setPrimaryItem(ViewGroup container, int position, Object object) {
+        public void setPrimaryItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
             super.setPrimaryItem(container, position, object);
         }
 

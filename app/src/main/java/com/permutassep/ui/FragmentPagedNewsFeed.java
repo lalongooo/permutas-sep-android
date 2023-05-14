@@ -11,13 +11,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.lalongooo.permutassep.R;
+import com.lalongooo.permutassep.databinding.CaFragmentPostListBinding;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.permutassep.presentation.config.Config;
@@ -41,28 +42,16 @@ import java.util.Collection;
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
-/**
- * By Jorge E. Hernandez (@lalongooo) 2015
- */
 public class FragmentPagedNewsFeed extends BaseFragment implements PagedPostsListView {
 
     public static final String TAG = "FragmentPagedPostList";
 
+    private CaFragmentPostListBinding binding;
+
     @Inject
     PagedPostListPresenter postListPresenter;
 
-    @BindView(R.id.rv_users)
-    RecyclerView rv_posts;
-
-    @BindView(R.id.floatingActionButton)
-    FloatingActionButton floatingActionButton;
-
     private MaterialDialog progressDialog;
-
     private PostComponent postComponent;
     private FloatingActionButtonClickListener floatingActionButtonClickListener;
     private FirstLaunchCompleteListener firstLaunchCompleteListener;
@@ -90,8 +79,7 @@ public class FragmentPagedNewsFeed extends BaseFragment implements PagedPostsLis
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View fragmentView = inflater.inflate(R.layout.ca_fragment_post_list, container, false);
-        ButterKnife.bind(this, fragmentView);
+        binding = CaFragmentPostListBinding.inflate(inflater, container, false);
 
         ActionBar actionBar = getActivity().getActionBar();
         if (actionBar != null) {
@@ -100,19 +88,18 @@ public class FragmentPagedNewsFeed extends BaseFragment implements PagedPostsLis
 
         setupUI();
         setHasOptionsMenu(true);
-        return fragmentView;
+        return binding.getRoot();
     }
 
     private void setupUI() {
-        this.floatingActionButton.setVisibility(PrefUtils.getUser(getActivity()) == null ? View.GONE : View.VISIBLE);
-        this.postsLayoutManager = new PostsLayoutManager(getActivity());
-        this.rv_posts.setLayoutManager(postsLayoutManager);
+        binding.floatingActionButton.setVisibility(PrefUtils.getUser(requireActivity()) == null ? View.GONE : View.VISIBLE);
+        postsLayoutManager = new PostsLayoutManager(getActivity());
+        binding.rvUsers.setLayoutManager(postsLayoutManager);
 
-        this.postsAdapter = new PostsAdapter(getActivity(), new ArrayList<PostModel>());
-        this.postsAdapter.setOnItemClickListener(onItemClickListener);
-        this.rv_posts.setAdapter(postsAdapter);
-        this.rv_posts.addOnScrollListener(new EndlessRecyclerOnScrollListener(postsLayoutManager) {
-
+        postsAdapter = new PostsAdapter(requireActivity(), new ArrayList<>());
+        postsAdapter.setOnItemClickListener(onItemClickListener);
+        binding.rvUsers.setAdapter(postsAdapter);
+        binding.rvUsers.addOnScrollListener(new EndlessRecyclerOnScrollListener(postsLayoutManager) {
             @Override
             public void onLoadMore(int current_page) {
                 currentPage = current_page;
@@ -121,6 +108,8 @@ public class FragmentPagedNewsFeed extends BaseFragment implements PagedPostsLis
                 }
             }
         });
+
+        binding.floatingActionButton.setOnClickListener(v -> floatingActionButtonClickListener.onFloatingActionButtonClick());
     }
 
     @Override
@@ -168,12 +157,6 @@ public class FragmentPagedNewsFeed extends BaseFragment implements PagedPostsLis
         postComponent.inject(this);
         this.postListPresenter.setView(this);
     }
-
-    @OnClick(R.id.floatingActionButton)
-    void onFabClick() {
-        floatingActionButtonClickListener.onFloatingActionButtonClick();
-    }
-
 
     private void loadUserList() {
         this.postListPresenter.initialize(currentPage, Config.NEWS_FEED_ITEMS_PER_PAGE);
@@ -301,7 +284,7 @@ public class FragmentPagedNewsFeed extends BaseFragment implements PagedPostsLis
         }
 
         @Override
-        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+        public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
             super.onScrolled(recyclerView, dx, dy);
 
             visibleItemCount = recyclerView.getChildCount();
@@ -314,15 +297,9 @@ public class FragmentPagedNewsFeed extends BaseFragment implements PagedPostsLis
                     previousTotal = totalItemCount;
                 }
             }
-            if (!loading && (totalItemCount - visibleItemCount)
-                    <= (firstVisibleItem + visibleThreshold)) {
-                // End has been reached
-
-                // Do something
+            if (!loading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
                 current_page++;
-
                 onLoadMore(current_page);
-
                 loading = true;
             }
         }

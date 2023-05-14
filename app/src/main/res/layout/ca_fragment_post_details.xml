@@ -3,10 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include layout="@layout/ca_view_post_details" />
+    <include
+            android:id="@+id/post_details"
+            layout="@layout/ca_view_post_details" />
 
-    <include layout="@layout/ca_view_progress" />
+    <include
+            android:id="@+id/progress_view"
+            layout="@layout/ca_view_progress" />
 
-    <include layout="@layout/ca_view_retry" />
+    <include
+            android:id="@+id/view_retry"
+            layout="@layout/ca_view_retry" />
 
 </RelativeLayout>

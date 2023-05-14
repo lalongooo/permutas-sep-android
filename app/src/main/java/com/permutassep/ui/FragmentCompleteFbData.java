@@ -12,7 +12,6 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 
 import androidx.fragment.app.FragmentManager;
 
@@ -20,6 +19,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.facebook.login.LoginManager;
 import com.lalongooo.permutassep.BuildConfig;
 import com.lalongooo.permutassep.R;
+import com.lalongooo.permutassep.databinding.CaFragmentCompleteFbDataBinding;
 import com.permutassep.presentation.interfaces.LoginCompleteListener;
 import com.permutassep.presentation.internal.di.components.ApplicationComponent;
 import com.permutassep.presentation.internal.di.components.AuthenticationComponent;
@@ -36,22 +36,9 @@ import com.throrinstudio.android.common.libs.validator.validator.PhoneValidator;
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
 public class FragmentCompleteFbData extends BaseFragment implements SignUpView {
 
-    /**
-     * UI elements
-     */
-
-    @BindView(R.id.etName)
-    EditText etName;
-    @BindView(R.id.etEmail)
-    EditText etEmail;
-    @BindView(R.id.etPhone)
-    EditText etPhone;
+    private CaFragmentCompleteFbDataBinding binding;
 
     @Inject
     SignUpPresenter signUpPresenter;
@@ -75,15 +62,12 @@ public class FragmentCompleteFbData extends BaseFragment implements SignUpView {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View fragmentView = inflater.inflate(R.layout.ca_fragment_complete_fb_data, container, false);
-        ButterKnife.bind(this, fragmentView);
-
+        binding = CaFragmentCompleteFbDataBinding.inflate(inflater, container, false);
         ActionBar actionBar = getActivity().getActionBar();
         if (actionBar != null) {
             actionBar.hide();
         }
-
-        return fragmentView;
+        return binding.getRoot();
     }
 
     @Override
@@ -95,24 +79,25 @@ public class FragmentCompleteFbData extends BaseFragment implements SignUpView {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        this.initializeInjector();
+        initializeInjector();
+        setupOnClickListeners();
     }
 
     private void initializeInjector() {
         String name = getArguments().getString("name");
         String email = getArguments().getString("email");
         String socialUserId = getArguments().getString("socialUserId");
-        String phone = etPhone.getText().toString();
+        String phone = binding.etPhone.getText().toString();
         String password = BuildConfig.com_permutassep_fb_login_dummy_password;
 
         if (!TextUtils.isEmpty(name)) {
-            etName.setText(name);
-            etName.setFocusable(false);
+            binding.etName.setText(name);
+            binding.etName.setFocusable(false);
         }
 
         if (!TextUtils.isEmpty(email)) {
-            etEmail.setText(email);
-            etEmail.setFocusable(false);
+            binding.etEmail.setText(email);
+            binding.etEmail.setFocusable(false);
         }
 
         UserModel userModel = new UserModel();
@@ -131,18 +116,17 @@ public class FragmentCompleteFbData extends BaseFragment implements SignUpView {
         signUpPresenter.setView(this);
     }
 
-    @OnClick(R.id.btnContinueRegistration)
-    void onBtnContinueRegistrationClick() {
+    private void setupOnClickListeners() {
         /**
          * Add validations of the EditText's
          */
-        Validate vName = new Validate(etName);
+        Validate vName = new Validate(binding.etName);
         vName.addValidator(new NotEmptyValidator(getActivity()));
 
-        Validate vEmail = new Validate(etEmail);
+        Validate vEmail = new Validate(binding.etEmail);
         vEmail.addValidator(new EmailValidator(getActivity()));
 
-        Validate vPhone = new Validate(etPhone);
+        Validate vPhone = new Validate(binding.etPhone);
         vPhone.addValidator(new PhoneValidator(getActivity()));
 
         Form form = new Form();
@@ -169,6 +153,7 @@ public class FragmentCompleteFbData extends BaseFragment implements SignUpView {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        binding = null;
     }
 
     @Override

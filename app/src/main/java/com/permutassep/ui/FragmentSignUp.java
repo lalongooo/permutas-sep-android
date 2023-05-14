@@ -1,9 +1,5 @@
 package com.permutassep.ui;
 
-/**
- * By Jorge E. Hernandez (@lalongooo) 2015
- */
-
 import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
@@ -11,8 +7,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
@@ -24,8 +21,8 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.Profile;
 import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
 import com.lalongooo.permutassep.R;
+import com.lalongooo.permutassep.databinding.CaFragmentSignupBinding;
 import com.permutassep.presentation.interfaces.LoginCompleteListener;
 import com.permutassep.presentation.internal.di.components.ApplicationComponent;
 import com.permutassep.presentation.internal.di.components.AuthenticationComponent;
@@ -45,25 +42,10 @@ import org.json.JSONObject;
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
 public class FragmentSignUp extends BaseFragment implements SignUpView {
 
-    /**
-     * UI elements
-     */
-    @BindView(R.id.etName)
-    EditText etName;
-    @BindView(R.id.etEmail)
-    EditText etEmail;
-    @BindView(R.id.etPhone)
-    EditText etPhone;
-    @BindView(R.id.etPassword)
-    EditText etPassword;
-    @BindView(R.id.btnLogin)
-    LoginButton loginButton;
+    private CaFragmentSignupBinding binding;
+
     @Inject
     SignUpPresenter signUpPresenter;
 
@@ -73,26 +55,50 @@ public class FragmentSignUp extends BaseFragment implements SignUpView {
     private CallbackManager callbackManager;
     private FacebookSignUpListener facebookSignUpListener;
 
-    /**
-     * A static method to create a new instance of the {@link FragmentSignUp} class
-     *
-     * @return An instance of {@link FragmentSignUp}
-     */
     public static FragmentSignUp newInstance() {
         return new FragmentSignUp();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View fragmentView = inflater.inflate(R.layout.ca_fragment_signup, container, false);
-        ButterKnife.bind(this, fragmentView);
-        setUpFacebookLoginButton();
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        binding = CaFragmentSignupBinding.inflate(inflater, container, false);
+        return binding.getRoot();
+    }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setUpFacebookLoginButton();
         ActionBar actionBar = ((FragmentActivity) getActivity()).getActionBar();
         if (actionBar != null) {
             actionBar.hide();
         }
-        return fragmentView;
+
+        binding.btnRegister.setOnClickListener(v -> {
+            Validate vName = new Validate(binding.etName);
+            vName.addValidator(new NotEmptyValidator(getActivity()));
+
+            Validate vEmail = new Validate(binding.etEmail);
+            vEmail.addValidator(new EmailValidator(getActivity()));
+
+            Validate vPhone = new Validate(binding.etPhone);
+            vPhone.addValidator(new PhoneValidator(getActivity()));
+
+            Validate vPassword = new Validate(binding.etPassword);
+            vPassword.addValidator(new NotEmptyValidator(getActivity()));
+
+            Form form = new Form();
+            form.addValidates(vName, vEmail, vPhone, vPassword);
+
+            if (form.isValid()) {
+                String name = binding.etName.getText().toString();
+                String email = binding.etEmail.getText().toString();
+                String phone = binding.etPhone.getText().toString();
+                String password = binding.etPassword.getText().toString();
+                initializeInjector(name, email, phone, password);
+                signUpPresenter.signUp();
+            }
+        });
     }
 
     @Override
@@ -110,9 +116,8 @@ public class FragmentSignUp extends BaseFragment implements SignUpView {
 
     private void setUpFacebookLoginButton() {
         callbackManager = CallbackManager.Factory.create();
-        loginButton.setReadPermissions("email");
-        // loginButton.setFragment();
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+        binding.btnLogin.setReadPermissions("email");
+        binding.btnLogin.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 showLoading();
@@ -152,36 +157,6 @@ public class FragmentSignUp extends BaseFragment implements SignUpView {
 
             }
         });
-    }
-
-    @OnClick(R.id.btnRegister)
-    void onBtnLoginClick() {
-        /**
-         * Add validations of the EditText's
-         */
-        Validate vName = new Validate(etName);
-        vName.addValidator(new NotEmptyValidator(getActivity()));
-
-        Validate vEmail = new Validate(etEmail);
-        vEmail.addValidator(new EmailValidator(getActivity()));
-
-        Validate vPhone = new Validate(etPhone);
-        vPhone.addValidator(new PhoneValidator(getActivity()));
-
-        Validate vPassword = new Validate(etPassword);
-        vPassword.addValidator(new NotEmptyValidator(getActivity()));
-
-        Form form = new Form();
-        form.addValidates(vName, vEmail, vPhone, vPassword);
-
-        if (form.isValid()) {
-            String name = etName.getText().toString();
-            String email = etEmail.getText().toString();
-            String phone = etPhone.getText().toString();
-            String password = etPassword.getText().toString();
-            initializeInjector(name, email, phone, password);
-            signUpPresenter.signUp();
-        }
     }
 
     private void initializeInjector(String name, String email, String phone, String password) {
