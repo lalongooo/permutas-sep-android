@@ -52,8 +52,6 @@ android {
             minifyEnabled false
             signingConfig signingConfigs.debugConfig
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
-            buildConfigField "String", "PARSE_COM_APPLICATION_ID", parse_com_debug_application_id
-            buildConfigField "String", "PARSE_COM_CLIENT_KEY", parse_com_debug_client_key
             buildConfigField "String", "com_permutassep_api_rest_endpoint", com_permutassep_debug_api_rest_endpoint
             buildConfigField "String", "com_permutassep_api_rest_user", com_permutassep_debug_api_rest_user
             buildConfigField "String", "com_permutassep_api_rest_password", com_permutassep_debug_api_rest_password
@@ -67,8 +65,6 @@ android {
             minifyEnabled false
             signingConfig signingConfigs.releaseConfig
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
-            buildConfigField "String", "PARSE_COM_APPLICATION_ID", parse_com_release_application_id
-            buildConfigField "String", "PARSE_COM_CLIENT_KEY", parse_com_release_client_key
             buildConfigField "String", "com_permutassep_api_rest_endpoint", com_permutassep_release_api_rest_endpoint
             buildConfigField "String", "com_permutassep_api_rest_user", com_permutassep_release_api_rest_user
             buildConfigField "String", "com_permutassep_api_rest_password", com_permutassep_release_api_rest_password
@@ -94,8 +90,6 @@ dependencies {
     implementation presentationDependencies.rxJava
     implementation presentationDependencies.rxAndroid
     implementation presentationDependencies.javaxAnnotation
-    implementation 'com.parse.bolts:bolts-android:1.3.0'
-    implementation 'com.parse:parse-android:1.11.0'
     implementation 'androidx.viewpager:viewpager:1.0.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.google.android.material:material:1.8.0'

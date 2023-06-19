@@ -35,10 +35,8 @@ import com.permutassep.presentation.internal.di.modules.PostModule;
 import com.permutassep.presentation.model.PostModel;
 import com.permutassep.presentation.model.UserModel;
 import com.permutassep.presentation.navigation.Navigator;
-import com.permutassep.presentation.utils.ParseUtils;
 import com.permutassep.presentation.utils.PrefUtils;
 import com.permutassep.presentation.view.HomeView;
-import com.permutassep.push.PushBroadcastReceiver;
 
 import java.util.HashMap;
 
@@ -81,13 +79,7 @@ public class ActivityMain extends BaseActivity
         } else {
             userModel = PrefUtils.getUser(this);
             if (userModel != null) {
-                if (getIntent().getStringExtra(PushBroadcastReceiver.PUSH_POST_ID_EXTRA) != null) {
-                    int psPostId = Integer.valueOf(getIntent().getStringExtra(PushBroadcastReceiver.PUSH_POST_ID_EXTRA));
-                    navigator.navigateToPostDetailsFromNotification(this, psPostId);
-                } else {
-                    navigator.navigateToPostList(this, true);
-                    ParseUtils.setUpParseInstallationUser(userModel.getId());
-                }
+                navigator.navigateToPostList(this, true);
                 renderDrawerOptions();
                 PrefUtils.markLoggedUser(this, true);
             } else {
@@ -185,11 +177,6 @@ public class ActivityMain extends BaseActivity
     public void onBackPressed() {
         if (drawer != null && drawer.isDrawerOpen()) {
             drawer.closeDrawer();
-        } else if (getIntent().getStringExtra(PushBroadcastReceiver.PUSH_POST_ID_EXTRA) != null) {
-            getIntent().removeExtra(PushBroadcastReceiver.PUSH_POST_ID_EXTRA);
-            getSupportFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-            navigator.navigateToPostList(this, true);
-            navigator.navigateToPostList(this, true);
         } else {
             super.onBackPressed();
             if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
@@ -268,7 +255,6 @@ public class ActivityMain extends BaseActivity
     public void onLoginComplete(UserModel userModel) {
         this.userModel = userModel;
         PrefUtils.putUser(this, userModel);
-        ParseUtils.setUpParseInstallationUser(userModel.getId());
         PrefUtils.markLoggedUser(this, true);
         renderDrawerOptions();
     }
@@ -300,7 +286,6 @@ public class ActivityMain extends BaseActivity
             case R.id.action_logout:
                 PrefUtils.markLoggedUser(this, false);
                 PrefUtils.clearApplicationPreferences(this);
-                ParseUtils.clearParseInstallationUser();
                 LoginManager.getInstance().logOut();
                 navigator.navigateToStart(this);
 
@@ -343,10 +328,6 @@ public class ActivityMain extends BaseActivity
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        if (intent.getStringExtra(PushBroadcastReceiver.PUSH_POST_ID_EXTRA) != null) {
-            int psPostId = Integer.valueOf(intent.getStringExtra(PushBroadcastReceiver.PUSH_POST_ID_EXTRA));
-            this.navigator.navigateToPostDetails(this, psPostId);
-        }
     }
 
     /**

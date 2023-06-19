@@ -14,8 +14,6 @@ import com.facebook.FacebookSdk;
 import com.lalongooo.permutassep.BuildConfig;
 import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader;
 import com.mikepenz.materialdrawer.util.DrawerImageLoader;
-import com.parse.Parse;
-import com.parse.ParseInstallation;
 import com.permutassep.presentation.internal.di.components.ApplicationComponent;
 import com.permutassep.presentation.internal.di.components.DaggerApplicationComponent;
 import com.permutassep.presentation.internal.di.modules.ApplicationModule;
@@ -32,7 +30,6 @@ public class AndroidApplication extends Application {
         super.onCreate();
         this.initializeInjector();
         this.setUpDrawerImageLoader();
-        this.setupParseCom();
         FacebookSdk.sdkInitialize(getApplicationContext());
     }
 
@@ -75,13 +72,5 @@ public class AndroidApplication extends Application {
      */
     public ApplicationComponent getApplicationComponent() {
         return this.applicationComponent;
-    }
-
-    /**
-     * Setup parse.com according to https://parse.com/apps/quickstart#parse_push/android/native/existing
-     */
-    private void setupParseCom() {
-        Parse.initialize(this, BuildConfig.PARSE_COM_APPLICATION_ID, BuildConfig.PARSE_COM_CLIENT_KEY);
-        ParseInstallation.getCurrentInstallation().saveInBackground();
     }
 }
